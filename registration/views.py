@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from django.views.generic.detail import SingleObjectMixin
 from registration.models import Vehicle, EndUser , bike, prize, Tag
 from multiprocessing.sharedctypes import template
@@ -17,6 +17,7 @@ from rest_framework import viewsets
 
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.views import generic
 
 
 class BikeViewSet(viewsets.ModelViewSet):
@@ -76,40 +77,24 @@ class TagViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         serializer.save()
+        
+        
+        
+class newuser(CreateView):
+    model = EndUser
+    fields = ('username','password', 'first_name', 'last_name')
+    exclude=[]
+    template_name = 'registration/newuser.html'
+    success_url="registration/home/"
+    
+    
+class vehicleList(ListView):
+    model = bike
+    #queryset = bike.objects.all(owner_id=request.user)
+    fields = ('bikes_id','owner_id','model','created_at')
+    template_name = 'registration/ViewVehicles.html'
 
-# class bikesList(APIView,ListView):
-#     template_name = 'registration/ViewVehicle.html'
-#     """
-#     List all snippets, or create a new snippet.
-#     """
-#     def get(self, request, format=None):
-#         snippets = bikes.objects.all()
-#         serializer = SnippetSerializer(bikes, many=True)
-#         return Response(serializer.data)
-# 
-#     def post(self, request, format=None):
-#         serializer = SnippetSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-# 
-# class ViewRegisterVehicles(SingleObjectMixin,ListView,APIView):
-#     template_name = 'registratin/ViewVehicles.html'
-#     
-#     
-#     def get(self,request, *args, **kwargs):
-#         self.object = self.get_object(queryset= Vehicle.objects.all())
-#         return super().get(request,*args,**kwargs)
-#     
-#     
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['Vehicle'] = self.object
-#         return context
-#     
-#     
-#     def get_queryset(self):
-#         return self.object.book_set.all()
+
+
     
     
