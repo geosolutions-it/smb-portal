@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.views.generic.detail import SingleObjectMixin
-from registration.models import Vehicle, EndUser , bike, prize, Tag
+from registration.models import Vehicle, EndUser , bike, prize, Tag, Profile
 from multiprocessing.sharedctypes import template
 # Create your views here.
 from rest_framework import serializers
@@ -18,6 +18,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.views import generic
+import profile
 
 
 class BikeViewSet(viewsets.ModelViewSet):
@@ -85,7 +86,7 @@ class newuser(CreateView):
     fields = ('username','password', 'first_name', 'last_name')
     exclude=[]
     template_name = 'registration/newuser.html'
-    success_url="registration/home/"
+    success_url="http://localhost:8000/registration/home/"
     
     
 class vehicleList(ListView):
@@ -93,6 +94,20 @@ class vehicleList(ListView):
     #queryset = bike.objects.all(owner_id=request.user)
     fields = ('bikes_id','owner_id','model','created_at')
     template_name = 'registration/ViewVehicles.html'
+    
+    
+class UpdateProfile(UpdateView):
+    model = Profile
+    fields = ('bio','user_id')
+    template_name = 'registration/UpdateProfile.html'
+    #queryset = Profile.objects.all()
+    
+    
+    
+class TagList(ListView):
+    model = Tag
+    exclude=[]
+    template_name = 'registration/ViewTags.html'
 
 
 

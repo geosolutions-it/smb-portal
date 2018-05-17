@@ -12,7 +12,7 @@ class BikeSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=EndUser
-        exclude= ['password']
+        exclude= []
         
         
 class PrizeSerializer(serializers.ModelSerializer):

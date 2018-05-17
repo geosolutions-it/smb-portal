@@ -1,7 +1,4 @@
 {% extends 'registration/base.html' %}
-
-
-
 {% block content %}
 <div class="" id="container">
         <div>
@@ -9,19 +6,15 @@
                 <div class="pri_container">
                 <div class="row">
                     <div class="col-md-6 margin-bottom-2x">
-                        <h6 class="text-muted text-normal text-uppercase">Vehicles</h6>
+                        <h6 class="text-muted text-normal text-uppercase">Tags</h6>
                         <hr class="margin-bottom-1x">
-                        <nav class="list-group">
-                              <a class="btn btn-outline-primary" href="{% url 'Vehicles' %}">Vehicles</a>
-                              <a class="btn btn-outline-primary" href="{% url 'Tags' %}">Tags</a>
-                    </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-md-6 margin-bottom-2x">
-                        <h6 class="text-muted text-normal text-uppercase">Profile</h6>
-                        <hr class="margin-bottom-1x">
-                        <nav class="list-group">
-                              <a class="btn btn-outline-primary" href="{% url 'UpdateProfile' %}"> Update Profile</a>
+                        <ul class="list-group">
+                            {% for tag in object_list %}
+    						<ul class="list-group-item">{{ tag.owner_id }} </ul>
+								{% empty %}
+   							 <ul>No articles yet.</ul>
+								{% endfor %}
+                        </ul>
                     </div>
                     <!-- <div class="col-md-6 margin-bottom-2x">
                         <h6 class="text-muted text-normal text-uppercase">Link Example</h6>
@@ -145,4 +138,5 @@
         </div>
         <!-- END ROW -->
     </div>
+
 {% endblock %}

@@ -16,7 +16,8 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('newuser/', views.newuser.as_view(),name='newuser'),
     path('user/Vehicles',  views.vehicleList.as_view(),name='Vehicles'),
-    #path(', ,
+    path('user/Tags',views.TagList.as_view(),name='Tags'),
+    path('user/updateProfile', views.UpdateProfile.as_view(),name='UpdateProfile'),
     path('home/',  TemplateView.as_view(template_name="registration/home.html")),
     #path(r'single/', views.ViewRegisterVehicles.as_view(), name='index'),
     # ex: /polls/5/

@@ -5,6 +5,7 @@ from rest_framework import serializers
 #--->
 # Create your models here.
 from django.contrib.auth.models  import AbstractUser
+from django.contrib.auth.models import User
 
 
 
@@ -16,6 +17,7 @@ class EndUser(AbstractUser):
     given_name = models.CharField(max_length=100) 
     surname = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
+    
     
     
 # class PrizeManager(AbstractUser):
