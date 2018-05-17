@@ -1,0 +1,914 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>
+        Save my Bike
+    </title>
+    <!-- SEO Meta Tags-->
+    <!-- <meta name="description" content="Silver Edge Modern Bootstrap 4 Admin Dashboard - PVR Tech Admin">
+    <meta name="keywords" content="Silver Edge Modern Bootstrap 4 Admin Dashboard, PVR Tech Admin, PVR Admin, PVR">
+    <meta name="author" content=""> -->
+    <!-- Mobile Specific Meta Tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Favicon and Apple Icons-->
+    <link rel="icon" type="image/png" href="http://via.placeholder.com/32x32">
+    <link rel="icon" type="image/png" href="http://via.placeholder.com/32x32">
+    <!-- Vendor Styles including: Bootstrap, Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/css/vendor.min.css' %}">
+    <!-- Main Template Styles-->
+    <link id="mainStyles" rel="stylesheet" media="screen" href="{% static 'assets/css/styles.css'%}">
+    <!-- Modernizr-->
+    <script src="{% static 'assets/js/modernizr.min.js' %}"></script>
+    <!-- <script src ="{% static 'assets/js/dashboard_v3.js' %}"></script> -->
+</head>
+ <body>
+
+<!-- BEGIN OFF-CANVAS CATEGORY MENU-->
+<div class="offcanvas-container" id="menu-categories">
+    <a class="account-link" href="javascript:void(0)">
+        <div class="user-ava">
+            <img src="{% static 'assets/img/savemybike.png' %}" alt="administrator">
+        </div>
+        <div class="user-info">
+            <h6 class="user-name">Administrator</h6>
+            <span class="text-sm text-white opacity-60">pvrtechstudio</span>
+        </div>
+    </a>
+    <nav class="offcanvas-menu">
+        <ul class="menu">
+            <li class="has-children">
+                <span>
+                    <a href="index.html"><span>Home</span></a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li><a href="index.html">Dashboard v1</a></li>
+                    <li><a href="dashboard_v2.html">Dashboard v2</a></li>
+                    <li><a href="dashboard_v3.html">Dashboard v3</a></li>
+                    <li><a href="javascript:void(0)">More to come. Stay Tuned.</a></li>
+                </ul>
+            </li>
+            <li class="has-children">
+                <span>
+                    <a href="javascript:void(0)"><span>UI Elements</span></a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)"><span>UI Elements 1</span></a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ui_accordion.html">Accordion</a></li>
+                            <li><a href="ui_alerts.html">Alerts</a></li>
+                            <li><a href="ui_buttons.html">Buttons</a></li>
+                            <li><a href="ui_cards.html">Cards</a></li>
+                            <li><a href="ui_forms.html">Forms</a></li>
+                            <li><a href="ui_form_layouts.html">Form Layouts</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)"><span>UI Elements 2</span></a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ui_gallery.html">Gallery</a></li>
+                            <li><a href="ui_images_figures.html">Images & Figures</a></li>
+                            <li><a href="ui_list_group.html">List Group</a></li>
+                            <li><a href="ui_media_object.html">Media Object</a></li>
+                            <li><a href="ui_modal.html">Modal</a></li>
+                            <li><a href="ui_pagination.html">Pagination</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)"><span>UI Elements 3</span></a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ui_pills.html">Pills</a></li>
+                            <li><a href="ui_progress_bars.html">Progress Bars</a></li>
+                            <li><a href="ui_steps.html">Steps</a></li>
+                            <li><a href="ui_tables.html">Tables</a></li>
+                            <li><a href="ui_tabs.html">Tabs</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)"><span>UI Elements 4</span></a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ui_toast_notification.html">Toast Notifications</a></li>
+                            <li><a href="ui_sweet_alert.html">Sweet Alert</a></li>
+                            <li><a href="ui_tooltips.html">Tooltips & Popovers</a></li>
+                            <li><a href="ui_typography.html">Typography</a></li>
+                            <li><a href="ui_widgets.html">Widgets</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-children">
+                <span>
+                    <a href="javascript:void(0)">Essentials</a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Layout</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ess_sidebar_v1.html">Page with Sidebar v1</a></li>
+                            <li><a href="ess_sidebar_v2.html">Page with Sidebar v2</a></li>
+                            <li><a href="ess_without_sidebar.html">Page without Sidebar</a></li>
+                            <li><a href="ess_page_topbar.html">Page with Topbar</a></li>
+                            <li><a href="ess_page_dark_footer.html">Page Dark Footer</a></li>
+                            <li><a href="ess_page_light_footer.html">Page Light Footer</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="ess_starter.html">Starter Page</a></li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Login</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ess_login_v1.html">Login v1</a></li>
+                            <li><a href="ess_login_v2.html">Login v2</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Registration</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ess_registration_v1.html">Registration v1</a></li>
+                            <li><a href="ess_registration_v2.html">Registration v2</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="ess_forget_password.html">Forgot Password</a></li>
+                    <li><a href="ess_reset_password.html">Reset Password</a></li>
+                    <li><a href="ess_lock_screen.html">Lock Screen</a></li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Error Pages</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ess_404.html">404 Page Not Found</a></li>
+                            <li><a href="ess_500.html">500 Internal Server</a></li>
+                            <li><a href="ess_503.html">503 Service Unavailable</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="ess_profile.html">Profile Page</a></li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Cookie</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ess_cookie_v1.html">Cookie v1</a></li>
+                            <li><a href="ess_cookie_v2.html">Cookie v2</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-children">
+                <span>
+                    <a href="javascript:void(0)">Apps</a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li><a href="app_chat.html">Chat Popup</a></li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">E-commerce</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="app_shop_grid.html">Shop Grid</a></li>
+                            <li><a href="app_shop_list.html">Shop List</a></li>
+                            <li><a href="app_no_sidebar.html">Shop No Sidebar</a></li>
+                            <li><a href="app_single_product.html">Single Product</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Contact</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="app_contact_v1.html">Contact v1</a></li>
+                            <li><a href="app_contact_v2.html">Contact v2</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="app_calendar.html">Calendar</a></li>
+                    <li><a href="app_file_manager.html">File Manager</a></li>
+                    <li><a href="app_email.html">E-Mail</a></li>
+                    <li><a href="app_pricing.html">Pricing Table</a></li>
+                </ul>
+            </li>
+            <li class="has-children">
+                <span>
+                    <a href="javascript:void(0)">Forms</a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li><a href="form_elements.html">Form Elements</a></li>
+                    <li><a href="form_layouts.html">Form Layouts</a></li>
+                    <li><a href="form_validation.html">Form Validation</a></li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Form Components</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="form_datepicker.html">Date Picker</a></li>
+                            <li><a href="form_time_picker.html">Time Picker</a></li>
+                            <li><a href="form_select2.html">Select2</a></li>
+                            <li><a href="form_clipboard.html">Clipboard</a></li>
+                            <li><a href="form_session.html">Session</a></li>
+                            <li><a href="form_ck_editor.html">CK Editor</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-children active">
+                <span>
+                    <a href="javascript:void(0)">Pages</a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li class="active"><a href="page_landing.html">Landing Page</a></li>
+                    <li><a href="page_search_results.html">Search Results</a></li>
+                    <li><a href="page_help.html">Help / FAQ</a></li>
+                    <li><a href="page_coming_soon.html">Coming Soon</a></li>
+                </ul>
+            </li>
+            <li class="has-children">
+                <span>
+                    <a href="index.html"><span>Mega Menu</span></a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li><a href="index.html">Dashboard v1</a></li>
+                    <li><a href="dashboard_v2.html">Dashboard v2</a></li>
+                    <li><a href="dashboard_v3.html">Dashboard v3</a></li>
+                    <li><a href="javascript:void(0)">More to come. Stay Tuned.</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!-- END OFF-CANVAS CATEGORY MENU-->
+
+<!-- BEGIN OFF-CANVAS MOBILE MENU-->
+<div class="offcanvas-container" id="mobile-menu">
+    <a class="account-link" href="javascript:void(0)">
+        <div class="user-ava">
+            <img src="http://via.placeholder.com/128x128" alt="administrator">
+        </div>
+        <div class="user-info">
+            <h6 class="user-name">Administrator</h6>
+            <span class="text-sm text-white opacity-60">pvrtechstudio</span>
+        </div>
+    </a>
+    <nav class="offcanvas-menu">
+        <ul class="menu">
+            <li class="has-children">
+                <span>
+                    <a href="index.html"><span>Home</span></a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li><a href="index.html">Dashboard v1</a></li>
+                    <li><a href="dashboard_v2.html">Dashboard v2</a></li>
+                    <li><a href="dashboard_v3.html">Dashboard v3</a></li>
+                    <li><a href="javascript:void(0)">More to come. Stay Tuned.</a></li>
+                </ul>
+            </li>
+            <li class="has-children">
+                <span>
+                    <a href="javascript:void(0)"><span>UI Elements</span></a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)"><span>UI Elements 1</span></a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ui_accordion.html">Accordion</a></li>
+                            <li><a href="ui_alerts.html">Alerts</a></li>
+                            <li><a href="ui_buttons.html">Buttons</a></li>
+                            <li><a href="ui_cards.html">Cards</a></li>
+                            <li><a href="ui_forms.html">Forms</a></li>
+                            <li><a href="ui_form_layouts.html">Form Layouts</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)"><span>UI Elements 2</span></a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ui_gallery.html">Gallery</a></li>
+                            <li><a href="ui_images_figures.html">Images & Figures</a></li>
+                            <li><a href="ui_list_group.html">List Group</a></li>
+                            <li><a href="ui_media_object.html">Media Object</a></li>
+                            <li><a href="ui_modal.html">Modal</a></li>
+                            <li><a href="ui_pagination.html">Pagination</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)"><span>UI Elements 3</span></a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ui_pills.html">Pills</a></li>
+                            <li><a href="ui_progress_bars.html">Progress Bars</a></li>
+                            <li><a href="ui_steps.html">Steps</a></li>
+                            <li><a href="ui_tables.html">Tables</a></li>
+                            <li><a href="ui_tabs.html">Tabs</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)"><span>UI Elements 4</span></a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ui_toast_notification.html">Toast Notifications</a></li>
+                            <li><a href="ui_sweet_alert.html">Sweet Alert</a></li>
+                            <li><a href="ui_tooltips.html">Tooltips & Popovers</a></li>
+                            <li><a href="ui_typography.html">Typography</a></li>
+                            <li><a href="ui_widgets.html">Widgets</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-children">
+                <span>
+                    <a href="javascript:void(0)">Essentials</a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Layout</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ess_sidebar_v1.html">Page with Sidebar v1</a></li>
+                            <li><a href="ess_sidebar_v2.html">Page with Sidebar v2</a></li>
+                            <li><a href="ess_without_sidebar.html">Page without Sidebar</a></li>
+                            <li><a href="ess_page_topbar.html">Page with Topbar</a></li>
+                            <li><a href="ess_page_dark_footer.html">Page Dark Footer</a></li>
+                            <li><a href="ess_page_light_footer.html">Page Light Footer</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="ess_starter.html">Starter Page</a></li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Login</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ess_login_v1.html">Login v1</a></li>
+                            <li><a href="ess_login_v2.html">Login v2</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Registration</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ess_registration_v1.html">Registration v1</a></li>
+                            <li><a href="ess_registration_v2.html">Registration v2</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="ess_forget_password.html">Forgot Password</a></li>
+                    <li><a href="ess_reset_password.html">Reset Password</a></li>
+                    <li><a href="ess_lock_screen.html">Lock Screen</a></li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Error Pages</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ess_404.html">404 Page Not Found</a></li>
+                            <li><a href="ess_500.html">500 Internal Server</a></li>
+                            <li><a href="ess_503.html">503 Service Unavailable</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="ess_profile.html">Profile Page</a></li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Cookie</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="ess_cookie_v1.html">Cookie v1</a></li>
+                            <li><a href="ess_cookie_v2.html">Cookie v2</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-children">
+                <span>
+                    <a href="javascript:void(0)">Apps</a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li><a href="app_chat.html">Chat Popup</a></li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">E-commerce</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="app_shop_grid.html">Shop Grid</a></li>
+                            <li><a href="app_shop_list.html">Shop List</a></li>
+                            <li><a href="app_no_sidebar.html">Shop No Sidebar</a></li>
+                            <li><a href="app_single_product.html">Single Product</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Contact</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="app_contact_v1.html">Contact v1</a></li>
+                            <li><a href="app_contact_v2.html">Contact v2</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="app_calendar.html">Calendar</a></li>
+                    <li><a href="app_file_manager.html">File Manager</a></li>
+                    <li><a href="app_email.html">E-Mail</a></li>
+                    <li><a href="app_pricing.html">Pricing Table</a></li>
+                </ul>
+            </li>
+            <li class="has-children">
+                <span>
+                    <a href="javascript:void(0)">Forms</a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li><a href="form_elements.html">Form Elements</a></li>
+                    <li><a href="form_layouts.html">Form Layouts</a></li>
+                    <li><a href="form_validation.html">Form Validation</a></li>
+                    <li class="has-children">
+                        <span>
+                            <a href="javascript:void(0)">Form Components</a>
+                            <span class="sub-menu-toggle"></span>
+                        </span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href="form_datepicker.html">Date Picker</a></li>
+                            <li><a href="form_time_picker.html">Time Picker</a></li>
+                            <li><a href="form_select2.html">Select2</a></li>
+                            <li><a href="form_clipboard.html">Clipboard</a></li>
+                            <li><a href="form_session.html">Session</a></li>
+                            <li><a href="form_ck_editor.html">CK Editor</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-children active">
+                <span>
+                    <a href="javascript:void(0)">Pages</a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li class="active"><a href="page_landing.html">Landing Page</a></li>
+                    <li><a href="page_search_results.html">Search Results</a></li>
+                    <li><a href="page_help.html">Help / FAQ</a></li>
+                    <li><a href="page_coming_soon.html">Coming Soon</a></li>
+                </ul>
+            </li>
+            <li class="has-children">
+                <span>
+                    <a href="index.html"><span>Mega Menu</span></a>
+                    <span class="sub-menu-toggle"></span>
+                </span>
+                <ul class="offcanvas-submenu">
+                    <li><a href="index.html">Dashboard v1</a></li>
+                    <li><a href="dashboard_v2.html">Dashboard v2</a></li>
+                    <li><a href="dashboard_v3.html">Dashboard v3</a></li>
+                    <li><a href="javascript:void(0)">More to come. Stay Tuned.</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!-- END OFF-CANVAS MOBILE MENU-->
+
+<!-- BEGIN TOPBAR-->
+<!-- <div class="topbar">
+    <div class="topbar-column">
+        <a class="hidden-md-down" href="mailto:palanivelayudam@gmail.com">
+            <i class="icon-mail"></i>&nbsp; pvrtechstudio.com
+        </a>
+        <a class="hidden-md-down" href="tel:+919159547048">
+            <i class="icon-bell"></i>&nbsp; +91 9159547048
+        </a>
+        <a class="social-button fa fa-facebook shape-none sb-dark" href="javascript:void(0)" target="_blank">
+            <i class="socicon-facebook"></i></a>
+        <a class="social-button fa fa-twitter shape-none sb-dark" href="javascript:void(0)" target="_blank">
+            <i class="socicon-twitter"></i></a>
+        <a class="social-button fa fa-instagram shape-none sb-dark" href="javascript:void(0)" target="_blank">
+            <i class="socicon-instagram"></i>
+        </a>
+        <a class="social-button fa fa-google-plus shape-none sb-dark" href="javascript:void(0)" target="_blank">
+            <i class="socicon-pinterest"></i>
+        </a>
+    </div>
+    <div class="topbar-column">
+        <a class="hidden-md-down" href="javascript:void(0)"><i class="icon-download"></i>&nbsp; Designed by <a
+                href="http://www.pvrtechstudio.com/" class="m-l-5" target="_blank">PVR Tech Studio</a></a>
+    </div>
+</div> -->
+<!-- END TOPBAR-->
+
+<!-- NAVBAR-->
+<header class="navbar navbar-sticky">
+    <!-- BEGIN SEARCH-->
+    <form class="site-search" method="get">
+        <input type="text" name="site_search" placeholder="Type to search..." autocomplete="off">
+        <div class="search-tools">
+            <span class="clear-search">Clear</span>
+            <span class="close-search"><i class="icon-cross"></i></span>
+        </div>
+    </form>
+    <!-- END SEARCH-->
+    <div class="site-branding">
+        <div class="inner">
+            <!-- OFF-CANVAS TOGGLE (#MENU-CATEGORIES)-->
+            <a class="offcanvas-toggle cats-toggle" href="#menu-categories" data-toggle="offcanvas"></a>
+            <!-- OFF-CANVAS TOGGLE (#MOBILE-MENU)-->
+            <a class="offcanvas-toggle menu-toggle" href="#mobile-menu" data-toggle="offcanvas"></a>
+            <!-- SITE LOGO-->
+            <a class="site-logo" href="index.html">
+                <img src="{% static 'assets/img/savemybike.png' %}" alt="PVR_Tech_Studio">
+            </a>
+        </div>
+    </div>
+    <!-- BEGIN MAIN NAVIGATION-->
+    <nav class="site-menu">
+        <ul>
+            <li class="has-megamenu">
+                <a href="index.html"><span>Home</span></a>
+                <ul class="mega-menu">
+                    <li>
+                        <a class="d-block img-thumbnail text-center navi-link" href="index.html">
+                            <img alt="dashboard_1" src="http://via.placeholder.com/826x456">
+                            <h6 class="mt-3">Dashboard v1</h6>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block img-thumbnail text-center navi-link" href="dashboard_v2.html">
+                            <img alt="dashboard_v2" src="http://via.placeholder.com/826x456">
+                            <h6 class="mt-3">Dashboard v2</h6>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block img-thumbnail text-center navi-link" href="dashboard_v3.html">
+                            <img alt="dashboard_v3" src="http://via.placeholder.com/826x456">
+                            <h6 class="mt-3">Dashboard v3</h6>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="img-thumbnail text-center">
+                            <img alt="More To Come. Stay Tuned!" src="http://via.placeholder.com/826x456">
+                            <h6 class="mt-3">More to come. Stay Tuned!</h6>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            
+            
+            <li>
+                <a href="javascript:void(0)"><span>Report a stolen Bike?</span></a>
+                
+            </li>
+            <li>
+                <a href="javascript:void(0)"><span>About</span></a>
+                
+            </li>
+            <li class="active"><a href="javascript:void(0)"><span>Registration</span></a>
+              <!--   <ul class="sub-menu">
+                    <li class="active"><a href="page_landing.html">Landing Page</a></li>
+                    <li><a href="page_search_results.html">Search Results</a></li>
+                    <li><a href="page_help.html">Help / FAQ</a></li>
+                    <li><a href="page_coming_soon.html">Coming Soon</a></li>
+                </ul> -->
+            </li>
+            
+        </ul>
+    </nav>
+    <!-- END MAIN NAVIGATION-->
+    
+    
+    
+
+    <!-- BEGIN TOOLBAR-->
+    <div class="toolbar">
+        <div class="inner">
+            <div class="tools">
+                <div class="search">
+                    <i class="icon-search"></i>
+                </div>
+                <div class="cart">
+                    <a href="javascript:void(0)"></a><i class="icon-bell"></i>
+                    <span class="count">3</span><span class="subtotal">New Notification</span>
+                    <div class="toolbar-dropdown">
+                        <div class="dropdown-product-item">
+                            <span class="dropdown-product-remove">
+                                <i class="icon-cross"></i>
+                            </span>
+                            <a class="dropdown-product-thumb" href="javascript:void(0)">
+                                <img src="http://via.placeholder.com/128x128" alt="Product">
+                            </a>
+                            <div class="dropdown-product-info">
+                                <a class="dropdown-product-title" href="javascript:void(0)">
+                                    New User Registered
+                                </a>
+                                <span class="dropdown-product-details">
+                                    Lorem Ipsum is simply dummy text.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dropdown-product-item">
+                            <span class="dropdown-product-remove">
+                                <i class="icon-cross"></i>
+                            </span>
+                            <a class="dropdown-product-thumb" href="javascript:void(0)">
+                                <img src="http://via.placeholder.com/128x128" alt="Product">
+                            </a>
+                            <div class="dropdown-product-info">
+                                <a class="dropdown-product-title" href="javascript:void(0)">
+                                    John Smith
+                                </a>
+                                <span class="dropdown-product-details">
+                                    Lorem Ipsum is simply dummy text.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dropdown-product-item">
+                            <span class="dropdown-product-remove">
+                                <i class="icon-cross"></i>
+                            </span>
+                            <a class="dropdown-product-thumb" href="javascript:void(0)">
+                                <img src="http://via.placeholder.com/128x128" alt="Product">
+                            </a>
+                            <div class="dropdown-product-info">
+                                <a class="dropdown-product-title" href="javascript:void(0)">
+                                    Server Error Reports
+                                </a>
+                                <span class="dropdown-product-details">
+                                    Lorem Ipsum is simply dummy text.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="toolbar-dropdown-group">
+                            <div class="column">
+                                <a class="btn btn-sm btn-block btn-secondary" href="javascript:void(0)">
+                                    Clear All
+                                </a>
+                            </div>
+                            <div class="column">
+                                <a class="btn btn-sm btn-block btn-success" href="javascript:void(0)">
+                                    View All
+                                </a>
+                            </div>
+                            <div class="column d-sm-block d-md-none" id="close_notification">
+                                <a class="btn btn-sm btn-block btn-success" href="javascript:void(0)">
+                                    Close
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="account">
+                    <a href="javascript:void(0)"></a><i class="icon-head"></i>
+                    <ul class="toolbar-dropdown">
+                        <li class="sub-menu-user">
+                            <div class="user-ava">
+                                <img src="http://via.placeholder.com/128x128" alt="Administrator">
+                            </div>
+                            <div class="user-info">
+                                <h6 class="user-name">Administrator</h6>
+                                <span class="text-xs text-muted">pvrtechstudio</span>
+                            </div>
+                        </li>
+                        <li><a href="javascript:void(0)"> <i class="icon-head"></i> My Profile</a></li>
+                        <li><a href="javascript:void(0)"> <i class="icon-mail"></i> Messages</a></li>
+                        <li><a href="javascript:void(0)"> <i class="icon-cog"></i> Settings</a></li>
+                        <li class="sub-menu-separator"></li>
+                        <li><a href="javascript:void(0)"> <i class="icon-server"></i> Lock Screen</a></li>
+                        <li><a href="javascript:void(0)"> <i class="icon-lock"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END TOOLBAR-->
+</header>
+
+<!-- BEGIN MAIN CONTENT-->
+<section class="container padding-top-3x padding-bottom-2x">
+
+	    
+</section>
+<div class="offcanvas-wrapper">
+
+
+   {%  block content  %}
+   {% endblock %}
+   
+    
+
+    <!-- BEGIN SITE FOOTER-->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row p-t-70">
+                <div class="col-lg-3 col-md-6">
+                    <!-- Contact Info-->
+                    <section class="widget widget-light-skin">
+                        <h3 class="widget-title">Get In Touch With Us</h3>
+                        <p class="text-white">Phone: +91 9159547048</p>
+                        <ul class="list-unstyled text-sm text-white">
+                            <li><span class="opacity-50">Monday-Friday:</span>9.00 am - 8.00 pm</li>
+                            <li><span class="opacity-50">Saturday:</span>10.00 am - 6.00 pm</li>
+                        </ul>
+                        <p>
+                            <a class="navi-link-light" target="_blank" href="http://www.pvrtechstudio.com/">pvrtechstudio.com</a>
+                        </p>
+                        <a class="social-button shape-circle sb-facebook sb-light-skin" href="javascript:void(0)">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a class="social-button shape-circle sb-twitter sb-light-skin" href="javascript:void(0)">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a class="social-button shape-circle sb-instagram sb-light-skin" href="javascript:void(0)">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a class="social-button shape-circle sb-google-plus sb-light-skin" href="javascript:void(0)">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                    </section>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <!-- Mobile App Buttons-->
+                    <section class="widget widget-light-skin">
+                        <h3 class="widget-title">Our Mobile App</h3>
+                        <a class="market-button apple-button mb-light-skin" href="javascript:void(0)">
+                            <span class="mb-subtitle">Download on the</span>
+                            <span class="mb-title">App Store</span>
+                        </a>
+                        <a class="market-button google-button mb-light-skin" href="javascript:void(0)">
+                            <span class="mb-subtitle">Download on the</span>
+                            <span class="mb-title">Google Play</span>
+                        </a>
+                        <a class="market-button windows-button mb-light-skin" href="javascript:void(0)">
+                            <span class="mb-subtitle">Download on the</span>
+                            <span class="mb-title">Windows Store</span>
+                        </a>
+                    </section>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <!-- About Us-->
+                    <section class="widget widget-links widget-light-skin">
+                        <h3 class="widget-title">Pages</h3>
+                        <ul class="">
+                            <li><a href="ess_sidebar_v1.html">Page with Sidebar v1</a></li>
+                            <li><a href="ess_sidebar_v2.html">Page with Sidebar v2</a></li>
+                            <li><a href="ess_without_sidebar.html">Page without Sidebar</a></li>
+                            <li><a href="ess_page_topbar.html">Page with Topbar</a></li>
+                            <li><a href="ess_page_dark_footer.html">Page Dark Footer</a></li>
+                            <li><a href="ess_page_light_footer.html">Page Light Footer</a></li>
+                        </ul>
+                    </section>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <!-- Account / Shipping Info-->
+                    <section class="widget widget-links widget-light-skin">
+                        <h3 class="widget-title">Instagran Feed</h3>
+                        <div id="instafeedExample-4" data-user-id="4841496280" data-limit="8" data-col="3"
+                             data-classes="z-depth-1 z-depth-2--hover" data-lightbox="true" class="instafeed row">
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- Copyright-->
+            <div class="container footer-copyright">
+                <!-- COPYRIGHT-->
+                <div class="column">
+                    2018 © All rights reserved.
+                </div>
+                <div class="column footer_right">
+                    <a href="http://www.pvrtechstudio.com/" target="_blank">PVR Tech Studio</a> We Design Your Future.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END SITE FOOTER-->
+</div>
+<!-- END MAIN CONTENT-->
+
+<!-- BEGIN BACK TO TOP BUTTON-->
+<a class="scroll-to-top-btn" href="javascript:void(0)">
+    <i class="icon-arrow-up"></i>
+</a>
+<!-- END BACK TO TOP BUTTON-->
+
+<!-- Backdrop-->
+<div class="site-backdrop"></div>
+
+<!-- BEGIN PRELOADER -->
+<div id="preloader">
+    <div class="inner">
+        <span class="loader"></span>
+    </div>
+</div>
+<!-- END PRELOADER -->
+
+<!-- BEGIN LIVE CUSTOMIZER -->
+<div class="pvr-floated-chat-btn" id="live_customizer">
+    <i class="icon-cog live_customizer_btn"></i>
+    <span class="live_customizer_btn">Settings</span>
+</div>
+<!-- END LIVE CUSTOMIZER -->
+
+<!-- BEGIN LIVE CUSTOMIZER -->
+<div class="menu-wrap live_customizer bg_svg_blue">
+    <nav class="menu">
+        <div class="profile">
+            <img src="http://via.placeholder.com/128x128" alt="Andrew"/>
+            <span>Administrator</span>
+        </div>
+        <div class="link-list fixed-plugin">
+            <div>
+                <span class="fl">Dark Layout</span>
+                <span>
+                  <input type="checkbox" class="color_dark_settings"/>
+                </span>
+            </div>
+            <div>
+                <span class="fl">Enable Sidebar</span>
+                <span>
+                    <input type="checkbox" class="minified_switch_settings" checked/>
+                </span>
+            </div>
+            <div>
+                <span class="fl">Nav Bar Sticky</span>
+                <span>
+                    <input type="checkbox" class="minified_switch_nav_sticky"/>
+                </span>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="icon-list_bottom">
+            <a href="javascript:void(0)"><i class="fa fa-fw fa-home"></i></a>
+            <a href="javascript:void(0)"><i class="fa fa-fw fa-question-circle"></i></a>
+            <a href="javascript:void(0)"><i class="fa fa-fw fa-power-off"></i></a>
+        </div>
+    </nav>
+</div>
+
+<!-- END LIVE CUSTOMIZER -->
+
+<!-- BEGIN CORE JS -->
+<script src="{% static 'assets/js/vendor.min.js' %}"></script>
+<script src="{% static 'assets/js/scripts.min.js' %}"></script>
+</body>
+</html>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{# Read the documentation for more information #} 
