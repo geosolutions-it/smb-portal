@@ -15,9 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+#from .registration
 #from xml.etree.ElementInclude import include
+
+
+
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^Home/', include('Bikes.urls')),
+    url(r'^registration/', include('registration.urls')),
 ]

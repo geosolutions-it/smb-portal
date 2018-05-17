@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # my apps
+    'registration',
+    #third party apps
+     'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +73,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'smbportal.wsgi.application'
 
+#for abstract User Class
+AUTH_USER_MODEL = 'registration.EndUser'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -107,7 +113,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
