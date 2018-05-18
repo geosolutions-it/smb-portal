@@ -18,7 +18,8 @@ urlpatterns = [
     path('user/Vehicles',  views.vehicleList.as_view(),name='Vehicles'),
     path('user/Tags',views.TagList.as_view(),name='Tags'),
     path('user/updateProfile', views.UpdateProfile.as_view(),name='UpdateProfile'),
-    path('home/',  TemplateView.as_view(template_name="registration/home.html")),
+    path('user/DetailProfile/<slug:slug>/',views.DetailProfile.as_view(),name='DetailProfile'),
+    path('home/',  TemplateView.as_view(template_name="registration/home.html"),name='home'),
     path('user/Prizes',views.PrizeList.as_view(),name='Prizes'),
     #path(r'single/', views.ViewRegisterVehicles.as_view(), name='index'),
     # ex: /polls/5/

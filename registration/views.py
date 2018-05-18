@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.views.generic.detail import SingleObjectMixin
 from registration.models import Vehicles, EndUser, prize, Tag, Profile
 from multiprocessing.sharedctypes import template
@@ -102,7 +102,26 @@ class UpdateProfile(UpdateView):
     template_name = 'registration/UpdateProfile.html'
     #queryset = Profile.objects.all()
     
+class DetailProfile(DetailView): 
+    model = Profile
+    exclude= []
+    template_name = 'registration/DetailProfile.html' 
+    context_object_name = 'profile_details'
+    Queryset = Profile.objects.get(user_id=1)
     
+    slug_field = "nickname"
+    
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['now'] = timezone.now()
+#         return context
+    def get_queryset(self):
+        return DetailView.get_queryset(self)
+#     def get_queryset(self):
+#         queryset = super(DetailProfile, self).get_queryset()
+#         return queryset.filter(user_id__username=self.request.user)
+    
+  
     
 class TagList(ListView):
     model = Tag
