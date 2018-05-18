@@ -99,3 +99,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# MACOS files
+.DS_Store
+.AppleDouble
+.LSOverride
