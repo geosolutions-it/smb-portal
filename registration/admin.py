@@ -1,13 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 
-from .models import EndUser,Profile,Vehicle,receipt,Tag,bike, prize
+from .models import EndUser,Profile,Vehicles,receipt,Tag, prize,VehicleTypes
 
-#admin.site.register(User)
+admin.site.register(VehicleTypes)
 admin.site.register(EndUser)
 admin.site.register(Profile)
-admin.site.register(Vehicle)
+admin.site.register(Vehicles)
 admin.site.register(receipt)
 admin.site.register(Tag)
-admin.site.register(bike)
 admin.site.register(prize)

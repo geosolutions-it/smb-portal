@@ -80,19 +80,15 @@ AUTH_USER_MODEL = 'registration.EndUser'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    
+   
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'savemybike',
+        'USER': 'savemybike',
+        'PASSWORD': 'savemybike',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': '<database_name>',
-#         'USER': '<user>',
-#         'PASSWORD': '<password>',
-#         'HOST': '<Host>',
-#         'PORT': '',
-#     }
 }
 
 

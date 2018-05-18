@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView
 from django.views.generic.detail import SingleObjectMixin
-from registration.models import Vehicle, EndUser , bike, prize, Tag, Profile
+from registration.models import Vehicles, EndUser, prize, Tag, Profile
 from multiprocessing.sharedctypes import template
 # Create your views here.
 from rest_framework import serializers
 
 
 #django-restfull framework
-from registration.serializers import BikeSerializer, PrizeSerializer,UserSerializer,TagSerializer,ReceiptSerializer
+from registration.serializers import VehicleSerializer, PrizeSerializer,UserSerializer,TagSerializer,ReceiptSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -28,8 +28,8 @@ class BikeViewSet(viewsets.ModelViewSet):
 
     Additionally we also provide an extra `highlight` action.
     """
-    queryset = bike.objects.all()
-    serializer_class = BikeSerializer
+    queryset = Vehicles.objects.all()
+    serializer_class = VehicleSerializer
     template_name = 'registration/ViewVehicles.html'
     #permission_classes = (permissions.IsAuthenticatedOrReadOnly,
     #                      IsOwnerOrReadOnly,)
@@ -90,7 +90,7 @@ class newuser(CreateView):
     
     
 class vehicleList(ListView):
-    model = bike
+    model = Vehicles
     #queryset = bike.objects.all(owner_id=request.user)
     fields = ('bikes_id','owner_id','model','created_at')
     template_name = 'registration/ViewVehicles.html'
