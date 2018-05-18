@@ -5,17 +5,20 @@
         <div>
             <div class="pri_main_container" data-test-selector="page-annuals-pricing" data-test-language="en-us">
                 <div class="pri_container">
-                <div class="row">
+                <div class="row"> 
                     <div class="col-md-6 margin-bottom-2x">
+                    
                         <h6 class="text-muted text-normal text-uppercase">Vehicles</h6>
                         <hr class="margin-bottom-1x">
                         <ul class="list-group">
                             {% for bike in object_list %}
-    						<ul class="list-group-item">{{ bike.owner_id }} - {{ bike.model }}</ul>
+    						<ul class="list-group-item">{{ bike.owner_id }} - {{ bike.name }}</ul>
+    						<a class="btn btn-outline-primary" href="{% url 'Vehicles' %}"> New Vehicles</a>
 								{% empty %}
-   							 <ul>No articles yet.</ul>
+   							 <a class="btn btn-outline-primary" href="{% url 'Vehicles' %}"> New Vehicles</a>
 								{% endfor %}
                         </ul>
+                       
                     </div>
                     <!-- <div class="col-md-6 margin-bottom-2x">
                         <h6 class="text-muted text-normal text-uppercase">Link Example</h6>

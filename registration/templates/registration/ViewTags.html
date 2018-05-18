@@ -10,7 +10,8 @@
                         <hr class="margin-bottom-1x">
                         <ul class="list-group">
                             {% for tag in object_list %}
-    						<ul class="list-group-item">{{ tag.owner_id }} </ul>
+                            
+    						<ul class="list-group-item">{{ tag.vehicle }} </ul>
 								{% empty %}
    							 <ul>No articles yet.</ul>
 								{% endfor %}

@@ -109,6 +109,10 @@ class TagList(ListView):
     exclude=[]
     template_name = 'registration/ViewTags.html'
 
+class PrizeList(ListView):
+    model = prize
+    exclude=[]
+    template_name = 'registration/ViewPrizes.html'
 
 
     

@@ -22,9 +22,6 @@ from django.db import models
 
 class EndUser(AbstractUser):
     
-    #profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE) 
-    given_name = models.CharField(max_length=100) 
-    surname = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
 
 class Datapoints(models.Model):
@@ -147,16 +144,23 @@ class Vehicles(models.Model):
 #     
 #     email_address = models.CharField(max_length=100)
        
-    
+class ProfileType(models.Model):
+    profile_icon = models.CharField(max_length=200) 
+    profile_name = models.CharField(max_length=200)
+    id = models.IntegerField(primary_key=True)   
     
 class Profile(models.Model):
     profile_id = models.AutoField(primary_key=True)
+    nickname = models.CharField(max_length=100)
+    image = models.CharField(max_length=200)
+    email = models.EmailField()
     gender = models.CharField(max_length=20)
     phone_number = models.IntegerField()
     user_id = models.ForeignKey(EndUser,on_delete=models.CASCADE)
     bio = models.CharField(max_length=200)
     date_created = models.DateField()
     date_updated = models.DateField()
+    language_preference = models.IntegerField()
     class Meta:
         managed = True
     
@@ -175,20 +179,9 @@ class Vehicle(models.Model):
 class receipt(models.Model):
     created_at= models.DateTimeField()
     owner_id = models.ForeignKey(EndUser,on_delete=models.CASCADE)
-    
-# my old model
-# class Tag(models.Model):
-#     vehicle_id = models.ForeignKey(Vehicle,on_delete=models.CASCADE)
-#     Vehicle_type = models.CharField(max_length=100)
+    rfid_id = models.ForeignKey(Tag,on_delete=models.CASCADE)
     
 
-# class bike(Vehicle):
-#     bikes_id = models.AutoField(primary_key=True)
-#     model = models.CharField(max_length = 200)
-#     rfid_id = models.ForeignKey(Tag, on_delete=models.CASCADE)
-#     #registration_date =models.ForeignKey(Receipt,on_delete=models.CASCADE)
-#     class Meta:
-#         managed = False
     
     
     
@@ -196,12 +189,18 @@ class receipt(models.Model):
 class prize(models.Model):
     prize_id = models.AutoField(primary_key=True)
     prizemanager_id = models.ForeignKey(EndUser,on_delete=models.CASCADE)
+    title = models.CharField(max_length)
     description = models.CharField(max_length=200)
+    #number_of_badges = models.IntegerField(0)
     
     
     
 
-
+class Badges(models.Model):
+    id = models.AutoField(primary_key = True)
+    #prize_id = models.ForeignKey(prize, on_delete=models.CASCADE)
+    number_of_badges = models.IntegerField()
+    type_of_badge = models.CharField()
     
     
     
