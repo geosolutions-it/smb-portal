@@ -85,7 +85,7 @@ AUTH_USER_MODEL = 'registration.User'
 DATABASES = {
    
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'savemybike',
         'USER': 'savemybike',
         'PASSWORD': 'savemybike',
