@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from registration import views
 from django.conf.urls import url, include
 from django.views.generic import TemplateView, CreateView, ListView
-from .models import EndUser
+from profiles.models import User
 router = DefaultRouter()
 router.register(r'bikes', views.BikeViewSet)
 router.register(r'prizes', views.PrizeViewSet)

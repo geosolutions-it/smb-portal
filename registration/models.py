@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from rest_framework import serializers
+
+#from vehicles.models import  Tag
 #import  user model from here
 #--->
 # Create your models here.
@@ -22,37 +24,7 @@ from django.db import models
 
 
 
-class Datapoint(models.Model):
-    elevation = models.FloatField(blank=True, null=True)
-    sessionid = models.BigIntegerField(blank=True, null=True)
-    timestamp = models.BigIntegerField(blank=True, null=True)
-    accelerationx = models.FloatField(blank=True, null=True)
-    accelerationy = models.FloatField(blank=True, null=True)
-    accelerationz = models.FloatField(blank=True, null=True)
-    accuracy = models.FloatField(blank=True, null=True)
-    batconsumptionperhour = models.FloatField(blank=True, null=True)
-    batterylevel = models.FloatField(blank=True, null=True)
-    devicebearing = models.FloatField(blank=True, null=True)
-    devicepitch = models.FloatField(blank=True, null=True)
-    deviceroll = models.FloatField(blank=True, null=True)
-    gps_bearing = models.FloatField(blank=True, null=True)
-    humidity = models.FloatField(blank=True, null=True)
-    lumen = models.FloatField(blank=True, null=True)
-    pressure = models.FloatField(blank=True, null=True)
-    proximity = models.FloatField(blank=True, null=True)
-    speed = models.FloatField(blank=True, null=True)
-    temperature = models.FloatField(blank=True, null=True)
-    vehiclemode = models.IntegerField(blank=True, null=True)
-    serialversionuid = models.BigIntegerField(blank=True, null=True)
-    color = models.BigIntegerField(blank=True, null=True)
-    username = models.TextField(blank=True, null=True)
-    the_geom = models.TextField(blank=True, null=True)  # This field type is a guess.
-    field_id = models.UUIDField(db_column='_id')  # Field renamed because it started with '_'.
-    vehicle_id = models.UUIDField(blank=True, null=True)
 
-    class Meta:
-        managed = True
-        db_table = 'datapoints'
 
 
 class Position(models.Model):
@@ -75,17 +47,11 @@ class SpatialRefSys(models.Model):
         db_table = 'spatial_ref_sys'
 
 
-class Tag(models.Model):
-    epc = models.TextField(primary_key=True)
-    vehicle = models.ForeignKey('Vehicles', models.DO_NOTHING)
 
-    class Meta:
-        managed = True
-        db_table = 'tags'
 
 
 class User(AbstractUser):
-    username = models.TextField(primary_key=True)
+    username = models.TextField(unique = True)
     email = models.TextField(blank=True, null=True)
     name = models.TextField(blank=True, null=True)
     given_name = models.TextField(blank=True, null=True)
@@ -99,7 +65,7 @@ class User(AbstractUser):
 
     class Meta:
         managed = True
-        db_table = 'users'
+        db_table = 'user'
         unique_together = (('username', 'sub'),)
 
 
@@ -108,7 +74,7 @@ class User(AbstractUser):
 
 # for determining a user Habbits
 class UserHabbits(models.Model):
-    public_transportaion = models.IntegerField() # from least to most amount
+    public_transportaion = models.IntegerField() # from least to most amount, 1 - 3
     customer_sharing = models.IntegerField()
     bicycle_usuage = models.IntegerField()
     
@@ -138,7 +104,7 @@ class UserHabbits(models.Model):
 class Receipt(models.Model):
     created_at= models.DateTimeField()
     owner_id = models.ForeignKey(User,on_delete=models.CASCADE)
-    rfid_id = models.ForeignKey(Tag,on_delete=models.CASCADE)
+    #rfid_id = models.ForeignKey(Tag,on_delete=models.CASCADE)
     
 
     

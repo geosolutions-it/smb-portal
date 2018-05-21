@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
-from .models import Vehicle, User, prize, Tag, receipt
-
+from .models import  User, Prize, Receipt
+from vehicles.models import Vehicle, Tag
 
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         
 class PrizeSerializer(serializers.ModelSerializer):
     class Meta:
-        model= prize
+        model= Prize
         exclude = []
         
 
@@ -30,5 +30,5 @@ class TagSerializer(serializers.ModelSerializer):
 class ReceiptSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = receipt
+        model = Receipt
         exclude = []

@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.views.generic.detail import SingleObjectMixin
-from registration.models import Vehicle, User, prize, Tag, Profile
+from registration.models import  User, Prize 
+from vehicles.models import Vehicle, Tag
+from profiles.models import Profile
 from multiprocessing.sharedctypes import template
 # Create your views here.
 from rest_framework import serializers
@@ -44,7 +46,7 @@ class PrizeViewSet(viewsets.ModelViewSet):
 
     Additionally we also provide an extra `highlight` action.
     """
-    queryset = prize.objects.all()
+    queryset = Prize.objects.all()
     serializer_class = PrizeSerializer
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
     #                      IsOwnerOrReadOnly,)
@@ -96,7 +98,7 @@ class DetailProfile(DetailView):
     exclude = []
     template_name = 'registration/DetailProfile.html' 
     context_object_name = 'profile_details'
-    Queryset = Profile.objects.get(user_id=1)
+    #Queryset = Profile.objects.get(user_id=1)
     
     slug_field = "nickname"
     
@@ -118,7 +120,7 @@ class TagList(ListView):
 
 
 class PrizeList(ListView):
-    model = prize
+    model = Prize
     exclude = []
     template_name = 'registration/ViewPrizes.html'
     
