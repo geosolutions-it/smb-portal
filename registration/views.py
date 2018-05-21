@@ -89,7 +89,8 @@ class vehicleList(ListView):
     model = Vehicle
     # queryset = bike.objects.all(owner_id=request.user)
     fields = (
-        'bikes_id', 'owner_id', 'model', 'created_at'
+        'bikes_id', 'owner_id', 
+        'model', 'created_at'
         )
     template_name = 'registration/ViewVehicles.html'
     

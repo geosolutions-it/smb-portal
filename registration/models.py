@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from rest_framework import serializers
 
-#from vehicles.models import  Tag
+
 #import  user model from here
 #--->
 # Create your models here.
