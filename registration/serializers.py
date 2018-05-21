@@ -1,17 +1,17 @@
 
 from rest_framework import serializers
-from .models import Vehicles, EndUser, prize, Tag, receipt
+from .models import Vehicle, User, prize, Tag, receipt
 
 
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Vehicles
+        model=Vehicle
         exclude = []
         
         
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model=EndUser
+        model=User
         exclude= []
         
         

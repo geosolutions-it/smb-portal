@@ -5,7 +5,7 @@ from rest_framework import serializers
 #--->
 # Create your models here.
 from django.contrib.auth.models  import AbstractUser
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 
 
 
@@ -20,11 +20,9 @@ from django.db import models
 
 
 
-class EndUser(AbstractUser):
-    
-    location = models.CharField(max_length=100)
 
-class Datapoints(models.Model):
+
+class Datapoint(models.Model):
     elevation = models.FloatField(blank=True, null=True)
     sessionid = models.BigIntegerField(blank=True, null=True)
     timestamp = models.BigIntegerField(blank=True, null=True)
@@ -57,7 +55,7 @@ class Datapoints(models.Model):
         db_table = 'datapoints'
 
 
-class Positions(models.Model):
+class Position(models.Model):
     id = models.BigAutoField(primary_key=True)
 
     class Meta:
@@ -86,7 +84,7 @@ class Tag(models.Model):
         db_table = 'tags'
 
 
-class Users(models.Model):
+class User(AbstractUser):
     username = models.TextField(primary_key=True)
     email = models.TextField(blank=True, null=True)
     name = models.TextField(blank=True, null=True)
@@ -100,12 +98,12 @@ class Users(models.Model):
     field_id = models.UUIDField(db_column='_id', unique=True, blank=True, null=True)  # Field renamed because it started with '_'.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'users'
         unique_together = (('username', 'sub'),)
 
 
-class VehicleTypes(models.Model):
+class VehicleType(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.TextField(blank=True, null=True)
     icon = models.TextField(blank=True, null=True)
@@ -115,15 +113,15 @@ class VehicleTypes(models.Model):
         db_table = 'vehicle_types'
 
 
-class Vehicles(models.Model):
+class Vehicle(models.Model):
     id = models.BigAutoField(primary_key=True)
     lastupdate = models.DateTimeField(blank=True, null=True)
     type = models.IntegerField(blank=True, null=True)
     name = models.TextField(blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
-    lastposition = models.ForeignKey(Datapoints, models.DO_NOTHING, db_column='lastposition', blank=True, null=True)
+    lastposition = models.ForeignKey(Datapoint, models.DO_NOTHING, db_column='lastposition', blank=True, null=True)
     image = models.TextField(blank=True, null=True)
-    owner = models.ForeignKey(EndUser, models.DO_NOTHING, db_column='owner', blank=True, null=True)
+    owner = models.ForeignKey(User, models.DO_NOTHING, db_column='owner', blank=True, null=True)
     field_id = models.UUIDField(db_column='_id', blank=True, null=True)  # Field renamed because it started with '_'.
     #owner_0 = models.ForeignKey(Users, models.DO_NOTHING, db_column='owner_id', blank=True, null=True)  # Field renamed because of name conflict.
 
@@ -144,31 +142,13 @@ class Vehicles(models.Model):
 #     
 #     email_address = models.CharField(max_length=100)
        
-class ProfileType(models.Model):
-    profile_icon = models.CharField(max_length=200) 
-    profile_name = models.CharField(max_length=200)
-    id = models.IntegerField(primary_key=True)   
-    
-class Profile(models.Model):
-    profile_id = models.AutoField(primary_key=True)
-    nickname = models.CharField(max_length=100)
-    image = models.CharField(max_length=200)
-    email = models.EmailField()
-    gender = models.CharField(max_length=20)
-    phone_number = models.IntegerField()
-    user_id = models.ForeignKey(EndUser,on_delete=models.CASCADE)
-    bio = models.CharField(max_length=200)
-    date_created = models.DateField()
-    date_updated = models.DateField()
-    language_preference = models.IntegerField()
-    class Meta:
-        managed = True
+
     
 
 
 class Vehicle(models.Model):
     vehicle_id = models.AutoField(primary_key=True)
-    owner_id = models.ForeignKey(EndUser, on_delete=models.CASCADE)
+    owner_id = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField()
     class Meta:
         managed = False
@@ -178,7 +158,7 @@ class Vehicle(models.Model):
 
 class receipt(models.Model):
     created_at= models.DateTimeField()
-    owner_id = models.ForeignKey(EndUser,on_delete=models.CASCADE)
+    owner_id = models.ForeignKey(User,on_delete=models.CASCADE)
     rfid_id = models.ForeignKey(Tag,on_delete=models.CASCADE)
     
 
@@ -188,7 +168,7 @@ class receipt(models.Model):
     
 class prize(models.Model):
     prize_id = models.AutoField(primary_key=True)
-    prizemanager_id = models.ForeignKey(EndUser,on_delete=models.CASCADE)
+    prizemanager_id = models.ForeignKey(User,on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     #number_of_badges = models.IntegerField(0)
@@ -196,7 +176,7 @@ class prize(models.Model):
     
     
 
-class Badges(models.Model):
+class Badge(models.Model):
     id = models.AutoField(primary_key = True)
     #prize_id = models.ForeignKey(prize, on_delete=models.CASCADE)
     number_of_badges = models.IntegerField()
