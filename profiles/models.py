@@ -3,7 +3,13 @@ from registration.models import User
 # Create your models here.
 
 
-class EndUser(User):
+#class EndUser(User):
+
+
+
+
+
+
 
 
 class ProfileType(models.Model):
