@@ -7,6 +7,7 @@ class Vehicle(models.Model):
     lastupdate = models.DateTimeField(blank=True, null=True)
     model = models.CharField(max_length=100)
     colour = models.CharField(max_length=100)
+    brand = models.IntegerField(blank=True,null=True)
     type = models.IntegerField(blank=True, null=True)
     name = models.TextField(blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
@@ -23,7 +24,7 @@ class Vehicle(models.Model):
         
         
 
-class VehilceStatus(models.Model):
+class VehicleStatus(models.Model):
     id = models.IntegerField()
     status = models.CharField(max_length=100)
     icon = models.CharField(max_length=100)        

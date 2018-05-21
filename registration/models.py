@@ -106,7 +106,12 @@ class User(AbstractUser):
 
 
 
-
+# for determining a user Habbits
+class UserHabbits(models.Model):
+    public_transportaion = models.IntegerField() # from least to most amount
+    customer_sharing = models.IntegerField()
+    bicycle_usuage = models.IntegerField()
+    
 
 
 
@@ -130,7 +135,7 @@ class User(AbstractUser):
     
     
 
-class receipt(models.Model):
+class Receipt(models.Model):
     created_at= models.DateTimeField()
     owner_id = models.ForeignKey(User,on_delete=models.CASCADE)
     rfid_id = models.ForeignKey(Tag,on_delete=models.CASCADE)
@@ -140,7 +145,7 @@ class receipt(models.Model):
     
     
     
-class prize(models.Model):
+class Prize(models.Model):
     prize_id = models.AutoField(primary_key=True)
     prizemanager_id = models.ForeignKey(User,on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
