@@ -1,7 +1,6 @@
 from django.db import models
-from registration.models import User
+from smbportal.registration.models import User
 # Create your models here.
-
 
 #class EndUser(User):
 
@@ -21,11 +20,6 @@ class Profile(models.Model):
         managed = True
 
 
-
-
-
-
-
 class ProfileType(models.Model):
     profile_icon = models.CharField(max_length=200) 
     profile_name = models.CharField(max_length=200)
@@ -34,26 +28,5 @@ class ProfileType(models.Model):
     profile_id = models.ForeignKey(Profile,on_delete=models.CASCADE)
 
 
-
-class Message(models.Model):
-    to_user = models.ForeignKey(User,on_delete=models.CASCADE)
-    from_user = models.ForeignKey(User,on_delete=models.CASCADE)
-    information = models.TextField()
-    created_at = models.DateTimeField()
-    
-
-class Post(models.Model):
-    creator = models.ForeignKey(User,on_delete=models.CASCADE)
-    created_at = models.DateTimeField()
-    message = models.TextField()
-    level_of_sharing = ForeignKey(Profile, on_delete=models.CASCADE)
-    
-    
-class Followers(models.Model):
-    follower = models.ForeignKey(User,on_delete=models.CASCADE)
-    
-    
-class Following(models.Model):
-    
     
     

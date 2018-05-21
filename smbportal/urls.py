@@ -21,15 +21,11 @@ from django.views.generic import TemplateView, CreateView
 #from .registration
 #from xml.etree.ElementInclude import include
 
-
-
-
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     
     #url(r'^', CreateView.as_view(template_name='registration/newuser.html',model=User)),
-    url(r'^registration/', include('registration.urls')),
+    url(r'^registration/', include('smbportal.registration.urls')),
 ]

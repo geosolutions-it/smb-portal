@@ -1,5 +1,5 @@
 from django.db import models
-from registration.models import  User
+from smbportal.registration.models import User
 # Create your models here.
 
 

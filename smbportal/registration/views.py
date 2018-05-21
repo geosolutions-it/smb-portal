@@ -2,15 +2,15 @@ from django.shortcuts import render
 from django.views.generic import \
 ListView, CreateView, UpdateView, DetailView
 from django.views.generic.detail import SingleObjectMixin
-from registration.models import  User, Prize 
-from vehicles.models import Vehicle, Tag
-from profiles.models import Profile
+from smbportal.registration.models import  User, Prize 
+from smbportal.vehicles.models import Vehicle, Tag
+from smbportal.profiles.models import Profile
 from multiprocessing.sharedctypes import template
 # Create your views here.
 from rest_framework import serializers
 
 # django-restfull framework
-from registration.serializers import \
+from smbportal.registration.serializers import \
 VehicleSerializer, PrizeSerializer, UserSerializer, \
 TagSerializer, ReceiptSerializer
 from django.http import Http404

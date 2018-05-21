@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     # my apps
-    'registration',
-    'profiles',
-    'vehicles',
+    'smbportal.registration',
+    'smbportal.profiles',
+    'smbportal.vehicles',
     
     #third party apps
      'rest_framework',
@@ -95,6 +95,7 @@ DATABASES = {
     }
 }
 
+#GDAL_LIBRARY_PATH = '/home/sue/local/lib/libgdal.so'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

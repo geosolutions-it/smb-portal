@@ -2,10 +2,10 @@ from django.urls import path
 from rest_framework import serializers
 from . import models
 from rest_framework.routers import DefaultRouter
-from registration import views
+from smbportal.registration import views
 from django.conf.urls import url, include
 from django.views.generic import TemplateView, CreateView, ListView
-from profiles.models import User
+from smbportal.profiles.models import User
 router = DefaultRouter()
 router.register(r'bikes', views.BikeViewSet)
 router.register(r'prizes', views.PrizeViewSet)
