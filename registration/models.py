@@ -80,23 +80,6 @@ class UserHabbits(models.Model):
     
 
 
-
-
-
-
-
-    
-    
-    
-# class PrizeManager(AbstractUser):
-#     
-#     email_address = models.CharField(max_length=100)
-       
-
-    
-
-
-
     
     
     
@@ -116,16 +99,23 @@ class Prize(models.Model):
     prizemanager_id = models.ForeignKey(User,on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
-    #number_of_badges = models.IntegerField(0)
     
     
+
+
+
     
 
 class Badge(models.Model):
     id = models.AutoField(primary_key = True)
-    #prize_id = models.ForeignKey(prize, on_delete=models.CASCADE)
     number_of_badges = models.IntegerField()
     type_of_badge = models.CharField(max_length=100)
+    
+    
+class PrizeandBadges(models.Model):
+    id = models.AutoField(primary_key= True)
+    prize_id = models.ForeignKey(Prize,on_delete=models.CASCADE)
+    badge_id = models.ForeignKey(Badge,on_delete=models.CASCADE)
     
     
     

@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.views.generic import \
+ListView, CreateView, UpdateView, DetailView
 from django.views.generic.detail import SingleObjectMixin
 from registration.models import  User, Prize 
 from vehicles.models import Vehicle, Tag
@@ -9,7 +10,9 @@ from multiprocessing.sharedctypes import template
 from rest_framework import serializers
 
 # django-restfull framework
-from registration.serializers import VehicleSerializer, PrizeSerializer, UserSerializer, TagSerializer, ReceiptSerializer
+from registration.serializers import \
+VehicleSerializer, PrizeSerializer, UserSerializer, \
+TagSerializer, ReceiptSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -73,7 +76,10 @@ class TagViewSet(viewsets.ModelViewSet):
         
 class newuser(CreateView):
     model = User
-    fields = ('username', 'password', 'first_name', 'last_name')
+    fields = (
+        'username', 'password',
+         'first_name', 'last_name'
+        )
     exclude = []
     template_name = 'registration/newuser.html'
     success_url = "http://localhost:8000/registration/home/"
@@ -82,13 +88,17 @@ class newuser(CreateView):
 class vehicleList(ListView):
     model = Vehicle
     # queryset = bike.objects.all(owner_id=request.user)
-    fields = ('bikes_id', 'owner_id', 'model', 'created_at')
+    fields = (
+        'bikes_id', 'owner_id', 'model', 'created_at'
+        )
     template_name = 'registration/ViewVehicles.html'
     
     
 class UpdateProfile(UpdateView):
     model = Profile
-    fields = ('bio', 'user_id')
+    fields = (
+        'bio', 'user_id'
+        )
     template_name = 'registration/UpdateProfile.html'
     # queryset = Profile.objects.all()
 
