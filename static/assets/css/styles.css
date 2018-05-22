@@ -6380,7 +6380,7 @@ video {
 }
 
 .site-menu ul > li.active > a {
-    color: #0da9ef;
+    color: #F51DAF;
 }
 
 .site-menu > ul {
@@ -6410,7 +6410,7 @@ video {
 }
 
 .site-menu > ul > li.active > a {
-    border-top-color: #0da9ef;
+    border-top-color: #F51DAF;
 }
 
 .site-menu ul > li:hover > .sub-menu {
@@ -6674,11 +6674,11 @@ video {
 }
 
 .navbar-ghost:not(.navbar-stuck) .site-menu > ul > li:hover > a {
-    color: #0da9ef;
+    color: #F51DAF;
 }
 
 .navbar-ghost:not(.navbar-stuck) .site-menu > ul > li.active > a {
-    color: #0da9ef;
+    color: #F51DAF;
 }
 
 .navbar-ghost:not(.navbar-stuck) .toolbar .search, .navbar-ghost:not(.navbar-stuck) .toolbar .account, .navbar-ghost:not(.navbar-stuck) .toolbar .cart {

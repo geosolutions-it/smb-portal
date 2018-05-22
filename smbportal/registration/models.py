@@ -44,24 +44,22 @@ class PrizeandBadges(models.Model):
     badge_id = models.ForeignKey(Badge,on_delete=models.CASCADE)
     
     
-    
-    
-class User(AbstractUser):
-    username = models.TextField(unique = True)
-    email = models.TextField(blank=True, null=True)
-    name = models.TextField(blank=True, null=True)
-    given_name = models.TextField(blank=True, null=True)
-    family_name = models.TextField(blank=True, null=True)
-    preferred_username = models.TextField(blank=True, null=True)
-    cognito_user_status = models.NullBooleanField(db_column='cognito:user_status')  # Field renamed to remove unsuitable characters.
-    status = models.TextField(blank=True, null=True)
-    sub = models.TextField()
-    id = models.BigAutoField(primary_key = True,unique=True)
-    field_id = models.UUIDField(db_column='_id', unique=True, blank=True, null=True)  # Field renamed because it started with '_'.
-
-    class Meta:
-        managed = False
-        unique_together = (('username', 'sub'),)    
+# class User(AbstractUser):
+#     username = models.TextField(unique = True)
+#     email = models.TextField(blank=True, null=True)
+#     name = models.TextField(blank=True, null=True)
+#     given_name = models.TextField(blank=True, null=True)
+#     family_name = models.TextField(blank=True, null=True)
+#     preferred_username = models.TextField(blank=True, null=True)
+#     cognito_user_status = models.NullBooleanField(db_column='cognito:user_status')  # Field renamed to remove unsuitable characters.
+#     status = models.TextField(blank=True, null=True)
+#     sub = models.TextField()
+#     id = models.BigAutoField(primary_key = True,unique=True)
+#     field_id = models.UUIDField(db_column='_id', unique=True, blank=True, null=True)  # Field renamed because it started with '_'.
+# 
+#     class Meta:
+#         managed = False
+#         unique_together = (('username', 'sub'),)    
 
 
 
