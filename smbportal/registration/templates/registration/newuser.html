@@ -109,45 +109,45 @@
                                 <p>Registration takes less than a minute but gives you full control over your account.</p>
                                 <form class="row" action="{% url 'newuser' %}" method="post">
                                 {% csrf_token %}
-                                    <!-- <div class="col-sm-6">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="reg-fn">First Name</label>
-                                            <input class="form-control" type="text" id="reg-fn" required>
+                                            {{form.first_name}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="reg-ln">Last Name</label>
-                                            <input class="form-control" type="text" id="reg-ln" required>
+                                            {{form.last_name}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="reg-email">E-mail Address</label>
-                                            <input class="form-control" type="email" id="reg-email" required>
+                                            {{form.email}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="reg-phone">Phone Number</label>
-                                            <input class="form-control" type="text" id="reg-phone" required>
+                                            {{form.phone_number}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="reg-pass">Password</label>
-                                            <input class="form-control" type="password" id="reg-pass" required>
+                                            {{form.password}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="reg-pass-confirm">Confirm Password</label>
-                                            <input class="form-control" type="password" id="reg-pass-confirm" required>
+                                            {{form.password}}
                                         </div>
-                                    </div> -->
-                                    {{ form.as_p }}
+                                    </div>
+                                   
                                     <div class="col-12 text-center text-sm-right">
-                                        <button class="btn btn-primary margin-bottom-none" type="submit">Register</button>
+                                        <button class="btn btn-primary margin-bottom-none" style="background-color:#F51DAF" type="submit">Register</button>
                                     </div>
                                 </form>
                             </div>

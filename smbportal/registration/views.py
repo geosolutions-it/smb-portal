@@ -77,8 +77,8 @@ class TagViewSet(viewsets.ModelViewSet):
 class newuser(CreateView):
     model = EndUserProfile
     fields = (
-        'username', 'password',
-         'first_name', 'last_name'
+        'username', 'password','email','gender','profile_type',
+         'first_name', 'last_name','phone_number',
         )
     exclude = []
     template_name = 'registration/newuser.html'

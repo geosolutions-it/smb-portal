@@ -6,7 +6,6 @@ from django.contrib.auth.models  import AbstractUser
 
 class EndUserProfile(AbstractUser):
     username = models.TextField(unique = True)
-    email = models.TextField(blank=True, null=True)
     name = models.TextField(blank=True, null=True)
     given_name = models.TextField(blank=True, null=True)
     family_name = models.TextField(blank=True, null=True)
