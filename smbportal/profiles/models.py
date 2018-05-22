@@ -1,7 +1,11 @@
 from django.db import models
 
+<<<<<<< HEAD
 from django.contrib.auth.models  import AbstractUser
 # Create your models here.
+=======
+from smbportal.registration.models import User
+>>>>>>> 77e69efb96bd7a0171e44790cc7b18cc3f0c07de
 
 
 class EndUserProfile(AbstractUser):
@@ -21,6 +25,7 @@ class EndUserProfile(AbstractUser):
     gender = models.CharField(max_length=20)
     phone_number = models.IntegerField(blank=True, null=True)
     bio = models.CharField(max_length=200)
+<<<<<<< HEAD
     date_created = models.DateField(blank=True, null=True)
     date_updated = models.DateField(blank=True, null=True)
     language_preference = models.IntegerField(blank=True, null=True)
@@ -33,9 +38,12 @@ class EndUserProfile(AbstractUser):
         managed = True
         unique_together = (('username', 'sub'),)
 
+=======
+    date_created = models.DateField()
+    date_updated = models.DateField()
+    language_preference = models.IntegerField()
+    level_of_sharing = models.IntegerField(blank=True, null=True)
+>>>>>>> 77e69efb96bd7a0171e44790cc7b18cc3f0c07de
 
 
 
-
-    
-    

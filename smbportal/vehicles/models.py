@@ -1,10 +1,7 @@
 from django.db import models
-from smbportal.profiles.models import EndUserProfile
-# Create your models here.
+from smbportal.registration.models import User
 
 
-
-        
 class Datapoint(models.Model):
     elevation = models.FloatField(blank=True, null=True)
     sessionid = models.BigIntegerField(blank=True, null=True)
@@ -34,9 +31,9 @@ class Datapoint(models.Model):
     vehicle_id = models.UUIDField(blank=True, null=True)
 
     class Meta:
-        managed = True
         db_table = 'datapoints'
-        
+
+
 class Vehicle(models.Model):
     id = models.BigAutoField(primary_key=True)
     lastupdate = models.DateTimeField(blank=True, null=True)
@@ -50,22 +47,18 @@ class Vehicle(models.Model):
     image = models.TextField(blank=True, null=True)
     owner = models.ForeignKey(EndUserProfile, models.DO_NOTHING, db_column='owner', blank=True, null=True)
     field_id = models.UUIDField(db_column='_id', blank=True, null=True)  # Field renamed because it started with '_'.
-    #owner_0 = models.ForeignKey(Users, models.DO_NOTHING, db_column='owner_id', blank=True, null=True)  # Field renamed because of name conflict.
 
     class Meta:
-        managed = True
         db_table = 'vehicles'
-        
-        
-        
+
 
 class VehicleStatus(models.Model):
     id = models.IntegerField(primary_key=True)
     status = models.CharField(max_length=100)
     icon = models.CharField(max_length=100)
     class Meta:
-        managed = True
-        db_table = 'vehicle_status'      
+        db_table = 'vehicle_status'
+
 
 class VehicleType(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -73,15 +66,12 @@ class VehicleType(models.Model):
     icon = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = True
         db_table = 'vehicle_types'
-        
-        
-        
+
+
 class Tag(models.Model):
     epc = models.TextField(primary_key=True)
     vehicle = models.ForeignKey(Vehicle, models.DO_NOTHING)
 
     class Meta:
-        managed = True
         db_table = 'tags'
