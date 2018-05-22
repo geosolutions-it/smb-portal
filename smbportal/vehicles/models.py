@@ -45,7 +45,7 @@ class Vehicle(models.Model):
     status = models.IntegerField(blank=True, null=True)# foreignkey to vehicle status
     lastposition = models.ForeignKey(Datapoint, models.DO_NOTHING, db_column='lastposition', blank=True, null=True)
     image = models.TextField(blank=True, null=True)
-    owner = models.ForeignKey(EndUserProfile, models.DO_NOTHING, db_column='owner', blank=True, null=True)
+    owner = models.ForeignKey(User, models.DO_NOTHING, db_column='owner', blank=True, null=True)
     field_id = models.UUIDField(db_column='_id', blank=True, null=True)  # Field renamed because it started with '_'.
 
     class Meta:

@@ -8,8 +8,7 @@ from rest_framework import serializers
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from smbportal.profiles.models import EndUserProfile
-from django.contrib.auth.models  import AbstractUser
+
 class Position(models.Model):
     id = models.BigAutoField(primary_key=True)
 

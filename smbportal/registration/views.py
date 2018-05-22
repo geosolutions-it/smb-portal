@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.views.generic import \
 ListView, CreateView, UpdateView, DetailView
 from django.views.generic.detail import SingleObjectMixin
-from smbportal.registration.models import  EndUserProfile, Prize 
+from smbportal.registration.models import  User, Prize 
+from smbportal.profiles.models import EndUserProfile
 from smbportal.vehicles.models import Vehicle, Tag
 from smbportal.profiles.models import EndUserProfile
 from multiprocessing.sharedctypes import template
