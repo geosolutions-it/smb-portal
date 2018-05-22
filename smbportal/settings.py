@@ -78,7 +78,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'smbportal.wsgi.application'
 
 #for abstract User Class
-AUTH_USER_MODEL = 'registration.User'
+AUTH_USER_MODEL = 'profiles.EndUserProfile'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases

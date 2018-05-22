@@ -1,15 +1,12 @@
 from django.contrib import admin
-#from django.contrib.auth.models import User as original
 from smbportal.vehicles.models import Vehicle, VehicleType, Tag
 
-from .models import User,Receipt, Prize
-from smbportal.profiles.models import Profile
+from .models import Receipt, Prize
+from smbportal.profiles.models import EndUserProfile
 
 
 admin.site.register(VehicleType)
-admin.site.register(User)
-#admin.site.register(original)
-admin.site.register(Profile)
+admin.site.register(EndUserProfile)
 admin.site.register(Vehicle)
 admin.site.register(Receipt)
 admin.site.register(Tag)

@@ -1,5 +1,5 @@
 from django.db import models
-from smbportal.registration.models import User
+from smbportal.profiles.models import EndUserProfile
 # Create your models here.
 
 
@@ -48,7 +48,7 @@ class Vehicle(models.Model):
     status = models.IntegerField(blank=True, null=True)# foreignkey to vehicle status
     lastposition = models.ForeignKey(Datapoint, models.DO_NOTHING, db_column='lastposition', blank=True, null=True)
     image = models.TextField(blank=True, null=True)
-    owner = models.ForeignKey(User, models.DO_NOTHING, db_column='owner', blank=True, null=True)
+    owner = models.ForeignKey(EndUserProfile, models.DO_NOTHING, db_column='owner', blank=True, null=True)
     field_id = models.UUIDField(db_column='_id', blank=True, null=True)  # Field renamed because it started with '_'.
     #owner_0 = models.ForeignKey(Users, models.DO_NOTHING, db_column='owner_id', blank=True, null=True)  # Field renamed because of name conflict.
 

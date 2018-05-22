@@ -1,7 +1,8 @@
 
 from rest_framework import serializers
-from .models import  User, Prize, Receipt
+from .models import Prize, Receipt
 from smbportal.vehicles.models import Vehicle, Tag
+from smbportal.profiles.models import EndUserProfile
 
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,7 +12,7 @@ class VehicleSerializer(serializers.ModelSerializer):
         
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model=User
+        model=EndUserProfile
         exclude= []
         
         

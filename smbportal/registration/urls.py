@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from smbportal.registration import views
 from django.conf.urls import url, include
 from django.views.generic import TemplateView, CreateView, ListView
-from smbportal.profiles.models import User
+from smbportal.profiles.models import EndUserProfile
 router = DefaultRouter()
 router.register(r'bikes', views.BikeViewSet)
 router.register(r'prizes', views.PrizeViewSet)

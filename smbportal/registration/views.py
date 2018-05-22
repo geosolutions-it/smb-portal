@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.views.generic import \
 ListView, CreateView, UpdateView, DetailView
 from django.views.generic.detail import SingleObjectMixin
-from smbportal.registration.models import  User, Prize 
+from smbportal.registration.models import  EndUserProfile, Prize 
 from smbportal.vehicles.models import Vehicle, Tag
-from smbportal.profiles.models import Profile
+from smbportal.profiles.models import EndUserProfile
 from multiprocessing.sharedctypes import template
 # Create your views here.
 from rest_framework import serializers
@@ -59,7 +59,7 @@ class PrizeViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = EndUserProfile.objects.all()
     serializer_class = UserSerializer
     
     def perform_create(self, serializer):
@@ -75,7 +75,7 @@ class TagViewSet(viewsets.ModelViewSet):
         
         
 class newuser(CreateView):
-    model = User
+    model = EndUserProfile
     fields = (
         'username', 'password',
          'first_name', 'last_name'
@@ -87,7 +87,7 @@ class newuser(CreateView):
     
 class vehicleList(ListView):
     model = Vehicle
-    # queryset = bike.objects.all(owner_id=request.user)
+    # queryset = bike.objects.all(owner_id=request.EndUserProfile)
     fields = (
         'bikes_id', 'owner_id', 
         'model', 'created_at'
@@ -96,7 +96,7 @@ class vehicleList(ListView):
     
     
 class UpdateProfile(UpdateView):
-    model = Profile
+    model = EndUserProfile
     fields = (
         'bio', 'user_id'
         )
@@ -105,23 +105,14 @@ class UpdateProfile(UpdateView):
 
     
 class DetailProfile(DetailView): 
-    model = Profile
+    model = EndUserProfile
     exclude = []
     template_name = 'registration/DetailProfile.html' 
     context_object_name = 'profile_details'
-    #Queryset = Profile.objects.get(user_id=1)
-    
     slug_field = "nickname"
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['now'] = timezone.now()
-#         return context
     def get_queryset(self):
         return DetailView.get_queryset(self)
-#     def get_queryset(self):
-#         queryset = super(DetailProfile, self).get_queryset()
-#         return queryset.filter(user_id__username=self.request.user)
+#     
   
     
 class TagList(ListView):
