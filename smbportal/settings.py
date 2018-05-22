@@ -148,3 +148,8 @@ STATICFILES_DIRS = [
     #'/var/www/static/',
 ]
 
+try:
+    from local_settings import *
+except ImportError:
+    pass
+

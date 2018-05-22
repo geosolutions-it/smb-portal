@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+from smbportal.registration.models import User
 
 class Follower(models.Model):
     follower = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -8,7 +8,7 @@ class Follower(models.Model):
     
     
 class Friend(models.Model):
-    name = ForeignKey(User,on_delete=models.CASCADE)
+    name = models.ForeignKey(User,on_delete=models.CASCADE)
     age = models.CharField(max_length=100)
     created_at = models.DateTimeField()
-    
+

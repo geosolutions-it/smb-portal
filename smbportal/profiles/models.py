@@ -1,8 +1,7 @@
 from django.db import models
-from smbportal.registration.models import User
-# Create your models here.
 
-#class EndUser(User):
+from smbportal.registration.models import User
+
 
 class Profile(models.Model):
     profile_id = models.AutoField(primary_key=True)
@@ -15,9 +14,7 @@ class Profile(models.Model):
     date_created = models.DateField()
     date_updated = models.DateField()
     language_preference = models.IntegerField()
-    level_of_sharing = models.IntegerField(blank=True, null= True)
-    class Meta:
-        managed = True
+    level_of_sharing = models.IntegerField(blank=True, null=True)
 
 
 class ProfileType(models.Model):
@@ -27,6 +24,3 @@ class ProfileType(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
     profile_id = models.ForeignKey(Profile,on_delete=models.CASCADE)
 
-
-    
-    
