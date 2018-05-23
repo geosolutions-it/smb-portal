@@ -9,6 +9,7 @@ from smbportal.registration.models import User
 
 
 class EndUserProfile(User):
+    
     nickname = models.CharField(max_length=100)
     image = models.CharField(max_length=200)
     gender = models.CharField(max_length=20)
@@ -22,9 +23,6 @@ class EndUserProfile(User):
     profile_icon = models.CharField(max_length=200) 
     profile_name = models.CharField(max_length=200)
     
-    class Meta:
-        managed = True
-        unique_together = (('username', 'sub'),)
 
 
 

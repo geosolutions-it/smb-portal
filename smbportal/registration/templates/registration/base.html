@@ -115,7 +115,8 @@
                 <a href="javascript:void(0)"><span>About</span></a>
                 
             </li>
-            <li class="active" style=color:#F51DAF;"><a href="javascript:void(0)"><span>Registration</span></a>
+           <!--  <class="active" style=color:#F51DAF;"> -->
+            <li ><button  class="btn btn-sm btn-primary" type="button" href="javascript:void(0)">Registration</button>
               <!--   <ul class="sub-menu">
                     <li class="active"><a href="page_landing.html">Landing Page</a></li>
                     <li><a href="page_search_results.html">Search Results</a></li>
@@ -123,7 +124,7 @@
                     <li><a href="page_coming_soon.html">Coming Soon</a></li>
                 </ul> -->
             </li>
-            
+           
         </ul>
     </nav>
     <!-- END MAIN NAVIGATION-->
@@ -218,7 +219,7 @@
                             </div>
                             <div class="user-info">
                                 <h6 class="user-name">{{request.user}}</h6>
-                                <span class="text-xs text-muted">pvrtechstudio</span>
+                                <span class="text-xs text-muted"></span>
                             </div>
                         </li>
                         <li><a href="{% url 'DetailProfile' request.user %}"> <i class="icon-head"></i> My Profile</a></li>
@@ -260,7 +261,6 @@
                 <div class="col-lg-6 col-md-6">
                     <!-- About Us-->
                     <section class="widget widget-links widget-light-skin">
-                        <!-- <h3 class="widget-title">Pages</h3> -->
                         <ul class="">
                             <li>Save my Bike // info@savemybike.eu // Privacy Policy // Credits //</li>
                             
@@ -364,23 +364,7 @@
 <!-- BEGIN CORE JS -->
 <script src="{% static 'assets/js/vendor.min.js' %}"></script>
 <script src="{% static 'assets/js/scripts.min.js' %}"></script>
+{% block js %}
+{% endblock %}
 </body>
 </html>
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{# Read the documentation for more information #} 
