@@ -113,9 +113,8 @@ class DetailProfile(DetailView):
     slug_field = "nickname"
     def get_queryset(self):
         return DetailView.get_queryset(self)
-#     
+     
   
-    
 class TagList(ListView):
     model = Tag
     exclude = []
