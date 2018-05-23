@@ -10,13 +10,13 @@ Steps for setting up SMB-Portal
 
 1. clone this repo
 
-2. create a virtual environment.
+2. create a virtual environment and name it smbportal.
 
 3. activate this environment.
 
-4. pip install -r requirements.txt in your shell/terminal.
+4. `pip install -r requirements.txt` in your shell/terminal.
 
-**make sure u create a database and user name savemybike** 
+**make sure u create a database and user name savemybike on a postgis enabled postgresql server** 
 
 
 5. then run `python manage.py makemigrations` then `python manage.py migrate`
