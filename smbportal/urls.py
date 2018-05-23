@@ -17,15 +17,20 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView, CreateView
-
+from django.conf.urls.i18n import i18n_patterns, urlpatterns
 #from .registration
 #from xml.etree.ElementInclude import include
 
+
 urlpatterns = [
+    
+    
+    ]
+urlpatterns += i18n_patterns(
     url(r'^admin/', admin.site.urls),
-    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     
     #url(r'^', CreateView.as_view(template_name='registration/newuser.html',model=User)),
     url(r'^registration/', include('smbportal.registration.urls')),
-]
+)
