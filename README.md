@@ -19,10 +19,10 @@ Steps for setting up SMB-Portal
 **make sure u create a database and user name savemybike** 
 
 
-5. then run 'python manage.py makemigrations' then 'python manage.py migrate'
+5. then run `python manage.py makemigrations` then `python manage.py migrate`
 
 
-6. then run the server with the command 'python manage.py runserver'
+6. then run the server with the command `python manage.py runserver`
 
 
 7. in your web browser enter 'localhost:8000/login'
