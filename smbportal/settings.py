@@ -141,8 +141,7 @@ LANGUAGES = (
     ('it', _('Italian')),
 )
 
-LANGUAGE_CODE = 'en-us'
-
+#LANGUAGE_CODE = 'en-us'
 USE_L10N = True
 
 USE_TZ = True

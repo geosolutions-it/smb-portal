@@ -1,5 +1,5 @@
 {% load static %}
-{% load i18n %}
+{% load static i18n %}
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -78,7 +78,7 @@
     <nav class="site-menu">
         <ul>
             <li class="has-megamenu">
-                <a href="{% url 'home' %}"><span>Home</span></a>
+                <a href="{% url 'home' %}"><span>{% trans 'Home' %}</span></a>
                <!--  <ul class="mega-menu">
                     <li>
                         <a class="d-block img-thumbnail text-center navi-link" href="index.html">
@@ -109,15 +109,15 @@
             
             
             <li>
-                <a href="javascript:void(0)"><span>Report a stolen Bike?</span></a>
+                <a href="javascript:void(0)"><span>{% trans 'Report a stolen Bike?' %}</span></a>
                 
             </li>
             <li>
-                <a href="javascript:void(0)"><span>About</span></a>
+                <a href="javascript:void(0)"><span>{% trans 'About' %}</span></a>
                 
             </li>
            <!--  <class="active" style=color:#F51DAF;"> -->
-            <li ><button  class="btn btn-sm btn-primary" type="button" onclick="{% url 'newuser' %}">Registration</button>
+            <li ><button  class="btn btn-sm btn-primary" type="button" onclick="{% url 'newuser' %}">{% trans 'Registration' %}</button>
               <!--   <ul class="sub-menu">
                     <li class="active"><a href="page_landing.html">Landing Page</a></li>
                     <li><a href="page_search_results.html">Search Results</a></li>
@@ -223,12 +223,12 @@
                                 <span class="text-xs text-muted"></span>
                             </div>
                         </li>
-                        <li><a href="{% url 'DetailProfile' request.user %}"> <i class="icon-head"></i> My Profile</a></li>
-                        <li><a href="javascript:void(0)"> <i class="icon-mail"></i> Messages</a></li>
-                        <li><a href="javascript:void(0)"> <i class="icon-cog"></i> Settings</a></li>
+                        <li><a href="{% url 'DetailProfile' request.user %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
+                        <li><a href="javascript:void(0)"> <i class="icon-mail"></i> {% trans 'Messages' %}</a></li>
+                        <li><a href="javascript:void(0)"> <i class="icon-cog"></i> {% trans 'Settings' %}</a></li>
                         <li class="sub-menu-separator"></li>
-                        <li><a href="javascript:void(0)"> <i class="icon-server"></i> Lock Screen</a></li>
-                        <li><a href="{% url 'logout' %}"> <i class="icon-lock"></i> Logout</a></li>
+                        <li><a href="javascript:void(0)"> <i class="icon-server"></i> {% trans 'Lock Screen' %}</a></li>
+                        <li><a href="{% url 'logout' %}"> <i class="icon-lock"></i> {% trans 'Logout' %}</a></li>
                     </ul>
                 </div>
             </div>
