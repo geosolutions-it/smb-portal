@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-23 19:26+0000\n"
+"POT-Creation-Date: 2018-05-23 20:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,6 +58,48 @@ msgstr "Disconnettersi"
 msgid "Restricted Area"
 msgstr "area riservata"
 
+#: smbportal/registration/templates/registration/home.html:13
+#: smbportal/registration/templates/registration/home.html:16
+msgid "Bikes"
+msgstr "Bici"
+
+#: smbportal/registration/templates/registration/home.html:14
+msgid ""
+" Register new Bikes, update information about your bikes and delete \n"
+"                                    bikes off the system. "
+msgstr "Registra nuove biciclette, aggiorna le informazioni sulle tue bici ed elimina biciclette fuori dal sistema. "
+
+#: smbportal/registration/templates/registration/home.html:23
+#: smbportal/registration/templates/registration/home.html:26
+msgid "Prizes"
+msgstr "I premi"
+
+#: smbportal/registration/templates/registration/home.html:24
+msgid ""
+" View all the prizes you can available in your \n"
+"                                    city."
+msgstr "Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
+
+#: smbportal/registration/templates/registration/home.html:33
+#: smbportal/registration/templates/registration/home.html:35
+msgid "Tags"
+msgstr "Tags"
+
+#: smbportal/registration/templates/registration/home.html:34
+msgid "Add rfid support to your bikes here"
+msgstr "Aggiungi il supporto di rfid alle tue bici qui"
+
+#: smbportal/registration/templates/registration/home.html:45
+#: smbportal/registration/templates/registration/home.html:48
+msgid "Badges"
+msgstr "Badges"
+
+#: smbportal/registration/templates/registration/home.html:46
+msgid ""
+"View all your Badges, the ones you've unlocked and \n"
+"                                    ones you need to get."
+msgstr "Visualizza tutti i tuoi badge, quelli che hai sbloccato e quelli che devi ottenere"
+
 #: smbportal/registration/templates/registration/login.html:136
 msgid "Login"
 msgstr "Accesso"
@@ -99,10 +141,8 @@ msgid "Confirm Password"
 msgstr "conferma password"
 
 #: smbportal/registration/templates/registration/newuser.html:150
-#, fuzzy
-#| msgid "Registration"
 msgid "Register"
-msgstr "Registrazione"
+msgstr "Registrare"
 
 #: smbportal/settings.py:140
 msgid "English"

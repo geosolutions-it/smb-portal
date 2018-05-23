@@ -1,11 +1,58 @@
 {% extends 'registration/base.html' %}
-
+{% load i18n %}
 
 
 {% block content %}
-<div class="" id="container">
+<div class="col-md-9 margin-bottom-2x" id="container">
+<!-- <h6 class="text-muted text-normal text-uppercase padding-top-2x mt-2">Content Alignment</h6> -->
+                <hr class="margin-bottom-1x">
+                <div class="row">
+                    <div class="col-lg-4 margin-bottom-2x">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">{% trans 'Bikes' %}</h4>
+                                <p class="card-text"> {% blocktrans %} Register new Bikes, update information about your bikes and delete 
+                                    bikes off the system. {% endblocktrans %}</p>
+                                <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Bikes' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 margin-bottom-2x">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4 class="card-title">{% trans 'Prizes' %}</h4>
+                                <p class="card-text">{% blocktrans %} View all the prizes you can available in your 
+                                    city.{% endblocktrans %}</p>
+                                <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Prizes' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 margin-bottom-2x">
+                        <div class="card text-right">
+                            <div class="card-body">
+                                <h4 class="card-title">{% trans 'Tags' %}</h4>
+                                <p class="card-text">{% blocktrans %}Add rfid support to your bikes here{% endblocktrans %} </p>
+                                <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Tags' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 margin-bottom-4x">
+                        <div class="card text-right">
+                            <div class="card-body">
+                                <h4 class="card-title">{% trans 'Badges' %}</h4>
+                                <p class="card-text">{% blocktrans %}View all your Badges, the ones you've unlocked and 
+                                    ones you need to get.{% endblocktrans %}</p>
+                                <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Badges' %}</a>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+               
         <div>
-            <div class="pri_main_container" data-test-selector="page-annuals-pricing" data-test-language="en-us">
+            <!-- <div class="pri_main_container" data-test-selector="page-annuals-pricing" data-test-language="en-us">
                 <div class="pri_container">
                 <div class="row">
                     <div class="col-md-6 margin-bottom-2x">
@@ -27,7 +74,7 @@
                               
                               
                               </nav>
-                    </div>
+                    </div> -->
                     
                     <!-- <div class="col-md-6 margin-bottom-2x">
                         <h6 class="text-muted text-normal text-uppercase">Link Example</h6>
@@ -151,9 +198,7 @@
         </div>
         <!-- END ROW -->
     </div>
-    </div>
-    </div>
-    </div>
+   
 {% endblock %}
 {% block js %}
 
