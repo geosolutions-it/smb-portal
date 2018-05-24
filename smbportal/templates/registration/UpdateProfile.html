@@ -1,0 +1,149 @@
+{% extends 'registration/base.html' %}
+
+
+{% block content %}
+<div id="container">
+        <!-- Promo-->
+        <section class="fw-section" style="background-image: url('http://via.placeholder.com/1920x1080');">
+            <span class="overlay" style="background-color: #374250; opacity: .55;"></span>
+            <div class="container padding-top-2x padding-bottom-2x up-head-w">
+                <img class="d-block rounded-circle mb-2 w-80" src="http://via.placeholder.com/128x128" alt="Image">
+                <h3 class="f-s-25 text-normal text-white text-shadow mb-1">Administrator</h3>
+                <span class="text-white">pvrtechstudio</span>
+                <div class="up-social">
+                    <a href="javascript:void(0)" data-toggle="tooltip" title="" data-original-title="Google Plus">
+                        <i class="fa fa-google-plus-square"></i>
+                    </a>
+                    <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title=""
+                       data-original-title="Facebook">
+                        <i class="fa fa-facebook-square"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container p-t-60">
+            <div class="row">
+                <div class="col-lg-4">
+                    <aside class="user-info-wrapper">
+                        <div class="user-cover" style="background-image:url('http://via.placeholder.com/1170x225')">
+                            <div class="info-label" data-toggle="tooltip"
+                                 title="Verified User">
+                                <i class="icon-medal"></i> Verified User
+                            </div>
+                        </div>
+                        <div class="user-info">
+                            <div class="user-avatar"><a class="edit-avatar" href="javascript:void(0)"></a><img
+                                    src="http://via.placeholder.com/128x128" alt="User"></div>
+                            <div class="user-data">
+                                <h4>Administrator</h4>
+                                <span>pvrtechstudio</span>
+                            </div>
+                        </div>
+                    </aside>
+                    <nav class="list-group">
+                        <a class="list-group-item with-badge" href="javascript:void(0)">
+                            <i class="icon-bag"></i>Orders
+                            <span class="badge badge-primary badge-pill">6</span>
+                        </a>
+                        <a class="list-group-item active" href="javascript:void(0)">
+                            <i class="icon-head"></i>Profile
+                        </a>
+                        <a class="list-group-item" href="javascript:void(0)">
+                            <i class="icon-map"></i>Addresses
+                        </a>
+                        <a class="list-group-item with-badge" href="javascript:void(0)">
+                            <i class="icon-heart"></i>Wishlist
+                            <span class="badge badge-primary badge-pill">3</span>
+                        </a>
+                        <a class="list-group-item with-badge" href="javascript:void(0)">
+                            <i class="icon-tag"></i>My Tickets
+                            <span class="badge badge-primary badge-pill">4</span>
+                        </a>
+                    </nav>
+                </div>
+                <div class="col-lg-8">
+                    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+                    <form class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn">First Name</label>
+                                <input class="form-control form-control-rounded" type="text" id="account-fn"
+                                       value="Administrator" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-ln">Last Name</label>
+                                <input class="form-control form-control-rounded" type="text" id="account-ln"
+                                       value="pvrtechstudio" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-email">E-mail Address</label>
+                                <input class="form-control form-control-rounded" type="email" value="admin@pvrtechstudio.com" id="account-email">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-email">DOB</label>
+                                <input class="form-control form-control-rounded date_picker" value="04/12/1992" type="text"
+                                       id="account-dob">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-email">Gender</label>
+                                <select class="form-control form-control-rounded">
+                                    <option value="">Select</option>
+                                    <option value="" selected>Male</option>
+                                    <option value="">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-phone">Phone Number</label>
+                                <input class="form-control form-control-rounded" value="+919159547048" type="text" id="account-phone"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-pass">New Password</label>
+                                <input class="form-control form-control-rounded" type="password" id="account-pass">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-confirm-pass">Confirm Password</label>
+                                <input class="form-control form-control-rounded" type="password"
+                                       id="account-confirm-pass">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="custom-control custom-checkbox d-block">
+                                    <input class="custom-control-input" type="checkbox" id="subscribe_me" checked>
+                                    <label class="custom-control-label" for="subscribe_me">Subscribe me to
+                                        Newsletter</label>
+                                </div>
+                                <button class="btn btn-primary btn-rounded margin-right-none" type="button" data-toast
+                                        data-toast-position="topRight" data-toast-type="success"
+                                        data-toast-icon="icon-circle-check" data-toast-title="Success!"
+                                        data-toast-message="Your profile updated successfuly.">Update Profile
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

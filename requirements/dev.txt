@@ -1,0 +1,4 @@
+--requirement production.txt
+
+flake8==3.5.0
+pylint==1.9.1
