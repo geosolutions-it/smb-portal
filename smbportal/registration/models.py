@@ -4,6 +4,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 class Position(models.Model):
     id = models.BigAutoField(primary_key=True)
 
@@ -41,11 +42,7 @@ class Receipt(models.Model):
     #rfid_id = models.ForeignKey(Tag,on_delete=models.CASCADE)
 
 
-class Prize(models.Model):
-    prize_id = models.AutoField(primary_key=True)
-    prizemanager_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    description = models.CharField(max_length=200)
+
 
 
 class Badge(models.Model):
@@ -54,7 +51,4 @@ class Badge(models.Model):
     type_of_badge = models.CharField(max_length=100)
 
 
-class PrizeandBadges(models.Model):
-    id = models.AutoField(primary_key= True)
-    prize_id = models.ForeignKey(Prize,on_delete=models.CASCADE)
-    badge_id = models.ForeignKey(Badge,on_delete=models.CASCADE)
+

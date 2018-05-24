@@ -2,14 +2,13 @@ from django.shortcuts import render
 from django.views.generic import \
 ListView, CreateView, UpdateView, DetailView
 from django.views.generic.detail import SingleObjectMixin
-from smbportal.registration.models import  User, Prize 
-from smbportal.profiles.models import EndUserProfile
+from smbportal.registration.models import  User 
+from smbportal.prizes.models import Prize
 from smbportal.vehicles.models import Vehicle, Tag
 from smbportal.profiles.models import EndUserProfile
 from multiprocessing.sharedctypes import template
 # Create your views here.
 from rest_framework import serializers
-
 # django-restfull framework
 from smbportal.registration.serializers import \
 VehicleSerializer, PrizeSerializer, UserSerializer, \
@@ -19,11 +18,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
-
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.views import generic
 import profile
+from django.forms.widgets import Textarea, SelectDateWidget
+from .forms import  EndUserForm
 
 
 class BikeViewSet(viewsets.ModelViewSet):
@@ -77,13 +77,15 @@ class TagViewSet(viewsets.ModelViewSet):
         
 class newuser(CreateView):
     model = EndUserProfile
-    fields = (
-        'username', 'password','email','gender','profile_type',
-         'first_name', 'last_name','phone_number',
-        )
+#     fields = (
+#         'username', 'password','email','gender','profile_type',
+#          'first_name', 'last_name','phone_number',
+#         )
+    form_class = EndUserForm
     exclude = []
     template_name = 'registration/newuser.html'
     success_url = "http://localhost:8000/registration/home/"
+    
     
     
 class vehicleList(ListView):

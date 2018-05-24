@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-23 20:56+0000\n"
+"POT-Creation-Date: 2018-05-24 13:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,31 +30,31 @@ msgstr "Segnala una bici rubata"
 msgid "About"
 msgstr "Di"
 
-#: smbportal/registration/templates/registration/base.html:120
+#: smbportal/registration/templates/registration/base.html:121
 msgid "Registration"
 msgstr "Registrazione"
 
-#: smbportal/registration/templates/registration/base.html:226
+#: smbportal/registration/templates/registration/base.html:222
 msgid "My Profile"
 msgstr "Il mio profilo"
 
-#: smbportal/registration/templates/registration/base.html:227
+#: smbportal/registration/templates/registration/base.html:223
 msgid "Messages"
 msgstr "messaggi"
 
-#: smbportal/registration/templates/registration/base.html:228
+#: smbportal/registration/templates/registration/base.html:224
 msgid "Settings"
 msgstr "impostazioni"
 
-#: smbportal/registration/templates/registration/base.html:230
+#: smbportal/registration/templates/registration/base.html:226
 msgid "Lock Screen"
 msgstr "Blocca schermo"
 
-#: smbportal/registration/templates/registration/base.html:231
+#: smbportal/registration/templates/registration/base.html:227
 msgid "Logout"
 msgstr "Disconnettersi"
 
-#: smbportal/registration/templates/registration/base.html:266
+#: smbportal/registration/templates/registration/base.html:262
 msgid "Restricted Area"
 msgstr "area riservata"
 
@@ -67,7 +67,9 @@ msgstr "Bici"
 msgid ""
 " Register new Bikes, update information about your bikes and delete \n"
 "                                    bikes off the system. "
-msgstr "Registra nuove biciclette, aggiorna le informazioni sulle tue bici ed elimina biciclette fuori dal sistema. "
+msgstr ""
+"Registra nuove biciclette, aggiorna le informazioni sulle tue bici ed "
+"elimina biciclette fuori dal sistema. "
 
 #: smbportal/registration/templates/registration/home.html:23
 #: smbportal/registration/templates/registration/home.html:26
@@ -78,7 +80,8 @@ msgstr "I premi"
 msgid ""
 " View all the prizes you can available in your \n"
 "                                    city."
-msgstr "Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
+msgstr ""
+"Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
 
 #: smbportal/registration/templates/registration/home.html:33
 #: smbportal/registration/templates/registration/home.html:35
@@ -98,7 +101,9 @@ msgstr "Badges"
 msgid ""
 "View all your Badges, the ones you've unlocked and \n"
 "                                    ones you need to get."
-msgstr "Visualizza tutti i tuoi badge, quelli che hai sbloccato e quelli che devi ottenere"
+msgstr ""
+"Visualizza tutti i tuoi badge, quelli che hai sbloccato e quelli che devi "
+"ottenere"
 
 #: smbportal/registration/templates/registration/login.html:136
 msgid "Login"
@@ -141,13 +146,17 @@ msgid "Confirm Password"
 msgstr "conferma password"
 
 #: smbportal/registration/templates/registration/newuser.html:150
+msgid "username"
+msgstr "nome utente"
+
+#: smbportal/registration/templates/registration/newuser.html:156
 msgid "Register"
 msgstr "Registrare"
 
-#: smbportal/settings.py:140
+#: smbportal/settings.py:141
 msgid "English"
 msgstr "English"
 
-#: smbportal/settings.py:141
+#: smbportal/settings.py:142
 msgid "Italian"
 msgstr "Italian"

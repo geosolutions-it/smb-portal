@@ -1,8 +1,10 @@
 
 from rest_framework import serializers
-from .models import Prize, Receipt
+from .models import Receipt
 from smbportal.vehicles.models import Vehicle, Tag
 from smbportal.profiles.models import EndUserProfile
+from smbportal.prizes.models import Prize
+
 
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
