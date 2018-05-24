@@ -130,8 +130,25 @@
                                             </a>
                                         </div>
                                     </div> -->
-                                    <!-- <h4 class="margin-bottom-1x">Or using form below</h4> -->
                                     {{ form.as_p }}
+                                    <div class="form-group input-group">
+                                        <input class="form-control" type="email" placeholder="Email" required>
+                                        <span class="input-group-addon"><i class="icon-mail"></i></span>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <input class="form-control" type="password" placeholder="Password" required>
+                                        <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                    </div>
+                                    <div class="d-flex flex-wrap justify-content-between padding-bottom-1x">
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" type="checkbox" id="remember_me" checked>
+                                            <label class="custom-control-label" for="remember_me">Remember me</label>
+                                        </div>
+                                        <a class="navi-link" href="ess_forget_password.html">Forgot password?</a>
+                                    </div>
+                                    <div class="text-center text-sm-right">
+                                        <button class="btn btn-primary margin-bottom-none" type="submit">Login</button>
+                                    </div>
                                     <div class="text-center text-sm-right">
                                         <button class="btn btn-primary margin-bottom-none" type="submit">{% trans 'Login' %}</button>
                                     </div>

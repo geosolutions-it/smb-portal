@@ -1,7 +1,14 @@
 from django.db import models
 from smbportal.registration.models import User
 
-
+type_of_vehicle = (
+    (0,'car'),
+    (1,'electric bike'),
+    (2, 'bike'),
+    (3,'electric car'),
+    (4,'fuel car'),
+    (5,'bus'),
+    )
 class Datapoint(models.Model):
     elevation = models.FloatField(blank=True, null=True)
     sessionid = models.BigIntegerField(blank=True, null=True)
@@ -40,7 +47,7 @@ class Vehicle(models.Model):
     model = models.CharField(max_length=100)
     colour = models.CharField(max_length=100)
     brand = models.IntegerField(blank=True,null=True)
-    type = models.IntegerField(blank=True, null=True)
+    type = models.IntegerField(blank=True, null=True, choices = type_of_vehicle)
     name = models.TextField(blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)# foreignkey to vehicle status
     lastposition = models.ForeignKey(Datapoint, models.DO_NOTHING, db_column='lastposition', blank=True, null=True)

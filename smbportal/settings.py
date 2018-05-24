@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'smbportal.profiles',
     'smbportal.vehicles',
     'smbportal.prizes',
+    'smbportal.badges',
     
     #third party apps
      'rest_framework',

@@ -1,5 +1,6 @@
 from django.db import models
-from smbportal.registration.models import User, Badge
+from smbportal.registration.models import User
+from smbportal.badges.models import Badge
 # Create your models here.
 class Prize(models.Model):
     prize_id = models.AutoField(primary_key=True)

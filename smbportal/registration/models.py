@@ -3,8 +3,30 @@ from django.conf import settings
 from rest_framework import serializers
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from random import choices
 
 
+public_transportation_choices = (
+    (0,'normal (> 10 strokes / month), '),
+    (1,'Light <10 strokes / month and> 10 rides / year),'),
+    (2,'very sporadic (<10 strokes / year)')
+    
+    
+    )
+
+customer_sharing_choices = (
+    (0,'bicycles'),
+    (1,'electric cars'),
+    (2,'fuell cars'),
+    )
+
+bicycle_usage_choices = (
+    (0,'the usual (on average at least 1 time per week),'),
+    (1,'socially (1 or more times a month), '),
+    (2,'seasonal (mainly used in summer), '),
+    (3,'sporadic (<12 times in a year),'),
+    (4,'never to move in city.'),
+    )
 class Position(models.Model):
     id = models.BigAutoField(primary_key=True)
 
@@ -31,8 +53,8 @@ class User(AbstractUser):
 
 # for determining a user Habbits
 class UserHabits(models.Model):
-    public_transportaion = models.IntegerField()  # from least to most amount, 1 - 3
-    customer_sharing = models.IntegerField()
+    public_transportaion = models.IntegerField(choices=public_transportation_choices)  # from least to most amount, 1 - 3
+    customer_sharing = models.IntegerField(choices=customer_sharing_choices)
     bicycle_usuage = models.IntegerField()
 
 
@@ -45,10 +67,7 @@ class Receipt(models.Model):
 
 
 
-class Badge(models.Model):
-    id = models.AutoField(primary_key=True)
-    number_of_badges = models.IntegerField()
-    type_of_badge = models.CharField(max_length=100)
+
 
 
 

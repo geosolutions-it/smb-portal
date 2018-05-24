@@ -5,7 +5,7 @@ from smbportal.registration.models import User
 
 
 class Analyse(models.Model):
-    endUser = models.ForeignKey(User,on_delete=models.CASCADE)
+    Analyst = models.ForeignKey(User,on_delete=models.CASCADE)
     position = modelsForeignKey(Datapoint,on_delete=models.CASCADE)
     city = models.TextField()
     awards = models.ForeignKey(Prize,on_delete=models.CASCADE)

@@ -9,6 +9,7 @@ class EndUserProfile(User):
     gender = models.CharField(max_length=20)
     phone_number = models.IntegerField(blank=True, null=True)
     bio = models.CharField(max_length=200)
+    platform_privacy_policy = models.BooleanField()
     date_created = models.DateField(blank=True, null=True)
     date_updated = models.DateField(blank=True, null=True)
     language_preference = models.IntegerField(blank=True, null=True)
