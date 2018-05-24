@@ -22,9 +22,13 @@ Steps for setting up SMB-Portal
 
 6. `pip install -r requirements.txt` in your shell/terminal.
 
-**make sure u create a database and user name savemybike on a postgis enabled postgresql server** 
+
 
 7.if postgresql isnt installed. download and install from the official website
+
+8. rename the local_sample.py.sample to local_sample.py
+
+9. write your down database setting in the local_sample.py
 
 8. then run `python manage.py makemigrations` then `python manage.py migrate`
 
