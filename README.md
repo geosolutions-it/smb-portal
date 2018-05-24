@@ -8,11 +8,17 @@ SaveMyByke portal
 Steps for setting up SMB-Portal
 
 
-1. clone this repo
+   
+1. initial an empty folder with `git init'
 
-2. create a virtual environment and name it smbportal.
+2. clone this repo with `git clone <repo address >`
 
-3. activate this environment.
+3. install virtualenv with `pip install virtualenv`
+
+
+2. create a virtual environment `virtualenv <virtual environment name >`.
+
+3. locate and activate this environment `source activate`.
 
 4. `pip install -r requirements.txt` in your shell/terminal.
 
