@@ -9,7 +9,7 @@ Steps for setting up SMB-Portal
 
 
    
-1. initial an empty folder with `git init`
+1. initialize  an empty folder with `git init`
 
 2. clone this repo with `git clone <repo address >`
 
