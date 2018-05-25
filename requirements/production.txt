@@ -13,6 +13,6 @@ six==1.11.0
 git+https://github.com/jhuapl-boss/django-oidc.git
 git+https://github.com/jhuapl-boss/drf-oidc-auth.git
 
-# personal fork of boss-oidc, while the project does not merge
+# fork of boss-oidc, while the project does not merge
 # https://github.com/jhuapl-boss/boss-oidc/pull/20
-git+https://github.com/ricardogsilva/boss-oidc.git
+git+https://github.com/geosolutions-it/boss-oidc.git
