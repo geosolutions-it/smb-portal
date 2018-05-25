@@ -1,0 +1,146 @@
+
+{% extends 'registration/base.html' %}
+{% block content %}
+<div class="" id="container">
+        <div>
+            <div class="pri_main_container" data-test-selector="page-annuals-pricing" data-test-language="en-us">
+                <div class="pri_container">
+                <div class="row"> 
+                    <div class="col-md-6 margin-bottom-2x">
+                    
+                        <h6 class="text-muted text-normal text-uppercase">Vehicles</h6>
+                        <hr class="margin-bottom-1x">
+                        <ul class="list-group">
+                            {% for bike in object_list %}
+    						<ul class="list-group-item">{{ bike.owner_id }} - {{ bike.name }}</ul>
+    						<a class="btn btn-outline-primary" href="{% url 'Vehicles' %}"> New Vehicles</a>
+								{% empty %}
+   							 <a class="btn btn-outline-primary" href="{% url 'Vehicles' %}"> New Vehicles</a>
+								{% endfor %}
+                        </ul>
+                       
+                    </div>
+                    <!-- <div class="col-md-6 margin-bottom-2x">
+                        <h6 class="text-muted text-normal text-uppercase">Link Example</h6>
+                        <hr class="margin-bottom-1x">
+                        <nav class="list-group">
+                            <a class="list-group-item" href="javascript:void(0)">Lorem Ipsum is</a>
+                            <a class="list-group-item active" href="javascript:void(0)">Lorem Ipsum is simply dummy</a>
+                            <a class="list-group-item" href="javascript:void(0)">Lorem Ipsum is</a>
+                            <a class="list-group-item" href="javascript:void(0)">Lorem Ipsum is simply</a>
+                            <a class="list-group-item" href="javascript:void(0)">Lorem Ipsum is simply</a>
+                        </nav>
+                    </div> -->
+                
+                <!-- <div class="row pt-1">
+                    <div class="col-md-6 margin-bottom-2x">
+                        <h6 class="text-muted text-normal text-uppercase">With Icons</h6>
+                        <hr class="margin-bottom-1x">
+                        <nav class="list-group">
+                            <a class="list-group-item" href="javascript:void(0)"><i class="icon-eye"></i> Lorem Ipsum is</a>
+                            <a class="list-group-item active" href="javascript:void(0)"><i class="icon-bell"></i> Lorem Ipsum is simply dummy</a>
+                            <a class="list-group-item" href="javascript:void(0)"><i class="icon-cog"></i> Lorem Ipsum is</a>
+                            <a class="list-group-item" href="javascript:void(0)"><i class="icon-umbrella"></i> Lorem Ipsum is simply</a>
+                            <a class="list-group-item" href="javascript:void(0)"><i class="icon-globe"></i> Lorem Ipsum is simply</a>
+                        </nav>
+                    </div>
+                    <div class="col-md-6 margin-bottom-2x">
+                        <h6 class="text-muted text-normal text-uppercase">With Badges</h6>
+                        <hr class="margin-bottom-1x">
+                        <nav class="list-group">
+                            <a class="list-group-item with-badge" href="javascript:void(0)">
+                                Lorem Ipsum is
+                                <span class="badge badge-default badge-pill">15</span>
+                            </a>
+                            <a class="list-group-item with-badge active" href="javascript:void(0)">
+                                Lorem Ipsum is simply dummy
+                                <span class="badge badge-default badge-pill">8</span>
+                            </a>
+                            <a class="list-group-item with-badge" href="javascript:void(0)">
+                                Lorem Ipsum is
+                                <span class="badge badge-warning badge-pill">6</span>
+                            </a>
+                            <a class="list-group-item with-badge" href="javascript:void(0)">
+                                Lorem Ipsum is simply
+                                <span class="badge badge-primary badge-pill">23</span>
+                            </a>
+                            <a class="list-group-item with-badge" href="javascript:void(0)">
+                                Lorem Ipsum is simply
+                                <span class="badge badge-danger badge-pill">19</span>
+                            </a>
+                        </nav>
+                    </div>
+                </div> -->
+                <!-- <div class="row pt-1">
+                    <div class="col-12">
+                        <h6 class="text-muted text-normal text-uppercase">Contextual Classes</h6>
+                        <hr class="margin-bottom-1x">
+                    </div>
+                    <div class="col-md-6 margin-bottom-2x">
+                        <ul class="list-group">
+                            <li class="list-group-item">Lorem Ipsum is</li>
+                            <li class="list-group-item list-group-item-success">Lorem Ipsum is simply dummy</li>
+                            <li class="list-group-item list-group-item-info">Lorem Ipsum is</li>
+                            <li class="list-group-item list-group-item-warning">Lorem Ipsum is simply</li>
+                            <li class="list-group-item list-group-item-danger">Lorem Ipsum is simply</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 margin-bottom-2x">
+                        <nav class="list-group">
+                            <a class="list-group-item list-group-item-action" href="javascript:void(0)">
+                                Lorem Ipsum is
+                            </a>
+                            <a class="list-group-item list-group-item-action list-group-item-success" href="javascript:void(0)">
+                                Lorem Ipsum is simply dummy
+                            </a>
+                            <a class="list-group-item list-group-item-action list-group-item-info" href="javascript:void(0)">
+                                Lorem Ipsum is
+                            </a>
+                            <a class="list-group-item list-group-item-action list-group-item-warning" href="javascript:void(0)">
+                                Lorem Ipsum is simply
+                            </a>
+                            <a class="list-group-item list-group-item-action list-group-item-danger" href="javascript:void(0)">
+                                Lorem Ipsum is simply
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div> -->
+            <!-- END COL-9 -->
+
+            <!-- BEGIN COL-3 -->
+            <!-- <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
+                SIDE MENU
+                <nav class="list-group" id="ui_elements_nav">
+                    <a class="list-group-item list-group-item-action" href="ui_accordion.html">Accordion</a>
+                    <a class="list-group-item list-group-item-action" href="ui_alerts.html">Alerts</a>
+                    <a class="list-group-item list-group-item-action" href="ui_buttons.html">Buttons</a>
+                    <a class="list-group-item list-group-item-action" href="ui_cards.html">Cards</a>
+                    <a class="list-group-item list-group-item-action" href="ui_forms.html">Forms</a>
+                    <a class="list-group-item list-group-item-action" href="ui_form_layouts.html">Form Layouts</a>
+                    <a class="list-group-item list-group-item-action" href="ui_gallery.html">Gallery</a>
+                    <a class="list-group-item list-group-item-action" href="ui_images_figures.html">Images & Figures</a>
+                    <a class="list-group-item list-group-item-action" href="ui_list_group.html">List Group</a>
+                    <a class="list-group-item list-group-item-action" href="ui_media_object.html">Media Object</a>
+                    <a class="list-group-item list-group-item-action" href="ui_modal.html">Modal</a>
+                    <a class="list-group-item list-group-item-action" href="ui_pagination.html">Pagination</a>
+                    <a class="list-group-item list-group-item-action" href="ui_pills.html">Pills</a>
+                    <a class="list-group-item list-group-item-action" href="ui_progress_bars.html">Progress Bars</a>
+                    <a class="list-group-item list-group-item-action" href="ui_steps.html">Steps</a>
+                    <a class="list-group-item list-group-item-action" href="ui_tables.html">Tables</a>
+                    <a class="list-group-item list-group-item-action" href="ui_tabs.html">Tabs</a>
+                    <a class="list-group-item list-group-item-action" href="ui_toast_notification.html">Toast
+                        Notifications</a>
+                    <a class="list-group-item list-group-item-action" href="ui_sweet_alert.html">Sweet Alert</a>
+                    <a class="list-group-item list-group-item-action" href="ui_tooltips.html">Tooltips & Popovers</a>
+                    <a class="list-group-item list-group-item-action" href="ui_typography.html">Typography</a>
+                    <a class="list-group-item list-group-item-action" href="ui_widgets.html">Widgets</a>
+
+                </nav>
+            </div> -->
+            <!-- END COL-3 -->
+        </div>
+        <!-- END ROW -->
+    </div>
+
+{% endblock %}

@@ -1,0 +1,372 @@
+{% load static %}
+{% load static i18n %}
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>
+        Save my Bike
+    </title>
+    <!-- SEO Meta Tags-->
+    <!-- <meta name="description" content="Silver Edge Modern Bootstrap 4 Admin Dashboard - PVR Tech Admin">
+    <meta name="keywords" content="Silver Edge Modern Bootstrap 4 Admin Dashboard, PVR Tech Admin, PVR Admin, PVR">
+    <meta name="author" content=""> -->
+    <!-- Mobile Specific Meta Tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Favicon and Apple Icons-->
+    <link rel="icon" type="image/png" href="http://via.placeholder.com/32x32">
+    <link rel="icon" type="image/png" href="http://via.placeholder.com/32x32">
+    <!-- Vendor Styles including: Bootstrap, Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/css/vendor.min.css' %}">
+    <!-- Main Template Styles-->
+    <link id="mainStyles" rel="stylesheet" media="screen" href="{% static 'assets/css/styles.css'%}">
+    <!-- Modernizr-->
+    <script src="{% static 'assets/js/modernizr.min.js' %}"></script>
+    <!-- <script src ="{% static 'assets/js/dashboard_v3.js' %}"></script> -->
+</head>
+ <body>
+
+<!-- END OFF-CANVAS MOBILE MENU-->
+
+<!-- BEGIN TOPBAR-->
+<!-- <div class="topbar">
+    <div class="topbar-column">
+        <a class="hidden-md-down" href="mailto:palanivelayudam@gmail.com">
+            <i class="icon-mail"></i>&nbsp; pvrtechstudio.com
+        </a>
+        <a class="hidden-md-down" href="tel:+919159547048">
+            <i class="icon-bell"></i>&nbsp; +91 9159547048
+        </a>
+        <a class="social-button fa fa-facebook shape-none sb-dark" href="javascript:void(0)" target="_blank">
+            <i class="socicon-facebook"></i></a>
+        <a class="social-button fa fa-twitter shape-none sb-dark" href="javascript:void(0)" target="_blank">
+            <i class="socicon-twitter"></i></a>
+        <a class="social-button fa fa-instagram shape-none sb-dark" href="javascript:void(0)" target="_blank">
+            <i class="socicon-instagram"></i>
+        </a>
+        <a class="social-button fa fa-google-plus shape-none sb-dark" href="javascript:void(0)" target="_blank">
+            <i class="socicon-pinterest"></i>
+        </a>
+    </div>
+    <div class="topbar-column">
+        <a class="hidden-md-down" href="javascript:void(0)"><i class="icon-download"></i>&nbsp; Designed by <a
+                href="http://www.pvrtechstudio.com/" class="m-l-5" target="_blank">PVR Tech Studio</a></a>
+    </div>
+</div> -->
+<!-- END TOPBAR-->
+
+<!-- NAVBAR-->
+<header class="navbar navbar-sticky">
+    <!-- BEGIN SEARCH-->
+    <form class="site-search" method="get">
+        <input type="text" name="site_search" placeholder="Type to search..." autocomplete="off">
+        <div class="search-tools">
+            <span class="clear-search">Clear</span>
+            <span class="close-search"><i class="icon-cross"></i></span>
+        </div>
+    </form>
+    <!-- END SEARCH-->
+    <div class="site-branding">
+        <div class="inner">
+          <!-- SITE LOGO-->
+            <a class="site-logo" href="index.html">
+                <img src="{% static 'assets/img/logo.png' %}" alt="PVR_Tech_Studio">
+            </a>
+        </div>
+    </div>
+    <!-- BEGIN MAIN NAVIGATION-->
+    <nav class="site-menu">
+        <ul>
+            <li class="has-megamenu">
+                <a href="{% url 'home' %}"><span>{% trans 'Home' %}</span></a>
+               <!--  <ul class="mega-menu">
+                    <li>
+                        <a class="d-block img-thumbnail text-center navi-link" href="index.html">
+                            <img alt="dashboard_1" src="http://via.placeholder.com/826x456">
+                            <h6 class="mt-3">Dashboard v1</h6>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block img-thumbnail text-center navi-link" href="dashboard_v2.html">
+                            <img alt="dashboard_v2" src="http://via.placeholder.com/826x456">
+                            <h6 class="mt-3">Dashboard v2</h6>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block img-thumbnail text-center navi-link" href="dashboard_v3.html">
+                            <img alt="dashboard_v3" src="http://via.placeholder.com/826x456">
+                            <h6 class="mt-3">Dashboard v3</h6>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="img-thumbnail text-center">
+                            <img alt="More To Come. Stay Tuned!" src="http://via.placeholder.com/826x456">
+                            <h6 class="mt-3">More to come. Stay Tuned!</h6>
+                        </div>
+                    </li>
+                </ul> -->
+            </li>
+            
+            
+            <li>
+                <a href="javascript:void(0)"><span>{% trans 'Report a stolen Bike?' %}</span></a>
+                
+            </li>
+            <li>
+                <a href="javascript:void(0)"><span>{% trans 'About' %}</span></a>
+                
+            </li>
+           <!--  <class="active" style=color:#F51DAF;"> -->
+            <li ><button  class="btn btn-sm btn-primary" type="button" onclick="{% url 'newuser' %}">{% trans 'Registration' %}</button>
+              <!--   <ul class="sub-menu">
+                    <li class="active"><a href="page_landing.html">Landing Page</a></li>
+                    <li><a href="page_search_results.html">Search Results</a></li>
+                    <li><a href="page_help.html">Help / FAQ</a></li>
+                    <li><a href="page_coming_soon.html">Coming Soon</a></li>
+                </ul> -->
+            </li>
+           
+        </ul>
+    </nav>
+    <!-- END MAIN NAVIGATION-->
+    
+    
+    
+
+    <!-- BEGIN TOOLBAR-->
+    <div class="toolbar">
+        <div class="inner">
+            <div class="tools">
+                <!-- <div class="search">
+                    <i class="icon-search"></i>
+                </div> -->
+                <!-- <div class="cart">
+                    <a href="javascript:void(0)"></a><i class="icon-bell"></i>
+                    <span class="count">3</span><span class="subtotal">New Notification</span>
+                    <div class="toolbar-dropdown">
+                        <div class="dropdown-product-item">
+                            <span class="dropdown-product-remove">
+                                <i class="icon-cross"></i>
+                            </span>
+                            <a class="dropdown-product-thumb" href="javascript:void(0)">
+                                <img src="http://via.placeholder.com/128x128" alt="Product">
+                            </a>
+                            <div class="dropdown-product-info">
+                                <a class="dropdown-product-title" href="javascript:void(0)">
+                                    New User Registered
+                                </a>
+                                <span class="dropdown-product-details">
+                                    Lorem Ipsum is simply dummy text.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dropdown-product-item">
+                            <span class="dropdown-product-remove">
+                                <i class="icon-cross"></i>
+                            </span>
+                            <a class="dropdown-product-thumb" href="javascript:void(0)">
+                                <img src="http://via.placeholder.com/128x128" alt="Product">
+                            </a>
+                            <div class="dropdown-product-info">
+                                <a class="dropdown-product-title" href="javascript:void(0)">
+                                    John Smith
+                                </a>
+                                <span class="dropdown-product-details">
+                                    Lorem Ipsum is simply dummy text.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dropdown-product-item">
+                            <span class="dropdown-product-remove">
+                                <i class="icon-cross"></i>
+                            </span>
+                            <a class="dropdown-product-thumb" href="javascript:void(0)">
+                                <img src="http://via.placeholder.com/128x128" alt="Product">
+                            </a>
+                            <div class="dropdown-product-info">
+                                <a class="dropdown-product-title" href="javascript:void(0)">
+                                    Server Error Reports
+                                </a>
+                                <span class="dropdown-product-details">
+                                    Lorem Ipsum is simply dummy text.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="toolbar-dropdown-group">
+                            <div class="column">
+                                <a class="btn btn-sm btn-block btn-secondary" href="javascript:void(0)">
+                                    Clear All
+                                </a>
+                            </div>
+                            <div class="column">
+                                <a class="btn btn-sm btn-block btn-success" href="javascript:void(0)">
+                                    View All
+                                </a>
+                            </div>
+                            <div class="column d-sm-block d-md-none" id="close_notification">
+                                <a class="btn btn-sm btn-block btn-success" href="javascript:void(0)">
+                                    Close
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="account">
+                    <a href="javascript:void(0)"></a><i class="icon-head"></i>
+                    <ul class="toolbar-dropdown">
+                        <li class="sub-menu-user">
+                            <div class="user-ava">
+                                <img src="http://via.placeholder.com/128x128" alt="Administrator">
+                            </div>
+                            <div class="user-info">
+                                <h6 class="user-name">{{request.user}}</h6>
+                                <span class="text-xs text-muted"></span>
+                            </div>
+                        </li>
+                        <li><a href="{% url 'DetailProfile' request.user %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
+                        <li><a href="javascript:void(0)"> <i class="icon-mail"></i> {% trans 'Messages' %}</a></li>
+                        <li><a href="javascript:void(0)"> <i class="icon-cog"></i> {% trans 'Settings' %}</a></li>
+                        <li class="sub-menu-separator"></li>
+                        <li><a href="javascript:void(0)"> <i class="icon-server"></i> {% trans 'Lock Screen' %}</a></li>
+                        <li><a href="{% url 'logout' %}"> <i class="icon-lock"></i> {% trans 'Logout' %}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END TOOLBAR-->
+</header>
+
+<!-- BEGIN MAIN CONTENT-->
+<section class="container padding-top-3x padding-bottom-2x">
+
+	    
+</section>
+<div class="offcanvas-wrapper">
+
+
+   {%  block content  %}
+   {% endblock %}
+   
+    
+
+    <!-- BEGIN SITE FOOTER-->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row p-t-70">
+                <div class="col-lg-3 col-md-6">
+                    <!-- Contact Info-->
+                    
+                </div>
+                
+                <div class="col-lg-9 col-md-9">
+                    <!-- About Us-->
+                    <section class="widget widget-links widget-light-skin">
+                        <ul class="">
+                            <li>Save my Bike // info@savemybike.eu // Privacy Policy // Credits // <a  class="btn btn-sm btn-primary" href="#"><span>{% trans "Restricted Area" %}</span></a></li>
+                            
+                            
+                        </ul>
+                         <a class="social-button shape-circle sb-facebook sb-light-skin" href="javascript:void(0)">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a class="social-button shape-circle sb-twitter sb-light-skin" href="javascript:void(0)">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a class="social-button shape-circle sb-instagram sb-light-skin" href="javascript:void(0)">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a class="social-button shape-circle sb-google-plus sb-light-skin" href="javascript:void(0)">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                       <!--  <a class="social-button shape-circle sb-pintrest sb-light-skin" href="javascript:void(0)">
+                            <i class="fa fa-pintrest"></i>
+                        </a> -->
+                    
+                    </section> 
+                </div>
+                
+            </div>
+            <!-- Copyright-->
+            <div class="container footer-copyright">
+                <!-- COPYRIGHT-->
+                
+                <div class="column footer_right">
+                    <!-- <a href="http://www.pvrtechstudio.com/" target="_blank">PVR Tech Studio</a> We Design Your Future. -->
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END SITE FOOTER-->
+</div>
+<!-- END MAIN CONTENT-->
+
+<!-- BEGIN BACK TO TOP BUTTON-->
+<a class="scroll-to-top-btn" href="javascript:void(0)">
+    <i class="icon-arrow-up"></i>
+</a>
+<!-- END BACK TO TOP BUTTON-->
+
+<!-- Backdrop-->
+<div class="site-backdrop"></div>
+
+<!-- BEGIN PRELOADER -->
+<div id="preloader">
+    <div class="inner">
+        <span class="loader"></span>
+    </div>
+</div>
+<!-- END PRELOADER -->
+
+<!-- BEGIN LIVE CUSTOMIZER -->
+<!-- <div class="pvr-floated-chat-btn" id="live_customizer">
+    <i class="icon-cog live_customizer_btn"></i>
+    <span class="live_customizer_btn">Settings</span>
+</div> -->
+<!-- END LIVE CUSTOMIZER -->
+
+<!-- BEGIN LIVE CUSTOMIZER -->
+<div class="menu-wrap live_customizer bg_svg_blue">
+    <nav class="menu">
+        <div class="profile">
+            <img src="http://via.placeholder.com/128x128" alt="Andrew"/>
+            <span>Administrator</span>
+        </div>
+        <div class="link-list fixed-plugin">
+            <div>
+                <span class="fl">Dark Layout</span>
+                <span>
+                  <input type="checkbox" class="color_dark_settings"/>
+                </span>
+            </div>
+            <div>
+                <span class="fl">Enable Sidebar</span>
+                <span>
+                    <input type="checkbox" class="minified_switch_settings" checked/>
+                </span>
+            </div>
+            <div>
+                <span class="fl">Nav Bar Sticky</span>
+                <span>
+                    <input type="checkbox" class="minified_switch_nav_sticky"/>
+                </span>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="icon-list_bottom">
+            <a href="javascript:void(0)"><i class="fa fa-fw fa-home"></i></a>
+            <a href="javascript:void(0)"><i class="fa fa-fw fa-question-circle"></i></a>
+            <a href="javascript:void(0)"><i class="fa fa-fw fa-power-off"></i></a>
+        </div>
+    </nav>
+</div>
+
+<!-- END LIVE CUSTOMIZER -->
+
+<!-- BEGIN CORE JS -->
+<script src="{% static 'assets/js/vendor.min.js' %}"></script>
+<script src="{% static 'assets/js/scripts.min.js' %}"></script>
+{% block js %}
+{% endblock %}
+</body>
+</html>
