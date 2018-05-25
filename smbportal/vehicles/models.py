@@ -1,54 +1,38 @@
+#########################################################################
+#
+# Copyright 2018, GeoSolutions Sas.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree.
+#
+#########################################################################
+
+import uuid
+
 from django.db import models
 from django.conf import settings
-from django.contrib.gis.db import models as gismodels
 
-
-# TODO: decide how to integrate external tables that are used by other apps
 
 class Vehicle(models.Model):
-    # id = models.BigAutoField(primary_key=True)
-    last_update = models.DateTimeField(
-        auto_now=True,
-        db_column="lastupdate",
+    id = models.UUIDField(
+        primary_key=True,
+        editable=False,
+        default=uuid.uuid4,
     )
     last_position = models.ForeignKey(
-        "Datapoint",
-        models.DO_NOTHING,
-        db_column='lastposition',
+        "tracks.CollectedPoint",
+        models.CASCADE,
         blank=True,
         null=True
     )
-
-    model = models.CharField(max_length=100)
-    colour = models.CharField(max_length=100)
-    brand = models.IntegerField(blank=True, null=True)
-    type = models.IntegerField(blank=True, null=True)
-    name = models.TextField(blank=True, null=True)
-    status = models.IntegerField(
-        blank=True,
-        null=True
-    )  # foreignkey to vehicle status
-    image = models.TextField(blank=True, null=True)
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        models.DO_NOTHING,
-        db_column='owner',
-        blank=True,
-        null=True
-    )
-    field_id = models.UUIDField(
-        db_column='_id',
-        blank=True,
-        null=True
-    )  # Field renamed because it started with '_'.
 
     class Meta:
-        db_table = 'vehicles'
-        managed = False
+        abstract = True
 
 
 # TODO: Integrate django-photolog for bike picture gallery
-class Bike(models.Model):
+class Bike(Vehicle):
     RACING_BIKE = "racing"
     CITY_BIKE = "city"
     MOUNTAIN_BIKE = "mountain"
@@ -65,9 +49,13 @@ class Bike(models.Model):
 
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        models.CASCADE
+        on_delete=models.CASCADE
     )
-    type_ = models.CharField(
+    last_update = models.DateTimeField(
+        auto_now=True,
+        db_column="lastupdate",
+    )
+    bike_type = models.CharField(
         max_length=20,
         choices=(
             (RACING_BIKE, RACING_BIKE),
@@ -76,14 +64,6 @@ class Bike(models.Model):
             (FOLDABLE_BIKE, FOLDABLE_BIKE),
         ),
         default=CITY_BIKE,
-    )
-    brand = models.CharField(
-        max_length=50,
-        blank=True,
-    )
-    model = models.CharField(
-        max_length=50,
-        blank=True,
     )
     gear = models.CharField(
         max_length=50,
@@ -104,14 +84,11 @@ class Bike(models.Model):
         ),
         default=DISK_BRAKE,
     )
-    color = models.CharField(
-        max_length="100",
-        blank=True,
-    )
-    saddle = models.CharField(
-        max_length=100,
-        blank=True,
-    )
+    nickname = models.CharField(max_length=100)
+    brand = models.CharField(max_length=50, blank=True)
+    model = models.CharField(max_length=50, blank=True)
+    color = models.CharField(max_length=100, blank=True)
+    saddle = models.CharField(max_length=100, blank=True)
     has_basket = models.BooleanField(default=False)
     has_cargo_rack = models.BooleanField(default=False)
     has_lights = models.BooleanField(default=False)
@@ -131,11 +108,11 @@ class BikePossessionHistory(models.Model):
 
     bike = models.ForeignKey(
         "Bike",
-        models.CASCADE
+        on_delete=models.CASCADE
     )
     reporter = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        models.CASCADE,
+        on_delete=models.CASCADE,
     )
     possession_state = models.CharField(
         max_length=50,
@@ -153,51 +130,11 @@ class BikePossessionHistory(models.Model):
     )
 
 
-class VehicleType(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.TextField(blank=True, null=True)
-    icon = models.TextField(blank=True, null=True)
-
-    class Meta:
-        db_table = 'vehicle_types'
-
-
-class Tag(models.Model):
-    epc = models.TextField(primary_key=True)
-    vehicle = models.ForeignKey(Vehicle, models.DO_NOTHING)
-
-    class Meta:
-        db_table = 'tags'
-
-
-class Datapoint(gismodels.Model):
-    elevation = models.FloatField(blank=True, null=True)
-    sessionid = models.BigIntegerField(blank=True, null=True)
-    timestamp = models.BigIntegerField(blank=True, null=True)
-    accelerationx = models.FloatField(blank=True, null=True)
-    accelerationy = models.FloatField(blank=True, null=True)
-    accelerationz = models.FloatField(blank=True, null=True)
-    accuracy = models.FloatField(blank=True, null=True)
-    batconsumptionperhour = models.FloatField(blank=True, null=True)
-    batterylevel = models.FloatField(blank=True, null=True)
-    devicebearing = models.FloatField(blank=True, null=True)
-    devicepitch = models.FloatField(blank=True, null=True)
-    deviceroll = models.FloatField(blank=True, null=True)
-    gps_bearing = models.FloatField(blank=True, null=True)
-    humidity = models.FloatField(blank=True, null=True)
-    lumen = models.FloatField(blank=True, null=True)
-    pressure = models.FloatField(blank=True, null=True)
-    proximity = models.FloatField(blank=True, null=True)
-    speed = models.FloatField(blank=True, null=True)
-    temperature = models.FloatField(blank=True, null=True)
-    vehiclemode = models.IntegerField(blank=True, null=True)
-    serialversionuid = models.BigIntegerField(blank=True, null=True)
-    color = models.BigIntegerField(blank=True, null=True)
-    username = models.TextField(blank=True)
-    field_id = models.UUIDField(db_column='_id')
-    vehicle_id = models.UUIDField(blank=True, null=True)
-    the_geom = gismodels.PointField()
-
-    class Meta:
-        db_table = 'datapoints'
-        managed = False
+class PhysicalTag(models.Model):
+    bike = models.ForeignKey(
+        "Bike",
+        on_delete=models.CASCADE,
+    )
+    epc = models.TextField(
+        help_text="Electronic Product Code"
+    )

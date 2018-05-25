@@ -2,18 +2,26 @@
 
 Steps for setting up this project:
 
+*  Create a postgis database
+
 *  clone this repo
 
-*  create a virtual environment and name it smbportal.
-
-*  activate this environment.
+*  create a virtual environment and activate it
 
 *  `pip install -r requirements/production.txt` in your shell/terminal.
 
-*  make sure to create a database and user name savemybike on a postgis enabled postgresql server** 
+*  Ensure you have all the variables defined in `deployment/demo.env`,
+   (with appropriate values) in your environment and that they will be 
+   exported to child processes
 
-*  then run `python manage.py makemigrations` then `python manage.py migrate`
+*  Create migrations for the external `bossoidc` app
 
-*  then run the server with the command `python manage.py runserver`
+   ```bash
+   python3 manage.py makemigrations bossoidc
+   ```
 
-*  in your web browser enter 'localhost:8000/login'
+*  Run `python manage.py migrate` in order to have the DB structure be created
+
+*  Run the server with the command `python manage.py runserver 0:8000`
+
+*  in your web browser enter 'localhost:8000'

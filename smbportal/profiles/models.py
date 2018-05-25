@@ -8,47 +8,42 @@
 #
 #########################################################################
 
-from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 # TODO: Integrate with django-avatar for avatar support
-# TODO: Decide on and improve integration with external tables
+# TODO: do we need to add the `status` attribute?
+# TODO: do we need to add the `_id` attribute?
 class SmbUser(AbstractUser):
     """Default user model for smb-portal.
 
-    This model's schema cannot be changed at-will.
-    This model has some unusual properties, like the custom ``db_table``
-    meta option and the mapping of some attributes to explicit table_column
-    names. This is due to the fact that the database table that is used by the
-    model is being shared between the smb-portal and other smb apps.
-
-    Some of the underlying DB table columns are not needed for the smb-portal
-    and are therefore not mapped to any django model attributes.
+    This model's schema cannot be changed at-will since the underlying DB table
+    is shared with other smb apps
 
     """
 
     nickname = models.CharField(
         max_length=100,
-        db_column="preferred_username"
+    )
+    language_preference = models.CharField(
+        max_length=20,
+        choices=((k, v) for k, v in settings.LANGUAGES),
+        default="en"
     )
     sub = models.TextField(
         help_text="The OpenID Direct subject. This is the effective user "
-                  "identifier in the authentication provider",
-        unique=True
+                  "identifier in the authentication provider. This attribute "
+                  "is required by other smb apps, it is not used "
+                  "by smb-portal",
+        blank=True
     )
-    language_preference = models.CharField(
-        choices=((k, v) for k, v in settings.LANGUAGES.items()),
-        default="en"
+    cognito_user_status = models.BooleanField(
+        default=True,
+        help_text="This attribute is required by other smb apps, it is not "
+                  "used by smb-portal"
     )
-    # ``cognito:user_status`` column is not mapped to this model
-    # ``status`` column is not mapped to this model
-    # ``_id`` column is not mapped to this model
-
-    class Meta:
-        db_table = "users"
-        managed = False
 
 
 # TODO: Integrate data sharing policies
@@ -61,7 +56,8 @@ class EndUserProfile(models.Model):
     PRIVATE = "private"
 
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
     )
     date_updated = models.DateTimeField(
         auto_now=True
