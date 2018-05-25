@@ -8,13 +8,10 @@
 #
 #########################################################################
 
-"""smbportal URL Configuration"""
+from django.urls import path
 
-from django.conf.urls import url, include
-from django.contrib import admin
-from django.conf.urls.i18n import i18n_patterns
+from . import views
 
-urlpatterns = i18n_patterns(
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', include("profiles.urls")),
-)
+urlpatterns = [
+    path("", views.index, name="index")
+]

@@ -28,13 +28,20 @@ def get_environment_variable(var_name, default_value=None):
     return value
 
 
-def get_boolean_env_value(environment_value):
-    return True if environment_value.lower() == "true" else False
+def get_boolean_env_value(environment_value, default_value=None):
+    raw_value = get_environment_variable(
+        environment_value,
+        default_value=default_value
+    )
+    return True if raw_value.lower() in ("true", "1") else False
 
 
-def get_list_env_value(environment_value, separator=":"):
-    return [item for item in environment_value.split(separator) if
-            item != ""]
+def get_list_env_value(environment_value, separator=":", default_value=None):
+    raw_value = get_environment_variable(
+        environment_value,
+        default_value=default_value
+    )
+    return [item for item in raw_value.split(separator) if item != ""]
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -48,9 +55,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = get_environment_variable("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = get_boolean_env_value("DJANGO_DEBUG", False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = get_list_env_value(
+    "DJANGO_ALLOWED_HOSTS", separator=" ", default_value="*")
 
 
 # Application definition
@@ -67,6 +75,7 @@ INSTALLED_APPS = [
     'djangooidc',
     'profiles.apps.ProfilesConfig',
     'vehicles.apps.VehiclesConfig',
+    'tracks.apps.TracksConfig',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +89,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'base.urls'
 
 TEMPLATES = [
     {
@@ -99,20 +108,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
-
-AUTH_USER_MODEL = 'profiles.SmbUser'
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+WSGI_APPLICATION = 'base.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(
-        get_environment_variable("DJANGO_DATABASE_URL"))
+        get_environment_variable(
+            "DJANGO_DATABASE_URL",
+            default_value="sqlite:///{}".format(
+                os.path.join(BASE_DIR, "db.sqlite3")))
+    )
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
+AUTH_USER_MODEL = 'profiles.SmbUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -132,6 +139,11 @@ AUTH_PASSWORD_VALIDATORS = [
                  'NumericPasswordValidator'),
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'rules.permissions.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
