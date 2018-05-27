@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "bossoidc",
     "djangooidc",
+    "base",
     "keycloakauth.apps.KeycloakauthConfig",
     "profiles.apps.ProfilesConfig",
     "vehicles.apps.VehiclesConfig",

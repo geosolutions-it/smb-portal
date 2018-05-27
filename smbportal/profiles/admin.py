@@ -2,6 +2,7 @@ from bossoidc.admin import KeycloakInline
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from djangooidc.views import logout
 
 from . import models
@@ -38,4 +39,5 @@ class SmbUserAdmin(UserAdmin):
         return False
 
 
+admin.site.unregister(get_user_model())
 admin.site.register(models.SmbUser, SmbUserAdmin)

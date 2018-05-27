@@ -14,12 +14,6 @@ Steps for setting up this project:
    (with appropriate values) in your environment and that they will be 
    exported to child processes
 
-*  Create migrations for the external `bossoidc` app
-
-   ```bash
-   python3 manage.py makemigrations bossoidc
-   ```
-
 *  Run `python manage.py migrate` in order to have the DB structure be created
 
 *  Run the server with the command `python manage.py runserver 0:8000`
