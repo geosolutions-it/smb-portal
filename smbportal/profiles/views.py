@@ -10,6 +10,10 @@
 
 from django.conf import settings
 from django.http import HttpResponse
+from django.views.generic import DetailView
+from django.views import View
+
+from . import models
 
 
 def index(request):
@@ -27,3 +31,13 @@ def index(request):
     )
     return HttpResponse(raw_response)
 
+
+class EndUserDisplay(DetailView):
+    model = models.SmbUser
+    
+
+class EndUserView(View):
+
+    def get(self, request, *args, **kwargs):
+        view = EndUserDisplay.as_view()
+        return view(request, *args, **kwargs)

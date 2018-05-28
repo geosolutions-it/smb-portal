@@ -12,13 +12,7 @@ Steps for setting up this project:
 
 *  Ensure you have all the variables defined in `deployment/demo.env`,
    (with appropriate values) in your environment and that they will be 
-   exported to child processes
-
-*  Create migrations for the external `bossoidc` app
-
-   ```bash
-   python3 manage.py makemigrations bossoidc
-   ```
+   exported to child processes. 
 
 *  Run `python manage.py migrate` in order to have the DB structure be created
 

@@ -64,54 +64,56 @@ ALLOWED_HOSTS = get_list_env_value(
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.gis',
-    'bossoidc',
-    'djangooidc',
-    'profiles.apps.ProfilesConfig',
-    'vehicles.apps.VehiclesConfig',
-    'tracks.apps.TracksConfig',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.gis",
+    "bossoidc",
+    "djangooidc",
+    "base",
+    "keycloakauth.apps.KeycloakauthConfig",
+    "profiles.apps.ProfilesConfig",
+    "vehicles.apps.VehiclesConfig",
+    "tracks.apps.TracksConfig",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'base.urls'
+ROOT_URLCONF = "base.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.i18n',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.i18n",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'base.wsgi.application'
+WSGI_APPLICATION = "base.wsgi.application"
 
 DATABASES = {
-    'default': dj_database_url.parse(
+    "default": dj_database_url.parse(
         get_environment_variable(
             "DJANGO_DATABASE_URL",
             default_value="sqlite:///{}".format(
@@ -119,59 +121,60 @@ DATABASES = {
     )
 }
 
-AUTH_USER_MODEL = 'profiles.SmbUser'
+AUTH_USER_MODEL = "profiles.SmbUser"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': ('django.contrib.auth.password_validation.'
-                 'UserAttributeSimilarityValidator'),
+        "NAME": ("django.contrib.auth.password_validation."
+                 "UserAttributeSimilarityValidator"),
     },
     {
-        'NAME': (
-            'django.contrib.auth.password_validation.MinimumLengthValidator'),
+        "NAME": (
+            "django.contrib.auth.password_validation.MinimumLengthValidator"),
     },
     {
-        'NAME': (
-            'django.contrib.auth.password_validation.CommonPasswordValidator'),
+        "NAME": (
+            "django.contrib.auth.password_validation.CommonPasswordValidator"),
     },
     {
-        'NAME': ('django.contrib.auth.password_validation.'
-                 'NumericPasswordValidator'),
+        "NAME": ("django.contrib.auth.password_validation."
+                 "NumericPasswordValidator"),
     },
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'rules.permissions.ObjectPermissionBackend',
-    'django.contrib.auth.backends.ModelBackend',
+    "rules.permissions.ObjectPermissionBackend",
+    "django.contrib.auth.backends.ModelBackend",
+    "bossoidc.backend.OpenIdConnectBackend",
 )
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
 LANGUAGES = (
-    ('en', _('English')),
-    ('it', _('Italian')),
+    ("en", _("English")),
+    ("it", _("Italian")),
 )
 
-# LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = "en-us"
 USE_L10N = True
 
 USE_TZ = True
 
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, "locale"),
 )
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -242,6 +245,10 @@ OIDC_AUTH = {
     "OIDC_AUDIENCES": [
         KEYCLOAK["client_id"],
     ],
-    "OIDC_RESOLVE_USER_FUNCTION": 'bossoidc.backend.get_user_by_id',
+    "OIDC_RESOLVE_USER_FUNCTION": "bossoidc.backend.get_user_by_id",
     "OIDC_BEARER_TOKEN_EXPIRATION_TIME": 4 * 10,  # 4 minutes
 }
+
+UPDATE_USER_DATA = "keycloakauth.oidchooks.update_user_data"
+
+LOAD_USER_ROLES = "keycloakauth.oidchooks.load_user_roles"

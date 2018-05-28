@@ -11,5 +11,5 @@
 from django.apps import AppConfig
 
 
-class ProfilesConfig(AppConfig):
-    name = "profiles"
+class KeycloakauthConfig(AppConfig):
+    name = "keycloakauth"

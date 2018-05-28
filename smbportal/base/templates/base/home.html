@@ -1,4 +1,4 @@
-{% extends 'registration/base.html' %}
+{% extends 'base/base.html' %}
 {% load i18n %}
 
 
@@ -59,8 +59,8 @@
                         <h6 class="text-muted text-normal text-uppercase">Vehicles</h6>
                         <hr class="margin-bottom-1x">
                         <nav class="list-group">
-                              <a class="btn btn-outline-primary" href="{% url 'Vehicles' %}">Vehicles</a>
-                              <a class="btn btn-outline-primary" href="{% url 'Tags' %}">Tags</a>
+                              <a class="btn btn-outline-primary" href="{% comment %}{% url 'Vehicles' %}{% endcomment %}">Vehicles</a>
+                              <a class="btn btn-outline-primary" href="{% comment %}{% url 'Tags' %}{% endcomment %}">Tags</a>
                               
                               </nav>
                     </div>
@@ -70,7 +70,7 @@
                         <h6 class="text-muted text-normal text-uppercase">Prizes</h6>
                         <hr class="margin-bottom-1x">
                         <nav class="list-group">
-                              <a class="btn btn-outline-primary" href="{% url 'Prizes' %}"> Prizes</a>
+                              <a class="btn btn-outline-primary" href="{% comment %}{% url 'Prizes' %}{% endcomment %}"> Prizes</a>
                               
                               
                               </nav>

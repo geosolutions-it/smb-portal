@@ -15,12 +15,26 @@ from django.urls import path
 from django.contrib import admin
 from django.conf.urls.i18n import i18n_patterns
 
+from . import views
+
 urlpatterns = [
     path('openid/', include('djangooidc.urls')),
 ]
 
 
 urlpatterns += i18n_patterns(
-    path(r'admin/', admin.site.urls),
-    path(r'', include("profiles.urls")),
+    path(
+        route=r'admin/',
+        view=admin.site.urls
+    ),
+    path(
+        route=r'',
+        view=views.index,
+        name="index"
+    ),
+    path(
+        route=r'profiles/',
+        view=include("profiles.urls"),
+        name="profiles"
+    ),
 )

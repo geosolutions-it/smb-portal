@@ -8,8 +8,11 @@
 #
 #########################################################################
 
-from django.apps import AppConfig
+from django.shortcuts import render
 
 
-class ProfilesConfig(AppConfig):
-    name = "profiles"
+def index(request):
+    return render(
+        request,
+        "base/home.html"
+    )
