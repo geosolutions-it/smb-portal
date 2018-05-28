@@ -11,8 +11,6 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.urls import reverse
-from django.utils.text import slugify
 
 
 # TODO: Integrate with django-avatar for avatar support
@@ -49,7 +47,19 @@ class SmbUser(AbstractUser):
 
     @property
     def profile(self):
-        return self.enduserprofile
+        attibute_names = (
+            "enduserprofile",
+            # add more profiles for analysts, prize managers, etc
+        )
+        for attr in attibute_names:
+            try:
+                profile = getattr(self, attr)
+                break
+            except AttributeError:
+                pass
+        else:
+            profile = None
+        return profile
 
 
 # TODO: Integrate data sharing policies
