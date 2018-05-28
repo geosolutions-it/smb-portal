@@ -8,11 +8,11 @@
 #
 #########################################################################
 
-from django.urls import path
+from django.shortcuts import render
 
-from . import views
 
-app_name = "profiles"
-urlpatterns = [
-    path("", views.index, name="index")
-]
+def index(request):
+    return render(
+        request,
+        "base/home.html"
+    )
