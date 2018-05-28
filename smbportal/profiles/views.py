@@ -8,36 +8,48 @@
 #
 #########################################################################
 
-from django.conf import settings
-from django.http import HttpResponse
+from django.contrib import messages
+from django.views.generic import CreateView
 from django.views.generic import DetailView
-from django.views import View
+from django.views.generic import UpdateView
 
 from . import models
 
 
-def index(request):
-    print("Inside index view. Current user: {}".format(request.user))
-    raw_response = """
-    <p>Hi {user}</p>
-    <a href=\"{login_url}\">login</a>
-    <p>You're at the index.</p>
-    <a href=\"{logout_url}\">logout</a>
-    """.format(
-        user=request.user,
-        login_url="{}?next={}".format(
-            settings.LOGIN_URL, request.get_full_path()),
-        logout_url=settings.LOGOUT_URL,
+class UserActionMixin(object):
+
+    @property
+    def success_message(self):
+        return NotImplemented
+
+    def form_valid(self, form):
+        messages.info(self.request, self.success_message)
+        return super().form_valid(form)
+
+
+class UserProfileMixin(object):
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
+
+
+class EndUserDetailView(UserProfileMixin, DetailView):
+    model = models.EndUserProfile
+
+
+class EndUserCreateView(UserProfileMixin, UserActionMixin, CreateView):
+    model = models.EndUserProfile
+    fields = (
+        "gender",
     )
-    return HttpResponse(raw_response)
+    template_name_suffix = "_create"
+    success_message = "user profile created!"
 
 
-class EndUserDisplay(DetailView):
-    model = models.SmbUser
-    
-
-class EndUserView(View):
-
-    def get(self, request, *args, **kwargs):
-        view = EndUserDisplay.as_view()
-        return view(request, *args, **kwargs)
+class EndUserUpdateView(UserProfileMixin, UserActionMixin, UpdateView):
+    model = models.EndUserProfile
+    fields = (
+        "gender",
+    )
+    template_name_suffix = "_update"
+    success_message = "user profile updated!"
