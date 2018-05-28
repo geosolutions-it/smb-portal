@@ -12,7 +12,9 @@ from django.urls import path
 
 from . import views
 
-app_name = "profiles"
+app_name = "profile"
 urlpatterns = [
-    path("", views.index, name="index")
+    path("", views.EndUserDetailView.as_view(), name="detail"),
+    path("create", views.EndUserCreateView.as_view(), name="create"),
+    path("update", views.EndUserUpdateView.as_view(), name="update"),
 ]

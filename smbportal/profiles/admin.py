@@ -28,6 +28,7 @@ class SmbUserAdmin(UserAdmin):
         "is_superuser",
         "is_staff",
         "groups",
+        "user_permissions",
         "last_login",
         "date_joined",
     )
@@ -39,5 +40,6 @@ class SmbUserAdmin(UserAdmin):
         return False
 
 
+# boss-oidc already registered the user model
 admin.site.unregister(get_user_model())
 admin.site.register(models.SmbUser, SmbUserAdmin)
