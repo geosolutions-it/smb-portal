@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     "profiles.apps.ProfilesConfig",
     "vehicles.apps.VehiclesConfig",
     "tracks.apps.TracksConfig",
+    "rules.apps.AutodiscoverRulesConfig",
 ]
 
 MIDDLEWARE = [
