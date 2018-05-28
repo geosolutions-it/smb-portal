@@ -13,16 +13,11 @@
 from django.urls import include
 from django.urls import path
 from django.contrib import admin
-from django.conf.urls.i18n import i18n_patterns
 
 from . import views
 
 urlpatterns = [
     path('openid/', include('djangooidc.urls')),
-]
-
-
-urlpatterns += i18n_patterns(
     path(
         route=r'admin/',
         view=admin.site.urls
@@ -33,8 +28,8 @@ urlpatterns += i18n_patterns(
         name="index"
     ),
     path(
-        route=r'profiles/',
+        route=r'profile/',
         view=include("profiles.urls"),
-        name="profiles"
+        name="profile"
     ),
-)
+]
