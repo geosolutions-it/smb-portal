@@ -13,6 +13,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.db.models.fields.files import ImageField
 
 
 # TODO: Integrate with django-avatar for avatar support
@@ -81,6 +82,7 @@ class EndUserProfile(models.Model):
         help_text="Short user biography",
         blank=True
     )
+    #avatar_image = ImageField(upload_to=get_image_path, blank=True, null=True)
 
 
 class MobilityHabitsSurvey(models.Model):

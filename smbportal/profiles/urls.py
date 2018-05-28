@@ -17,4 +17,5 @@ urlpatterns = [
     path("", views.EndUserDetailView.as_view(), name="detail"),
     path("create", views.EndUserCreateView.as_view(), name="create"),
     path("update", views.EndUserUpdateView.as_view(), name="update"),
+    path("create/survey",views.EndUserSurvey.as_view(),name='createsurvey'),
 ]

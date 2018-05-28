@@ -43,3 +43,5 @@ class SmbUserAdmin(UserAdmin):
 # boss-oidc already registered the user model
 admin.site.unregister(get_user_model())
 admin.site.register(models.SmbUser, SmbUserAdmin)
+admin.site.register(models.EndUserProfile)
+admin.site.register(models.MobilityHabitsSurvey)

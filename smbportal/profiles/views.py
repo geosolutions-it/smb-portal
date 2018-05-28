@@ -12,8 +12,10 @@ from django.contrib import messages
 from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import UpdateView
+from . import forms
 
 from . import models
+from django.forms.widgets import TextInput
 
 
 class UserActionMixin(object):
@@ -35,15 +37,21 @@ class UserProfileMixin(object):
 
 class EndUserDetailView(UserProfileMixin, DetailView):
     model = models.EndUserProfile
-
+    
 
 class EndUserCreateView(UserProfileMixin, UserActionMixin, CreateView):
     model = models.EndUserProfile
-    fields = (
-        "gender",
-    )
+    context_object_name = "enduserprofile"
+    form_class = forms.EndUserDetailViewForm
+#     fields = (
+#         "gender",
+#     )
     template_name_suffix = "_create"
     success_message = "user profile created!"
+    success_url = "create/survey"
+    
+    def get_initial(self):
+        return { 'user': self.request.user }
 
 
 class EndUserUpdateView(UserProfileMixin, UserActionMixin, UpdateView):
@@ -53,3 +61,16 @@ class EndUserUpdateView(UserProfileMixin, UserActionMixin, UpdateView):
     )
     template_name_suffix = "_update"
     success_message = "user profile updated!"
+    
+
+class EndUserSurvey(UserProfileMixin,UserActionMixin,CreateView):
+    model = models.MobilityHabitsSurvey
+    context_object_name="survey"
+    form_class = forms.UserMobilityHabitsForm
+    template_name_suffix = "_create"
+    success_url = "/"
+    
+    def get_initial(self):
+        return { 'user': self.request.user }
+    
+    

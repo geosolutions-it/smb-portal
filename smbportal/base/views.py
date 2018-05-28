@@ -9,7 +9,17 @@
 #########################################################################
 
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf.global_settings import LOGIN_URL
+from django.views.generic.edit import CreateView,View
+
 
 
 def index(request):
     return render(request, "base/home.html")
+
+
+
+
+
+

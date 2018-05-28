@@ -79,32 +79,6 @@
         <ul>
             <li class="has-megamenu">
                 <a href="{% url 'index' %}"><span>{% trans 'Home' %}</span></a>
-               <!--  <ul class="mega-menu">
-                    <li>
-                        <a class="d-block img-thumbnail text-center navi-link" href="index.html">
-                            <img alt="dashboard_1" src="http://via.placeholder.com/826x456">
-                            <h6 class="mt-3">Dashboard v1</h6>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="d-block img-thumbnail text-center navi-link" href="dashboard_v2.html">
-                            <img alt="dashboard_v2" src="http://via.placeholder.com/826x456">
-                            <h6 class="mt-3">Dashboard v2</h6>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="d-block img-thumbnail text-center navi-link" href="dashboard_v3.html">
-                            <img alt="dashboard_v3" src="http://via.placeholder.com/826x456">
-                            <h6 class="mt-3">Dashboard v3</h6>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="img-thumbnail text-center">
-                            <img alt="More To Come. Stay Tuned!" src="http://via.placeholder.com/826x456">
-                            <h6 class="mt-3">More to come. Stay Tuned!</h6>
-                        </div>
-                    </li>
-                </ul> -->
             </li>
             
             
@@ -214,22 +188,43 @@
                 <div class="account">
                     <a href="javascript:void(0)"></a><i class="icon-head"></i>
                     <ul class="toolbar-dropdown">
+                    {% if request.user.is_authenticated %}
                         <li class="sub-menu-user">
                             <div class="user-ava">
                                 <img src="http://via.placeholder.com/128x128" alt="Administrator">
                             </div>
+                            
                             <div class="user-info">
+                            
                                 <h6 class="user-name">{{request.user}}</h6>
                                 <span class="text-xs text-muted"></span>
                             </div>
                         </li>
-                        <li><a href="{% comment %}{% url 'DetailProfile' request.user %}{% endcomment %}}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
+                        {% if user.profile %}
+                        <li><a href="{% url 'profile:detail' %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
+                        {% else %}
+                        <li><a href="{% url 'profile:create' %}"> <i class="icon-head"></i> {% trans 'Create Profile' %}</a></li>
+                        {% endif %}
                         <li><a href="javascript:void(0)"> <i class="icon-mail"></i> {% trans 'Messages' %}</a></li>
-                        <li><a href="javascript:void(0)"> <i class="icon-cog"></i> {% trans 'Settings' %}</a></li>
+                       
                         <li class="sub-menu-separator"></li>
-                        <li><a href="javascript:void(0)"> <i class="icon-server"></i> {% trans 'Lock Screen' %}</a></li>
+                   
                         <li><a href="{% url 'logout' %}"> <i class="icon-lock"></i> {% trans 'Logout' %}</a></li>
+                        
+                        {% else %}
+                        <div class="user-info">
+                            
+                                <h6 class="user-name">{{user.username}}</h6>
+                                <span class="text-xs text-muted"></span> 
+                            </div>
+                        </li>
+                        <li><a href="{% comment %}{% url 'DetailProfile' request.user %}{% endcomment %}}"> <i class="icon-head"></i> {% trans 'Register' %}</a></li>
+                        <li><a href="{% url 'login'  %}"> <i class="icon-user"></i> {% trans 'Login' %}</a></li>
+                        
+                        
+                        
                     </ul>
+                    {% endif %}
                 </div>
             </div>
         </div>

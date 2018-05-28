@@ -13,7 +13,8 @@
 from django.urls import include
 from django.urls import path
 from django.contrib import admin
-
+from django.contrib.auth import views as auth_views
+from django.conf import settings
 from . import views
 
 urlpatterns = [
@@ -32,4 +33,9 @@ urlpatterns = [
         view=include("profiles.urls"),
         name="profile"
     ),
+    path(
+        route=r'openid/openid/KeyCloak',
+        view= auth_views.login,
+        name="login"
+        )
 ]
