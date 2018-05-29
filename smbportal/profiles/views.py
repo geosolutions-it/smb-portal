@@ -47,10 +47,10 @@ class UserProfileMixin(object):
         return user.profile if has_profile(user) else False
 
 
-class EndUserProfileDetailView(LoginRequiredMixin, PermissionRequiredMixin,
-                               UserProfileMixin, DetailView):
+class EndUserProfileDetailView(LoginRequiredMixin, UserProfileMixin,
+                               PermissionRequiredMixin, DetailView):
     model = models.EndUserProfile
-    context_object_name = "enduserprofile"
+    #context_object_name = "enduserprofile"
     form_class = forms.EndUserDetailViewForm
     permission_required = "profiles.can_view"
     object_level_permissions = True
@@ -116,9 +116,10 @@ class EndUserProfileCreateView(LoginRequiredMixin, PermissionRequiredMixin,
 class EndUserProfileUpdateView(LoginRequiredMixin, UserProfileMixin,
                                FormUpdatedMessageMixin, UpdateView):
     model = models.EndUserProfile
-    fields = (
-        "gender",
-    )
+    form_class = forms.EndUserCreateViewForm
+#     fields = (
+#         "gender",
+#     )
     template_name_suffix = "_update"
     success_message = "user profile updated!"
 

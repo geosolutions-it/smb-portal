@@ -7,16 +7,16 @@
 {% endblock %}
 {% block content %}
 <div class="col-md-6 offset-md-3 header text-center">
-<span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> Complete your Profile </span>
+	<span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> Complete your Profile </span>
 
 
-<form method="post" class="col-md-6 offset-md-3">{% csrf_token %}
-{% avatar user   class="img-circle img-responsive" id="user_avatar" %}
-<a href="{% url 'avatar_change' %}">Change your avatar</a>
+		<form method="post" class="col-md-6 offset-md-3">{% csrf_token %}
+			{% avatar user   class="img-circle img-responsive" id="user_avatar" %}
+			<a href="{% url 'avatar_change' %}">Change your avatar</a>
 
-{{form.as_p}}
+			{{ form.as_p }}
 
- <input type="submit" class="btn btn-sm btn-primary m-r-5" value="Save" />
-</form>
+ 			<input type="submit" class="btn btn-sm btn-primary m-r-5" value="Save" />
+		</form>
 </div>
 {% endblock %}

@@ -1,165 +1,23 @@
 {% extends 'base/base.html' %}
+{% load static %}
 {% load avatar_tags %}
-
-
 {% block thickness %}
 <section class="container padding-top-1x padding-bottom-2x"> </section>
 
 {% endblock %}
 {% block content %}
 <div class="col-md-6 offset-md-3 header text-center">
-<span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> Profile </span>
+	<span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> Update your Profile </span>
 
 
-<form method="post" class="col-md-6 offset-md-3">{% csrf_token %}
-{% avatar user   class="img-circle img-responsive" id="user_avatar" %}
-<a href="{% url 'avatar_change' %}">Change your avatar</a>
+	<form method="post" class="col-md-6 offset-md-3">{% csrf_token %}
+		{% avatar user   class="img-circle img-responsive" id="user_avatar" %}
+		<a href="{% url 'avatar_change' %}">Change your avatar</a>
 
-{{user.as_p}}
+		{{ form.as_p }}
 
- <!-- <input type="submit" value="Save" /> -->
-</form>
-<a class="btn btn-sm btn-primary" href="{% url 'profile:update'%}">Update Profile</a>
+ 		<input class="btn btn-sm btn-primary m-r-5" type="submit" value="Save" />
+	</form>
 </div>
-
-
-
-
 {% endblock %}
-
-
-
-
-
-<!-- <div id="container">
-        Promo
-        <section class="fw-section" style="background-image: url('http://via.placeholder.com/1920x1080');">
-            <span class="overlay" style="background-color: #374250; opacity: .55;"></span>
-            <div class="container padding-top-2x padding-bottom-2x up-head-w">
-                <img class="d-block rounded-circle mb-2 w-80" src="http://via.placeholder.com/128x128" alt="Image">
-                <h3 class="f-s-25 text-normal text-white text-shadow mb-1">{{request.user}}</h3>
-                <span class="text-white">pvrtechstudio</span>
-                <div class="up-social">
-                    <a href="javascript:void(0)" data-toggle="tooltip" title="" data-original-title="Google Plus">
-                        <i class="fa fa-google-plus-square"></i>
-                    </a>
-                    <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title=""
-                       data-original-title="Facebook">
-                        <i class="fa fa-facebook-square"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <div class="container p-t-60">
-            <div class="row">
-                <div class="col-lg-4">
-                    <aside class="user-info-wrapper">
-                        <div class="user-cover" style="background-image:url('http://via.placeholder.com/1170x225')">
-                            <div class="info-label" data-toggle="tooltip"
-                                 title="Verified User">
-                                <i class="icon-medal"></i> Verified User
-                            </div>
-                        </div>
-                        <div class="user-info">
-                        {% load avatar_tags %}
-                        
-                           <div class="user-avatar">{% avatar user   class="img-circle img-responsive" id="user_avatar" %} </div>
-                            <div class="user-data">
-                                <h4>{{user.first_name}}</h4>
-                                <span>pvrtechstudio</span>
-                            </div>
-                        </div>
-                    </aside>
-                    <nav class="list-group">
-                        <a class="list-group-item with-badge" href="javascript:void(0)">
-                            <i class="icon-bag"></i>Orders
-                            <span class="badge badge-primary badge-pill">6</span>
-                        </a>
-                        <a class="list-group-item active" href="javascript:void(0)">
-                            <i class="icon-head"></i>Profile
-                        </a>
-                        <a class="list-group-item" href="javascript:void(0)">
-                            <i class="icon-map"></i>Addresses
-                        </a>
-                        <a class="list-group-item with-badge" href="javascript:void(0)">
-                            <i class="icon-heart"></i>Prizes
-                            <span class="badge badge-primary badge-pill">3</span>
-                        </a>
-                        <a class="list-group-item with-badge" href="javascript:void(0)">
-                            <i class="icon-tag"></i>My Badges
-                            <span class="badge badge-primary badge-pill">4</span>
-                        </a>
-                    </nav>
-                </div>
-                <div class="col-lg-8">
-                    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
-                    <form class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="account-fn">First Name</label>
-                                <input class="form-control form-control-rounded" type="text" id="account-fn"
-                                       value="{{user.last_name}}" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="account-ln">Last Name</label>
-                                <input class="form-control form-control-rounded" type="text" id="account-ln"
-                                       value="{{user.first_name}}" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="account-email">E-mail Address</label>
-                                <input class="form-control form-control-rounded" type="email" value="{{user.email}}" id="account-email">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="account-email">nickname</label>
-                                <input class="form-control form-control-rounded date_picker" value="{{user.profile.bio}}" type="text"
-                                       id="account-dob">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="account-email">Gender</label>
-                                <select class="form-control form-control-rounded">
-                                    <option value="">Select</option>
-                                    <option value="" selected>{{user.profile.gender}}</option>
-                                    <option value="">Female</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="account-phone">Phone Number</label>
-                                <input class="form-control form-control-rounded" value="{{user.profile.phone_number}}" type="text" id="account-phone"
-                                       required>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="custom-control custom-checkbox d-block">
-                                    <input class="custom-control-input" type="checkbox" id="subscribe_me" checked>
-                                    <label class="custom-control-label" for="subscribe_me">Subscribe me to
-                                        Newsletter</label>
-                                </div>
-                                <button class="btn btn-primary btn-rounded margin-right-none" type="button" data-toast
-                                        data-toast-position="topRight" data-toast-type="success"
-                                        data-toast-icon="icon-circle-check" data-toast-title="Success!"
-                                        data-toast-message="Your profile updated successfuly.">Update Profile
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>   -->
-
-
-
-
-
+<!-- This is the update profile page for {{ user }} -->
