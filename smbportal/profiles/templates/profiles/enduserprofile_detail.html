@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-
+{% load avatar_tags %}
 
 {% block content %}
 
@@ -34,11 +34,12 @@
                             </div>
                         </div>
                         <div class="user-info">
-                            <div class="user-avatar"><a class="edit-avatar" href="javascript:void(0)"></a><img
-                                    src="http://via.placeholder.com/128x128" alt="User"></div>
+                        {% load avatar_tags %}
+                        
+                           <div class="user-avatar">{% avatar user   class="img-circle img-responsive" id="user_avatar" %} </div>
                             <div class="user-data">
-                                <h4>Administrator</h4>
-                                <span>pvrtechstudio</span>
+                                <h4>{{user.first_name}}</h4>
+                                <!-- <span>pvrtechstudio</span> -->
                             </div>
                         </div>
                     </aside>

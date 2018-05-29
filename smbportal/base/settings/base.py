@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "bossoidc",
     "djangooidc",
     "base",
+    "avatar",
     "keycloakauth.apps.KeycloakauthConfig",
     "profiles.apps.ProfilesConfig",
     "vehicles.apps.VehiclesConfig",
@@ -189,6 +190,10 @@ END_USERS_GROUP = "end_users"
 ANALYSTS_GROUP = "analysts"
 
 PRIZE_MANAGERS_GROUP = "prize_managers"
+
+MEDIA_URL = "MEDIA/ROOT/ASSETS/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA')
 
 KEYCLOAK = {
     "base_url": get_environment_variable(

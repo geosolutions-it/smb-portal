@@ -3452,7 +3452,7 @@ button:focus {
 }
 
 .card-group .card .card-footer {
-    border-radius: 0;
+    border-radius: 0;card-title
 }
 
 .card-group .card:first-child .card-footer {
@@ -11531,6 +11531,7 @@ span.ti-cursor {
 
 .widget-1 .card-header a i {
     line-height: 0;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.2) 49%, rgba(0,0,0,0.15) 51%, rgba(0,0,0,0.05));
 }
 
 .widget-1 .card-title {
@@ -11540,6 +11541,7 @@ span.ti-cursor {
     font-weight: 600;
     color: #343a40;
     margin-bottom: 0;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.2) 49%, rgba(0,0,0,0.15) 51%, rgba(0,0,0,0.05));
 }
 
 .widget-1 .card-body {
@@ -11547,12 +11549,14 @@ span.ti-cursor {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.2) 49%, rgba(0,0,0,0.15) 51%, rgba(0,0,0,0.05));
 }
 
 .widget-1 .card-body span:last-child {
     font-weight: 700;
     color: #343a40;
     font-size: 24px;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.2) 49%, rgba(0,0,0,0.15) 51%, rgba(0,0,0,0.05));
 }
 
 .widget-1 .card-footer {
@@ -11560,6 +11564,7 @@ span.ti-cursor {
     background-color: transparent;
     display: flex;
     justify-content: space-between;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.2) 49%, rgba(0,0,0,0.15) 51%, rgba(0,0,0,0.05));
 }
 
 .widget-1 .card-footer h6 {
@@ -11782,4 +11787,14 @@ body .fc button {
 
 [href="ui_widgets.html"] {
     display: none !important;
+}
+
+/*
+*
+*team-ccd
+*
+*
+*/
+
+
 }

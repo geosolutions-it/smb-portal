@@ -9,7 +9,8 @@ class EndUserDetailViewForm(forms.ModelForm):
         widgets = {
             'user': forms.HiddenInput(),
             'bio': forms.TextInput(attrs={'class': 'form-control form-control-rounded','size':'10'}),
-            'gender': forms.Select(attrs={'class': 'form-control form-control-rounded','size':'10'})
+            'gender': forms.Select(attrs={'class': 'form-control form-control-rounded','size':'20'}),
+            #'user_avatar': forms.ImageField(),
         }
         
         

@@ -37,5 +37,7 @@ urlpatterns = [
         route=r'openid/openid/KeyCloak',
         view= auth_views.login,
         name="login"
-        )
+        ),
+    
+    path(r'^avatar/',include('avatar.urls')),
 ]

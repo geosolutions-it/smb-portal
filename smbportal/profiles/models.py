@@ -82,7 +82,7 @@ class EndUserProfile(models.Model):
         help_text="Short user biography",
         blank=True
     )
-    #avatar_image = ImageField(upload_to=get_image_path, blank=True, null=True)
+    user_avatar = ImageField(upload_to="MEDIA.ROOT.ASSETS", blank=True, null=True)
 
 
 class MobilityHabitsSurvey(models.Model):

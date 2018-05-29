@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% load avatar_tags %}
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -218,8 +219,8 @@
                                 <span class="text-xs text-muted"></span> 
                             </div>
                         </li>
-                        <li><a href="{% comment %}{% url 'DetailProfile' request.user %}{% endcomment %}}"> <i class="icon-head"></i> {% trans 'Register' %}</a></li>
-                        <li><a href="{% url 'login'  %}"> <i class="icon-user"></i> {% trans 'Login' %}</a></li>
+                        <li><a href="{% url 'login'  %}"> <i class="icon-head"></i> {% trans 'Register/Login' %}</a></li>
+                       <!--  <li><a href="{% url 'login'  %}"> <i class="icon-user"></i> {% trans 'Login' %}</a></li> -->
                         
                         
                         
@@ -233,12 +234,15 @@
 </header>
 
 <!-- BEGIN MAIN CONTENT-->
-<section class="container padding-top-3x padding-bottom-2x">
+
 
 	    
-</section>
+<!-- </section>  -->
 <div class="offcanvas-wrapper">
+{% block thickness %}
+<!-- <section class="container padding-top-3x padding-bottom-2x"> -->
 
+{% endblock %}
 
    {%  block content  %}
    {% endblock %}
