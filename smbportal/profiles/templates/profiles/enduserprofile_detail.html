@@ -7,7 +7,7 @@
 
 {% endblock %}
 {% block content %}
-<div class="col-md-6 offset-md-3 header">
+<div class="col-md-6 offset-md-3 header text-center">
 <span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> Profile </span>
 
 
@@ -17,8 +17,9 @@
 
 {{user.as_p}}
 
- <input type="submit" value="Save" />
+ <!-- <input type="submit" value="Save" /> -->
 </form>
+<a class="btn btn-sm btn-primary" href="{% url 'profile:update'%}">Update Profile</a>
 </div>
 
 
