@@ -50,7 +50,19 @@ class SmbUser(AbstractUser):
 
     @property
     def profile(self):
-        return self.enduserprofile
+        attibute_names = (
+            "enduserprofile",
+            # add more profiles for analysts, prize managers, etc
+        )
+        for attr in attibute_names:
+            try:
+                profile = getattr(self, attr)
+                break
+            except AttributeError:
+                pass
+        else:
+            profile = None
+        return profile
 
 
 # TODO: Integrate data sharing policies

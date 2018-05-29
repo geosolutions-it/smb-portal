@@ -39,7 +39,8 @@ LOGGING = {
         },
         'djangooidc': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'ERROR',
+            'propagate': False,
         },
         'profiles': {
             'handlers': ['console'],
