@@ -92,13 +92,8 @@
                 
             </li>
            <!--  <class="active" style=color:#F51DAF;"> -->
-            <li ><button  class="btn btn-sm btn-primary" type="button" onclick="{% comment %}{% url 'newuser' %}{% endcomment %}">{% trans 'Registration' %}</button>
-              <!--   <ul class="sub-menu">
-                    <li class="active"><a href="page_landing.html">Landing Page</a></li>
-                    <li><a href="page_search_results.html">Search Results</a></li>
-                    <li><a href="page_help.html">Help / FAQ</a></li>
-                    <li><a href="page_coming_soon.html">Coming Soon</a></li>
-                </ul> -->
+            <li ><button  class="btn btn-sm btn-primary" type="button" onclick="href.location({% url 'login' %})">{% trans 'Registration' %}</button>
+              
             </li>
            
         </ul>
