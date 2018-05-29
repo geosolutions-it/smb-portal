@@ -1,6 +1,7 @@
 <!-- This is the update profile page for {{ user }} -->
 
 {% extends 'base/base.html' %}
+{% load static %}
 {% load avatar_tags %}
 {% block thickness %}
 <section class="container padding-top-1x padding-bottom-2x"> </section>
@@ -17,7 +18,7 @@
 
 {{form.as_p}}
 
- <input type="submit" value="Save" />
+ <input class="btn btn-sm btn-primary m-r-5" type="submit" value="Save" />
 </form>
 </div>
 {% endblock %}

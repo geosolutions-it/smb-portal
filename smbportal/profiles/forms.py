@@ -64,32 +64,32 @@ class UserMobilityHabitsForm(forms.ModelForm):
             'end_user': forms.HiddenInput(),
             'public_transport_usage': forms.Select(
                 attrs={
-                    'class': 'form-control form-control-rounded',
-                    'size':'10',
+                    'class': 'js-states form-control select_2',
+                    'id':"select2",
                     }
                 ),
             'uses_bike_sharing_services': forms.NullBooleanSelect(
                 attrs={
-                    'class': 'form-control form-control-rounded',
-                    'size':'10',
+                    'class': 'js-states form-control select_2',
+                    'id':"select2",
                     }
                 ),
             'uses_electrical_car_sharing_services': forms.NullBooleanSelect(
                 attrs={
-                    'class': 'form-control form-control-rounded',
-                    'size':'10',
+                    'class': 'js-states form-control select_2',
+                    'id':"select2",
                     }
                 ),
             'uses_fuel_car_sharing_services': forms.NullBooleanSelect(
                 attrs={
-                    'class': 'form-control form-control-rounded',
-                    'size':'10',
+                    'class': 'js-states form-control select_2',
+                    'id':"select2",
                     }
                 ),
             'bicycle_usage':forms.Select(
                 attrs={
-                    'class': 'form-control form-control-rounded',
-                    'size':'10',
+                    'class': 'js-states form-control select_2',
+                    'id':"select2",
                     }
                 )
         }

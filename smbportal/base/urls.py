@@ -39,7 +39,7 @@ urlpatterns = [
         ),
     
     path(
-        route=r'avatar/',
+        route=r'avatar/$',
         view=include('avatar.urls')
     ),
 ]

@@ -100,12 +100,17 @@ class EndUserProfileCreateView(LoginRequiredMixin, PermissionRequiredMixin,
     template_name_suffix = "_create"
     success_message = "user profile created!"
     permission_required = "profiles.can_create"
+    success_url = "create/survey"
 
     def get_login_url(self):
         if not self.request.user.is_authenticated:
             return settings.LOGIN_URL
         elif has_profile(self.request.user):
             raise PermissionDenied("User already has a profile")
+        
+        
+    def get_initial(self):
+        return { 'user': self.request.user }
 
 
 class EndUserProfileUpdateView(LoginRequiredMixin, UserProfileMixin,
