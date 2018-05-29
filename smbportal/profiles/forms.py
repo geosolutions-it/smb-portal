@@ -8,24 +8,31 @@ class EndUserDetailViewForm(forms.ModelForm):
         model = models.EndUserProfile
         fields = (
             'user','bio',
-            'gender'
+            'gender',
+            'phone_number'
             )
         widgets = {
             'user': forms.HiddenInput(),
             'bio': forms.TextInput(
                 attrs={
-                    'class': 'form-control form-control-rounded',
-                    'size': '10',
+                    'class': 'form-control form-control',
+                    'id': "select2",
                     }
                 ),
             'gender': forms.Select(
                 attrs={
                     'class': 'js-states form-control select_2',
-                    'size': '20','id':"select2",
+                    'id': "select2",
                     }
                 ),
-            #'user_avatar': forms.ImageField(),
-        }
+            'phone_number': forms.NumberInput(
+                attrs={
+                    'class': 'js-states form-control',
+                    'id':'select2',
+                    }
+                ),
+            
+        } 
 
 class EndUserCreateViewForm(forms.ModelForm):
     
@@ -36,6 +43,7 @@ class EndUserCreateViewForm(forms.ModelForm):
             'user','bio',
             'gender',
             'phone_number',
+           
             
             
             )
@@ -57,11 +65,48 @@ class EndUserCreateViewForm(forms.ModelForm):
             'phone_number': forms.NumberInput(
                 attrs={
                     'class': 'js-states form-control',
+                    'id':'select2',
                     }
                 ),
             
         }
         
+        
+class EndUserUpdateViewForm(forms.ModelForm):
+    
+    
+    class Meta:
+        model = models.EndUserProfile
+        fields = (
+            'user','bio',
+            'gender',
+            'phone_number',
+            
+            
+            )
+        
+        widgets = {
+            'user': forms.HiddenInput(),
+            'bio': forms.TextInput(
+                attrs={
+                    'class': 'form-control form-control',
+                    'id': "select2",
+                    }
+                ),
+            'gender': forms.Select(
+                attrs={
+                    'class': 'js-states form-control select_2',
+                    'id': "select2",
+                    }
+                ),
+            'phone_number': forms.NumberInput(
+                attrs={
+                    'class': 'js-states form-control',
+                    'id':'select2',
+                    }
+                ),
+            
+        }        
         
 class UserMobilityHabitsForm(forms.ModelForm):
     

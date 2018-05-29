@@ -116,13 +116,19 @@ class EndUserProfileCreateView(LoginRequiredMixin, PermissionRequiredMixin,
 class EndUserProfileUpdateView(LoginRequiredMixin, UserProfileMixin,
                                FormUpdatedMessageMixin, UpdateView):
     model = models.EndUserProfile
-    form_class = forms.EndUserCreateViewForm
-#     fields = (
-#         "gender",
-#     )
+    form_class = forms.EndUserUpdateViewForm
     template_name_suffix = "_update"
     success_message = "user profile updated!"
+    success_message = "/"
 
+
+class EndUserProfileUpdateDetailView(LoginRequiredMixin, UserProfileMixin,
+                               FormUpdatedMessageMixin, UpdateView):
+    model = models.EndUserProfile
+    form_class = forms.EndUserDetailViewForm
+    template_name_suffix = "_detail"
+    success_message = "user profile updated!"
+    success_message = "/"
 
 class EndUserSurvey(UserProfileMixin, FormUpdatedMessageMixin,
                     CreateView):

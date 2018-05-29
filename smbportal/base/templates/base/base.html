@@ -187,17 +187,18 @@
                     {% if request.user.is_authenticated %}
                         <li class="sub-menu-user">
                             <div class="user-ava">
-                                <img src="http://via.placeholder.com/128x128" alt="Administrator">
+                                {% avatar user   class="img-circle img-responsive" id="user_avatar" %}
                             </div>
                             
                             <div class="user-info">
                             
-                                <h6 class="user-name">{{request.user}}</h6>
+                                <h6 class="user-name">{{request.user.first_name}} {{request.user.last_name}}</h6>
                                 <span class="text-xs text-muted"></span>
                             </div>
                         </li>
                         {% if user.profile %}
-                        <li><a href="{% url 'profile:detail' %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
+                        <li><a href="{% url 'profile:details' %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
+                        <li><a href="{% url 'profile:update' %}"> <i class="icon-head"></i> {% trans 'UpdateProfile' %}</a></li>
                         {% else %}
                         <li><a href="{% url 'profile:create' %}"> <i class="icon-head"></i> {% trans 'Create Profile' %}</a></li>
                         {% endif %}
