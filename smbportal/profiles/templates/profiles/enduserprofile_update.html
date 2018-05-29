@@ -1,1 +1,23 @@
-This is the update profile page for {{ user }}
+<!-- This is the update profile page for {{ user }} -->
+
+{% extends 'base/base.html' %}
+{% load avatar_tags %}
+{% block thickness %}
+<section class="container padding-top-1x padding-bottom-2x"> </section>
+
+{% endblock %}
+{% block content %}
+<div class="col-md-6 offset-md-3 header">
+<span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> Update your Profile </span>
+
+
+<form method="post" class="col-md-6 offset-md-3">{% csrf_token %}
+{% avatar user   class="img-circle img-responsive" id="user_avatar" %}
+<a href="{% url 'avatar_change' %}">Change your avatar</a>
+
+{{form.as_p}}
+
+ <input type="submit" value="Save" />
+</form>
+</div>
+{% endblock %}

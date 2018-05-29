@@ -1,9 +1,36 @@
 {% extends 'base/base.html' %}
 {% load avatar_tags %}
 
-{% block content %}
 
-<div id="container">
+{% block thickness %}
+<section class="container padding-top-1x padding-bottom-2x"> </section>
+
+{% endblock %}
+{% block content %}
+<div class="col-md-6 offset-md-3 header">
+<span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> Profile </span>
+
+
+<form method="post" class="col-md-6 offset-md-3">{% csrf_token %}
+{% avatar user   class="img-circle img-responsive" id="user_avatar" %}
+<a href="{% url 'avatar_change' %}">Change your avatar</a>
+
+{{user.as_p}}
+
+ <input type="submit" value="Save" />
+</form>
+</div>
+
+
+
+
+{% endblock %}
+
+
+
+
+
+<!-- <div id="container">
         Promo
         <section class="fw-section" style="background-image: url('http://via.placeholder.com/1920x1080');">
             <span class="overlay" style="background-color: #374250; opacity: .55;"></span>
@@ -39,7 +66,7 @@
                            <div class="user-avatar">{% avatar user   class="img-circle img-responsive" id="user_avatar" %} </div>
                             <div class="user-data">
                                 <h4>{{user.first_name}}</h4>
-                                <!-- <span>pvrtechstudio</span> -->
+                                <span>pvrtechstudio</span>
                             </div>
                         </div>
                     </aside>
@@ -129,11 +156,7 @@
                 </div>
             </div>
         </div>
-    </div>  
-
-
-
-{% endblock %}
+    </div>   -->
 
 
 

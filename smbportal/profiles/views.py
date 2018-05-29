@@ -50,9 +50,8 @@ class UserProfileMixin(object):
 class EndUserProfileDetailView(LoginRequiredMixin, PermissionRequiredMixin,
                                UserProfileMixin, DetailView):
     model = models.EndUserProfile
-    fields = (
-        "gender",
-    )
+    context_object_name = "enduserprofile"
+    form_class = forms.EndUserDetailViewForm
     permission_required = "profiles.can_view"
     object_level_permissions = True
 
@@ -94,7 +93,7 @@ class EndUserProfileCreateView(LoginRequiredMixin, PermissionRequiredMixin,
                                CreateView):
     model = models.EndUserProfile
     context_object_name = "enduserprofile"
-    form_class = forms.EndUserDetailViewForm
+    form_class = forms.EndUserCreateViewForm
 #     fields = (
 #         "gender",
 #     )
@@ -119,7 +118,8 @@ class EndUserProfileUpdateView(LoginRequiredMixin, UserProfileMixin,
     success_message = "user profile updated!"
 
 
-class EndUserSurvey(UserProfileMixin, FormUpdatedMessageMixin, CreateView):
+class EndUserSurvey(UserProfileMixin, FormUpdatedMessageMixin,
+                    CreateView):
     model = models.MobilityHabitsSurvey
     context_object_name="survey"
     form_class = forms.UserMobilityHabitsForm
