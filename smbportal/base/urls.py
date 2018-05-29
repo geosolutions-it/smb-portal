@@ -14,7 +14,6 @@ from django.urls import include
 from django.urls import path
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.conf import settings
 from . import views
 
 urlpatterns = [
@@ -39,5 +38,8 @@ urlpatterns = [
         name="login"
         ),
     
-    path(r'^avatar/',include('avatar.urls')),
+    path(
+        route=r'avatar/',
+        view=include('avatar.urls')
+    ),
 ]
