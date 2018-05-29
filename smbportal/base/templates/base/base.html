@@ -70,8 +70,8 @@
     <div class="site-branding">
         <div class="inner">
           <!-- SITE LOGO-->
-            <a class="site-logo" href="index.html">
-                <img src="{% static 'base/img/logo.png' %}" alt="PVR_Tech_Studio">
+            <a class="site-logo" href="{% url 'index' %}">
+                <img src="{% static 'base/img/logo.png' %}" alt="save-my-bike logo">
             </a>
         </div>
     </div>
@@ -81,21 +81,17 @@
             <li class="has-megamenu">
                 <a href="{% url 'index' %}"><span>{% trans 'Home' %}</span></a>
             </li>
-            
-            
+            <li class="has-megamenu">
+                <a href="{% url 'bikes:list' %}"><span>{% trans 'Bikes' %}</span></a>
+            </li>
             <li>
                 <a href="javascript:void(0)"><span>{% trans 'Report a stolen Bike?' %}</span></a>
                 
             </li>
             <li>
                 <a href="javascript:void(0)"><span>{% trans 'About' %}</span></a>
-                
             </li>
-           <!--  <class="active" style=color:#F51DAF;"> -->
-            <li ><button  class="btn btn-sm btn-primary" type="button" onclick="href.location({% url 'login' %})">{% trans 'Registration' %}</button>
-              
-            </li>
-           
+
         </ul>
     </nav>
     <!-- END MAIN NAVIGATION-->
@@ -196,12 +192,7 @@
                                 <span class="text-xs text-muted"></span>
                             </div>
                         </li>
-                        {% if user.profile %}
-                        <li><a href="{% url 'profile:details' %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
-                        <li><a href="{% url 'profile:update' %}"> <i class="icon-head"></i> {% trans 'UpdateProfile' %}</a></li>
-                        {% else %}
-                        <li><a href="{% url 'profile:create' %}"> <i class="icon-head"></i> {% trans 'Create Profile' %}</a></li>
-                        {% endif %}
+                        <li><a href="{% url 'profile:update' %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
                         <li><a href="javascript:void(0)"> <i class="icon-mail"></i> {% trans 'Messages' %}</a></li>
                        
                         <li class="sub-menu-separator"></li>
@@ -215,7 +206,7 @@
                                 <span class="text-xs text-muted"></span> 
                             </div>
                         </li>
-                        <li><a href="{% url 'login'  %}"> <i class="icon-head"></i> {% trans 'Register/Login' %}</a></li>
+                        <li><a href="{% url 'login'  %}"> <i class="icon-head"></i> {% trans 'Login/Register' %}</a></li>
                        <!--  <li><a href="{% url 'login'  %}"> <i class="icon-user"></i> {% trans 'Login' %}</a></li> -->
                         
                         

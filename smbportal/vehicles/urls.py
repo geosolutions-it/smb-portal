@@ -12,26 +12,31 @@ from django.urls import path
 
 from . import views
 
-app_name = "profile"
+app_name = "bikes"
 urlpatterns = [
     path(
         route="",
-        view=views.EndUserProfileUpdateView.as_view(),
-        name="update"
+        view=views.BikeListView.as_view(),
+        name="list"
     ),
     path(
         route="create",
-        view=views.EndUserProfileCreateView.as_view(),
+        view=views.BikeCreateView.as_view(),
         name="create"
     ),
     path(
-        route="surveys/create",
-        view=views.MobilityHabitsSurveyCreateView.as_view(),
-        name='create-survey'
+        route="<pk>",
+        view=views.BikeDetailView.as_view(),
+        name="detail"
     ),
     path(
-        route="surveys/<pk>",
-        view=views.MobilityHabitsSurveyDetailView.as_view(),
-        name='survey'
+        route="<pk>/update",
+        view=views.BikeUpdateView.as_view(),
+        name="update"
+    ),
+    path(
+        route="<pk>/delete",
+        view=views.BikeDeleteView.as_view(),
+        name="delete"
     ),
 ]

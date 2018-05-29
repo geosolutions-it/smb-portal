@@ -12,6 +12,7 @@ import uuid
 
 from django.db import models
 from django.conf import settings
+from django.shortcuts import reverse
 
 
 class Vehicle(models.Model):
@@ -31,6 +32,20 @@ class Vehicle(models.Model):
         abstract = True
 
 
+class BikeManager(models.Manager):
+
+    def create(self, *args, **kwargs):
+        bike = self.model(*args, **kwargs)
+        bike.save()
+        possession_history = BikePossessionHistory(
+            bike=bike,
+            reporter=bike.owner,
+        )
+        possession_history.save()
+        return bike
+
+
+# TODO: Add custom managers for retrieving stolen bikes and lost bikes
 # TODO: Integrate django-photolog for bike picture gallery
 class Bike(Vehicle):
     RACING_BIKE = "racing"
@@ -47,9 +62,12 @@ class Bike(Vehicle):
     CANTILEVER_BRAKE = "cantilever"
     COASTER_BRAKE = "coaster"
 
+    objects = BikeManager()
+
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="bikes",
     )
     last_update = models.DateTimeField(
         auto_now=True,
@@ -97,7 +115,26 @@ class Bike(Vehicle):
         default=False,
         verbose_name="has SaveMyBike sticker"
     )
-    other_details = models.TextField()
+    other_details = models.TextField(blank=True)
+
+    def __str__(self):
+        return "{0.id}({0.nickname})".format(self)
+
+    def get_absolute_url(self):
+        return reverse("bikes:detail", kwargs={"pk": self.id})
+
+    def get_current_possession_state(self):
+        return self.possession_history.last()
+
+    def report_possession_state(self, state, reporter=None, details=None):
+        state_obj = BikePossessionHistory(
+            bike=self,
+            reporter=reporter if reporter is not None else self.owner,
+            possession_state=state,
+            details=details if details is not None else ""
+        )
+        state_obj.full_clean()
+        state_obj.save()
 
 
 class BikePossessionHistory(models.Model):
@@ -108,7 +145,8 @@ class BikePossessionHistory(models.Model):
 
     bike = models.ForeignKey(
         "Bike",
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="possession_history"
     )
     reporter = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -128,6 +166,9 @@ class BikePossessionHistory(models.Model):
     details = models.TextField(
         blank=True
     )
+
+    def __str__(self):
+        return "{0.possession_state}({0.creation_date})".format(self)
 
 
 class PhysicalTag(models.Model):

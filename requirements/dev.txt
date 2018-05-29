@@ -1,4 +1,6 @@
 --requirement production.txt
 
 flake8==3.5.0
+pytest==3.6.0
+pytest-django==3.2.1
 pylint==1.9.1

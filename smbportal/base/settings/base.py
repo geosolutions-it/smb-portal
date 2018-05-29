@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "bossoidc",
     "djangooidc",
+    "bootstrap4",
     "base",
     "avatar",
     "keycloakauth.apps.KeycloakauthConfig",

@@ -17,7 +17,7 @@
                                 <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Bikes' %}</h4>
                                 <p class="card-text align-items-center d-flex justify-content-center"> {% blocktrans %} Register new Bikes, update information about your bikes and delete 
                                     bikes off the system. {% endblocktrans %}</p>
-                                <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Bikes' %}</a>
+                                <a class="btn btn-block btn-secondary" href="{% url 'bikes:list' %}">{% trans 'Bikes' %}</a>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                                 <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Prizes' %}</h4>
                                 <p class="card-text align-items-center d-flex justify-content-center">{% blocktrans %} View all the prizes you can available in your 
                                     city.{% endblocktrans %}</p>
-                                <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Prizes' %}</a>
+                                <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                             <div class="card-body">
                                 <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Tags' %}</h4>
                                 <p class="card-text align-items-center d-flex justify-content-center">{% blocktrans %}Want protection? Add rfid support to your bikes here{% endblocktrans %} </p>
-                                <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Tags' %}</a>
+                                <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                                 <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Badges' %}</h4>
                                 <p class="card-text align-items-center d-flex justify-content-center">{% blocktrans %}View all your Badges, the ones you've unlocked and 
                                     ones you need to get.{% endblocktrans %}</p>
-                                <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Badges' %}</a>
+                                <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
                             </div>
                         </div>
                     </div>

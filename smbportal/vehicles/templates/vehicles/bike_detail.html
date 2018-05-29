@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <p>This is the bike detail page for <b>{{ bike.pk }}</b></p>
+    <p>nickname: <b>{{ bike.nickname }}</b></p>
+    <p>type of bike: <b>{{ bike.bike_type }}</b></p>
+    <p>current state: {{ bike.get_current_possession_state }}</p>
+    <h3>Tags</h3>
+    <ul>
+        {% for tag in bike.tags %}
+            <li>{{ tag }}</li>
+        {% empty %}
+            <li>This bike does not have any tags</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a class="btn btn-info" href="{% url 'bikes:update' pk=bike.pk %}">Edit bike</a>
+        <a class="btn btn-danger" href="{% url 'bikes:delete' pk=bike.pk %}">Delete bike</a>
+    </p>
+{% endblock %}

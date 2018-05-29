@@ -33,6 +33,11 @@ urlpatterns = [
         name="profile"
     ),
     path(
+        route=r'bikes/',
+        view=include("vehicles.urls"),
+        name="bikes"
+    ),
+    path(
         route=r'openid/openid/KeyCloak',
         view= auth_views.login,
         name="login"

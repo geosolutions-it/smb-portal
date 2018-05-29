@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <p>This is the bike list page</p>
+    <p><a class="btn btn-info" href="{%  url 'bikes:create' %}">Register a new bike</a></p>
+    Available bikes:
+    <ul>
+        {% for bike in bikes %}
+            <li><a href="{{ bike.get_absolute_url }}">{{ bike.nickname }}</a></li>
+        {% empty %}
+            <li>You don't have any bikes yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

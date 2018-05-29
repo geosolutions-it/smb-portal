@@ -1,22 +1,69 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% load avatar_tags %}
+{% load bootstrap4 %}
 {% block thickness %}
-<section class="container padding-top-1x padding-bottom-2x"> </section>
-
+    <section class="container padding-top-1x padding-bottom-2x"> </section>
 {% endblock %}
+
 {% block content %}
-<div class="col-md-6 offset-md-3 header text-center">
-	<span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> Complete your Profile </span>
-
-
-		<form method="post" class="col-md-6 offset-md-3">{% csrf_token %}
-			{% avatar user   class="img-circle img-responsive" id="user_avatar" %}
-			<a href="{% url 'avatar_change' %}">Change your avatar</a>
-
-			{{ form.as_p }}
-
- 			<input type="submit" class="btn btn-sm btn-primary m-r-5" value="Save" />
-		</form>
-</div>
+    <div class="page-title m-b-0">
+        <div class="container">
+            <div class="column">
+                <h1>Complete your profile</h1>
+            </div>
+            <div class="column">
+                <ul class="breadcrumbs">
+                    <li>Breadcrumbs</li>
+                    <li class="separator"></li>
+                    <li>will</li>
+                    <li class="separator"></li>
+                    <li>show</li>
+                    <li class="separator"></li>
+                    <li>up here</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="container">
+        <div class="container p-t-60">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <a class="edit-avatar" href="{% url 'avatar_change' %}"><i class="fa fa-pencil-square-o"></i></a>
+                            {% avatar user class="rounded-circle" %}
+                        </div>
+                        <div class="user-data">
+                            <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                            <span>
+                                <i class="fa fa-user-o"></i> {{ user.username }}<br>
+                                <i class="fa fa-envelope-o"></i> {{ user.email }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                            <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
+                        {% endbuttons %}
+                    </form>
+                    <div class="container">
+                        {% if user.mobility_habits_surveys %}
+                            <p>Mobility surveys</p>
+                            <ul>
+                                {% for survey in user.mobility_habits_surveys %}
+                                    <li>{{ survey }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <p>You can also <a href="">register as a different user type</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
