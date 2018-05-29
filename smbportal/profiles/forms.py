@@ -7,16 +7,17 @@ class EndUserDetailViewForm(forms.ModelForm):
     class Meta:
         model = models.EndUserProfile
         fields = (
-            'user','bio',
+            'user',
             'gender',
-            'phone_number'
+            'phone_number',
+            'bio',
             )
         widgets = {
             'user': forms.HiddenInput(),
-            'bio': forms.TextInput(
+            'bio': forms.Textarea(
                 attrs={
-                    'class': 'form-control form-control',
-                    'id': "select2",
+                    'class': 'form-control',
+                    'id': "select2",'rows':'3'
                     }
                 ),
             'gender': forms.Select(
