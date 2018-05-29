@@ -119,7 +119,7 @@ class EndUserProfileUpdateView(LoginRequiredMixin, UserProfileMixin,
     success_message = "user profile updated!"
 
 
-class EndUserSurvey(UserProfileMixin,UserActionMixin,CreateView):
+class EndUserSurvey(UserProfileMixin, FormUpdatedMessageMixin, CreateView):
     model = models.MobilityHabitsSurvey
     context_object_name="survey"
     form_class = forms.UserMobilityHabitsForm
