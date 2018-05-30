@@ -97,6 +97,91 @@ class EndUserProfile(models.Model):
     user_avatar = ImageField(upload_to="MEDIA.ROOT.ASSETS", blank=True, null=True)
 
 
+
+
+class  PrizeManagerProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        blank = True
+    )
+    
+    organization = models.OneToOneField(
+        Organiation,
+        on_delete=models.CASCADE,
+        
+    )
+    language_preference = models.CharField(
+        max_length=20,
+        choices=((k, v) for k, v in settings.LANGUAGES),
+        default="en"
+    )
+    acceptance_of_policy = models.BooleanField(
+        default=False,
+        
+     )
+    
+    
+class Organization(models.Model):
+    primary_key = models.AutoField(
+        primary_key=True
+        )
+    organization_name = models.CharField(
+        blank=False,
+        null=False
+        )
+    role_in_organization = models.CharField(
+        blank=False,
+        null=False
+        )
+    type_of_interest_of_actor = models.CharField(
+        blank=True,
+        null=True,
+        )
+    
+class PrizeManagerSurvey(models.Model):
+    BIKES = "Bikes"
+    ON_FOOT = "By Foot"
+    CAR_SHARING = "Car Sharing"
+    PUBLIC_BIKE_SHARING = "Public Bike sharing"
+    ELECTRIC_CAR_SHARING = "Electric Car sharing"
+    
+    FREE_TICKET = "free ticket"
+    GIFT_ITEMS = "gift items"
+    BOOK_DISCOUNT_COUPONS = "book of discount coupons of tickets"
+    DISCOUNT_ON_PURCHASE = "discount on purchase subscription one-off"
+    
+    commercial_area_of_interest = models.CharField(
+        blank=False,
+        null=False,
+        )
+    #
+    reward_mode = models.CharField(
+        blank=False,
+        null=False,
+        choices = (
+                (BIKES,' On Bikes'),
+                (ON_FOOT,'By Foot'),
+                (CAR_SHARING,'By Car Sharing'),
+                (PUBLIC_BIKE_SHARING,'By Public Bike sharing'),
+                (ELECTRIC_CAR_SHARING,'Electric Car sharing')
+                )
+        )
+    type_of_offer = models.CharField(
+        blank=False,
+        null=False,
+        choices = (
+            (FREE_TICKET,"free ticket"),
+            (GIFT_ITEMS,"gift items"),
+            (BOOK_DISCOUNT_COUPONS,"book of discount coupons of tickets"),
+            (DISCOUNT_ON_PURCHASE,"discount on purchase subscription one-off"),
+            )
+        )
+    reference_site = models.URLField(
+        blank=True,
+        null=True
+        )
+    
 class MobilityHabitsSurvey(models.Model):
     FREQUENT_PUBLIC_TRANSPORT_USER = "frequent"
     OCCASIONAL_PUBLIC_TRANSPORT_USER = "occasional"
