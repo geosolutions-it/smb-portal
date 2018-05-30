@@ -20,4 +20,5 @@ urlpatterns = [
     path("create", views.EndUserProfileCreateView.as_view(), name="create"),
     path("update", views.EndUserProfileUpdateView.as_view(), name="update"),
     path("create/survey",views.EndUserSurvey.as_view(),name='createsurvey'),
+    path("prizemanager/details",views.PrizeMangerProfileDetailView.as_view(),name="manager/details")
 ]
