@@ -155,4 +155,13 @@ class UserMobilityHabitsForm(forms.ModelForm):
                     }
                 )
         }
-        
+     
+class PrizeManagerProfileDetailViewForm(forms.ModelForm):
+    
+    class Meta:
+        model = models.PrizeManagerProfile 
+        fields = (
+            'organization',
+            'language_preference',
+            'acceptance_of_policy',
+            )  

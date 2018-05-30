@@ -25,7 +25,6 @@ from . import forms
 from . import models
 from .rules import has_profile
 from .rules import is_profile_owner
-
 logger = logging.getLogger(__name__)
 
 
@@ -46,7 +45,12 @@ class UserProfileMixin(object):
         user = self.request.user
         return user.profile if has_profile(user) else False
 
-
+class PrizeManagerProfileMixen(object):
+    
+    def get_object(self,queryset=None):
+        user = self.request.user
+        return user.prizeprofile if has_prizeprofile(user) else False
+    
 class EndUserProfileDetailView(LoginRequiredMixin, PermissionRequiredMixin,
                                UserProfileMixin, DetailView):
     model = models.EndUserProfile
@@ -140,3 +144,10 @@ class EndUserSurvey(UserProfileMixin, FormUpdatedMessageMixin,
 
     def get_initial(self):
         return { 'user': self.request.user }
+    
+    
+class PrizeMangerProfileDetailView(LoginRequiredMixin, UserProfileMixin,
+                             FormUpdatedMessageMixin, DetailView):
+    model = models.PrizeManagerProfile
+    form_class = forms.PrizeManagerProfileDetailViewForm
+    template_name_suffix = "_detail"
