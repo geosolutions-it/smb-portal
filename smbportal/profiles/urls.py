@@ -15,6 +15,8 @@ from . import views
 app_name = "profile"
 urlpatterns = [
     path("", views.EndUserProfileDetailView.as_view(), name="detail"),
+    #only here until i can figure out why it wont work above
+    path("details",views.EndUserProfileDetailsView.as_view(), name="details"),
     path("create", views.EndUserProfileCreateView.as_view(), name="create"),
     path("update", views.EndUserProfileUpdateView.as_view(), name="update"),
     path("create/survey",views.EndUserSurvey.as_view(),name='createsurvey'),

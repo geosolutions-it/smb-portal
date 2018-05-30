@@ -1,20 +1,21 @@
 {% extends 'base/base.html' %}
 {% load i18n %}
 {% block thickness %}
-<section class="container padding-top-3x padding-bottom-2x">
+<section class="container padding-top-3x padding-bottom-2x"> </section>
 
 {% endblock %}
 
 {% block content %}
-<div class="col-md-9 margin-bottom-2x" id="container">
+<div class="col-md-6 offset-md-3 margin-bottom-2x" id="container">
+<span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> . </span>
 <!-- <h6 class="text-muted text-normal text-uppercase padding-top-2x mt-2">Content Alignment</h6> -->
                 <hr class="margin-bottom-1x">
                 <div class="row">
                     <div class="col-lg-4 margin-bottom-2x">
-                        <div class="card">
+                        <div class="card text-center">
                             <div class="card-body">
-                                <h4 class="card-title">{% trans 'Bikes' %}</h4>
-                                <p class="card-text"> {% blocktrans %} Register new Bikes, update information about your bikes and delete 
+                                <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Bikes' %}</h4>
+                                <p class="card-text align-items-center d-flex justify-content-center"> {% blocktrans %} Register new Bikes, update information about your bikes and delete 
                                     bikes off the system. {% endblocktrans %}</p>
                                 <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Bikes' %}</a>
                             </div>
@@ -23,18 +24,18 @@
                     <div class="col-lg-4 margin-bottom-2x">
                         <div class="card text-center">
                             <div class="card-body">
-                                <h4 class="card-title">{% trans 'Prizes' %}</h4>
-                                <p class="card-text">{% blocktrans %} View all the prizes you can available in your 
+                                <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Prizes' %}</h4>
+                                <p class="card-text align-items-center d-flex justify-content-center">{% blocktrans %} View all the prizes you can available in your 
                                     city.{% endblocktrans %}</p>
                                 <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Prizes' %}</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 margin-bottom-2x">
-                        <div class="card text-right">
+                        <div class="card text-center">
                             <div class="card-body">
-                                <h4 class="card-title">{% trans 'Tags' %}</h4>
-                                <p class="card-text">{% blocktrans %}Add rfid support to your bikes here{% endblocktrans %} </p>
+                                <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Tags' %}</h4>
+                                <p class="card-text align-items-center d-flex justify-content-center">{% blocktrans %}Want protection? Add rfid support to your bikes here{% endblocktrans %} </p>
                                 <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Tags' %}</a>
                             </div>
                         </div>
@@ -43,10 +44,10 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4 margin-bottom-4x">
-                        <div class="card text-right">
+                        <div class="card text-center">
                             <div class="card-body">
-                                <h4 class="card-title">{% trans 'Badges' %}</h4>
-                                <p class="card-text">{% blocktrans %}View all your Badges, the ones you've unlocked and 
+                                <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Badges' %}</h4>
+                                <p class="card-text align-items-center d-flex justify-content-center">{% blocktrans %}View all your Badges, the ones you've unlocked and 
                                     ones you need to get.{% endblocktrans %}</p>
                                 <a class="btn btn-sm btn-primary" href="javascript:void(0)">{% trans 'Badges' %}</a>
                             </div>
@@ -200,6 +201,7 @@
             <!-- END COL-3 -->
         </div>
         <!-- END ROW -->
+        <span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> . </span>
     </div>
    
 {% endblock %}

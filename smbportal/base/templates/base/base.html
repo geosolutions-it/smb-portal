@@ -92,13 +92,8 @@
                 
             </li>
            <!--  <class="active" style=color:#F51DAF;"> -->
-            <li ><button  class="btn btn-sm btn-primary" type="button" onclick="{% comment %}{% url 'newuser' %}{% endcomment %}">{% trans 'Registration' %}</button>
-              <!--   <ul class="sub-menu">
-                    <li class="active"><a href="page_landing.html">Landing Page</a></li>
-                    <li><a href="page_search_results.html">Search Results</a></li>
-                    <li><a href="page_help.html">Help / FAQ</a></li>
-                    <li><a href="page_coming_soon.html">Coming Soon</a></li>
-                </ul> -->
+            <li ><button  class="btn btn-sm btn-primary" type="button" onclick="href.location({% url 'login' %})">{% trans 'Registration' %}</button>
+              
             </li>
            
         </ul>
@@ -192,17 +187,18 @@
                     {% if request.user.is_authenticated %}
                         <li class="sub-menu-user">
                             <div class="user-ava">
-                                <img src="http://via.placeholder.com/128x128" alt="Administrator">
+                                {% avatar user   class="img-circle img-responsive" id="user_avatar" %}
                             </div>
                             
                             <div class="user-info">
                             
-                                <h6 class="user-name">{{request.user}}</h6>
+                                <h6 class="user-name">{{ request.user }}</h6>
                                 <span class="text-xs text-muted"></span>
                             </div>
                         </li>
                         {% if user.profile %}
-                        <li><a href="{% url 'profile:detail' %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
+                        <li><a href="{% url 'profile:details' %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
+                        <li><a href="{% url 'profile:update' %}"> <i class="icon-head"></i> {% trans 'UpdateProfile' %}</a></li>
                         {% else %}
                         <li><a href="{% url 'profile:create' %}"> <i class="icon-head"></i> {% trans 'Create Profile' %}</a></li>
                         {% endif %}

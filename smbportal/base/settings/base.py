@@ -194,7 +194,7 @@ PRIZE_MANAGERS_GROUP = "prize_managers"
 
 MEDIA_URL = "MEDIA/ROOT/ASSETS/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA')
 
 KEYCLOAK = {
     "base_url": get_environment_variable(

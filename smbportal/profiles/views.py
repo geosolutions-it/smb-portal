@@ -50,9 +50,8 @@ class UserProfileMixin(object):
 class EndUserProfileDetailView(LoginRequiredMixin, PermissionRequiredMixin,
                                UserProfileMixin, DetailView):
     model = models.EndUserProfile
-    fields = (
-        "gender",
-    )
+    #context_object_name = "enduserprofile"
+    form_class = forms.EndUserDetailViewForm
     permission_required = "profiles.can_view"
     object_level_permissions = True
 
@@ -94,32 +93,45 @@ class EndUserProfileCreateView(LoginRequiredMixin, PermissionRequiredMixin,
                                CreateView):
     model = models.EndUserProfile
     context_object_name = "enduserprofile"
-    form_class = forms.EndUserDetailViewForm
+    form_class = forms.EndUserCreateViewForm
 #     fields = (
 #         "gender",
 #     )
     template_name_suffix = "_create"
     success_message = "user profile created!"
     permission_required = "profiles.can_create"
+    success_url = "create/survey"
 
     def get_login_url(self):
         if not self.request.user.is_authenticated:
             return settings.LOGIN_URL
         elif has_profile(self.request.user):
             raise PermissionDenied("User already has a profile")
+        
+        
+    def get_initial(self):
+        return { 'user': self.request.user }
 
 
 class EndUserProfileUpdateView(LoginRequiredMixin, UserProfileMixin,
                                FormUpdatedMessageMixin, UpdateView):
     model = models.EndUserProfile
-    fields = (
-        "gender",
-    )
+    form_class = forms.EndUserUpdateViewForm
     template_name_suffix = "_update"
     success_message = "user profile updated!"
+    success_url = "/"
 
 
-class EndUserSurvey(UserProfileMixin, FormUpdatedMessageMixin, CreateView):
+class EndUserProfileDetailsView(LoginRequiredMixin, UserProfileMixin,
+                               FormUpdatedMessageMixin, UpdateView):
+    model = models.EndUserProfile
+    form_class = forms.EndUserDetailViewForm
+    template_name_suffix = "_detail"
+    success_message = "user profile updated!"
+    success_url = "/"
+
+class EndUserSurvey(UserProfileMixin, FormUpdatedMessageMixin,
+                    CreateView):
     model = models.MobilityHabitsSurvey
     context_object_name="survey"
     form_class = forms.UserMobilityHabitsForm
