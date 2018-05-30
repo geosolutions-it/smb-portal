@@ -42,10 +42,20 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
+        'base': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
         'profiles': {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
-        }
+        },
+        'vehicles': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
     }
 }

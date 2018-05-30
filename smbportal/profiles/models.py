@@ -83,18 +83,27 @@ class EndUserProfile(models.Model):
     )
     gender = models.CharField(
         max_length=20,
-        blank=True,
+        blank=False,
         choices=(
             (FEMALE_GENDER, FEMALE_GENDER),
             (MALE_GENDER, MALE_GENDER),
         ),
+        default=FEMALE_GENDER,
     )
     phone_number = models.IntegerField(blank=True, null=True)
     bio = models.TextField(
         help_text="Short user biography",
         blank=True
     )
-    user_avatar = ImageField(upload_to="MEDIA.ROOT.ASSETS", blank=True, null=True)
+    # FIXME - Avatar should be on SmbUser class, other user types need it too
+    user_avatar = ImageField(
+        upload_to="MEDIA.ROOT.ASSETS",
+        blank=True,
+        null=True
+    )
+
+    def get_absolute_url(self):
+        return reverse("profile:update")
 
 
 class MobilityHabitsSurvey(models.Model):
@@ -113,7 +122,8 @@ class MobilityHabitsSurvey(models.Model):
         "EndUserProfile",
         on_delete=models.CASCADE,
         blank=True,
-        null=True
+        null=True,
+        related_name="mobility_habits_surveys"
     )
     date_answered = models.DateTimeField(
         auto_now_add=True
@@ -174,3 +184,6 @@ class MobilityHabitsSurvey(models.Model):
         )
 
     )
+
+    def get_absolute_url(self):
+        return reverse("profile:survey", kwargs={"pk": self.pk})

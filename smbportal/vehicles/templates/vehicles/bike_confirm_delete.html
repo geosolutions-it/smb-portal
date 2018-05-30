@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete bike <b>{{ bike.pk }}({{ bike.nickname }})</b>?</p>
+        {{ form.as_p }}
+        <input class="btn btn-danger" type="submit" value="Confirm">
+    </form>
+{% endblock %}

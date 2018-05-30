@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <p>This is the bike update page for <b>{{ bike.pk }}</b></p>
+    <form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Update">
+    </form>
+{% endblock %}

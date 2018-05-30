@@ -1,6 +1,7 @@
 Django==2.0
 dj-database-url==0.5.0
 django-avatar==4.1.0
+django-bootstrap4==0.0.6
 psycopg2-binary==2.7.4
 pygdal==2.2.3.3 # depends on libgdal-dev 2.3.3
 pytz==2018.4

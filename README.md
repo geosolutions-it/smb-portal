@@ -19,3 +19,32 @@ Steps for setting up this project:
 *  Run the server with the command `python manage.py runserver 0:8000`
 
 *  in your web browser enter 'localhost:8000'
+
+
+# Running tests
+
+This project is using pytest for automated testing. For running tests you 
+should install the development packages specified in `requirements/dev.txt`
+
+```python
+pip install -r requirements/dev.txt
+```
+
+For running tests you need a DB user that has sufficient permissions to create
+a new database and for creating the `postgis` extension inside it.
+
+```psql
+CREATE USER test_user WITH PASSWORD 'some-password';
+ALTER USER test_user SUPERUSER;
+```
+
+Running tests
+
+```bash
+cd smbportal
+DJANGO_DATABASE_URL="postgis://test_user:some-password@host:port/db" py.test \
+    -x \
+    -v \
+    -m unit
+    ../tests/
+```

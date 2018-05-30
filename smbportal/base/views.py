@@ -8,14 +8,25 @@
 #
 #########################################################################
 
-from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.conf.global_settings import LOGIN_URL
-from django.views.generic.edit import CreateView,View
+import logging
 
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.shortcuts import render
+
+from profiles.rules import has_profile
+
+logger = logging.getLogger(__name__)
 
 
 def index(request):
+    user = request.user
+    if user.is_authenticated and not has_profile(user):
+        messages.info(
+            request,
+            "Please complete your profile before continuing to use the portal"
+        )
+        return redirect("profile:create")
     return render(request, "base/home.html")
 
 

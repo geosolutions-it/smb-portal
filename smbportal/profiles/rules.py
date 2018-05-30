@@ -39,5 +39,5 @@ def has_profile(user):
 is_end_user = rules.is_group_member("end_users")
 
 rules.add_perm("profiles.can_create", ~has_profile)
-rules.add_perm("profiles.can_view", has_profile & is_profile_owner)
+rules.add_perm("profiles.can_view", has_profile)
 rules.add_perm("profiles.can_edit", has_profile & is_profile_owner)

@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load avatar_tags %}
+{% load bootstrap4 %}
+{% block thickness %}
+    <section class="container padding-top-1x padding-bottom-2x"> </section>
+{% endblock %}
+
+{% block content %}
+    <div class="page-title m-b-0">
+        <div class="container">
+            <div class="column">
+                <h1>Mobility Survey</h1>
+            </div>
+            <div class="column">
+                <ul class="breadcrumbs">
+                    <li>Breadcrumbs</li>
+                    <li class="separator"></li>
+                    <li>will</li>
+                    <li class="separator"></li>
+                    <li>show</li>
+                    <li class="separator"></li>
+                    <li>up here</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="container">
+        {{ survey }}
+    </div>
+{% endblock %}
