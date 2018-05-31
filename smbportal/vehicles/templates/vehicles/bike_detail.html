@@ -1,6 +1,11 @@
 {% extends 'base/base.html' %}
 
+{% block thickness %}
+    <section class="container padding-top-1x padding-bottom-2x"> </section>
+{% endblock %}
+
 {% block content %}
+<div class="col-md-6 offset-md-3 header text-center">
     <p>This is the bike detail page for <b>{{ bike.pk }}</b></p>
     <p>nickname: <b>{{ bike.nickname }}</b></p>
     <p>type of bike: <b>{{ bike.bike_type }}</b></p>
@@ -17,4 +22,7 @@
         <a class="btn btn-info" href="{% url 'bikes:update' pk=bike.pk %}">Edit bike</a>
         <a class="btn btn-danger" href="{% url 'bikes:delete' pk=bike.pk %}">Delete bike</a>
     </p>
+    
+</div>
+<section class="container padding-top-1x padding-bottom-2x"> </section>
 {% endblock %}
