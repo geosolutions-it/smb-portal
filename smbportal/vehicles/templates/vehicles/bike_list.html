@@ -1,6 +1,11 @@
 {% extends 'base/base.html' %}
 
+{% block thickness %}
+    <section class="container padding-top-1x padding-bottom-2x"> </section>
+{% endblock %}
+
 {% block content %}
+<div class="col-md-6 offset-md-3 header text-center">
     <p>This is the bike list page</p>
     <p><a class="btn btn-info" href="{%  url 'bikes:create' %}">Register a new bike</a></p>
     Available bikes:
@@ -11,4 +16,8 @@
             <li>You don't have any bikes yet.</li>
         {% endfor %}
     </ul>
+</div>
+
+<section class="container padding-top-1x padding-bottom-2x"> </section>
+
 {% endblock %}
