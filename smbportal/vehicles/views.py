@@ -21,6 +21,7 @@ from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 from django.views.generic import DeleteView
+from photologue.models import Photo
 
 from profiles import rules as profiles_rules
 from . import models
@@ -69,6 +70,16 @@ class BikeUpdateView(LoginRequiredMixin, UpdateView):
         "bike_type",
         "gear",
         "brake",
+        "brand",
+        "model",
+        "color",
+        "saddle",
+        "has_basket",
+        "has_cargo_rack",
+        "has_lights",
+        "has_bags",
+        "has_smb_sticker",
+        "other_details",
     )
     template_name_suffix = "_update"
 
@@ -90,3 +101,34 @@ class BikeDeleteView(LoginRequiredMixin, DeleteView):
     model = models.Bike
     context_object_name = "bike"
     success_url = reverse_lazy("bikes:list")
+
+
+class BikePictureUploadView(CreateView):
+    model = Photo
+    fields = (
+        "image",
+        "title",
+        "slug",
+        "caption",
+    )
+    template_name = "vehicles/bike_picture_create.html"
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data["bike"] = models.Bike.objects.get(
+            pk=self.kwargs.get("pk"))
+        return context_data
+
+    def form_valid(self, form):
+        logger.debug("form stuff: {}".format(form.__dict__))
+        logger.debug("cleaned image: {}".format(form.cleaned_data["image"]))
+        response = super().form_valid(form)
+        photo = self.object
+        logger.debug("bike_pk: {}".format(self.kwargs.get("pk")))
+        current_bike = models.Bike.objects.get(pk=self.kwargs.get("pk"))
+        logger.debug("current_bike: {}".format(current_bike))
+        gallery = current_bike.picture_gallery
+        logger.debug("gallery: {}".format(gallery))
+        gallery.photos.add(photo)
+        logger.debug("photo instance: {}".format(photo))
+        return response

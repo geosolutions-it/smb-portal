@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block page_title %}Add picture{% endblock %}
+{% block content %}
+    <div id="container">
+        <div class="container p-t-60">
+            <p>Add a new picture to bike {{ bike.nickname }}</p>
+            <form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-outline-primary btn-lg">Submit</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
