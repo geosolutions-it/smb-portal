@@ -1,10 +1,14 @@
 {% extends 'base/base.html' %}
+{% load bootstrap4 %}
 
 {% block content %}
     <p>This is the bike update page for <b>{{ bike.pk }}</b></p>
+    <a href="{% url 'bikes:picture-upload' pk=bike.pk %}" class="btn btn-secondary">Upload pictures</a>
     <form method="post" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-primary" type="submit" value="Update">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-outline-primary btn-lg">Update</button>
+        {% endbuttons %}
     </form>
 {% endblock %}

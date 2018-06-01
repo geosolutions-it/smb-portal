@@ -1,208 +1,61 @@
 {% extends 'base/base.html' %}
 {% load i18n %}
 {% block thickness %}
-<section class="container padding-top-3x padding-bottom-2x"> </section>
 
 {% endblock %}
 
 {% block content %}
 <div class="col-md-6 offset-md-3 margin-bottom-2x" id="container">
-<span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> . </span>
-<!-- <h6 class="text-muted text-normal text-uppercase padding-top-2x mt-2">Content Alignment</h6> -->
-                <hr class="margin-bottom-1x">
-                <div class="row">
-                    <div class="col-lg-4 margin-bottom-2x">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Bikes' %}</h4>
-                                <p class="card-text align-items-center d-flex justify-content-center"> {% blocktrans %} Register new Bikes, update information about your bikes and delete 
-                                    bikes off the system. {% endblocktrans %}</p>
-                                <a class="btn btn-block btn-secondary" href="{% url 'bikes:list' %}">{% trans 'Bikes' %}</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 margin-bottom-2x">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Prizes' %}</h4>
-                                <p class="card-text align-items-center d-flex justify-content-center">{% blocktrans %} View all the prizes you can available in your 
-                                    city.{% endblocktrans %}</p>
-                                <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 margin-bottom-2x">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Tags' %}</h4>
-                                <p class="card-text align-items-center d-flex justify-content-center">{% blocktrans %}Want protection? Add rfid support to your bikes here{% endblocktrans %} </p>
-                                <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
-                            </div>
-                        </div>
-                    </div>
-                    
+    <hr class="margin-bottom-1x">
+    <div class="row">
+        <div class="col-lg-4 margin-bottom-2x">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Bikes' %}</h4>
+                    <p class="card-text align-items-center d-flex justify-content-center">
+                        {% blocktrans %} Register new Bikes, update information about your bikes and delete bikes off the system. {% endblocktrans %}
+                    </p>
+                    <a class="btn btn-block btn-secondary" href="{% url 'bikes:list' %}">{% trans 'Bikes' %}</a>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4 margin-bottom-4x">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Badges' %}</h4>
-                                <p class="card-text align-items-center d-flex justify-content-center">{% blocktrans %}View all your Badges, the ones you've unlocked and 
-                                    ones you need to get.{% endblocktrans %}</p>
-                                <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
-                            </div>
-                        </div>
-                    </div>
-               </div>
-               
-        <div>
-            <!-- <div class="pri_main_container" data-test-selector="page-annuals-pricing" data-test-language="en-us">
-                <div class="pri_container">
-                <div class="row">
-                    <div class="col-md-6 margin-bottom-2x">
-                        <h6 class="text-muted text-normal text-uppercase">Vehicles</h6>
-                        <hr class="margin-bottom-1x">
-                        <nav class="list-group">
-                              <a class="btn btn-outline-primary" href="{% comment %}{% url 'Vehicles' %}{% endcomment %}">Vehicles</a>
-                              <a class="btn btn-outline-primary" href="{% comment %}{% url 'Tags' %}{% endcomment %}">Tags</a>
-                              
-                              </nav>
-                    </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-md-6 margin-bottom-2x">
-                        <h6 class="text-muted text-normal text-uppercase">Prizes</h6>
-                        <hr class="margin-bottom-1x">
-                        <nav class="list-group">
-                              <a class="btn btn-outline-primary" href="{% comment %}{% url 'Prizes' %}{% endcomment %}"> Prizes</a>
-                              
-                              
-                              </nav>
-                    </div> -->
-                    
-                    <!-- <div class="col-md-6 margin-bottom-2x">
-                        <h6 class="text-muted text-normal text-uppercase">Link Example</h6>
-                        <hr class="margin-bottom-1x">
-                        <nav class="list-group">
-                            <a class="list-group-item" href="javascript:void(0)">Lorem Ipsum is</a>
-                            <a class="list-group-item active" href="javascript:void(0)">Lorem Ipsum is simply dummy</a>
-                            <a class="list-group-item" href="javascript:void(0)">Lorem Ipsum is</a>
-                            <a class="list-group-item" href="javascript:void(0)">Lorem Ipsum is simply</a>
-                            <a class="list-group-item" href="javascript:void(0)">Lorem Ipsum is simply</a>
-                        </nav>
-                    </div> -->
-                
-                <!-- <div class="row pt-1">
-                    <div class="col-md-6 margin-bottom-2x">
-                        <h6 class="text-muted text-normal text-uppercase">With Icons</h6>
-                        <hr class="margin-bottom-1x">
-                        <nav class="list-group">
-                            <a class="list-group-item" href="javascript:void(0)"><i class="icon-eye"></i> Lorem Ipsum is</a>
-                            <a class="list-group-item active" href="javascript:void(0)"><i class="icon-bell"></i> Lorem Ipsum is simply dummy</a>
-                            <a class="list-group-item" href="javascript:void(0)"><i class="icon-cog"></i> Lorem Ipsum is</a>
-                            <a class="list-group-item" href="javascript:void(0)"><i class="icon-umbrella"></i> Lorem Ipsum is simply</a>
-                            <a class="list-group-item" href="javascript:void(0)"><i class="icon-globe"></i> Lorem Ipsum is simply</a>
-                        </nav>
-                    </div>
-                    <div class="col-md-6 margin-bottom-2x">
-                        <h6 class="text-muted text-normal text-uppercase">With Badges</h6>
-                        <hr class="margin-bottom-1x">
-                        <nav class="list-group">
-                            <a class="list-group-item with-badge" href="javascript:void(0)">
-                                Lorem Ipsum is
-                                <span class="badge badge-default badge-pill">15</span>
-                            </a>
-                            <a class="list-group-item with-badge active" href="javascript:void(0)">
-                                Lorem Ipsum is simply dummy
-                                <span class="badge badge-default badge-pill">8</span>
-                            </a>
-                            <a class="list-group-item with-badge" href="javascript:void(0)">
-                                Lorem Ipsum is
-                                <span class="badge badge-warning badge-pill">6</span>
-                            </a>
-                            <a class="list-group-item with-badge" href="javascript:void(0)">
-                                Lorem Ipsum is simply
-                                <span class="badge badge-primary badge-pill">23</span>
-                            </a>
-                            <a class="list-group-item with-badge" href="javascript:void(0)">
-                                Lorem Ipsum is simply
-                                <span class="badge badge-danger badge-pill">19</span>
-                            </a>
-                        </nav>
-                    </div>
-                </div> -->
-                <!-- <div class="row pt-1">
-                    <div class="col-12">
-                        <h6 class="text-muted text-normal text-uppercase">Contextual Classes</h6>
-                        <hr class="margin-bottom-1x">
-                    </div>
-                    <div class="col-md-6 margin-bottom-2x">
-                        <ul class="list-group">
-                            <li class="list-group-item">Lorem Ipsum is</li>
-                            <li class="list-group-item list-group-item-success">Lorem Ipsum is simply dummy</li>
-                            <li class="list-group-item list-group-item-info">Lorem Ipsum is</li>
-                            <li class="list-group-item list-group-item-warning">Lorem Ipsum is simply</li>
-                            <li class="list-group-item list-group-item-danger">Lorem Ipsum is simply</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 margin-bottom-2x">
-                        <nav class="list-group">
-                            <a class="list-group-item list-group-item-action" href="javascript:void(0)">
-                                Lorem Ipsum is
-                            </a>
-                            <a class="list-group-item list-group-item-action list-group-item-success" href="javascript:void(0)">
-                                Lorem Ipsum is simply dummy
-                            </a>
-                            <a class="list-group-item list-group-item-action list-group-item-info" href="javascript:void(0)">
-                                Lorem Ipsum is
-                            </a>
-                            <a class="list-group-item list-group-item-action list-group-item-warning" href="javascript:void(0)">
-                                Lorem Ipsum is simply
-                            </a>
-                            <a class="list-group-item list-group-item-action list-group-item-danger" href="javascript:void(0)">
-                                Lorem Ipsum is simply
-                            </a>
-                        </nav>
-                    </div>
-                </div>
-            </div> -->
-            <!-- END COL-9 -->
-
-            <!-- BEGIN COL-3 -->
-            <!-- <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
-                SIDE MENU
-                <nav class="list-group" id="ui_elements_nav">
-                    <a class="list-group-item list-group-item-action" href="ui_accordion.html">Accordion</a>
-                    <a class="list-group-item list-group-item-action" href="ui_alerts.html">Alerts</a>
-                    <a class="list-group-item list-group-item-action" href="ui_buttons.html">Buttons</a>
-                    <a class="list-group-item list-group-item-action" href="ui_cards.html">Cards</a>
-                    <a class="list-group-item list-group-item-action" href="ui_forms.html">Forms</a>
-                    <a class="list-group-item list-group-item-action" href="ui_form_layouts.html">Form Layouts</a>
-                    <a class="list-group-item list-group-item-action" href="ui_gallery.html">Gallery</a>
-                    <a class="list-group-item list-group-item-action" href="ui_images_figures.html">Images & Figures</a>
-                    <a class="list-group-item list-group-item-action" href="ui_list_group.html">List Group</a>
-                    <a class="list-group-item list-group-item-action" href="ui_media_object.html">Media Object</a>
-                    <a class="list-group-item list-group-item-action" href="ui_modal.html">Modal</a>
-                    <a class="list-group-item list-group-item-action" href="ui_pagination.html">Pagination</a>
-                    <a class="list-group-item list-group-item-action" href="ui_pills.html">Pills</a>
-                    <a class="list-group-item list-group-item-action" href="ui_progress_bars.html">Progress Bars</a>
-                    <a class="list-group-item list-group-item-action" href="ui_steps.html">Steps</a>
-                    <a class="list-group-item list-group-item-action" href="ui_tables.html">Tables</a>
-                    <a class="list-group-item list-group-item-action" href="ui_tabs.html">Tabs</a>
-                    <a class="list-group-item list-group-item-action" href="ui_toast_notification.html">Toast
-                        Notifications</a>
-                    <a class="list-group-item list-group-item-action" href="ui_sweet_alert.html">Sweet Alert</a>
-                    <a class="list-group-item list-group-item-action" href="ui_tooltips.html">Tooltips & Popovers</a>
-                    <a class="list-group-item list-group-item-action" href="ui_typography.html">Typography</a>
-                    <a class="list-group-item list-group-item-action" href="ui_widgets.html">Widgets</a>
-
-                </nav>
-            </div> -->
-            <!-- END COL-3 -->
+            </div>
         </div>
-        <!-- END ROW -->
-        <span class="d-block bg-primary text-center" style="background: linear-gradient(to right,#02C9ED,#CADA5D)"> . </span>
+        <div class="col-lg-4 margin-bottom-2x">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Prizes' %}</h4>
+                    <p class="card-text align-items-center d-flex justify-content-center">
+                        {% blocktrans %} View all the prizes you can available in your city.{% endblocktrans %}
+                    </p>
+                    <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 margin-bottom-2x">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Tags' %}</h4>
+                    <p class="card-text align-items-center d-flex justify-content-center">
+                        {% blocktrans %}Want protection? Add rfid support to your bikes here{% endblocktrans %}
+                    </p>
+                    <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-lg-4 margin-bottom-4x">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Badges' %}</h4>
+                    <p class="card-text align-items-center d-flex justify-content-center">
+                        {% blocktrans %}View all your Badges, the ones you've unlocked and ones you need to get.{% endblocktrans %}
+                    </p>
+                    <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
    
 {% endblock %}
 {% block js %}

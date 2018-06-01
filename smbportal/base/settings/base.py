@@ -11,6 +11,7 @@
 """Base Django settings for smbportal"""
 
 import os
+import pathlib
 
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
@@ -44,8 +45,7 @@ def get_list_env_value(environment_value, separator=":", default_value=None):
     return [item for item in raw_value.split(separator) if item != ""]
 
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = str(pathlib.Path(__file__).parents[2])
 
 
 # Quick-start development settings - unsuitable for production
@@ -71,9 +71,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
+    "django.contrib.sites",
     "bossoidc",
     "djangooidc",
     "bootstrap4",
+    "photologue",
+    "sortedm2m",
     "base",
     "avatar",
     "keycloakauth.apps.KeycloakauthConfig",
@@ -99,7 +102,9 @@ ROOT_URLCONF = "base.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, "templates"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -109,6 +114,10 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.i18n",
             ],
+            # "loaders": [
+            #     "django.template.loaders.filesystem.Loader",
+            #     "django.template.loaders.app_directories.Loader",
+            # ]
         },
     },
 ]
@@ -123,6 +132,8 @@ DATABASES = {
                 os.path.join(BASE_DIR, "db.sqlite3")))
     )
 }
+
+SITE_ID = 1
 
 AUTH_USER_MODEL = "profiles.SmbUser"
 
@@ -193,9 +204,12 @@ ANALYSTS_GROUP = "analysts"
 
 PRIZE_MANAGERS_GROUP = "prize_managers"
 
-MEDIA_URL = "MEDIA/ROOT/ASSETS/"
+MEDIA_URL = "/media/"
 
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA')
+MEDIA_ROOT = get_environment_variable(
+    "DJANGO_MEDIA_ROOT",
+    default_value=str(pathlib.Path(BASE_DIR).parent / "media"),
+)
 
 KEYCLOAK = {
     "base_url": get_environment_variable(

@@ -39,4 +39,9 @@ urlpatterns = [
         view=views.BikeDeleteView.as_view(),
         name="delete"
     ),
+    path(
+        route="<pk>/pictures/upload",
+        view=views.BikePictureUploadView.as_view(),
+        name="picture-upload"
+    ),
 ]

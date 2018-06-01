@@ -1,14 +1,25 @@
 {% extends 'base/base.html' %}
+{% block page_title %}Your bikes{% endblock %}
 
 {% block content %}
-    <p>This is the bike list page</p>
-    <p><a class="btn btn-info" href="{%  url 'bikes:create' %}">Register a new bike</a></p>
-    Available bikes:
-    <ul>
-        {% for bike in bikes %}
-            <li><a href="{{ bike.get_absolute_url }}">{{ bike.nickname }}</a></li>
-        {% empty %}
-            <li>You don't have any bikes yet.</li>
-        {% endfor %}
-    </ul>
+    <div id="container">
+        <div class="container p-t-60">
+            <div class="row">
+                <div class="col-lg-8">
+                    Available bikes:
+                    <ul>
+                        {% for bike in bikes %}
+                            <li><a href="{{ bike.get_absolute_url }}">{{ bike.nickname }}</a></li>
+                        {% empty %}
+                            <li>You don't have any bikes yet.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <p><a class="btn btn-info" href="{%  url 'bikes:create' %}">Register a new bike</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
