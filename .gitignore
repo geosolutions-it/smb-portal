@@ -107,3 +107,8 @@ ENV/
 .idea
 
 .DS_Store
+=======
+# MACOS files
+.DS_Store
+.AppleDouble
+.LSOverride
