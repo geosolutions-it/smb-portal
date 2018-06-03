@@ -1,26 +1,15 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% load avatar_tags %}
+{% load bootstrap4 %}
+{% load django_bootstrap_breadcrumbs %}
 
+{% block page_title %}Your profile{% endblock %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb 'profile' 'profile:update' %}
+{% endblock %}
 {% block content %}
-    <div class="page-title m-b-0">
-        <div class="container">
-            <div class="column">
-                <h1>Your profile</h1>
-            </div>
-            <div class="column">
-                <ul class="breadcrumbs">
-                    <li>Breadcrumbs</li>
-                    <li class="separator"></li>
-                    <li>will</li>
-                    <li class="separator"></li>
-                    <li>show</li>
-                    <li class="separator"></li>
-                    <li>up here</li>
-                </ul>
-            </div>
-        </div>
-    </div>
     <div id="container">
         <div class="container p-t-60">
             <div class="row">
