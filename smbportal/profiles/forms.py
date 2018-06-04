@@ -3,40 +3,6 @@ from django import forms
 from . import models
 
 
-class EndUserDetailViewForm(forms.ModelForm):
-    
-    class Meta:
-        model = models.EndUserProfile
-        fields = (
-            "user",
-            "gender",
-            "phone_number",
-            "bio",
-            )
-        widgets = {
-            "user": forms.HiddenInput(),
-            "bio": forms.Textarea(
-                attrs={
-                    "class": "form-control",
-                    "id": "select2",
-                    "rows": "3"
-                }
-            ),
-            "gender": forms.Select(
-                attrs={
-                    "class": "js-states form-control select_2",
-                    "id": "select2",
-                }
-            ),
-            "phone_number": forms.NumberInput(
-                attrs={
-                    "class": "js-states form-control",
-                    "id": "select2",
-                }
-            ),
-        }
-
-
 class EndUserProfileForm(forms.ModelForm):
 
     class Meta:
@@ -48,56 +14,15 @@ class EndUserProfileForm(forms.ModelForm):
         )
         
         widgets = {
-            "bio": forms.TextInput(
+            "bio": forms.Textarea(
                 attrs={
-                    "class": "form-control form-control",
+                    "class": "form-control",
                     }
                 ),
             "gender": forms.RadioSelect(),
-            "old_gender": forms.Select(
-                attrs={
-                    "class": "js-states form-control select_2",
-                    "id": "select2",
-                }
-            ),
             "phone_number": forms.NumberInput(
                 attrs={
                     "class": "js-states form-control",
-                    "id": "select2",
-                }
-            ),
-        }
-
-
-class EndUserUpdateViewForm(forms.ModelForm):
-
-    class Meta:
-        model = models.EndUserProfile
-        fields = (
-            "user",
-            "bio",
-            "gender",
-            "phone_number",
-        )
-        
-        widgets = {
-            "user": forms.HiddenInput(),
-            "bio": forms.TextInput(
-                attrs={
-                    "class": "form-control form-control",
-                    "id": "select2",
-                }
-            ),
-            "gender": forms.Select(
-                attrs={
-                    "class": "js-states form-control select_2",
-                    "id": "select2",
-                }
-            ),
-            "phone_number": forms.NumberInput(
-                attrs={
-                    "class": "js-states form-control",
-                    "id": "select2",
                 }
             ),
         }
