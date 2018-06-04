@@ -16,6 +16,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+
 from . import views
 
 urlpatterns = [
@@ -47,10 +48,21 @@ urlpatterns = [
     
     path(
         route=r"avatar/",
-        view=include("avatar.urls")
+        view=include("avatar.urls"),
+        name="avatar",
     ),
     path(
         route=r"photologue/",
         view=include("photologue.urls", namespace="photologue")
+    ),
+    path(
+        route=r"api/",
+        view=include("api.urls"),
+        name="api",
+    ),
+    path(
+        route=r"api-auth/",
+        view=include("rest_framework.urls", namespace="rest_framework"),
+        name="api-auth",
     )
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

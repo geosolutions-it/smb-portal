@@ -200,6 +200,7 @@ class PhysicalTag(models.Model):
     bike = models.ForeignKey(
         "Bike",
         on_delete=models.CASCADE,
+        related_name="tags",
     )
     epc = models.TextField(
         help_text="Electronic Product Code"

@@ -31,7 +31,7 @@
         <p>{{ bike.get_current_possession_state.possession_state }}</p>
         <h4>Tags</h4>
         <ul>
-            {% for tag in bike.tags %}
+            {% for tag in bike.tags.all %}
                 <li>{{ tag }}</li>
             {% empty %}
                 <li>This bike does not have any tags</li>
