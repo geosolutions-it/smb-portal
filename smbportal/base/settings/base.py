@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "bootstrap4",
     "photologue",
     "sortedm2m",
+    "django_bootstrap_breadcrumbs",
     "base",
     "avatar",
     "keycloakauth.apps.KeycloakauthConfig",
@@ -193,6 +194,8 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
 
 LOGIN_URL = "/openid/openid/KeyCloak"
 

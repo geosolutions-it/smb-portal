@@ -1,6 +1,7 @@
 {% load static %}
 {% load i18n %}
 {% load avatar_tags %}
+{% load django_bootstrap_breadcrumbs %}
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -222,26 +223,18 @@
 
 	    
 <!-- </section>  -->
-<div class="offcanvas-wrapper">
-{% block thickness %}
-<!-- <section class="container padding-top-3x padding-bottom-2x"> -->
-
+{% block breadcrumbs %}
+    {% clear_breadcrumbs %}
+    {% breadcrumb 'Home' 'index' %}
 {% endblock %}
+<div class="offcanvas-wrapper">
     <div class="page-title m-b-0">
         <div class="container">
             <div class="column">
                 <h1>{% block page_title %}{% endblock %}</h1>
             </div>
             <div class="column">
-                <ul class="breadcrumbs">
-                    <li>Breadcrumbs</li>
-                    <li class="separator"></li>
-                    <li>will</li>
-                    <li class="separator"></li>
-                    <li>show</li>
-                    <li class="separator"></li>
-                    <li>up here</li>
-                </ul>
+                {% render_breadcrumbs %}
             </div>
         </div>
     </div>

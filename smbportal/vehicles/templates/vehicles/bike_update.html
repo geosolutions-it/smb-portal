@@ -1,14 +1,32 @@
 {% extends 'base/base.html' %}
 {% load bootstrap4 %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block page_title %}Edit bike{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb 'bikes' 'bikes:list' %}
+    {% breadcrumb bike.pk 'bikes:detail' pk=bike.pk %}
+    {% breadcrumb 'update' 'bikes:edit' pk=bike.pk %}
+{% endblock %}
 
 {% block content %}
-    <p>This is the bike update page for <b>{{ bike.pk }}</b></p>
-    <a href="{% url 'bikes:picture-upload' pk=bike.pk %}" class="btn btn-secondary">Upload pictures</a>
-    <form method="post" action="">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-            <button type="submit" class="btn btn-outline-primary btn-lg">Update</button>
-        {% endbuttons %}
-    </form>
+    <div id="container">
+        <div class="container p-t-60">
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="{% url 'bikes:picture-upload' pk=bike.pk %}" class="btn btn-secondary">Upload pictures</a>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                            <button type="submit" class="btn btn-outline-primary btn-lg">Update bike</button>
+                        {% endbuttons %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
