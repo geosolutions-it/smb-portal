@@ -13,6 +13,8 @@ import uuid
 from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
+from django.utils.text import slugify
+from photologue.models import Gallery
 
 
 class Vehicle(models.Model):
@@ -35,13 +37,30 @@ class Vehicle(models.Model):
 class BikeManager(models.Manager):
 
     def create(self, *args, **kwargs):
-        bike = self.model(*args, **kwargs)
+        """Create instances
+
+        Automatically create a possession state and a gallery whenever a new
+        bike is saved
+
+        """
+
+        bike = self.model(
+            *args,
+            **kwargs
+        )
         bike.save()
         possession_history = BikePossessionHistory(
             bike=bike,
             reporter=bike.owner,
         )
         possession_history.save()
+        gallery_title = "Picture gallery for bike {}".format(bike.pk)
+        picture_gallery = Gallery.objects.create(
+            title=gallery_title,
+            slug=slugify(gallery_title),
+        )
+        bike.picture_gallery = picture_gallery
+        bike.save()
         return bike
 
 
@@ -68,6 +87,12 @@ class Bike(Vehicle):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="bikes",
+    )
+    picture_gallery = models.OneToOneField(
+        "photologue.Gallery",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     last_update = models.DateTimeField(
         auto_now=True,
@@ -175,6 +200,7 @@ class PhysicalTag(models.Model):
     bike = models.ForeignKey(
         "Bike",
         on_delete=models.CASCADE,
+        related_name="tags",
     )
     epc = models.TextField(
         help_text="Electronic Product Code"

@@ -1,6 +1,7 @@
 {% load static %}
 {% load i18n %}
 {% load avatar_tags %}
+{% load django_bootstrap_breadcrumbs %}
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -78,9 +79,6 @@
     <!-- BEGIN MAIN NAVIGATION-->
     <nav class="site-menu">
         <ul>
-            <li class="has-megamenu">
-                <a href="{% url 'index' %}"><span>{% trans 'Home' %}</span></a>
-            </li>
             <li class="has-megamenu">
                 <a href="{% url 'bikes:list' %}"><span>{% trans 'Bikes' %}</span></a>
             </li>
@@ -225,11 +223,21 @@
 
 	    
 <!-- </section>  -->
-<div class="offcanvas-wrapper">
-{% block thickness %}
-<!-- <section class="container padding-top-3x padding-bottom-2x"> -->
-
+{% block breadcrumbs %}
+    {% clear_breadcrumbs %}
+    {% breadcrumb 'Home' 'index' %}
 {% endblock %}
+<div class="offcanvas-wrapper">
+    <div class="page-title m-b-0">
+        <div class="container">
+            <div class="column">
+                <h1>{% block page_title %}{% endblock %}</h1>
+            </div>
+            <div class="column">
+                {% render_breadcrumbs %}
+            </div>
+        </div>
+    </div>
 
    {%  block content  %}
    {% endblock %}
@@ -248,11 +256,7 @@
                 <div class="col-lg-9 col-md-9">
                     <!-- About Us-->
                     <section class="widget widget-links widget-light-skin">
-                        <ul class="">
-                            <li>Save my Bike // info@savemybike.eu // Privacy Policy // Credits // <a  class="btn btn-sm btn-primary" href="#"><span>{% trans "Restricted Area" %}</span></a></li>
-                            
-                            
-                        </ul>
+                        <span>Save my Bike // info@savemybike.eu // Privacy Policy // Credits</span>
                          <a class="social-button shape-circle sb-facebook sb-light-skin" href="javascript:void(0)">
                             <i class="fa fa-facebook"></i>
                         </a>
@@ -265,11 +269,7 @@
                         <a class="social-button shape-circle sb-google-plus sb-light-skin" href="javascript:void(0)">
                             <i class="fa fa-google-plus"></i>
                         </a>
-                       <!--  <a class="social-button shape-circle sb-pintrest sb-light-skin" href="javascript:void(0)">
-                            <i class="fa fa-pintrest"></i>
-                        </a> -->
-                    
-                    </section> 
+                    </section>
                 </div>
                 
             </div>
