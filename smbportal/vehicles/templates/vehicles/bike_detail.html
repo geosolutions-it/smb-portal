@@ -1,64 +1,57 @@
-{% extends 'base/base.html' %}
+{% extends 'vehicles/base.html' %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block page_title %}Bike details{% endblock %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb 'bikes' 'bikes:list' %}
     {% breadcrumb bike.pk 'bikes:detail' pk=bike.pk %}
 {% endblock %}
 
-{% block content %}
-    <div id="container">
-        <div class="container p-t-60">
-            <div class="row">
-                <div class="col-lg-8">
-                    {% for photo in bike.picture_gallery.sample %}
-                        <a href="{{ photo.get_absolute_url }}">
-                            <img src="{{ photo.get_thumbnail_url }}" class="img-thumbnail" alt="{{ photo.title }}">
-                        </a>
-                    {% endfor %}
-                    <p>nickname: <em>{{ bike.nickname }}</em></p>
-                    <p>Type of bike: <em>{{ bike.bike_type }}</em></p>
-                    <p>Gears: <em>{{ bike.gear }}</em></p>
-                    <p>Brakes: <em>{{ bike.brake }}</em></p>
-                    <p>Brand: <em>{{ bike.brand }}</em></p>
-                    <p>Model: <em>{{ bike.model }}</em></p>
-                    <p>Color: <em>{{ bike.color }}</em></p>
-                    <p>Saddle: <em>{{ bike.saddle }}</em></p>
-                    <p>Basket: <em><i class="fa {% if bike.has_basket %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-                    <p>Cargo rack: <em><i class="fa {% if bike.has_cargo_rack %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-                    <p>Lights: <em><i class="fa {% if bike.has_lights %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-                    <p>Bags: <em><i class="fa {% if bike.has_bags %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-                    <p>SaveMyBike sticker: <em><i class="fa {% if bike.has_smb_sticker %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-                    <h4>Possession state</h4>
-                    <p>{{ bike.get_current_possession_state.possession_state }}</p>
-                    <h4>Tags</h4>
-                    <ul>
-                        {% for tag in bike.tags %}
-                            <li>{{ tag }}</li>
-                        {% empty %}
-                            <li>This bike does not have any tags</li>
-                        {% endfor %}
-                    </ul>
-                    <p>
-                        <a class="btn btn-outline-primary" href="{% url 'bikes:update' pk=bike.pk %}">Edit bike</a>
-                        <a class="btn btn-danger" href="{% url 'bikes:delete' pk=bike.pk %}">Delete bike</a>
-                    </p>
+{% block main %}
+    <div class="col-lg-8">
+        {% for photo in bike.picture_gallery.sample %}
+            <a href="{{ photo.get_absolute_url }}">
+                <img src="{{ photo.get_thumbnail_url }}" class="img-thumbnail" alt="{{ photo.title }}">
+            </a>
+        {% endfor %}
+        <p>nickname: <em>{{ bike.nickname }}</em></p>
+        <p>Type of bike: <em>{{ bike.bike_type }}</em></p>
+        <p>Gears: <em>{{ bike.gear }}</em></p>
+        <p>Brakes: <em>{{ bike.brake }}</em></p>
+        <p>Brand: <em>{{ bike.brand }}</em></p>
+        <p>Model: <em>{{ bike.model }}</em></p>
+        <p>Color: <em>{{ bike.color }}</em></p>
+        <p>Saddle: <em>{{ bike.saddle }}</em></p>
+        <p>Basket: <em><i class="fa {% if bike.has_basket %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+        <p>Cargo rack: <em><i class="fa {% if bike.has_cargo_rack %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+        <p>Lights: <em><i class="fa {% if bike.has_lights %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+        <p>Bags: <em><i class="fa {% if bike.has_bags %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+        <p>SaveMyBike sticker: <em><i class="fa {% if bike.has_smb_sticker %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+        <h4>Possession state</h4>
+        <p>{{ bike.get_current_possession_state.possession_state }}</p>
+        <h4>Tags</h4>
+        <ul>
+            {% for tag in bike.tags %}
+                <li>{{ tag }}</li>
+            {% empty %}
+                <li>This bike does not have any tags</li>
+            {% endfor %}
+        </ul>
+        <p>
+            <a class="btn btn-outline-primary" href="{% url 'bikes:update' pk=bike.pk %}">Edit bike</a>
+            <a class="btn btn-outline-danger" href="{% url 'bikes:delete' pk=bike.pk %}">Delete bike</a>
+        </p>
+    </div>
+    <div class="col-lg-4">
+        <div class="card card-info bg_svg_green text-white">
+            <div class="card-body p-40">
+                <div class="d-flex justify-content-center m-b-30">
+                    <i class="fa fa-bicycle p-b-30 f-s-150"></i>
                 </div>
-                <div class="col-lg-4">
-                    <div class="card card-info bg_svg_green text-white">
-                        <div class="card-body p-40">
-                            <div class="d-flex justify-content-center m-b-30">
-                                <i class="fa fa-bicycle p-b-30 f-s-150"></i>
-                            </div>
-                            <h5 class="text-white m-b-20">Bike registration code</h5>
-                            <p>{{ bike.pk }}</p>
-                            <p>Use this code to register new tags for this bike:</p>
-                            <p><a href="" class="btn btn-secondary">print registry information</a></p>
-                        </div>
-                    </div>
-                </div>
+                <h5 class="text-white m-b-20">Bike registration code</h5>
+                <p>{{ bike.pk }}</p>
+                <p>Use this code to register new tags for this bike:</p>
+                <p><a href="" class="btn btn-secondary">print registry information</a></p>
             </div>
         </div>
     </div>

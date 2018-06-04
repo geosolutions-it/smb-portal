@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'vehicles/base.html' %}
 {% load bootstrap4 %}
 {% load django_bootstrap_breadcrumbs %}
 
@@ -6,26 +6,18 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb 'bikes' 'bikes:list' %}
     {% breadcrumb bike.pk 'bikes:detail' pk=bike.pk %}
     {% breadcrumb 'delete' 'bikes:delete' pk=bike.pk %}
 {% endblock %}
 
-{% block content %}
-    <div id="container">
-        <div class="container p-t-60">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Are you sure you want to delete bike <b>{{ bike.pk }}({{ bike.nickname }})</b>?</p>
-                    <form method="post">
-                        {% csrf_token %}
-                        {% buttons %}
-                            <button type="submit" class="btn btn-danger btn-lg">Delete</button>
-                        {% endbuttons %}
-                    </form>
-                </div>
-            </div>
-        </div>
-
+{% block main %}
+    <div class="col-lg-12">
+        <p>Are you sure you want to delete bike <b>{{ bike.pk }}({{ bike.nickname }})</b>?</p>
+        <form method="post">
+            {% csrf_token %}
+            {% buttons %}
+                <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+            {% endbuttons %}
+        </form>
     </div>
 {% endblock %}
