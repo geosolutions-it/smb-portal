@@ -72,6 +72,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.gis",
     "django.contrib.sites",
+    "rest_framework",
+    "drf_yasg",
     "bossoidc",
     "djangooidc",
     "bootstrap4",
@@ -196,6 +198,12 @@ STATICFILES_DIRS = [
 ]
 
 BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    )
+}
 
 LOGIN_URL = "/openid/openid/KeyCloak"
 
