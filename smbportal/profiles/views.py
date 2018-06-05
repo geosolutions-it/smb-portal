@@ -97,7 +97,7 @@ class MobilityHabitsSurveyCreateView(LoginRequiredMixin,
                                      FormUpdatedMessageMixin,
                                      CreateView):
     model = models.MobilityHabitsSurvey
-    context_object_name="survey"
+    context_object_name = "survey"
     form_class = forms.UserMobilityHabitsForm
     template_name_suffix = "_create"
     success_url = reverse_lazy("profile:update")

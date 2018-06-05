@@ -42,10 +42,9 @@ urlpatterns = [
     ),
     path(
         route=r"openid/openid/KeyCloak",
-        view= auth_views.login,
+        view=auth_views.login,
         name="login"
         ),
-    
     path(
         route=r"avatar/",
         view=include("avatar.urls"),

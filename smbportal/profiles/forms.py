@@ -12,7 +12,6 @@ class EndUserProfileForm(forms.ModelForm):
             "gender",
             "phone_number",
         )
-        
         widgets = {
             "bio": forms.Textarea(
                 attrs={
@@ -30,7 +29,7 @@ class EndUserProfileForm(forms.ModelForm):
 
 class UserMobilityHabitsForm(forms.ModelForm):
 
-    class Meta: 
+    class Meta:
         model = models.MobilityHabitsSurvey
         fields = (
             "end_user",
@@ -40,7 +39,6 @@ class UserMobilityHabitsForm(forms.ModelForm):
             "uses_fuel_car_sharing_services",
             "bicycle_usage",
         )
-        
         widgets = {
             "end_user": forms.HiddenInput(),
             "public_transport_usage": forms.Select(
