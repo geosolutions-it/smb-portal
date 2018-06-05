@@ -46,7 +46,6 @@ class BikeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return result
 
 
-
 class BikeCreateView(LoginRequiredMixin, CreateView):
     model = models.Bike
     fields = (
@@ -61,7 +60,6 @@ class BikeCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
-
 
 
 class BikeUpdateView(LoginRequiredMixin, UpdateView):

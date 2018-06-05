@@ -3,4 +3,6 @@
 flake8==3.5.0
 pytest==3.6.0
 pytest-django==3.2.1
+pytest-flake8==1.0.1
+pytest-pythonpath==0.7.2
 pylint==1.9.1

@@ -28,9 +28,3 @@ def index(request):
         )
         return redirect("profile:create")
     return render(request, "base/home.html")
-
-
-
-
-
-

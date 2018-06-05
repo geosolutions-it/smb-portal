@@ -38,13 +38,12 @@ CREATE USER test_user WITH PASSWORD 'some-password';
 ALTER USER test_user SUPERUSER;
 ```
 
-Running tests
+Then run tests with
 
 ```bash
-cd smbportal
-DJANGO_DATABASE_URL="postgis://test_user:some-password@host:port/db" py.test \
-    -x \
-    -v \
-    -m unit
-    ../tests/
+DJANGO_DATABASE_URL="postgis://test_user:some-password@host:port/db" \
+    py.test --flake8
 ```
+
+The `setup.cfg` file has some relevant settings for running tests. Be sure to 
+check it out too

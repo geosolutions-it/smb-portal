@@ -18,6 +18,7 @@ from . import serializers
 # TODO: Specify permission_classes for all views
 # FIXME: account for different user profiles
 
+
 class SmbUserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.SmbUserSerializer
 

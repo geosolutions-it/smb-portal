@@ -10,8 +10,6 @@
 
 import logging
 
-from django.contrib.auth.mixins import PermissionRequiredMixin
-
 logger = logging.getLogger(__name__)
 
 
@@ -27,8 +25,8 @@ class UserHasObjectPermissionMixin(object):
 
         """
 
-        logger.debug("inside UserHasObjectPermissionMixin's has_permission method")
-        print("inside UserHasObjectPermissionMixin's has_permission method")
+        logger.debug(
+            "inside UserHasObjectPermissionMixin's has_permission method")
         current_user = self.request.user
         permissions_to_check = self.get_permission_required()
         return current_user.has_perms(
