@@ -10,7 +10,7 @@
         <div class="user-info">
             <div class="user-avatar">
                 <a class="edit-avatar" href="{% url 'avatar_change' %}"><i class="fa fa-pencil-square-o"></i></a>
-                {% avatar user class="rounded-circle" %}
+                {% avatar user 150 class="rounded-circle" %}
             </div>
             <div class="user-data">
                 <h4>{{ user.first_name }} {{ user.last_name }}</h4>
