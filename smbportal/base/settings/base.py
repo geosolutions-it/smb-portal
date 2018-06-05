@@ -205,6 +205,11 @@ REST_FRAMEWORK = {
     )
 }
 
+AVATAR_AUTO_GENERATE_SIZES = (
+    80,
+    150,
+)
+
 LOGIN_URL = "/openid/openid/KeyCloak"
 
 LOGOUT_URL = "/openid/logout"

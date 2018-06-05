@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+
+{% load i18n %}
+{% load bootstrap4 %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb 'profile' 'profile:update' %}
+    {% breadcrumb 'avatar' 'avatar_change' %}
+    {% breadcrumb 'delete' 'avatar_delete' %}
+{% endblock %}
+
+{%  block page_title %}Delete avatars{% endblock %}
+
+{% block main %}
+    <div class="col-lg">
+        <p>{% trans "Please select the avatars that you would like to delete." %}</p>
+        {% if not avatars %}
+            {% url 'avatar_add' as avatar_add_url %}
+            <p>{% blocktrans %}You have no avatars to delete. Please <a href="{{ avatar_add_url }}">upload one</a> now.{% endblocktrans %}</p>
+        {% endif %}
+        <form method="POST" action="{% url 'avatar_delete' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{% url 'avatar_change' %}">
+            {% bootstrap_form delete_avatar_form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-danger">{% trans "Delete selected" %}</button>
+            {% endbuttons %}
+        </form>
+    </div>
+{% endblock %}
