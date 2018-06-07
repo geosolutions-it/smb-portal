@@ -4,55 +4,106 @@
 {% block page_title %}Bike details{% endblock %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.pk 'bikes:detail' pk=bike.pk %}
+    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
 {% endblock %}
 
-{% block main %}
-    <div class="col-lg-8">
-        {% for photo in bike.picture_gallery.sample %}
-            <a href="{{ photo.get_absolute_url }}">
-                <img src="{{ photo.get_thumbnail_url }}" class="img-thumbnail" alt="{{ photo.title }}">
-            </a>
-        {% endfor %}
-        <p>nickname: <em>{{ bike.nickname }}</em></p>
-        <p>Type of bike: <em>{{ bike.bike_type }}</em></p>
-        <p>Gears: <em>{{ bike.gear }}</em></p>
-        <p>Brakes: <em>{{ bike.brake }}</em></p>
-        <p>Brand: <em>{{ bike.brand }}</em></p>
-        <p>Model: <em>{{ bike.model }}</em></p>
-        <p>Color: <em>{{ bike.color }}</em></p>
-        <p>Saddle: <em>{{ bike.saddle }}</em></p>
-        <p>Basket: <em><i class="fa {% if bike.has_basket %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-        <p>Cargo rack: <em><i class="fa {% if bike.has_cargo_rack %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-        <p>Lights: <em><i class="fa {% if bike.has_lights %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-        <p>Bags: <em><i class="fa {% if bike.has_bags %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-        <p>SaveMyBike sticker: <em><i class="fa {% if bike.has_smb_sticker %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-        <h4>Possession state</h4>
-        <p>{{ bike.get_current_possession_state.possession_state }}</p>
-        <h4>Tags</h4>
-        <ul>
-            {% for tag in bike.tags.all %}
-                <li>{{ tag }}</li>
-            {% empty %}
-                <li>This bike does not have any tags</li>
-            {% endfor %}
-        </ul>
-        <p>
-            <a class="btn btn-outline-primary" href="{% url 'bikes:update' pk=bike.pk %}">Edit bike</a>
-            <a class="btn btn-outline-danger" href="{% url 'bikes:delete' pk=bike.pk %}">Delete bike</a>
-        </p>
-    </div>
-    <div class="col-lg-4">
-        <div class="card card-info bg_svg_green text-white">
-            <div class="card-body p-40">
-                <div class="d-flex justify-content-center m-b-30">
-                    <i class="fa fa-bicycle p-b-30 f-s-150"></i>
+{% block content %}
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-4">
+                    <p>nickname: <em>{{ bike.nickname }}</em></p>
+                    <p>Type of bike: <em>{{ bike.bike_type }}</em></p>
+                    <p>Gears: <em>{{ bike.gear }}</em></p>
+                    <p>Brakes: <em>{{ bike.brake }}</em></p>
+                    <p>Brand: <em>{{ bike.brand }}</em></p>
+                    <p>Model: <em>{{ bike.model }}</em></p>
+                    <p>Color: <em>{{ bike.color }}</em></p>
+                    <p>Saddle: <em>{{ bike.saddle }}</em></p>
                 </div>
-                <h5 class="text-white m-b-20">Bike registration code</h5>
-                <p>{{ bike.pk }}</p>
-                <p>Use this code to register new tags for this bike:</p>
-                <p><a href="" class="btn btn-secondary">print registry information</a></p>
+                <div class="col-lg-4">
+                    <p>Basket: <em><i class="fa {% if bike.has_basket %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+                    <p>Cargo rack: <em><i class="fa {% if bike.has_cargo_rack %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+                    <p>Lights: <em><i class="fa {% if bike.has_lights %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+                    <p>Bags: <em><i class="fa {% if bike.has_bags %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+                    <p>SaveMyBike sticker: <em><i class="fa {% if bike.has_smb_sticker %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+                    <h4>Possession state</h4>
+                    <p>{{ bike.get_current_possession_state.possession_state }}</p>
+                    <h4>Tags</h4>
+                    <ul>
+                        {% for tag in bike.tags.all %}
+                            <li>{{ tag.epc }}</li>
+                        {% empty %}
+                            <li>This bike does not have any tags</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-lg-8 gallery-wrapper" data-pswp-uid="1">
+                    <div class="row">
+                        {% for photo in bike.picture_gallery.sample %}
+                            <div class="col-md-4 col-sm-6">
+                                <div class="gallery-item">
+                                    <a href="{{ photo.get_display_url }}" data-size="1280x853">
+                                        <img src="{{ photo.get_thumbnail_url }}" class="img-thumbnail" alt="{{ photo.title }}">
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <a class="btn btn-outline-primary" href="{% url 'bikes:update' pk=bike.pk %}">Edit bike</a>
+                    <a class="btn btn-outline-danger" href="{% url 'bikes:delete' pk=bike.pk %}">Delete bike</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-info bg_svg_green text-white">
+                <div class="card-body p-40">
+                    <div class="d-flex justify-content-center m-b-30">
+                        <i class="fa fa-bicycle p-b-30 f-s-150"></i>
+                    </div>
+                    <h5 class="text-white m-b-20">Bike registration code</h5>
+                    <p>{{ bike.pk }}</p>
+                    <p>Use this code to register new tags for this bike:</p>
+                    <p><a href="" class="btn btn-secondary">print registry information</a></p>
+                </div>
             </div>
         </div>
     </div>
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__single-tap pswp__share-modal--hidden">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

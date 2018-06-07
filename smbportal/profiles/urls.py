@@ -16,13 +16,18 @@ app_name = "profile"
 urlpatterns = [
     path(
         route="",
-        view=views.EndUserProfileUpdateView.as_view(),
+        view=views.ProfileUpdateView.as_view(),
         name="update"
     ),
     path(
         route="create",
         view=views.EndUserProfileCreateView.as_view(),
         name="create"
+    ),
+    path(
+        route="create-privileged",
+        view=views.PrivilegedUserProfileCreateView.as_view(),
+        name="create-privileged"
     ),
     path(
         route="surveys/create",

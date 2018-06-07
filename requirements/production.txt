@@ -9,6 +9,7 @@ drf-yasg==1.8.0
 psycopg2-binary==2.7.4
 pygdal==2.2.3.3 # depends on libgdal-dev 2.3.3
 pytz==2018.4
+requests==2.18.4
 rules==1.3
 
 git+https://github.com/jhuapl-boss/django-oidc.git

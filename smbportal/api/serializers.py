@@ -10,29 +10,80 @@
 
 """Serializers for the smbportal REST API"""
 
+import logging
+
 import photologue.models
 from rest_framework import serializers
 
 import profiles.models
 import vehicles.models
 
+logger = logging.getLogger(__name__)
+
 
 class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:users-detail",
     )
+    profile = serializers.SerializerMethodField()
+    profile_type = serializers.SerializerMethodField()
+
+    def get_profile(self, obj):
+        if obj.profile is not None:
+            profile_class = type(obj.profile)
+            serializer_class = {
+                profiles.models.EndUserProfile: EndUserProfileSerializer,
+                profiles.models.PrivilegedUserProfile: (
+                    PrivilegedUserProfileSerializer),
+            }.get(profile_class)
+            logger.debug("serializer_class: {}".format(serializer_class))
+            serializer = serializer_class(
+                instance=obj.profile,
+                context=self.context
+            )
+            logger.debug("serializer: {}".format(serializer))
+            result = serializer.data
+        else:
+            result = None
+        return result
+
+    def get_profile_type(self, obj):
+        return type(obj.profile).__name__.lower() if obj.profile else None
+
 
     class Meta:
         model = profiles.models.SmbUser
         fields = (
             "url",
+            "id",
             "username",
             "email",
             "first_name",
             "last_name",
             "nickname",
             "sub",
+            "profile",
+            "profile_type",
         )
+
+
+class EndUserProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = profiles.models.EndUserProfile
+        fields = (
+            "gender",
+            "phone_number",
+            "bio",
+            "date_updated",
+        )
+
+
+class PrivilegedUserProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = profiles.models.PrivilegedUserProfile
+        fields = ()
 
 
 class BikeListSerializer(serializers.HyperlinkedModelSerializer):
@@ -51,7 +102,12 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
     current_state = serializers.SerializerMethodField()
 
     def get_current_state(self, obj):
-        return "yo"
+        current_state = obj.get_current_possession_state()
+        serializer = BikePossessionHistorySerializer(
+            instance=current_state,
+            context=self.context
+        )
+        return serializer.data
 
     class Meta:
         model = vehicles.models.Bike
@@ -128,6 +184,7 @@ class PhysicalTagSerializer(serializers.HyperlinkedModelSerializer):
             "url",
             "bike",
             "epc",
+            "creation_date",
         )
 
 

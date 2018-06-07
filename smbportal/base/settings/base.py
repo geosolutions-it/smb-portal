@@ -200,9 +200,14 @@ STATICFILES_DIRS = [
 BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",  # for testing purposes
+        "oidc_auth.authentication.BearerTokenAuthentication",
+    ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticated",
-    )
+        "keycloakauth.permissions.DjangoRulesPermission",
+    ),
 }
 
 AVATAR_AUTO_GENERATE_SIZES = (
@@ -214,11 +219,13 @@ LOGIN_URL = "/openid/openid/KeyCloak"
 
 LOGOUT_URL = "/openid/logout"
 
-END_USERS_GROUP = "end_users"
+END_USER_PROFILE = "end_users"
 
-ANALYSTS_GROUP = "analysts"
+ANALYST_PROFILE = "analysts"
 
-PRIZE_MANAGERS_GROUP = "prize_managers"
+PRIZE_MANAGER_PROFILE = "prize_managers"
+
+PRIVILEGED_USER_PROFILE = "privileged_users"
 
 MEDIA_URL = "/media/"
 
@@ -239,9 +246,18 @@ KEYCLOAK = {
     "admin_username": get_environment_variable("KEYCLOAK_ADMIN_USERNAME"),
     "admin_password": get_environment_variable("KEYCLOAK_ADMIN_PASSWORD"),
     "group_mappings": {
-        END_USERS_GROUP: "/end_users",
-        ANALYSTS_GROUP: "/analysts",
-        PRIZE_MANAGERS_GROUP: "/prize_managers",
+        END_USER_PROFILE: [
+            "/end_users",
+        ],
+        ANALYST_PROFILE: [
+            "/analysts",
+        ],
+        PRIZE_MANAGER_PROFILE: [
+            "/prize_managers",
+        ],
+        PRIVILEGED_USER_PROFILE: [
+            "/privileged_users"
+        ]
     }
 }
 
@@ -283,7 +299,7 @@ OIDC_AUTH = {
         KEYCLOAK["client_id"],
     ],
     "OIDC_RESOLVE_USER_FUNCTION": "bossoidc.backend.get_user_by_id",
-    "OIDC_BEARER_TOKEN_EXPIRATION_TIME": 4 * 10,  # 4 minutes
+    "OIDC_BEARER_TOKEN_EXPIRATION_TIME": 4 * 60,  # 4 minutes
 }
 
 UPDATE_USER_DATA = "keycloakauth.oidchooks.update_user_data"
