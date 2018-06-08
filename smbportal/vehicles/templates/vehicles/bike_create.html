@@ -7,7 +7,6 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.pk 'bikes:detail' pk=bike.pk %}
     {% breadcrumb 'new' 'bikes:create' %}
 {% endblock %}
 
@@ -17,7 +16,7 @@
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
-                <button type="submit" class="btn btn-outline-primary btn-lg">Register</button>
+                <button type="submit" class="btn btn-primary btn-lg">Register</button>
             {% endbuttons %}
         </form>
     </div>

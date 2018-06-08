@@ -16,15 +16,19 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse
 from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 from django.views.generic import DeleteView
+from photologue.models import Gallery
 from photologue.models import Photo
 
+from base import mixins
 from profiles import rules as profiles_rules
 from . import models
+from . import forms
 
 logger = logging.getLogger(__name__)
 
@@ -46,25 +50,64 @@ class BikeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return result
 
 
-class BikeCreateView(LoginRequiredMixin, CreateView):
+class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
+                     CreateView):
+    model = models.Bike
+    form_class = forms.BikeForm
+    template_name_suffix = "_create"
+
+    @property
+    def success_message(self):
+        return "Created bike {!r}".format(self.object.nickname)
+
+    def get_success_url(self):
+        return reverse("bikes:update", kwargs={"pk": self.object.pk})
+
+    def get_form_kwargs(self):
+        """Instantiate a form object
+
+        We re-implement this method in order to pass the current user as an
+        initialization parameter. This is useful for perfoming validation on
+        the form's fields.
+
+        """
+
+        form_kwargs = super().get_form_kwargs()
+        form_kwargs.update({
+            "user": self.request.user,
+        })
+        return form_kwargs
+
+    def form_valid(self, form):
+        """Save a new Bike instance into the DB
+
+        BikePossessionHistory and Gallery objects are also created and
+        associated to the new bike instance
+
+        """
+
+        result = super().form_valid(form)
+        bike = self.object
+        possession_history = models.BikePossessionHistory(
+            bike=bike,
+            reporter=bike.owner,
+        )
+        possession_history.save()
+        gallery_title = "Picture gallery for bike {}".format(bike.pk)
+        picture_gallery = Gallery.objects.create(
+            title=gallery_title,
+            slug=slugify(gallery_title),
+        )
+        bike.picture_gallery = picture_gallery
+        bike.save()
+        return result
+
+
+class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
+                     UpdateView):
     model = models.Bike
     fields = (
         "nickname",
-        "bike_type",
-        "gear",
-        "brake",
-    )
-    template_name_suffix = "_create"
-    success_url = reverse_lazy("bikes:list")
-
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)
-
-
-class BikeUpdateView(LoginRequiredMixin, UpdateView):
-    model = models.Bike
-    fields = (
         "bike_type",
         "gear",
         "brake",
@@ -80,6 +123,10 @@ class BikeUpdateView(LoginRequiredMixin, UpdateView):
         "other_details",
     )
     template_name_suffix = "_update"
+
+    @property
+    def success_message(self):
+        return "bike {!r} updated".format(self.object.nickname)
 
     def get_success_url(self):
         bike = self.get_object()

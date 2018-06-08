@@ -10,6 +10,7 @@
 
 """URLs for the smb-portal's REST API"""
 
+from django.conf import settings
 from django.urls import path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -71,6 +72,7 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="fake@mail.com"),
         license=openapi.License(name="BSD License"),
     ),
+    url="{}/api".format(settings.KEYCLOAK["client_public_uri"]),
     public=False,
     permission_classes=[
         AllowAny,

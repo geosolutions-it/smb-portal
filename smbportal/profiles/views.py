@@ -98,17 +98,6 @@ def enforce_keycloak_group_memberships(user_id: str, user_profile: str,
     return result
 
 
-class FormUpdatedMessageMixin(object):
-
-    @property
-    def success_message(self):
-        return NotImplemented
-
-    def form_valid(self, form):
-        messages.info(self.request, self.success_message)
-        return super().form_valid(form)
-
-
 class UserProfileMixin(object):
 
     def get_object(self, queryset=None):
@@ -119,7 +108,7 @@ class UserProfileMixin(object):
 class PrivilegedUserProfileCreateView(LoginRequiredMixin,
                                       PermissionRequiredMixin,
                                       UserProfileMixin,
-                                      FormUpdatedMessageMixin,
+                                      mixins.FormUpdatedMessageMixin,
                                       CreateView):
     model = models.PrivilegedUserProfile
     template_name_suffix = "_create"
@@ -168,14 +157,21 @@ class PrivilegedUserProfileCreateView(LoginRequiredMixin,
 class EndUserProfileCreateView(LoginRequiredMixin,
                                PermissionRequiredMixin,
                                UserProfileMixin,
-                               FormUpdatedMessageMixin,
+                               mixins.FormUpdatedMessageMixin,
                                CreateView):
+    """Profile completion view
+
+    This view uses two forms, one for the completion of the user profile and
+    another for the mobility habits survey.
+
+    """
+
     model = models.EndUserProfile
     form_class = forms.EndUserProfileForm
     template_name_suffix = "_create"
     success_message = "end-user profile created!"
     permission_required = "profiles.can_create"
-    success_url = reverse_lazy("profile:create-survey")
+    success_url = reverse_lazy("profile:update")
 
     def get_login_url(self):
         if not self.request.user.is_authenticated:
@@ -185,35 +181,54 @@ class EndUserProfileCreateView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["mobility_form"] = forms.UserMobilityHabitsForm()
+        if self.request.method == "POST":
+            context["mobility_form"] = forms.UserMobilityHabitsForm(
+                self.request.POST)
+        else:
+            context["mobility_form"] = forms.UserMobilityHabitsForm()
         return context
 
     def form_valid(self, form):
         """Assign the request's user to the form and perform profile moderation
 
         This method relies on the presence of a ``groups`` key on the id token.
+        This key is used in order to sync group memberships with keycloak.
 
         """
 
         form.instance.user = self.request.user
-        response = super().form_valid(form)
-        id_token = self.request.session.get("id_token")
-        logger.debug(
-            "current_keycloak_groups: {}".format(id_token.get("groups", [])))
-        update_user_groups(
-            user=self.request.user,
-            user_profile=settings.END_USER_PROFILE,
-            current_keycloak_groups=id_token.get("groups", [])
-        )
+        # validate mobility survey before saving anything
+        mobility_form = self.get_context_data()["mobility_form"]
+        if mobility_form.is_valid():
+            logger.debug("mobility_form is valid")
+            response = super().form_valid(form)
+            # upon calling super().form_valid(form) the property self.object
+            # points to the newly created enduser profile
+            mobility_form.instance.end_user = self.object
+            mobility_form.save()
+            id_token = self.request.session.get("id_token")
+            update_user_groups(
+                user=self.request.user,
+                user_profile=settings.END_USER_PROFILE,
+                current_keycloak_groups=id_token.get("groups", [])
+            )
+        else:
+            response = self.form_invalid(form)
         return response
 
+    def form_invalid(self, form):
+        mobility_form = self.get_context_data()["mobility_form"]
+        logger.error("main form errors: {}".format(form.errors))
+        logger.error("mobility form errors: {}".format(mobility_form.errors))
+        return self.render_to_response(
+            self.get_context_data(form=form, mobility_form=mobility_form))
 
 
 class ProfileUpdateView(LoginRequiredMixin,
                         mixins.UserHasObjectPermissionMixin,
                         PermissionRequiredMixin,
                         UserProfileMixin,
-                        FormUpdatedMessageMixin,
+                        mixins.FormUpdatedMessageMixin,
                         UpdateView):
     permission_required = "profiles.can_edit"
     success_message = "user profile updated!"
@@ -256,7 +271,7 @@ class ProfileUpdateView(LoginRequiredMixin,
 
 class MobilityHabitsSurveyCreateView(LoginRequiredMixin,
                                      UserProfileMixin,
-                                     FormUpdatedMessageMixin,
+                                     mixins.FormUpdatedMessageMixin,
                                      CreateView):
     model = models.MobilityHabitsSurvey
     context_object_name = "survey"
