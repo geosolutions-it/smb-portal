@@ -32,20 +32,13 @@
                     <form method="post">
                         {% csrf_token %}
                         {% bootstrap_form form %}
+                        <h4>Mobility Survey</h4>
+                        <p>Please complete this short survey as a final step for creating your profile</p>
+                        {% bootstrap_form mobility_form %}
                         {% buttons %}
                             <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
                         {% endbuttons %}
                     </form>
-                    <div class="container">
-                        {% if user.mobility_habits_surveys %}
-                            <p>Mobility surveys</p>
-                            <ul>
-                                {% for survey in user.mobility_habits_surveys %}
-                                    <li>{{ survey }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    </div>
                     <p>You can also <a href="{% url 'profile:create-privileged' %}">register as a different user type</a></p>
                 </div>
             </div>

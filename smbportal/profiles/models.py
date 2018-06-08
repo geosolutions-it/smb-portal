@@ -156,7 +156,8 @@ class MobilityHabitsSurvey(models.Model):
                 NOT_A_PUBLIC_TRANSPORT_USER,
                 "Never"
             ),
-        )
+        ),
+        default=RARE_PUBLIC_TRANSPORT_USER,
     )
     uses_bike_sharing_services = models.BooleanField(
         default=False
@@ -190,8 +191,8 @@ class MobilityHabitsSurvey(models.Model):
                 NOT_A_BICYCLE_USER,
                 "Never use a bicycle to move around in the city"
             ),
-        )
-
+        ),
+        default=RARE_BICYCLE_USER,
     )
 
     def get_absolute_url(self):

@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load avatar_tags %}
 {% load django_bootstrap_breadcrumbs %}
+{% load base_extras %}
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -186,7 +187,7 @@
                             
                             <div class="user-info">
                             
-                                <h6 class="user-name">{{ request.user }}</h6>
+                                <h6 class="user-name">{{ request.user.first_name|add_str:" "|add_str:request.user.last_name }}</h6>
                                 <span class="text-xs text-muted"></span>
                             </div>
                         </li>

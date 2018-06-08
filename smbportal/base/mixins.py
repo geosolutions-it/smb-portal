@@ -10,7 +10,21 @@
 
 import logging
 
+from django.contrib import messages
+
 logger = logging.getLogger(__name__)
+
+
+class FormUpdatedMessageMixin(object):
+
+    @property
+    def success_message(self):
+        return NotImplemented
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        messages.info(self.request, self.success_message)
+        return result
 
 
 class UserHasObjectPermissionMixin(object):

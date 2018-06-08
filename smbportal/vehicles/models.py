@@ -142,6 +142,9 @@ class Bike(Vehicle):
     )
     other_details = models.TextField(blank=True)
 
+    class Meta:
+        unique_together = ("owner", "nickname")
+
     def __str__(self):
         return "{0.id}({0.nickname})".format(self)
 

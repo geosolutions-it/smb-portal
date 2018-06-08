@@ -78,7 +78,7 @@ class PhysicalTagViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.PhysicalTagSerializer
     queryset = vehicles.models.PhysicalTag.objects.all()
     required_permissions = (
-        "vehicles.can_list_tags",
+        "vehicles.can_list_physical_tags",
     )
 
 
