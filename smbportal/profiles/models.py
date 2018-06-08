@@ -10,9 +10,9 @@
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse
-from django.db.models.fields.files import ImageField
 
 
 # TODO: Integrate with django-avatar for avatar support
@@ -51,6 +51,7 @@ class SmbUser(AbstractUser):
     def profile(self):
         attibute_names = (
             "enduserprofile",
+            "privilegeduserprofile",
             # add more profiles for analysts, prize managers, etc
         )
         for attr in attibute_names:
@@ -89,20 +90,29 @@ class EndUserProfile(models.Model):
         ),
         default=FEMALE_GENDER,
     )
-    phone_number = models.IntegerField(blank=True, null=True)
+    PHONE_NUMBER_REGEX_VALIDATOR = RegexValidator(
+        r"^\+\d{8,15}$",
+        message="Use the format +99999999. From 8 to 15 digits allowed"
+    )
+    phone_number = models.CharField(
+        max_length=16,
+        blank=True,
+        validators=[PHONE_NUMBER_REGEX_VALIDATOR]
+    )
     bio = models.TextField(
         help_text="Short user biography",
         blank=True
     )
-    # FIXME - Avatar should be on SmbUser class, other user types need it too
-    user_avatar = ImageField(
-        upload_to="MEDIA.ROOT.ASSETS",
-        blank=True,
-        null=True
-    )
 
     def get_absolute_url(self):
         return reverse("profile:update")
+
+
+class PrivilegedUserProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
 
 
 class MobilityHabitsSurvey(models.Model):

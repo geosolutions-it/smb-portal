@@ -4,10 +4,10 @@
 {% load bootstrap4 %}
 {% load django_bootstrap_breadcrumbs %}
 
-{% block page_title %}Complete profile{% endblock %}
+{% block page_title %}Complete profile - Privileged user{% endblock %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb 'complete-profile' 'profile:create' %}
+    {% breadcrumb 'complete-profile-privileged' 'profile:create' %}
 {% endblock %}
 {% block content %}
     <div id="container">
@@ -29,24 +29,24 @@
                     </div>
                 </div>
                 <div class="col-lg-10">
+                    <div class="card text-white bg-info text-center mb-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Note</h4>
+                            <p class="card-text">
+                                Registering as a privileged user requires manual authorization from one of the platform's administrators.
+                                Your application will be moderated and you will be notified via e-mail. Until then you will not
+                                be able to use the portal
+                            </p>
+                        </div>
+                    </div>
                     <form method="post">
                         {% csrf_token %}
                         {% bootstrap_form form %}
                         {% buttons %}
+                            <a href="{% url 'profile:create' %}" class="btn btn-outline-secondary btn-lg">Go back - Register as a regular user</a>
                             <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
                         {% endbuttons %}
                     </form>
-                    <div class="container">
-                        {% if user.mobility_habits_surveys %}
-                            <p>Mobility surveys</p>
-                            <ul>
-                                {% for survey in user.mobility_habits_surveys %}
-                                    <li>{{ survey }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    </div>
-                    <p>You can also <a href="{% url 'profile:create-privileged' %}">register as a different user type</a></p>
                 </div>
             </div>
         </div>

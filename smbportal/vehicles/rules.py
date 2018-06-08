@@ -28,6 +28,13 @@ def is_bike_owner(user, bike):
     return bike.owner == user
 
 
+rules.add_perm("vehicles.can_list_bikes", profile_rules.is_privileged_user)
+
 rules.add_perm("vehicles.can_create_bike", profile_rules.is_end_user)
-rules.add_perm("profiles.can_view_bike", is_bike_owner)
-rules.add_perm("profiles.can_edit_bike", is_bike_owner)
+rules.add_perm("vehicles.can_view_bike", is_bike_owner)
+rules.add_perm("vehicles.can_edit_bike", is_bike_owner)
+
+rules.add_perm("vehicles.can_create_physical_tag", profile_rules.is_end_user)
+rules.add_perm("vehicles.can_view_physical_tag", is_bike_owner)
+rules.add_perm("vehicles.can_edit_physical_tag", is_bike_owner)
+

@@ -149,7 +149,7 @@ class Bike(Vehicle):
         return reverse("bikes:detail", kwargs={"pk": self.id})
 
     def get_current_possession_state(self):
-        return self.possession_history.last()
+        return self.possession_history.order_by("-creation_date").first()
 
     def report_possession_state(self, state, reporter=None, details=None):
         state_obj = BikePossessionHistory(
@@ -195,6 +195,11 @@ class BikePossessionHistory(models.Model):
     def __str__(self):
         return "{0.possession_state}({0.creation_date})".format(self)
 
+    class Meta:
+        ordering = [
+            "-creation_date",
+        ]
+
 
 class PhysicalTag(models.Model):
     bike = models.ForeignKey(
@@ -205,3 +210,4 @@ class PhysicalTag(models.Model):
     epc = models.TextField(
         help_text="Electronic Product Code"
     )
+    creation_date = models.DateTimeField(auto_now_add=True)

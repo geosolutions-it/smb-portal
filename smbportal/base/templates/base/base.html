@@ -239,29 +239,26 @@
         </div>
     </div>
 
-   {% if messages %}
-       <div class="row">
-           <div class="col-lg">
-               {% for message in messages %}
-                   <div {% if message.tags %}class="alert alert-dismissible fade show text-center margin-bottom-1x alert-{{ message.tags }}"{% endif %}>
-                       <span class="alert-close" data-dismiss="alert"></span>
-                       {{ message }}
-                   </div>
-               {% endfor %}
-           </div>
-       </div>
-   {% endif %}
-
-   {%  block content  %}
-       <div id="container">
-           <div class="container p-t-60">
-               <div class="row">
-                   {% block main %}{% endblock %}
+    <div id="container" class="container p-t-60">
+       {% if messages %}
+           <div class="row">
+               <div class="col-lg">
+                   {% for message in messages %}
+                       <div {% if message.tags %}class="alert alert-dismissible fade show text-center margin-bottom-1x alert-{{ message.tags }}"{% endif %}>
+                           <span class="alert-close" data-dismiss="alert"></span>
+                           {{ message }}
+                       </div>
+                   {% endfor %}
                </div>
            </div>
-       </div>
-   {% endblock %}
-   
+       {% endif %}
+       {%  block content  %}
+           <div class="row">
+               {% block main %}{% endblock %}
+           </div>
+       {% endblock %}
+    </div>
+
     
 
     <!-- BEGIN SITE FOOTER-->

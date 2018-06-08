@@ -22,6 +22,16 @@ app_name = "api"
 
 router = routers.DefaultRouter()
 router.register(
+    prefix=r"my-bikes",
+    viewset=views.MyBikeViewSet,
+    base_name="my-bikes"
+)
+router.register(
+    prefix=r"my-tags",
+    viewset=views.MyPhysicalTagViewSet,
+    base_name="my-tags"
+)
+router.register(
     prefix=r"users",
     viewset=views.SmbUserViewSet,
     base_name="users"
@@ -61,7 +71,7 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="fake@mail.com"),
         license=openapi.License(name="BSD License"),
     ),
-    public=True,
+    public=False,
     permission_classes=[
         AllowAny,
     ]
@@ -72,5 +82,11 @@ urlpatterns = [
         route=r"swagger/",
         view=schema_view.with_ui("swagger", cache_timeout=None),
         name="schema-swagger-ui",
+    ),
+    path(
+        route=r"my-user",
+        view=views.MyUserViewSet.as_view({
+            "get": "retrieve",
+        })
     )
 ] + router.urls
