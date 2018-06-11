@@ -67,7 +67,7 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         """Instantiate a form object
 
         We re-implement this method in order to pass the current user as an
-        initialization parameter. This is useful for perfoming validation on
+        initialization parameter. This is useful for performing validation on
         the form's fields.
 
         """
@@ -106,35 +106,32 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
 class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
                      UpdateView):
     model = models.Bike
-    fields = (
-        "nickname",
-        "bike_type",
-        "gear",
-        "brake",
-        "brand",
-        "model",
-        "color",
-        "saddle",
-        "has_basket",
-        "has_cargo_rack",
-        "has_lights",
-        "has_bags",
-        "has_smb_sticker",
-        "other_details",
-    )
+    form_class = forms.BikeForm
     template_name_suffix = "_update"
 
     @property
     def success_message(self):
-        return "bike {!r} updated".format(self.object.nickname)
+        return "Bike {!r} updated".format(self.object.nickname)
 
     def get_success_url(self):
         bike = self.get_object()
         return reverse("bikes:detail", kwargs={"pk": bike.pk})
 
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)
+    def get_form_kwargs(self):
+        """Instantiate a form object
+
+        We re-implement this method in order to pass the current user as an
+        initialization parameter. This is useful for performing validation on
+        the form's fields.
+
+        """
+
+        form_kwargs = super().get_form_kwargs()
+        form_kwargs.update({
+            "user": self.request.user,
+        })
+        logger.debug("BikeUpdateView form kwargs: {}".format(form_kwargs))
+        return form_kwargs
 
 
 class BikeDetailView(LoginRequiredMixin, DetailView):

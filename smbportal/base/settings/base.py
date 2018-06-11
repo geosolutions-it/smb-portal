@@ -14,6 +14,7 @@ import os
 import pathlib
 
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.messages import constants as message_constants
 from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
 
@@ -214,6 +215,14 @@ AVATAR_AUTO_GENERATE_SIZES = (
     80,
     150,
 )
+
+MESSAGE_TAGS = {
+    message_constants.DEBUG: "alert-info",
+    message_constants.INFO: "alert-info",
+    message_constants.SUCCESS: "alert-success",
+    message_constants.WARNING: "alert-warning",
+    message_constants.ERROR: "alert-error",
+}
 
 LOGIN_URL = "/openid/openid/KeyCloak"
 

@@ -19,6 +19,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import UpdateView
@@ -169,9 +170,17 @@ class EndUserProfileCreateView(LoginRequiredMixin,
     model = models.EndUserProfile
     form_class = forms.EndUserProfileForm
     template_name_suffix = "_create"
-    success_message = "end-user profile created!"
     permission_required = "profiles.can_create"
     success_url = reverse_lazy("profile:update")
+
+    @property
+    def success_message(self):
+        create_bike_url = reverse("bikes:create")
+        return mark_safe(
+            "end-user profile created! "
+            "You can <a href='{}'>add a new bike now</a>".format(
+                create_bike_url)
+        )
 
     def get_login_url(self):
         if not self.request.user.is_authenticated:

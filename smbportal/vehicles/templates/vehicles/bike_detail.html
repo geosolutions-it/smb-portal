@@ -12,14 +12,14 @@
         <div class="col-lg-8">
             <div class="row">
                 <div class="col-lg-4">
-                    <p>nickname: <em>{{ bike.nickname }}</em></p>
-                    <p>Type of bike: <em>{{ bike.bike_type }}</em></p>
-                    <p>Gears: <em>{{ bike.gear }}</em></p>
-                    <p>Brakes: <em>{{ bike.brake }}</em></p>
-                    <p>Brand: <em>{{ bike.brand }}</em></p>
-                    <p>Model: <em>{{ bike.model }}</em></p>
-                    <p>Color: <em>{{ bike.color }}</em></p>
-                    <p>Saddle: <em>{{ bike.saddle }}</em></p>
+                    <p>nickname: <strong>{{ bike.nickname }}</strong></p>
+                    <p>Type of bike: <strong>{{ bike.bike_type }}</strong></p>
+                    <p>Gears: <strong>{{ bike.gear }}</strong></p>
+                    <p>Brakes: <strong>{{ bike.brake }}</strong></p>
+                    <p>Brand: <strong>{{ bike.brand }}</strong></p>
+                    <p>Model: <strong>{{ bike.model }}</strong></p>
+                    <p>Color: <strong>{{ bike.color }}</strong></p>
+                    <p>Saddle: <strong>{{ bike.saddle }}</strong></p>
                 </div>
                 <div class="col-lg-4">
                     <p>Basket: <em><i class="fa {% if bike.has_basket %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
@@ -27,6 +27,7 @@
                     <p>Lights: <em><i class="fa {% if bike.has_lights %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
                     <p>Bags: <em><i class="fa {% if bike.has_bags %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
                     <p>SaveMyBike sticker: <em><i class="fa {% if bike.has_smb_sticker %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+                    <p>Other details: <strong>{{ bike.other_details }}</strong></p>
                     <h4>Possession state</h4>
                     <p>{{ bike.get_current_possession_state.possession_state }}</p>
                     <h4>Tags</h4>

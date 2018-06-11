@@ -23,7 +23,7 @@ class FormUpdatedMessageMixin(object):
 
     def form_valid(self, form):
         result = super().form_valid(form)
-        messages.info(self.request, self.success_message)
+        messages.success(self.request, self.success_message)
         return result
 
 

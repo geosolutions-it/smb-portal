@@ -8,9 +8,13 @@
 #
 #########################################################################
 
+import logging
+
 from django import forms
 
 from . import models
+
+logger = logging.getLogger(__name__)
 
 
 class BikeForm(forms.ModelForm):
@@ -49,7 +53,8 @@ class BikeForm(forms.ModelForm):
 
         super().clean()
         nickname = self.cleaned_data.get("nickname")
-        if self.user.bikes.filter(nickname=nickname).exists():
+        if self.user.bikes.filter(nickname=nickname).exclude(
+                id=self.instance.id).exists():
             # FIXME: should be passing "nickname" as the ``field`` value here
             #        However, that makes the template render a non-styled
             #        message next to the failing field. By passing ``None``
@@ -78,4 +83,5 @@ class BikeForm(forms.ModelForm):
             "has_lights",
             "has_bags",
             "has_smb_sticker",
+            "other_details",
         )
