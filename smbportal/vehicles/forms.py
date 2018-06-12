@@ -85,3 +85,29 @@ class BikeForm(forms.ModelForm):
             "has_smb_sticker",
             "other_details",
         )
+
+
+class BikePossessionHistoryForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user")
+        bike = kwargs.pop("bike", None)
+        super().__init__(*args, **kwargs)
+        self.instance.reporter = user
+        if bike is not None:
+            self.instance.bike = bike
+            del self.fields["bike"]
+        else:
+            self.fields["bike"].queryset = models.Bike.objects.filter(
+                owner=user)
+
+    class Meta:
+        model = models.BikePossessionHistory
+        fields = (
+            "bike",
+            "possession_state",
+            "details",
+        )
+        widgets = {
+            "possession_state": forms.RadioSelect,
+        }

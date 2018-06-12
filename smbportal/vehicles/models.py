@@ -146,7 +146,7 @@ class Bike(Vehicle):
         unique_together = ("owner", "nickname")
 
     def __str__(self):
-        return "{0.id}({0.nickname})".format(self)
+        return "{0.nickname}".format(self)
 
     def get_absolute_url(self):
         return reverse("bikes:detail", kwargs={"pk": self.id})

@@ -5,7 +5,7 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.pk 'bikes:detail' pk=bike.pk %}
+    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
     {% breadcrumb 'add picture' 'bikes:picture-upload' pk=bike.pk %}
 {% endblock %}
 

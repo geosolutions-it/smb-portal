@@ -8,13 +8,17 @@
 #
 #########################################################################
 
+import logging
+
 import photologue.models
-from rest_framework import viewsets
 from rest_framework import mixins
+from rest_framework import viewsets
 
 import profiles.models
 import vehicles.models
 from . import serializers
+
+logger = logging.getLogger(__name__)
 
 # TODO: Specify permission_classes for all views
 # FIXME: account for different user profiles
@@ -23,9 +27,17 @@ from . import serializers
 class MyUserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
                     viewsets.GenericViewSet):
     serializer_class = serializers.SmbUserSerializer
+    required_permissions = (
+        "profiles.can_view_profile",
+    )
+    required_object_permissions = (
+        "profiles.can_edit_profile",
+    )
 
     def get_object(self):
-        return self.request.user
+        user = self.request.user
+        self.check_object_permissions(self.request, obj=user.profile)
+        return user
 
 
 class MyBikeViewSet(viewsets.ModelViewSet):
@@ -41,12 +53,35 @@ class MyBikeViewSet(viewsets.ModelViewSet):
 class MyPhysicalTagViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.PhysicalTagSerializer
     required_permissions = (
-        "vehicles.can_create_physical_tag",
+        "vehicles.can_list_own_physical_tags",
     )
 
     def get_queryset(self):
         return vehicles.models.PhysicalTag.objects.filter(
             bike__owner=self.request.user)
+
+
+class MyBikePossessionHistoryViewSet(mixins.ListModelMixin,
+                                     mixins.CreateModelMixin,
+                                     mixins.RetrieveModelMixin,
+                                     viewsets.GenericViewSet):
+    serializer_class = serializers.MyBikePossessionHistorySerializer
+    required_permissions = (
+        "vehicles.can_list_own_bike_possession_history",
+        "vehicles.can_create_own_bike_possession_history",
+    )
+
+    def get_queryset(self):
+        return vehicles.models.BikePossessionHistory.objects.filter(
+            bike__owner=self.request.user)
+
+    def get_serializer(self, *args, **kwargs):
+        serializer_class = self.get_serializer_class()
+        context = kwargs.pop("context", {})
+        context.update({
+            "request": self.request
+        })
+        return serializer_class(context=context, *args, **kwargs)
 
 
 class SmbUserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -70,20 +105,29 @@ class BikeViewSet(viewsets.ReadOnlyModelViewSet):
             serializer_class = serializers.BikeListSerializer
         return serializer_class
 
-    def retrieve(self, request, *args, **kwargs):
-        super().list(request, *args, **kwargs)
 
-
-class PhysicalTagViewSet(viewsets.ModelViewSet):
+class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                         mixins.CreateModelMixin, mixins.DestroyModelMixin,
+                         viewsets.GenericViewSet):
     serializer_class = serializers.PhysicalTagSerializer
     queryset = vehicles.models.PhysicalTag.objects.all()
     required_permissions = (
         "vehicles.can_list_physical_tags",
     )
+    required_object_permissions = (
+        "vehicles.can_delete_physical_tags",
+    )
 
 
-class BikePossessionHistoryViewSet(viewsets.ReadOnlyModelViewSet):
+class BikePossessionHistoryViewSet(mixins.ListModelMixin,
+                                   mixins.CreateModelMixin,
+                                   mixins.RetrieveModelMixin,
+                                   viewsets.GenericViewSet):
     serializer_class = serializers.BikePossessionHistorySerializer
+    required_permissions = (
+        "vehicles.can_list_bike_possession_history",
+        "vehicles.can_create_bike_possession_history",
+    )
 
     def get_queryset(self):
         return vehicles.models.BikePossessionHistory.objects.all()

@@ -1,0 +1,31 @@
+{% extends "vehicles/base.html" %}
+
+{% load i18n %}
+{% load bootstrap4 %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% if bike %}
+        {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
+    {% endif %}
+    {% breadcrumb 'report status' 'bikes:report-status' pk=bike.pk %}
+{% endblock %}
+
+{% block page_title %}Report bike possession status{% endblock %}
+
+{% block main %}
+    <div class="col-lg-12">
+        {% if bike %}
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-outline-primary btn-lg">Submit</button>
+                {% endbuttons %}
+            </form>
+        {% else %}
+            <p>You don't have any bikes yet.</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -28,14 +28,21 @@ def is_bike_owner(user, bike):
     return bike.owner == user
 
 
-rules.add_perm("vehicles.can_list_bikes", profile_rules.is_privileged_user)
-rules.add_perm("vehicles.can_create_bike", profile_rules.is_end_user)
-rules.add_perm("vehicles.can_view_bike", is_bike_owner)
-rules.add_perm("vehicles.can_edit_bike", is_bike_owner)
-
-rules.add_perm(
-    "vehicles.can_list_physical_tags", profile_rules.is_privileged_user)
-rules.add_perm("vehicles.can_create_physical_tag", profile_rules.is_end_user)
-rules.add_perm("vehicles.can_view_physical_tag", is_bike_owner)
-rules.add_perm("vehicles.can_edit_physical_tag", is_bike_owner)
-
+for perm, predicate in {
+    "can_create_bike": profile_rules.is_end_user,
+    "can_create_bike_possession_history": profile_rules.is_privileged_user,
+    "can_create_own_bike_possession_history": profile_rules.is_end_user,
+    "can_create_physical_tag": profile_rules.is_end_user,
+    "can_delete_physical_tags": profile_rules.is_privileged_user,
+    "can_edit_bike": is_bike_owner,
+    "can_edit_physical_tag": is_bike_owner,
+    "can_list_bikes": profile_rules.is_privileged_user,
+    "can_list_own_bikes": profile_rules.is_end_user,
+    "can_list_bike_possession_history": profile_rules.is_privileged_user,
+    "can_list_own_bike_possession_history": profile_rules.is_end_user,
+    "can_list_physical_tags": profile_rules.is_privileged_user,
+    "can_list_own_physical_tags": profile_rules.is_end_user,
+    "can_view_physical_tag": is_bike_owner,
+    "can_view_bike": is_bike_owner,
+}.items():
+    rules.add_perm("vehicles.{}".format(perm), predicate)
