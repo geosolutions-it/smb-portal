@@ -22,6 +22,11 @@ from . import views
 app_name = "api"
 
 router = routers.DefaultRouter()
+# router.register(
+#     prefix=r"my-user",
+#     viewset=views.MyUserViewSet,
+#     base_name="my-user"
+# )
 router.register(
     prefix=r"my-bikes",
     viewset=views.MyBikeViewSet,
@@ -31,6 +36,11 @@ router.register(
     prefix=r"my-tags",
     viewset=views.MyPhysicalTagViewSet,
     base_name="my-tags"
+)
+router.register(
+    prefix=r"my-bike-possession-history",
+    viewset=views.MyBikePossessionHistoryViewSet,
+    base_name="my-bike-possession-history"
 )
 router.register(
     prefix=r"users",
@@ -86,9 +96,14 @@ urlpatterns = [
         name="schema-swagger-ui",
     ),
     path(
-        route=r"my-user",
-        view=views.MyUserViewSet.as_view({
-            "get": "retrieve",
-        })
+        route="my-user",
+        view=views.MyUserViewSet.as_view(
+            actions={
+                "get": "retrieve",
+                "patch": "partial_update",
+                "put": "update",
+            }
+        ),
+        name="my-user"
     )
 ] + router.urls

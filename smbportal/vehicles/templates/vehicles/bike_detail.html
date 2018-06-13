@@ -10,50 +10,41 @@
 {% block content %}
     <div class="row">
         <div class="col-lg-8">
-            <div class="row">
-                <div class="col-lg-4">
-                    <p>nickname: <em>{{ bike.nickname }}</em></p>
-                    <p>Type of bike: <em>{{ bike.bike_type }}</em></p>
-                    <p>Gears: <em>{{ bike.gear }}</em></p>
-                    <p>Brakes: <em>{{ bike.brake }}</em></p>
-                    <p>Brand: <em>{{ bike.brand }}</em></p>
-                    <p>Model: <em>{{ bike.model }}</em></p>
-                    <p>Color: <em>{{ bike.color }}</em></p>
-                    <p>Saddle: <em>{{ bike.saddle }}</em></p>
-                </div>
-                <div class="col-lg-4">
-                    <p>Basket: <em><i class="fa {% if bike.has_basket %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-                    <p>Cargo rack: <em><i class="fa {% if bike.has_cargo_rack %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-                    <p>Lights: <em><i class="fa {% if bike.has_lights %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-                    <p>Bags: <em><i class="fa {% if bike.has_bags %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-                    <p>SaveMyBike sticker: <em><i class="fa {% if bike.has_smb_sticker %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
-                    <h4>Possession state</h4>
-                    <p>{{ bike.get_current_possession_state.possession_state }}</p>
-                    <h4>Tags</h4>
-                    <ul>
-                        {% for tag in bike.tags.all %}
-                            <li>{{ tag.epc }}</li>
-                        {% empty %}
-                            <li>This bike does not have any tags</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="col-lg-8 gallery-wrapper" data-pswp-uid="1">
-                    <div class="row">
-                        {% for photo in bike.picture_gallery.sample %}
-                            <div class="col-md-4 col-sm-6">
-                                <div class="gallery-item">
-                                    <a href="{{ photo.get_display_url }}" data-size="1280x853">
-                                        <img src="{{ photo.get_thumbnail_url }}" class="img-thumbnail" alt="{{ photo.title }}">
-                                    </a>
-                                </div>
+            <p>nickname: <strong>{{ bike.nickname }}</strong></p>
+            <p>Type of bike: <strong>{{ bike.bike_type }}</strong></p>
+            <p>Gears: <strong>{{ bike.gear }}</strong></p>
+            <p>Brakes: <strong>{{ bike.brake }}</strong></p>
+            <p>Brand: <strong>{{ bike.brand }}</strong></p>
+            <p>Model: <strong>{{ bike.model }}</strong></p>
+            <p>Color: <strong>{{ bike.color }}</strong></p>
+            <p>Saddle: <strong>{{ bike.saddle }}</strong></p>
+            <p>Basket: <em><i class="fa {% if bike.has_basket %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+            <p>Cargo rack: <em><i class="fa {% if bike.has_cargo_rack %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+            <p>Lights: <em><i class="fa {% if bike.has_lights %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+            <p>Bags: <em><i class="fa {% if bike.has_bags %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+            <p>SaveMyBike sticker: <em><i class="fa {% if bike.has_smb_sticker %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
+            <p>Other details: <strong>{{ bike.other_details }}</strong></p>
+            <h4>Possession state</h4>
+            <p>{{ bike.get_current_possession_state.possession_state }}</p>
+            <h4>Tags</h4>
+            <ul>
+                {% for tag in bike.tags.all %}
+                    <li>{{ tag.epc }}</li>
+                {% empty %}
+                    <li>This bike does not have any tags</li>
+                {% endfor %}
+            </ul>
+            <div class="col-lg-8 gallery-wrapper" data-pswp-uid="1">
+                <div class="row">
+                    {% for photo in bike.picture_gallery.sample %}
+                        <div class="col-md-4 col-sm-6">
+                            <div class="gallery-item">
+                                <a href="{{ photo.get_display_url }}" data-size="1280x853">
+                                    <img src="{{ photo.get_thumbnail_url }}" class="img-thumbnail" alt="{{ photo.title }}">
+                                </a>
                             </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <a class="btn btn-outline-primary" href="{% url 'bikes:update' pk=bike.pk %}">Edit bike</a>
-                    <a class="btn btn-outline-danger" href="{% url 'bikes:delete' pk=bike.pk %}">Delete bike</a>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -69,6 +60,12 @@
                     <p><a href="" class="btn btn-secondary">print registry information</a></p>
                 </div>
             </div>
+        </div>
+        <div class="col">
+            <a class="btn btn-outline-primary" href="{% url 'bikes:update' pk=bike.pk %}"><i class="fa fa-pencil-square-o"></i> Edit bike details</a>
+            <a class="btn btn-outline-primary" href="{% url 'bikes:report-status' pk=bike.pk %}"><i class="fa fa-file-text-o"></i> Update bike status</a>
+            <a class="btn btn-outline-primary" href="{% url 'bikes:picture-upload' pk=bike.pk %}"><i class="fa fa-picture-o"></i> Add pictures</a>
+            <a class="btn btn-outline-danger" href="{% url 'bikes:delete' pk=bike.pk %}"><i class="fa fa-trash-o"></i> Delete bike</a>
         </div>
     </div>
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">

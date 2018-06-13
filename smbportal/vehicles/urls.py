@@ -25,6 +25,11 @@ urlpatterns = [
         name="create"
     ),
     path(
+        route="report-status",
+        view=views.BikePossessionHistoryCreateView.as_view(),
+        name="report-status"
+    ),
+    path(
         route="<pk>",
         view=views.BikeDetailView.as_view(),
         name="detail"
@@ -38,6 +43,11 @@ urlpatterns = [
         route="<pk>/delete",
         view=views.BikeDeleteView.as_view(),
         name="delete"
+    ),
+    path(
+        route="<pk>/report-status",
+        view=views.BikePossessionHistoryCreateView.as_view(),
+        name="report-status"
     ),
     path(
         route="<pk>/pictures/upload",

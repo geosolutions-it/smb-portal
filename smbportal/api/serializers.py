@@ -12,6 +12,7 @@
 
 import logging
 
+from django.urls import reverse
 import photologue.models
 from rest_framework import serializers
 
@@ -55,7 +56,6 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
         model = profiles.models.SmbUser
         fields = (
             "url",
-            "id",
             "username",
             "email",
             "first_name",
@@ -103,11 +103,11 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_current_state(self, obj):
         current_state = obj.get_current_possession_state()
-        serializer = BikePossessionHistorySerializer(
-            instance=current_state,
-            context=self.context
+        url = reverse(
+            viewname="api:bike-possession-history-detail",
+            kwargs={"pk": current_state.pk}
         )
-        return serializer.data
+        return url
 
     class Meta:
         model = vehicles.models.Bike
@@ -143,6 +143,15 @@ class BikeDetailSerializer(serializers.HyperlinkedModelSerializer):
         view_name="api:picture-galleries-detail",
         read_only=True
     )
+    current_state = serializers.SerializerMethodField()
+
+    def get_current_state(self, obj):
+        current_state = obj.get_current_possession_state()
+        serializer = BikePossessionHistorySerializer(
+            instance=current_state,
+            context=self.context
+        )
+        return serializer.data
 
     class Meta:
         model = vehicles.models.Bike
@@ -166,6 +175,7 @@ class BikeDetailSerializer(serializers.HyperlinkedModelSerializer):
             "has_bags",
             "has_smb_sticker",
             "other_details",
+            "current_state",
         )
 
 
@@ -188,17 +198,50 @@ class PhysicalTagSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+class MyBikePossessionHistorySerializer(
+        serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:bike-possession-history-detail",
+    )
+    bike = serializers.HyperlinkedRelatedField(
+        view_name="api:bikes-detail",
+        queryset=vehicles.models.Bike.objects.all()
+    )
+    reporter = serializers.HyperlinkedRelatedField(
+        view_name="api:users-detail",
+        read_only=True
+    )
+
+    class Meta:
+        model = vehicles.models.BikePossessionHistory
+        fields = (
+            "url",
+            "bike",
+            "reporter",
+            "possession_state",
+            "creation_date",
+            "details",
+        )
+
+    def save(self, **kwargs):
+        request = self.context.get("request")
+        current_user = request.user
+        return super().save(
+            reporter=current_user
+        )
+
+
 class BikePossessionHistorySerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:bike-possession-history-detail",
     )
     bike = serializers.HyperlinkedRelatedField(
         view_name="api:bikes-detail",
-        read_only=True
+        queryset=vehicles.models.Bike.objects.all()
     )
     reporter = serializers.HyperlinkedRelatedField(
         view_name="api:users-detail",
-        read_only=True
+        queryset=profiles.models.SmbUser.objects.all()
     )
 
     class Meta:

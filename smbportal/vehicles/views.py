@@ -13,6 +13,7 @@ import logging
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse
 from django.urls import reverse_lazy
@@ -35,7 +36,7 @@ logger = logging.getLogger(__name__)
 
 class BikeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = "bikes"
-    permission_required = "profiles.can_view"
+    permission_required = "vehicles.can_list_own_bikes"
 
     def get_queryset(self):
         return models.Bike.objects.filter(owner=self.request.user)
@@ -61,13 +62,13 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         return "Created bike {!r}".format(self.object.nickname)
 
     def get_success_url(self):
-        return reverse("bikes:update", kwargs={"pk": self.object.pk})
+        return reverse("bikes:detail", kwargs={"pk": self.object.pk})
 
     def get_form_kwargs(self):
         """Instantiate a form object
 
         We re-implement this method in order to pass the current user as an
-        initialization parameter. This is useful for perfoming validation on
+        initialization parameter. This is useful for performing validation on
         the form's fields.
 
         """
@@ -106,35 +107,29 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
 class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
                      UpdateView):
     model = models.Bike
-    fields = (
-        "nickname",
-        "bike_type",
-        "gear",
-        "brake",
-        "brand",
-        "model",
-        "color",
-        "saddle",
-        "has_basket",
-        "has_cargo_rack",
-        "has_lights",
-        "has_bags",
-        "has_smb_sticker",
-        "other_details",
-    )
+    form_class = forms.BikeForm
     template_name_suffix = "_update"
-
-    @property
-    def success_message(self):
-        return "bike {!r} updated".format(self.object.nickname)
+    success_message = "Bike details updated!"
 
     def get_success_url(self):
         bike = self.get_object()
         return reverse("bikes:detail", kwargs={"pk": bike.pk})
 
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)
+    def get_form_kwargs(self):
+        """Instantiate a form object
+
+        We re-implement this method in order to pass the current user as an
+        initialization parameter. This is useful for performing validation on
+        the form's fields.
+
+        """
+
+        form_kwargs = super().get_form_kwargs()
+        form_kwargs.update({
+            "user": self.request.user,
+        })
+        logger.debug("BikeUpdateView form kwargs: {}".format(form_kwargs))
+        return form_kwargs
 
 
 class BikeDetailView(LoginRequiredMixin, DetailView):
@@ -146,6 +141,12 @@ class BikeDeleteView(LoginRequiredMixin, DeleteView):
     model = models.Bike
     context_object_name = "bike"
     success_url = reverse_lazy("bikes:list")
+    success_message = "Bike deleted!"
+
+    def delete(self, request, *args, **kwargs):
+        result = super().delete(request, *args, **kwargs)
+        messages.success(request, self.success_message)
+        return result
 
 
 class BikePictureUploadView(CreateView):
@@ -165,15 +166,53 @@ class BikePictureUploadView(CreateView):
         return context_data
 
     def form_valid(self, form):
-        logger.debug("form stuff: {}".format(form.__dict__))
-        logger.debug("cleaned image: {}".format(form.cleaned_data["image"]))
         response = super().form_valid(form)
         photo = self.object
-        logger.debug("bike_pk: {}".format(self.kwargs.get("pk")))
         current_bike = models.Bike.objects.get(pk=self.kwargs.get("pk"))
-        logger.debug("current_bike: {}".format(current_bike))
         gallery = current_bike.picture_gallery
-        logger.debug("gallery: {}".format(gallery))
         gallery.photos.add(photo)
-        logger.debug("photo instance: {}".format(photo))
         return response
+
+
+class BikePossessionHistoryCreateView(LoginRequiredMixin,
+                                      mixins.FormUpdatedMessageMixin,
+                                      CreateView):
+    model = models.BikePossessionHistory
+    form_class = forms.BikePossessionHistoryForm
+    template_name_suffix = "_create"
+    success_message = "Bike status updated!"
+
+    def get_success_url(self):
+        pk = self.kwargs.get("pk")
+        if pk is not None:
+            result = reverse(
+                "bikes:detail",
+                kwargs={"pk": self.kwargs.get("pk")}
+            )
+        else:
+            result = reverse("bikes:list")
+        return result
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data["bike"] = self.get_bike()
+        return context_data
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({
+            "bike": self.get_bike(),
+            "user": self.request.user,
+            "initial": {
+                "possession_state": models.BikePossessionHistory.STOLEN,
+            }
+        })
+        return kwargs
+
+    def get_bike(self):
+        try:
+            bike = models.Bike.objects.get(pk=self.kwargs.get("pk"))
+        except models.Bike.DoesNotExist:
+            bike = None
+        return bike
+

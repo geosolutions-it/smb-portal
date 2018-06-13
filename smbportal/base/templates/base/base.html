@@ -84,7 +84,7 @@
                 <a href="{% url 'bikes:list' %}"><span>{% trans 'Bikes' %}</span></a>
             </li>
             <li>
-                <a href="javascript:void(0)"><span>{% trans 'Report a stolen Bike?' %}</span></a>
+                <a href="{% url 'bikes:report-status' %}"><span>{% trans 'Report a stolen Bike?' %}</span></a>
                 
             </li>
             <li>
@@ -245,7 +245,7 @@
            <div class="row">
                <div class="col-lg">
                    {% for message in messages %}
-                       <div {% if message.tags %}class="alert alert-dismissible fade show text-center margin-bottom-1x alert-{{ message.tags }}"{% endif %}>
+                       <div {% if message.tags %}class="alert alert-dismissible fade show text-center margin-bottom-1x {{ message.tags }}"{% endif %}>
                            <span class="alert-close" data-dismiss="alert"></span>
                            {{ message }}
                        </div>
