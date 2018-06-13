@@ -154,6 +154,9 @@ class Bike(Vehicle):
     def get_current_possession_state(self):
         return self.possession_history.order_by("-creation_date").first()
 
+    def get_latest_observation(self):
+        return self.observations.order_by("-observed_at").first()
+
     def report_possession_state(self, state, reporter=None, details=None):
         state_obj = BikePossessionHistory(
             bike=self,

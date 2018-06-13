@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     "profiles.apps.ProfilesConfig",
     "vehicles.apps.VehiclesConfig",
     "tracks.apps.TracksConfig",
+    "vehiclemonitor.apps.VehiclemonitorConfig",
     "rules.apps.AutodiscoverRulesConfig",
 ]
 
