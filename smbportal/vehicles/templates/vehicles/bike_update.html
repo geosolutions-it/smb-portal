@@ -17,6 +17,9 @@
             {% bootstrap_form form %}
             {% buttons %}
                 <button type="submit" class="btn btn-primary btn-lg">Update bike</button>
+                <a href="{% url 'bikes:gallery' pk=bike.pk %}" class="btn btn-secondary btn-lg"><i class="fa fa-picture-o"></i> Manage bike pictures</a>
+                <a class="btn btn-secondary" href="{% url 'bikes:report-status' pk=bike.pk %}"><i class="fa fa-file-text-o"></i> Update bike status</a>
+                <a class="btn btn-outline-danger" href="{% url 'bikes:delete' pk=bike.pk %}"><i class="fa fa-trash-o"></i> Delete bike</a>
             {% endbuttons %}
         </form>
     </div>

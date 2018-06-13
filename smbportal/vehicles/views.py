@@ -15,14 +15,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect
+from django.shortcuts import render
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils.text import slugify
+from django.views import View
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
-from django.views.generic import DeleteView
 from photologue.models import Gallery
 from photologue.models import Photo
 
@@ -149,29 +152,90 @@ class BikeDeleteView(LoginRequiredMixin, DeleteView):
         return result
 
 
-class BikePictureUploadView(CreateView):
-    model = Photo
-    fields = (
-        "image",
-        "title",
-        "slug",
-        "caption",
-    )
-    template_name = "vehicles/bike_picture_create.html"
+class BikeGalleryDetailView(LoginRequiredMixin, DetailView):
+    model = Gallery
+    context_object_name = "gallery"
+    template_name = "vehicles/bikegallery_detail.html"
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data["bike"] = models.Bike.objects.get(
-            pk=self.kwargs.get("pk"))
+        context_data["bike"] = _get_current_bike(self.kwargs)
         return context_data
+
+    def get_object(self, queryset=None):
+        bike = _get_current_bike(self.kwargs)
+        return bike.picture_gallery
+
+
+class BikePictureUploadView(mixins.FormUpdatedMessageMixin, CreateView):
+    model = Photo
+    form_class = forms.BikePictureForm
+    template_name = "vehicles/bike_picture_create.html"
+    success_message = "Bike picture uploaded!"
+
+    def get_success_url(self):
+        bike = _get_current_bike(self.kwargs)
+        return reverse("bikes:gallery", kwargs={"pk": bike.pk})
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data["bike"] = _get_current_bike(self.kwargs)
+        return context_data
+
+    def get_form_kwargs(self):
+        form_kwargs = super().get_form_kwargs()
+        form_kwargs.update({
+            "bike": _get_current_bike(self.kwargs),
+        })
+        return form_kwargs
 
     def form_valid(self, form):
         response = super().form_valid(form)
         photo = self.object
-        current_bike = models.Bike.objects.get(pk=self.kwargs.get("pk"))
+        current_bike = _get_current_bike(self.kwargs)
         gallery = current_bike.picture_gallery
         gallery.photos.add(photo)
         return response
+
+
+class BikePictureDeleteView(LoginRequiredMixin, View):
+    form_class = forms.BikePictureDeleteForm
+    template_name = "vehicles/bike_picture_confirm_delete.html"
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(**self.get_form_kwargs())
+        return render(
+            request,
+            self.template_name,
+            context=self.get_context_data(form=form)
+        )
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, **self.get_form_kwargs())
+        if form.is_valid():
+            for picture_id in form.cleaned_data["choices"]:
+                picture = Photo.objects.get(pk=picture_id)
+                picture.delete()
+            messages.success(request, "Pictures have been deleted!")
+            bike = _get_current_bike(kwargs)
+            result = redirect("bikes:gallery", pk=bike.pk)
+        else:
+            result = render(
+                request,
+                self.template_name,
+                context=self.get_context_data(form=form)
+            )
+        return result
+
+    def get_context_data(self, **kwargs):
+        context_data = kwargs.copy()
+        context_data["bike"] = _get_current_bike(self.kwargs)
+        return context_data
+
+    def get_form_kwargs(self):
+        return {
+            "bike": _get_current_bike(self.kwargs),
+        }
 
 
 class BikePossessionHistoryCreateView(LoginRequiredMixin,
@@ -195,13 +259,13 @@ class BikePossessionHistoryCreateView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data["bike"] = self.get_bike()
+        context_data["bike"] = _get_current_bike(self.kwargs)
         return context_data
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({
-            "bike": self.get_bike(),
+            "bike": _get_current_bike(self.kwargs),
             "user": self.request.user,
             "initial": {
                 "possession_state": models.BikePossessionHistory.STOLEN,
@@ -216,3 +280,10 @@ class BikePossessionHistoryCreateView(LoginRequiredMixin,
             bike = None
         return bike
 
+
+def _get_current_bike(view_kwargs):
+    try:
+        bike = models.Bike.objects.get(pk=view_kwargs.get("pk"))
+    except models.Bike.DoesNotExist:
+        bike = None
+    return bike

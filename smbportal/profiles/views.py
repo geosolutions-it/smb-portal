@@ -239,7 +239,7 @@ class ProfileUpdateView(LoginRequiredMixin,
                         UserProfileMixin,
                         mixins.FormUpdatedMessageMixin,
                         UpdateView):
-    permission_required = "profiles.can_edit"
+    permission_required = "profiles.can_edit_profile"
     success_message = "user profile updated!"
 
     def get_template_names(self):
