@@ -39,7 +39,7 @@
                     {% for photo in bike.picture_gallery.sample %}
                         <div class="col-md-4 col-sm-6">
                             <div class="gallery-item">
-                                <a href="{{ photo.get_display_url }}" data-size="1280x853">
+                                <a href="{{ photo.image.url }}" data-size="{{ photo.image.width }}x{{ photo.image.height }}">
                                     <img src="{{ photo.get_thumbnail_url }}" class="img-thumbnail" alt="{{ photo.title }}">
                                 </a>
                             </div>
@@ -63,9 +63,6 @@
         </div>
         <div class="col">
             <a class="btn btn-outline-primary" href="{% url 'bikes:update' pk=bike.pk %}"><i class="fa fa-pencil-square-o"></i> Edit bike details</a>
-            <a class="btn btn-outline-primary" href="{% url 'bikes:report-status' pk=bike.pk %}"><i class="fa fa-file-text-o"></i> Update bike status</a>
-            <a class="btn btn-outline-primary" href="{% url 'bikes:picture-upload' pk=bike.pk %}"><i class="fa fa-picture-o"></i> Add pictures</a>
-            <a class="btn btn-outline-danger" href="{% url 'bikes:delete' pk=bike.pk %}"><i class="fa fa-trash-o"></i> Delete bike</a>
         </div>
     </div>
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">

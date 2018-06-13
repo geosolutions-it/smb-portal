@@ -11,6 +11,9 @@
 import logging
 
 from django import forms
+from django.utils.text import mark_safe
+from django.utils.text import slugify
+from photologue.models import Photo
 
 from . import models
 
@@ -111,3 +114,70 @@ class BikePossessionHistoryForm(forms.ModelForm):
         widgets = {
             "possession_state": forms.RadioSelect,
         }
+
+
+class BikePictureForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.bike = kwargs.pop("bike", None)
+        super().__init__(*args, **kwargs)
+        self.instance.gallery = self.bike.picture_gallery
+
+    def clean(self):
+        """Perform validation of fields that depend on each other
+
+        We are re-implementing this method because the photologue ``Photo``
+        model requires a unique ``slug`` field for an uploaded photo. Since
+        we chose not to include this field in the upload form, but to
+        construct it dynamically instead, we need to validate it before it
+        reaches the DB (where it will fail if the slug is not unique)
+
+        """
+
+        super().clean()
+        file_name = self.cleaned_data["image"].name
+        title = "-".join((str(self.bike.pk), file_name))
+        slugged_title = slugify(title)
+        gallery = self.bike.picture_gallery
+        if gallery.photos.filter(slug=slugged_title).exists():
+            # FIXME: should be passing "image" as the ``field`` value here
+            #        However, that makes the template render a non-styled
+            #        message next to the failing field. By passing ``None``
+            #        we are at least rendering a correctly styled error in the
+            #        template
+            self.add_error(None, "Already uploaded a picture with that name")
+        else:
+            self.instance.title = title
+
+    def save(self, commit=True):
+        self.instance.slug = slugify(self.instance.title)
+        return super().save(commit=commit)
+
+    class Meta:
+        model = Photo
+        fields = (
+            "image",
+            "caption",
+        )
+
+
+class BikePictureDeleteForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        bike = kwargs.pop("bike")
+        super().__init__(*args, **kwargs)
+        choices = []
+        for picture in bike.picture_gallery.photos.all():
+            display_url = picture.get_thumbnail_url()
+            render_as = mark_safe(
+                '<img src="{}" alt="{}">'.format(display_url, picture.title))
+            choices.append((picture.pk, render_as))
+
+        self.fields["choices"] = forms.MultipleChoiceField(
+            label="Choices",
+            choices=choices,
+            widget=forms.CheckboxSelectMultiple,
+            error_messages={
+                "required": "Must select at least one picture to delete",
+            }
+        )

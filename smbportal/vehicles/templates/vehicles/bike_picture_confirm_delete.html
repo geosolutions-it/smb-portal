@@ -1,0 +1,29 @@
+{% extends "vehicles/base.html" %}
+
+{% load i18n %}
+{% load bootstrap4 %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
+    {% breadcrumb 'pictures' 'bikes:gallery' pk=bike.pk %}
+    {% breadcrumb 'delete' 'bikes:pictures-delete' pk=bike.pk %}
+{% endblock %}
+
+{%  block page_title %}Delete pictures{% endblock %}
+
+{% block main %}
+    <div class="col-lg">
+        <p>{% trans "Please select the pictures that you would like to delete." %}</p>
+        <form method="POST" action="{% url 'bikes:pictures-delete' pk=bike.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{% url 'bikes:gallery' pk=bike.pk %}">
+            {% bootstrap_form form %}
+            {% buttons %}
+                <a href="{% url 'bikes:gallery' pk=bike.pk %}" class="btn btn-secondary">{% trans "Go back" %}</a>
+                <button type="submit" class="btn btn-danger">{% trans "Delete selected pictures" %}</button>
+            {% endbuttons %}
+        </form>
+    </div>
+{% endblock %}
