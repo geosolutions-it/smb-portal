@@ -170,7 +170,7 @@ class EndUserProfileCreateView(LoginRequiredMixin,
     model = models.EndUserProfile
     form_class = forms.EndUserProfileForm
     template_name_suffix = "_create"
-    permission_required = "profiles.can_create"
+    permission_required = "profiles.can_create_profile"
     success_url = reverse_lazy("profile:update")
 
     @property
@@ -234,8 +234,8 @@ class EndUserProfileCreateView(LoginRequiredMixin,
 
 
 class ProfileUpdateView(LoginRequiredMixin,
-                        mixins.UserHasObjectPermissionMixin,
                         PermissionRequiredMixin,
+                        mixins.UserHasObjectPermissionMixin,
                         UserProfileMixin,
                         mixins.FormUpdatedMessageMixin,
                         UpdateView):
@@ -279,6 +279,7 @@ class ProfileUpdateView(LoginRequiredMixin,
 
 
 class MobilityHabitsSurveyCreateView(LoginRequiredMixin,
+                                     PermissionRequiredMixin,
                                      UserProfileMixin,
                                      mixins.FormUpdatedMessageMixin,
                                      CreateView):
@@ -287,6 +288,7 @@ class MobilityHabitsSurveyCreateView(LoginRequiredMixin,
     form_class = forms.UserMobilityHabitsForm
     template_name_suffix = "_create"
     success_url = reverse_lazy("profile:update")
+    permission_required = "profiles.can_edit_profile"
 
     def get_login_url(self):
         if not self.request.user.is_authenticated:
@@ -300,6 +302,8 @@ class MobilityHabitsSurveyCreateView(LoginRequiredMixin,
 
 
 class MobilityHabitsSurveyDetailView(LoginRequiredMixin,
+                                     PermissionRequiredMixin,
                                      DetailView):
     model = models.MobilityHabitsSurvey
     context_object_name = "survey"
+    permission_required = "profiles.can_view_profile"

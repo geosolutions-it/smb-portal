@@ -203,7 +203,7 @@ BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",  # for testing purposes
+        "rest_framework.authentication.SessionAuthentication",
         "oidc_auth.authentication.BearerTokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (

@@ -24,8 +24,7 @@
             <p>Bags: <em><i class="fa {% if bike.has_bags %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
             <p>SaveMyBike sticker: <em><i class="fa {% if bike.has_smb_sticker %}fa-check-square{% else %}fa-square-o{% endif %}"></i></em></p>
             <p>Other details: <strong>{{ bike.other_details }}</strong></p>
-            <h4>Possession state</h4>
-            <p>{{ bike.get_current_possession_state.possession_state }}</p>
+            <p>Current status: <strong>{% if bike.get_current_status.lost %}Lost{% else %}With owner{% endif %}</strong></p>
             <h4>Tags</h4>
             <ul>
                 {% for tag in bike.tags.all %}

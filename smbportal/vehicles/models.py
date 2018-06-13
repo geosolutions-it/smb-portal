@@ -49,11 +49,12 @@ class BikeManager(models.Manager):
             **kwargs
         )
         bike.save()
-        possession_history = BikePossessionHistory(
+        status_history = BikeStatus(
             bike=bike,
             reporter=bike.owner,
+            lost=False
         )
-        possession_history.save()
+        status_history.save()
         gallery_title = "Picture gallery for bike {}".format(bike.pk)
         picture_gallery = Gallery.objects.create(
             title=gallery_title,
@@ -151,55 +152,41 @@ class Bike(Vehicle):
     def get_absolute_url(self):
         return reverse("bikes:detail", kwargs={"pk": self.id})
 
-    def get_current_possession_state(self):
-        return self.possession_history.order_by("-creation_date").first()
+    def get_current_status(self):
+        return self.status_history.order_by("-creation_date").first()
 
     def get_latest_observation(self):
         return self.observations.order_by("-observed_at").first()
 
-    def report_possession_state(self, state, reporter=None, details=None):
-        state_obj = BikePossessionHistory(
+    def report_status(self, lost, reporter=None, details=None):
+        status_obj = BikeStatus(
             bike=self,
             reporter=reporter if reporter is not None else self.owner,
-            possession_state=state,
+            lost=lost,
             details=details if details is not None else ""
         )
-        state_obj.full_clean()
-        state_obj.save()
+        status_obj.full_clean()
+        status_obj.save()
 
 
-class BikePossessionHistory(models.Model):
-    WITH_OWNER = "with owner"
-    LOST = "lost"
-    STOLEN = "stolen"
-    FOUND_BY_THIRD_PARTY = "found by third party"
-
+class BikeStatus(models.Model):
     bike = models.ForeignKey(
         "Bike",
         on_delete=models.CASCADE,
-        related_name="possession_history"
+        related_name="status_history"
     )
     reporter = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    possession_state = models.CharField(
-        max_length=50,
-        choices=(
-            (WITH_OWNER, WITH_OWNER),
-            (LOST, LOST),
-            (STOLEN, STOLEN),
-            (FOUND_BY_THIRD_PARTY, FOUND_BY_THIRD_PARTY),
-        ),
-        default=WITH_OWNER,
-    )
+    lost = models.BooleanField(default=False)
     creation_date = models.DateTimeField(auto_now_add=True)
     details = models.TextField(
         blank=True
     )
 
     def __str__(self):
-        return "{0.possession_state}({0.creation_date})".format(self)
+        return "{0.status}({0.creation_date})".format(self)
 
     class Meta:
         ordering = [

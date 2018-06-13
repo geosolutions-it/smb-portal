@@ -85,18 +85,19 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
     def form_valid(self, form):
         """Save a new Bike instance into the DB
 
-        BikePossessionHistory and Gallery objects are also created and
-        associated to the new bike instance
+        BikeStatus and Gallery objects are also created and associated with
+        the new bike instance
 
         """
 
         result = super().form_valid(form)
         bike = self.object
-        possession_history = models.BikePossessionHistory(
+        bike_status = models.BikeStatus(
             bike=bike,
             reporter=bike.owner,
+            lost=False
         )
-        possession_history.save()
+        bike_status.save()
         gallery_title = "Picture gallery for bike {}".format(bike.pk)
         picture_gallery = Gallery.objects.create(
             title=gallery_title,
@@ -167,7 +168,9 @@ class BikeGalleryDetailView(LoginRequiredMixin, DetailView):
         return bike.picture_gallery
 
 
-class BikePictureUploadView(mixins.FormUpdatedMessageMixin, CreateView):
+class BikePictureUploadView(LoginRequiredMixin,
+                            mixins.FormUpdatedMessageMixin,
+                            CreateView):
     model = Photo
     form_class = forms.BikePictureForm
     template_name = "vehicles/bike_picture_create.html"
@@ -238,11 +241,11 @@ class BikePictureDeleteView(LoginRequiredMixin, View):
         }
 
 
-class BikePossessionHistoryCreateView(LoginRequiredMixin,
-                                      mixins.FormUpdatedMessageMixin,
-                                      CreateView):
-    model = models.BikePossessionHistory
-    form_class = forms.BikePossessionHistoryForm
+class BikeStatusCreateView(LoginRequiredMixin,
+                           mixins.FormUpdatedMessageMixin,
+                           CreateView):
+    model = models.BikeStatus
+    form_class = forms.BikeStatusForm
     template_name_suffix = "_create"
     success_message = "Bike status updated!"
 
@@ -268,7 +271,7 @@ class BikePossessionHistoryCreateView(LoginRequiredMixin,
             "bike": _get_current_bike(self.kwargs),
             "user": self.request.user,
             "initial": {
-                "possession_state": models.BikePossessionHistory.STOLEN,
+                "lost": True,
             }
         })
         return kwargs

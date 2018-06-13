@@ -10,6 +10,7 @@
 
 from urllib.parse import urlparse
 
+from django.contrib.auth.models import Group
 from django.urls import reverse
 import pytest
 
@@ -39,12 +40,16 @@ def test_bike_list_requires_enduser_profile(client, django_user_model):
 
 
 @pytest.mark.django_db
-def test_bike_list_only_returns_owned_bikes(client, django_user_model):
+def test_bike_list_only_returns_owned_bikes(client, django_user_model,
+                                            settings):
     user1 = django_user_model.objects.create(username="user1")
     profiles.models.EndUserProfile.objects.create(
         user=user1
     )
     user2 = django_user_model.objects.create(username="user2")
+    end_users_group = Group.objects.create(name=settings.END_USER_PROFILE)
+    end_users_group.user_set.add(user1, user2)
+
     bike1 = vehicles.models.Bike.objects.create(
         nickname="bike1",
         owner=user1
