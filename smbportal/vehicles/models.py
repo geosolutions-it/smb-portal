@@ -201,6 +201,7 @@ class PhysicalTag(models.Model):
         related_name="tags",
     )
     epc = models.TextField(
-        help_text="Electronic Product Code"
+        help_text="Electronic Product Code",
+        unique=True
     )
     creation_date = models.DateTimeField(auto_now_add=True)

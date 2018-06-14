@@ -6,7 +6,8 @@
 {% block breadcrumbs %}
     {{ block.super }}
     {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
-    {% breadcrumb 'pictures' 'bikes:gallery' pk=bike.pk %}
+    {% breadcrumb 'edit' 'bikes:update' pk=bike.pk %}
+    {% breadcrumb 'manage pictures' 'bikes:gallery' pk=bike.pk %}
 {% endblock %}
 
 {% block page_title %}Bike Pictures{% endblock %}

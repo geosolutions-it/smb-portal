@@ -8,6 +8,7 @@
     {{ block.super }}
     {% if bike %}
         {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
+        {% breadcrumb 'edit' 'bikes:update' pk=bike.pk %}
     {% endif %}
     {% breadcrumb 'report status' 'bikes:report-status' pk=bike.pk %}
 {% endblock %}
