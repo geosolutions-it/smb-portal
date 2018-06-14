@@ -77,7 +77,6 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
     def get_id(self, obj):
         return obj.keycloak.UID
 
-
     def get_profile(self, obj):
         if obj.profile is not None:
             profile_class = type(obj.profile)
@@ -110,7 +109,6 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
             "first_name",
             "last_name",
             "nickname",
-            "sub",
             "profile",
             "profile_type",
         )

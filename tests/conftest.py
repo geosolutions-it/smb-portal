@@ -10,6 +10,11 @@
 
 """pytest configuration file"""
 
+from unittest import mock
+
+import pytest
+from rest_framework.test import APIRequestFactory
+
 
 def pytest_configure(config):
     config.addinivalue_line(
@@ -20,3 +25,16 @@ def pytest_configure(config):
         "markers",
         "integration: Run only integration tests",
     )
+
+
+@pytest.fixture(scope="session")
+def api_request_factory():
+    factory = APIRequestFactory()
+    return factory
+
+
+@pytest.fixture
+def mocked_user():
+    mocked_user_class = mock.MagicMock(
+        spec="api.serializers.profiles.models.SmbUser")
+    return mocked_user_class()
