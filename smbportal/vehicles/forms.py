@@ -90,7 +90,7 @@ class BikeForm(forms.ModelForm):
         )
 
 
-class BikePossessionHistoryForm(forms.ModelForm):
+class BikeStatusForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user")
@@ -105,15 +105,12 @@ class BikePossessionHistoryForm(forms.ModelForm):
                 owner=user)
 
     class Meta:
-        model = models.BikePossessionHistory
+        model = models.BikeStatus
         fields = (
             "bike",
-            "possession_state",
+            "lost",
             "details",
         )
-        widgets = {
-            "possession_state": forms.RadioSelect,
-        }
 
 
 class BikePictureForm(forms.ModelForm):

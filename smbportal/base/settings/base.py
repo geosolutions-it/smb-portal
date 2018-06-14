@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     "profiles.apps.ProfilesConfig",
     "vehicles.apps.VehiclesConfig",
     "tracks.apps.TracksConfig",
+    "vehiclemonitor.apps.VehiclemonitorConfig",
     "rules.apps.AutodiscoverRulesConfig",
 ]
 
@@ -202,7 +203,7 @@ BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",  # for testing purposes
+        "rest_framework.authentication.SessionAuthentication",
         "oidc_auth.authentication.BearerTokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (

@@ -43,7 +43,6 @@ def update_user_data(user, token):
     create_django_memberships(user, groups)
 
 
-
 def load_user_roles(user, roles):
     """Load user roles defined in the OpenID Connect Provider.
 

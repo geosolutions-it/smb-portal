@@ -26,7 +26,7 @@ urlpatterns = [
     ),
     path(
         route="report-status",
-        view=views.BikePossessionHistoryCreateView.as_view(),
+        view=views.BikeStatusCreateView.as_view(),
         name="report-status"
     ),
     path(
@@ -46,7 +46,7 @@ urlpatterns = [
     ),
     path(
         route="<pk>/report-status",
-        view=views.BikePossessionHistoryCreateView.as_view(),
+        view=views.BikeStatusCreateView.as_view(),
         name="report-status"
     ),
     path(

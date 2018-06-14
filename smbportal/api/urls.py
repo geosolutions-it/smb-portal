@@ -22,11 +22,6 @@ from . import views
 app_name = "api"
 
 router = routers.DefaultRouter()
-# router.register(
-#     prefix=r"my-user",
-#     viewset=views.MyUserViewSet,
-#     base_name="my-user"
-# )
 router.register(
     prefix=r"my-bikes",
     viewset=views.MyBikeViewSet,
@@ -38,9 +33,9 @@ router.register(
     base_name="my-tags"
 )
 router.register(
-    prefix=r"my-bike-possession-history",
-    viewset=views.MyBikePossessionHistoryViewSet,
-    base_name="my-bike-possession-history"
+    prefix=r"my-bike-statuses",
+    viewset=views.MyBikeStatusViewSet,
+    base_name="my-bike-statuses"
 )
 router.register(
     prefix=r"users",
@@ -58,9 +53,9 @@ router.register(
     base_name="tags"
 )
 router.register(
-    prefix=r"bike-possession-history",
-    viewset=views.BikePossessionHistoryViewSet,
-    base_name="bike-possession-history"
+    prefix=r"statuses",
+    viewset=views.BikeStatusViewSet,
+    base_name="statuses"
 )
 router.register(
     prefix=r"picture-galleries",

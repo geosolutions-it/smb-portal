@@ -10,8 +10,6 @@
 
 """Unit tests for the keycloakauth.permissions module"""
 
-from django.contrib.auth.models import Group
-
 import pytest
 
 import keycloakauth.permissions
@@ -20,7 +18,7 @@ pytestmark = pytest.mark.unit
 
 
 @pytest.mark.parametrize("perms, expected", [
-    (("list_stuff",), ["list_stuff",]),
+    (("list_stuff",), ["list_stuff"]),
     (("create_stuff",), []),
     (("create_stuff", "list_stuff"), ["list_stuff"]),
     (("new_stuff",), []),
@@ -39,4 +37,3 @@ pytestmark = pytest.mark.unit
 def test_filter_out_unsafe_permissions(perms, expected):
     result = keycloakauth.permissions.filter_out_unsafe_permissions(perms)
     assert result == expected
-

@@ -8,14 +8,16 @@
 #
 #########################################################################
 
-"""Extra tags for using in smb-portal templates"""
+import pytest
 
-from django import template
-
-register = template.Library()
+pytestmark = pytest.mark.integration
 
 
-@register.filter
-def add_str(arg1, arg2):
-    """Concatenate input args"""
-    return "".join((str(arg1), str(arg2)))
+@pytest.mark.xfail
+def test_bike_observation_requires_position_if_not_address():
+    raise NotImplementedError
+
+
+@pytest.mark.xfail
+def test_bike_observation_requires_address_if_not_position():
+    raise NotImplementedError
