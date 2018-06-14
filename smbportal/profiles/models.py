@@ -15,9 +15,7 @@ from django.db import models
 from django.urls import reverse
 
 
-# TODO: Integrate with django-avatar for avatar support
 # TODO: do we need to add the `status` attribute?
-# TODO: do we need to add the `_id` attribute?
 class SmbUser(AbstractUser):
     """Default user model for smb-portal.
 
@@ -33,18 +31,6 @@ class SmbUser(AbstractUser):
         max_length=20,
         choices=((k, v) for k, v in settings.LANGUAGES),
         default="en"
-    )
-    sub = models.TextField(
-        help_text="The OpenID Direct subject. This is the effective user "
-                  "identifier in the authentication provider. This attribute "
-                  "is required by other smb apps, it is not used "
-                  "by smb-portal",
-        blank=True
-    )
-    cognito_user_status = models.BooleanField(
-        default=True,
-        help_text="This attribute is required by other smb apps, it is not "
-                  "used by smb-portal"
     )
 
     @property
