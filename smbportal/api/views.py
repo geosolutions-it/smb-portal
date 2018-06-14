@@ -90,6 +90,9 @@ class SmbUserViewSet(viewsets.ReadOnlyModelViewSet):
         "profiles.can_list_users",
     )
 
+    def get_object(self):
+        return self.get_queryset().get(keycloak__UID=self.kwargs["pk"])
+
 
 class BikeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = vehicles.models.Bike.objects.all()
@@ -118,12 +121,10 @@ class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     )
 
 
-class BikeStatusViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
-                        mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class BikeStatusViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.BikeStatusSerializer
     required_permissions = (
         "vehicles.can_list_bike_status",
-        "vehicles.can_create_bike_status",
     )
 
     def get_queryset(self):

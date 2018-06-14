@@ -12,7 +12,7 @@
 
 import logging
 
-from django.urls import reverse
+from rest_framework.reverse import reverse
 import photologue.models
 from rest_framework import serializers
 
@@ -22,12 +22,61 @@ import vehicles.models
 logger = logging.getLogger(__name__)
 
 
+class SmbUserHyperlinkedIdentityField(serializers.HyperlinkedIdentityField):
+    """Custom serializer field to support showing a custom id for ``SmbUser``
+
+    This field allows using the keycloak UUID as the user's identity field in
+    the API
+
+    """
+
+    def get_url(self, obj, view_name, request, format):
+        return reverse(
+            view_name,
+            kwargs={
+                "pk": obj.keycloak.UID
+            },
+            request=request,
+            format=format
+        )
+
+
+class SmbUserHyperlinkedRelatedField(serializers.HyperlinkedRelatedField):
+    """Custom serializer field to support showing a custom id for ``SmbUser``
+
+    This field allows using the keycloak UUID as the related attribute when
+    referencing user model from other models in the API
+
+    """
+
+    def get_url(self, obj, view_name, request, format):
+        return reverse(
+            view_name,
+            kwargs={
+                "pk": obj.keycloak.UID
+            },
+            request=request,
+            format=format
+        )
+
+    def get_object(self, view_name, view_args, view_kwargs):
+        return self.get_queryset().get(kycloak__UID=view_kwargs.get("pk"))
+
+    def use_pk_only_optimization(self):
+        return False
+
+
 class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
+    url = SmbUserHyperlinkedIdentityField(
         view_name="api:users-detail",
     )
+    id = serializers.SerializerMethodField()
     profile = serializers.SerializerMethodField()
     profile_type = serializers.SerializerMethodField()
+
+    def get_id(self, obj):
+        return obj.keycloak.UID
+
 
     def get_profile(self, obj):
         if obj.profile is not None:
@@ -55,6 +104,7 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
         model = profiles.models.SmbUser
         fields = (
             "url",
+            "id",
             "username",
             "email",
             "first_name",
@@ -89,7 +139,7 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:bikes-detail",
     )
-    owner = serializers.HyperlinkedRelatedField(
+    owner = SmbUserHyperlinkedRelatedField(
         view_name="api:users-detail",
         read_only=True
     )
@@ -124,7 +174,7 @@ class BikeDetailSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:bikes-detail",
     )
-    owner = serializers.HyperlinkedRelatedField(
+    owner = SmbUserHyperlinkedRelatedField(
         view_name="api:users-detail",
         read_only=True
     )
@@ -205,7 +255,7 @@ class MyBikeStatusSerializer(serializers.HyperlinkedModelSerializer):
         view_name="api:bikes-detail",
         queryset=vehicles.models.Bike.objects.all()
     )
-    reporter = serializers.HyperlinkedRelatedField(
+    reporter = SmbUserHyperlinkedRelatedField(
         view_name="api:users-detail",
         read_only=True
     )
@@ -237,7 +287,7 @@ class BikeStatusSerializer(serializers.HyperlinkedModelSerializer):
         view_name="api:bikes-detail",
         queryset=vehicles.models.Bike.objects.all()
     )
-    reporter = serializers.HyperlinkedRelatedField(
+    reporter = SmbUserHyperlinkedRelatedField(
         view_name="api:users-detail",
         queryset=profiles.models.SmbUser.objects.all()
     )
