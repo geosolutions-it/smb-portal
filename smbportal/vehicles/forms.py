@@ -88,6 +88,11 @@ class BikeForm(forms.ModelForm):
             "has_smb_sticker",
             "other_details",
         )
+        widgets = {
+            "bike_type": forms.RadioSelect,
+            "gear": forms.RadioSelect,
+            "brake": forms.RadioSelect,
+        }
 
 
 class BikeStatusForm(forms.ModelForm):
