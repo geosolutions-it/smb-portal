@@ -1,7 +1,7 @@
 {% extends "vehicles/base.html" %}
 
 {% load i18n %}
-{% load bootstrap4 %}
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
@@ -19,11 +19,9 @@
         <form method="POST" action="{% url 'bikes:pictures-delete' pk=bike.pk %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{% url 'bikes:gallery' pk=bike.pk %}">
-            {% bootstrap_form form %}
-            {% buttons %}
-                <a href="{% url 'bikes:gallery' pk=bike.pk %}" class="btn btn-secondary">{% trans "Go back" %}</a>
-                <button type="submit" class="btn btn-danger">{% trans "Delete selected pictures" %}</button>
-            {% endbuttons %}
+            {{ form|crispy }}
+            <a href="{% url 'bikes:gallery' pk=bike.pk %}" class="btn btn-secondary">{% trans "Go back" %}</a>
+            <button type="submit" class="btn btn-danger">{% trans "Delete selected pictures" %}</button>
         </form>
     </div>
 {% endblock %}

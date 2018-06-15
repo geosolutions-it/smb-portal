@@ -1,5 +1,6 @@
 {% extends 'vehicles/base.html' %}
-{% load bootstrap4 %}
+
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block page_title %}Edit bike{% endblock %}
@@ -12,13 +13,7 @@
 
 {% block main %}
     <div class="col-lg-9 col-md-8 order-md-1">
-        <form method="post" action="">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-primary btn-lg">Update bike</button>
-            {% endbuttons %}
-        </form>
+        {% crispy form %}
     </div>
     <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
         <nav class="list-group">

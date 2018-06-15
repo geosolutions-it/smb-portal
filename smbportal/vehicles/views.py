@@ -79,6 +79,7 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
             "user": self.request.user,
+            "submit_value": "Create bike",
         })
         return form_kwargs
 
@@ -131,6 +132,7 @@ class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
             "user": self.request.user,
+            "submit_value": "Update bike details",
         })
         logger.debug("BikeUpdateView form kwargs: {}".format(form_kwargs))
         return form_kwargs
@@ -270,18 +272,8 @@ class BikeStatusCreateView(LoginRequiredMixin,
         kwargs.update({
             "bike": _get_current_bike(self.kwargs),
             "user": self.request.user,
-            "initial": {
-                "lost": True,
-            }
         })
         return kwargs
-
-    def get_bike(self):
-        try:
-            bike = models.Bike.objects.get(pk=self.kwargs.get("pk"))
-        except models.Bike.DoesNotExist:
-            bike = None
-        return bike
 
 
 def _get_current_bike(view_kwargs):
