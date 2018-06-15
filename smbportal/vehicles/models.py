@@ -11,6 +11,7 @@
 import uuid
 
 from django.db import models
+from django.contrib.gis.db import models as gis_models
 from django.conf import settings
 from django.shortcuts import reverse
 from django.utils.text import slugify
@@ -184,9 +185,17 @@ class BikeStatus(models.Model):
     details = models.TextField(
         blank=True
     )
+    position = gis_models.PointField(
+        null=True,
+        blank=True,
+        help_text="Bike last seen position"
+    )
 
     def __str__(self):
-        return "{0.status}({0.creation_date})".format(self)
+        return "{status}({creation_date})".format(
+            status="lost" if self.lost else "with_owner",
+            creation_date=self.creation_date
+        )
 
     class Meta:
         ordering = [

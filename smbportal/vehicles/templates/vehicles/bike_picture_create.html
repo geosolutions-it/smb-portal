@@ -1,6 +1,7 @@
 {% extends 'vehicles/base.html' %}
+
 {% load i18n %}
-{% load bootstrap4 %}
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
@@ -16,10 +17,8 @@
     <div class="col-lg-12">
         <form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
             {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-outline-primary btn-lg">Submit</button>
-            {% endbuttons %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-outline-primary btn-lg">Submit</button>
         </form>
     </div>
 {% endblock %}

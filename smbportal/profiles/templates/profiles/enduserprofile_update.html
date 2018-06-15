@@ -1,7 +1,7 @@
 {% extends 'profiles/base.html' %}
 {% load static %}
 {% load avatar_tags %}
-{% load bootstrap4 %}
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block page_title %}Your profile{% endblock %}
@@ -24,10 +24,8 @@
     <div class="col-lg-8">
         <form method="post">
             {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
-            {% endbuttons %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
         </form>
         {% if enduserprofile.mobility_habits_surveys %}
             <h4>Mobility surveys</h4>

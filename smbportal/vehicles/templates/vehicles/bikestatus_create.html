@@ -1,28 +1,28 @@
 {% extends "vehicles/base.html" %}
 
 {% load i18n %}
-{% load bootstrap4 %}
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
+
+{% block extra_head %}
+    {{ form.media }}
+{% endblock %}
 
 {% block breadcrumbs %}
     {{ block.super }}
     {% if bike %}
         {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
         {% breadcrumb 'edit' 'bikes:update' pk=bike.pk %}
+        {% breadcrumb 'update status' 'bikes:report-status' pk=bike.pk %}
+    {% else %}
+        {% breadcrumb 'report lost' 'bikes:report-status' pk=bike.pk %}
     {% endif %}
-    {% breadcrumb 'report status' 'bikes:report-status' pk=bike.pk %}
 {% endblock %}
 
-{% block page_title %}Report bike possession status{% endblock %}
+{% block page_title %}{% if bike %}Update bike status{% else %}Report lost bike {% endif %}{% endblock %}
 
 {% block main %}
     <div class="col-lg-12">
-        <form method="post">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-outline-primary btn-lg">Submit</button>
-            {% endbuttons %}
-        </form>
+        {% crispy form %}
     </div>
 {% endblock %}

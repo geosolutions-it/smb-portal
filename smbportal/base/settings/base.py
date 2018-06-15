@@ -77,7 +77,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "bossoidc",
     "djangooidc",
-    "bootstrap4",
+    "crispy_forms",
     "photologue",
     "sortedm2m",
     "django_bootstrap_breadcrumbs",
@@ -216,6 +216,8 @@ AVATAR_AUTO_GENERATE_SIZES = (
     80,
     150,
 )
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MESSAGE_TAGS = {
     message_constants.DEBUG: "alert-info",

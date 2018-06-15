@@ -115,7 +115,7 @@ class PrivilegedUserProfileCreateView(LoginRequiredMixin,
     template_name_suffix = "_create"
     success_message = "privileged-user profile created!"
     success_url = settings.LOGOUT_URL
-    permission_required = "profiles.can_create"
+    permission_required = "profiles.can_create_profile"
     fields = ()
 
     def get_login_url(self):
@@ -242,6 +242,16 @@ class ProfileUpdateView(LoginRequiredMixin,
     permission_required = "profiles.can_edit_profile"
     success_message = "user profile updated!"
 
+    def has_permission(self):
+        user = self.request.user
+        for perm in self.get_permission_required():
+            if not user.has_perm(perm, obj=user.profile):
+                result = False
+                break
+        else:
+            result = True
+        return result
+
     def get_template_names(self):
         profile_class = type(self.request.user.profile)
         template_name = {
@@ -289,6 +299,16 @@ class MobilityHabitsSurveyCreateView(LoginRequiredMixin,
     template_name_suffix = "_create"
     success_url = reverse_lazy("profile:update")
     permission_required = "profiles.can_edit_profile"
+
+    def has_permission(self):
+        user = self.request.user
+        for perm in self.get_permission_required():
+            if not user.has_perm(perm, obj=user.profile):
+                result = False
+                break
+        else:
+            result = True
+        return result
 
     def get_login_url(self):
         if not self.request.user.is_authenticated:

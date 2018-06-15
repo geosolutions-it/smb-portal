@@ -10,7 +10,11 @@
 
 import logging
 
+from crispy_forms.helper import FormHelper
+from crispy_forms import layout
+from crispy_forms import bootstrap
 from django import forms
+from django.contrib.gis import forms as gis_forms
 from django.utils.text import mark_safe
 from django.utils.text import slugify
 from photologue.models import Photo
@@ -24,7 +28,64 @@ class BikeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop("user")
+        submit_value = kwargs.pop("submit_value", "OK")
         super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = layout.Layout(
+            layout.Field("nickname"),
+            layout.Div(
+                layout.Div(
+                    layout.Field("bike_type"),
+                    css_class="col-lg-4",
+                ),
+                layout.Div(
+                    layout.Field("gear"),
+                    css_class="col-lg-4",
+                ),
+                layout.Div(
+                    layout.Field("brake"),
+                    css_class="col-lg-4",
+                ),
+                layout.Div(
+                    layout.Field("brand"),
+                    layout.Field("model"),
+                    css_class="col-lg-6",
+                ),
+                layout.Div(
+                    layout.Field("color"),
+                    layout.Field("saddle"),
+                    css_class="col-lg-6",
+                ),
+                layout.Div(
+                    layout.Fieldset(
+                        None,
+                        "has_basket",
+                        "has_cargo_rack",
+                    ),
+                    css_class="col-lg-4",
+                ),
+                layout.Div(
+                    layout.Fieldset(
+                        None,
+                        "has_lights",
+                        "has_bags",
+                    ),
+                    css_class="col-lg-4",
+                ),
+                layout.Div(
+                    layout.Fieldset(
+                        None,
+                        "has_smb_sticker",
+                    ),
+                    css_class="col-lg-4",
+                ),
+                css_class="row"
+            ),
+            layout.Field("other_details"),
+            bootstrap.FormActions(
+                layout.Submit("submit", submit_value)
+            ),
+        )
 
     def clean(self):
         """Perform validation of fields that depend on each other
@@ -96,18 +157,44 @@ class BikeForm(forms.ModelForm):
 
 
 class BikeStatusForm(forms.ModelForm):
+    position = gis_forms.PointField(
+        required=False,
+        widget=gis_forms.OSMWidget(
+            attrs={
+                "default_lon": 12,
+                "default_lat": 41,
+                "default_zoom": 6,
+            }
+        )
+    )
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user")
         bike = kwargs.pop("bike", None)
+        submit_value = "Report lost bike" if not bike else "Update bike status"
         super().__init__(*args, **kwargs)
         self.instance.reporter = user
-        if bike is not None:
-            self.instance.bike = bike
-            del self.fields["bike"]
-        else:
+        self.helper = FormHelper()
+        self.helper.layout = layout.Layout(
+            layout.Field("bike"),
+            layout.Field("lost"),
+            layout.Field("details"),
+            layout.Field("position"),
+            bootstrap.FormActions(
+                layout.Submit("submit", submit_value)
+            )
+        )
+        if bike is None:  # TODO: show only bikes that are not currently lost
             self.fields["bike"].queryset = models.Bike.objects.filter(
                 owner=user)
+            self.instance.lost = True
+            self.helper.layout.pop(1)
+            del self.fields["lost"]
+        else:
+            current_status = bike.get_current_status()
+            self.fields["lost"].initial = current_status.lost
+            self.instance.bike = bike
+            del self.fields["bike"]
 
     class Meta:
         model = models.BikeStatus
@@ -115,6 +202,7 @@ class BikeStatusForm(forms.ModelForm):
             "bike",
             "lost",
             "details",
+            "position",
         )
 
 
