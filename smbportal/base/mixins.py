@@ -10,9 +10,21 @@
 
 import logging
 
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib import messages
 
 logger = logging.getLogger(__name__)
+
+
+class FormUpdatedMessageMixin(object):
+
+    @property
+    def success_message(self):
+        return NotImplemented
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        messages.success(self.request, self.success_message)
+        return result
 
 
 class UserHasObjectPermissionMixin(object):
@@ -27,8 +39,8 @@ class UserHasObjectPermissionMixin(object):
 
         """
 
-        logger.debug("inside UserHasObjectPermissionMixin's has_permission method")
-        print("inside UserHasObjectPermissionMixin's has_permission method")
+        logger.debug(
+            "inside UserHasObjectPermissionMixin's has_permission method")
         current_user = self.request.user
         permissions_to_check = self.get_permission_required()
         return current_user.has_perms(

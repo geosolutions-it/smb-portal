@@ -1,7 +1,7 @@
 {% extends 'profiles/base.html' %}
 {% load static %}
 {% load avatar_tags %}
-{% load bootstrap4 %}
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block page_title %}Your profile{% endblock %}
@@ -10,7 +10,7 @@
         <div class="user-info">
             <div class="user-avatar">
                 <a class="edit-avatar" href="{% url 'avatar_change' %}"><i class="fa fa-pencil-square-o"></i></a>
-                {% avatar user class="rounded-circle" %}
+                {% avatar user 150 class="rounded-circle" %}
             </div>
             <div class="user-data">
                 <h4>{{ user.first_name }} {{ user.last_name }}</h4>
@@ -24,10 +24,8 @@
     <div class="col-lg-8">
         <form method="post">
             {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
-            {% endbuttons %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
         </form>
         {% if enduserprofile.mobility_habits_surveys %}
             <h4>Mobility surveys</h4>
@@ -38,6 +36,5 @@
             </ul>
             <a class="btn btn-outline-secondary btn-sm" href="{% url 'profile:create-survey' %}">Answer the mobility survey again</a>
         {% endif %}
-        <p>You can also <a href="">register as a different user type</a></p>
     </div>
 {% endblock %}

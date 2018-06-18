@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% load i18n %}
+{% load avatar_tags %}
+{% load bootstrap4 %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb 'profile' 'profile:update' %}
+    {% breadcrumb 'avatar' 'avatar_change' %}
+{% endblock %}
+
+{%  block page_title %}Change avatar{% endblock %}
+
+{% block main %}
+    <div class="col-lg-4">
+        <p>Current avatar:</p>
+        {% avatar user 150 class="rounded-circle" %}
+    </div>
+    <div class="col-lg-8">
+        {% if avatars %}
+            <form method="POST" action="{% url 'avatar_change' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{% url 'profile:update' %}">
+                {% bootstrap_form primary_avatar_form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-outline-primary">Change</button>
+                    <a href="{% url 'avatar_add' %}" class="btn btn-outline-secondary">Upload new avatar</a>
+                    <a href="{% url 'avatar_delete' %}" class="btn btn-outline-secondary">Delete avatars</a>
+                {% endbuttons %}
+            </form>
+        {% else %}
+            <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
+            <a href="{% url 'avatar_add' %}" class="btn btn-outline-secondary">Upload new avatar</a>
+            <a href="{% url 'avatar_delete' %}" class="btn btn-outline-secondary">Delete avatars</a>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -11,6 +11,7 @@
 import uuid
 
 from django.db import models
+from django.contrib.gis.db import models as gis_models
 from django.conf import settings
 from django.shortcuts import reverse
 from django.utils.text import slugify
@@ -49,11 +50,12 @@ class BikeManager(models.Manager):
             **kwargs
         )
         bike.save()
-        possession_history = BikePossessionHistory(
+        status_history = BikeStatus(
             bike=bike,
             reporter=bike.owner,
+            lost=False
         )
-        possession_history.save()
+        status_history.save()
         gallery_title = "Picture gallery for bike {}".format(bike.pk)
         picture_gallery = Gallery.objects.create(
             title=gallery_title,
@@ -142,58 +144,63 @@ class Bike(Vehicle):
     )
     other_details = models.TextField(blank=True)
 
+    class Meta:
+        unique_together = ("owner", "nickname")
+
     def __str__(self):
-        return "{0.id}({0.nickname})".format(self)
+        return "{0.nickname}".format(self)
 
     def get_absolute_url(self):
         return reverse("bikes:detail", kwargs={"pk": self.id})
 
-    def get_current_possession_state(self):
-        return self.possession_history.last()
+    def get_current_status(self):
+        return self.status_history.order_by("-creation_date").first()
 
-    def report_possession_state(self, state, reporter=None, details=None):
-        state_obj = BikePossessionHistory(
+    def get_latest_observation(self):
+        return self.observations.order_by("-observed_at").first()
+
+    def report_status(self, lost, reporter=None, details=None):
+        status_obj = BikeStatus(
             bike=self,
             reporter=reporter if reporter is not None else self.owner,
-            possession_state=state,
+            lost=lost,
             details=details if details is not None else ""
         )
-        state_obj.full_clean()
-        state_obj.save()
+        status_obj.full_clean()
+        status_obj.save()
 
 
-class BikePossessionHistory(models.Model):
-    WITH_OWNER = "with owner"
-    LOST = "lost"
-    STOLEN = "stolen"
-    FOUND_BY_THIRD_PARTY = "found by third party"
-
+class BikeStatus(models.Model):
     bike = models.ForeignKey(
         "Bike",
         on_delete=models.CASCADE,
-        related_name="possession_history"
+        related_name="status_history"
     )
     reporter = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    possession_state = models.CharField(
-        max_length=50,
-        choices=(
-            (WITH_OWNER, WITH_OWNER),
-            (LOST, LOST),
-            (STOLEN, STOLEN),
-            (FOUND_BY_THIRD_PARTY, FOUND_BY_THIRD_PARTY),
-        ),
-        default=WITH_OWNER,
-    )
+    lost = models.BooleanField(default=False)
     creation_date = models.DateTimeField(auto_now_add=True)
     details = models.TextField(
         blank=True
     )
+    position = gis_models.PointField(
+        null=True,
+        blank=True,
+        help_text="Bike last seen position"
+    )
 
     def __str__(self):
-        return "{0.possession_state}({0.creation_date})".format(self)
+        return "{status}({creation_date})".format(
+            status="lost" if self.lost else "with_owner",
+            creation_date=self.creation_date
+        )
+
+    class Meta:
+        ordering = [
+            "-creation_date",
+        ]
 
 
 class PhysicalTag(models.Model):
@@ -203,5 +210,7 @@ class PhysicalTag(models.Model):
         related_name="tags",
     )
     epc = models.TextField(
-        help_text="Electronic Product Code"
+        help_text="Electronic Product Code",
+        unique=True
     )
+    creation_date = models.DateTimeField(auto_now_add=True)

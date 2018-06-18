@@ -25,6 +25,11 @@ urlpatterns = [
         name="create"
     ),
     path(
+        route="report-status",
+        view=views.BikeStatusCreateView.as_view(),
+        name="report-status"
+    ),
+    path(
         route="<pk>",
         view=views.BikeDetailView.as_view(),
         name="detail"
@@ -40,8 +45,23 @@ urlpatterns = [
         name="delete"
     ),
     path(
+        route="<pk>/report-status",
+        view=views.BikeStatusCreateView.as_view(),
+        name="report-status"
+    ),
+    path(
+        route="<pk>/pictures",
+        view=views.BikeGalleryDetailView.as_view(),
+        name="gallery"
+    ),
+    path(
         route="<pk>/pictures/upload",
         view=views.BikePictureUploadView.as_view(),
         name="picture-upload"
+    ),
+    path(
+        route="<pk>/pictures/delete",
+        view=views.BikePictureDeleteView.as_view(),
+        name="pictures-delete"
     ),
 ]

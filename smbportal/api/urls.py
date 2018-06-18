@@ -10,6 +10,7 @@
 
 """URLs for the smb-portal's REST API"""
 
+from django.conf import settings
 from django.urls import path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -21,6 +22,21 @@ from . import views
 app_name = "api"
 
 router = routers.DefaultRouter()
+router.register(
+    prefix=r"my-bikes",
+    viewset=views.MyBikeViewSet,
+    base_name="my-bikes"
+)
+router.register(
+    prefix=r"my-tags",
+    viewset=views.MyPhysicalTagViewSet,
+    base_name="my-tags"
+)
+router.register(
+    prefix=r"my-bike-statuses",
+    viewset=views.MyBikeStatusViewSet,
+    base_name="my-bike-statuses"
+)
 router.register(
     prefix=r"users",
     viewset=views.SmbUserViewSet,
@@ -37,9 +53,9 @@ router.register(
     base_name="tags"
 )
 router.register(
-    prefix=r"bike-possession-history",
-    viewset=views.BikePossessionHistoryViewSet,
-    base_name="bike-possession-history"
+    prefix=r"statuses",
+    viewset=views.BikeStatusViewSet,
+    base_name="statuses"
 )
 router.register(
     prefix=r"picture-galleries",
@@ -61,7 +77,8 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="fake@mail.com"),
         license=openapi.License(name="BSD License"),
     ),
-    public=True,
+    url="{}/api".format(settings.KEYCLOAK["client_public_uri"]),
+    public=False,
     permission_classes=[
         AllowAny,
     ]
@@ -72,5 +89,16 @@ urlpatterns = [
         route=r"swagger/",
         view=schema_view.with_ui("swagger", cache_timeout=None),
         name="schema-swagger-ui",
+    ),
+    path(
+        route="my-user",
+        view=views.MyUserViewSet.as_view(
+            actions={
+                "get": "retrieve",
+                "patch": "partial_update",
+                "put": "update",
+            }
+        ),
+        name="my-user"
     )
 ] + router.urls

@@ -22,15 +22,9 @@ logger = logging.getLogger(__name__)
 def index(request):
     user = request.user
     if user.is_authenticated and not has_profile(user):
-        messages.info(
+        messages.warning(
             request,
             "Please complete your profile before continuing to use the portal"
         )
         return redirect("profile:create")
     return render(request, "base/home.html")
-
-
-
-
-
-

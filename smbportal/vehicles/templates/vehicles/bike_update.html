@@ -1,24 +1,25 @@
 {% extends 'vehicles/base.html' %}
-{% load bootstrap4 %}
+
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block page_title %}Edit bike{% endblock %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.pk 'bikes:detail' pk=bike.pk %}
+    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
     {% breadcrumb 'edit' 'bikes:edit' pk=bike.pk %}
 {% endblock %}
 
 {% block main %}
-    <div class="col-lg-12">
-        <a href="{% url 'bikes:picture-upload' pk=bike.pk %}" class="btn btn-secondary">Upload pictures</a>
-        <form method="post" action="">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-outline-primary btn-lg">Update bike</button>
-            {% endbuttons %}
-        </form>
+    <div class="col-lg-9 col-md-8 order-md-1">
+        {% crispy form %}
+    </div>
+    <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
+        <nav class="list-group">
+            <a href="{% url 'bikes:gallery' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-picture-o"></i> Manage bike pictures</a>
+            <a href="{% url 'bikes:report-status' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-file-text-o"></i> Update bike status</a>
+            <a href="{% url 'bikes:delete' pk=bike.pk %}" class="list-group-item list-group-item-action list-group-item-danger"><i class="fa fa-trash-o"></i> Delete bike</a>
+        </nav>
     </div>
 {% endblock %}

@@ -14,6 +14,7 @@ import os
 import pathlib
 
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.messages import constants as message_constants
 from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
 
@@ -76,7 +77,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "bossoidc",
     "djangooidc",
-    "bootstrap4",
+    "crispy_forms",
     "photologue",
     "sortedm2m",
     "django_bootstrap_breadcrumbs",
@@ -86,6 +87,7 @@ INSTALLED_APPS = [
     "profiles.apps.ProfilesConfig",
     "vehicles.apps.VehiclesConfig",
     "tracks.apps.TracksConfig",
+    "vehiclemonitor.apps.VehiclemonitorConfig",
     "rules.apps.AutodiscoverRulesConfig",
 ]
 
@@ -200,20 +202,42 @@ STATICFILES_DIRS = [
 BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "oidc_auth.authentication.BearerTokenAuthentication",
+    ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticated",
-    )
+        "keycloakauth.permissions.DjangoRulesPermission",
+    ),
+}
+
+AVATAR_AUTO_GENERATE_SIZES = (
+    80,
+    150,
+)
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+MESSAGE_TAGS = {
+    message_constants.DEBUG: "alert-info",
+    message_constants.INFO: "alert-info",
+    message_constants.SUCCESS: "alert-success",
+    message_constants.WARNING: "alert-warning",
+    message_constants.ERROR: "alert-error",
 }
 
 LOGIN_URL = "/openid/openid/KeyCloak"
 
 LOGOUT_URL = "/openid/logout"
 
-END_USERS_GROUP = "end_users"
+END_USER_PROFILE = "end_users"
 
-ANALYSTS_GROUP = "analysts"
+ANALYST_PROFILE = "analysts"
 
-PRIZE_MANAGERS_GROUP = "prize_managers"
+PRIZE_MANAGER_PROFILE = "prize_managers"
+
+PRIVILEGED_USER_PROFILE = "privileged_users"
 
 MEDIA_URL = "/media/"
 
@@ -234,9 +258,18 @@ KEYCLOAK = {
     "admin_username": get_environment_variable("KEYCLOAK_ADMIN_USERNAME"),
     "admin_password": get_environment_variable("KEYCLOAK_ADMIN_PASSWORD"),
     "group_mappings": {
-        END_USERS_GROUP: "/end_users",
-        ANALYSTS_GROUP: "/analysts",
-        PRIZE_MANAGERS_GROUP: "/prize_managers",
+        END_USER_PROFILE: [
+            "/end_users",
+        ],
+        ANALYST_PROFILE: [
+            "/analysts",
+        ],
+        PRIZE_MANAGER_PROFILE: [
+            "/prize_managers",
+        ],
+        PRIVILEGED_USER_PROFILE: [
+            "/privileged_users"
+        ]
     }
 }
 
@@ -278,7 +311,7 @@ OIDC_AUTH = {
         KEYCLOAK["client_id"],
     ],
     "OIDC_RESOLVE_USER_FUNCTION": "bossoidc.backend.get_user_by_id",
-    "OIDC_BEARER_TOKEN_EXPIRATION_TIME": 4 * 10,  # 4 minutes
+    "OIDC_BEARER_TOKEN_EXPIRATION_TIME": 4 * 60,  # 4 minutes
 }
 
 UPDATE_USER_DATA = "keycloakauth.oidchooks.update_user_data"

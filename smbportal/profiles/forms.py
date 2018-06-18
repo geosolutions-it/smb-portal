@@ -12,7 +12,6 @@ class EndUserProfileForm(forms.ModelForm):
             "gender",
             "phone_number",
         )
-        
         widgets = {
             "bio": forms.Textarea(
                 attrs={
@@ -20,17 +19,27 @@ class EndUserProfileForm(forms.ModelForm):
                     }
                 ),
             "gender": forms.RadioSelect(),
-            "phone_number": forms.NumberInput(
+            "phone_number": forms.TextInput(
                 attrs={
                     "class": "js-states form-control",
+                    "pattern": r"^\+\d{8,15}$",
+                    "placeholder": "+99999999",
+                    "title": "+00000000",
                 }
             ),
         }
 
 
+class PrivilegedUserProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = models.PrivilegedUserProfile
+        fields = ()
+
+
 class UserMobilityHabitsForm(forms.ModelForm):
 
-    class Meta: 
+    class Meta:
         model = models.MobilityHabitsSurvey
         fields = (
             "end_user",
@@ -40,7 +49,6 @@ class UserMobilityHabitsForm(forms.ModelForm):
             "uses_fuel_car_sharing_services",
             "bicycle_usage",
         )
-        
         widgets = {
             "end_user": forms.HiddenInput(),
             "public_transport_usage": forms.Select(

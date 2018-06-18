@@ -25,10 +25,6 @@ class CollectedPoint(gismodels.Model):
     BIKE = "bike"
     BUS = "bus"
 
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
     vehicle_id = models.CharField(
         max_length=255,
         null=True,

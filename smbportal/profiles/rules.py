@@ -37,7 +37,12 @@ def has_profile(user):
 
 
 is_end_user = rules.is_group_member("end_users")
+is_privileged_user = rules.is_group_member("privileged_users")
 
-rules.add_perm("profiles.can_create", ~has_profile)
-rules.add_perm("profiles.can_view", has_profile)
-rules.add_perm("profiles.can_edit", has_profile & is_profile_owner)
+for perm, predicate in {
+    "can_list_users": is_privileged_user,
+    "can_create_profile": ~has_profile,
+    "can_view_profile": has_profile,
+    "can_edit_profile": has_profile & is_profile_owner,
+}.items():
+    rules.add_perm("profiles.{}".format(perm), predicate)

@@ -2,10 +2,11 @@
 
 {% load static %}
 {% load django_bootstrap_breadcrumbs %}
+{% load base_extras %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb 'mobility habits' 'profile:survey' pk=survey.pk %}
+    {% breadcrumb 'mobility survey '|add_str:survey.pk 'profile:survey' pk=survey.pk %}
 {% endblock %}
 
 {% block page_title %}Mobility survey{% endblock %}

@@ -6,13 +6,3 @@
     {{ block.super }}
     {% breadcrumb 'bikes' 'bikes:list' %}
 {% endblock %}
-
-{% block content %}
-    <div id="container">
-        <div class="container p-t-60">
-            <div class="row">
-                {% block main %}{% endblock %}
-            </div>
-        </div>
-    </div>
-{% endblock %}

@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load avatar_tags %}
 {% load django_bootstrap_breadcrumbs %}
+{% load base_extras %}
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -25,37 +26,12 @@
     <!-- Modernizr-->
     <script src="{% static 'base/js/modernizr.min.js' %}"></script>
     <!-- <script src ="{% static 'base/js/dashboard_v3.js' %}"></script> -->
+    {% block extra_head %}
+    {% endblock %}
 </head>
  <body>
 
 <!-- END OFF-CANVAS MOBILE MENU-->
-
-<!-- BEGIN TOPBAR-->
-<!-- <div class="topbar">
-    <div class="topbar-column">
-        <a class="hidden-md-down" href="mailto:palanivelayudam@gmail.com">
-            <i class="icon-mail"></i>&nbsp; pvrtechstudio.com
-        </a>
-        <a class="hidden-md-down" href="tel:+919159547048">
-            <i class="icon-bell"></i>&nbsp; +91 9159547048
-        </a>
-        <a class="social-button fa fa-facebook shape-none sb-dark" href="javascript:void(0)" target="_blank">
-            <i class="socicon-facebook"></i></a>
-        <a class="social-button fa fa-twitter shape-none sb-dark" href="javascript:void(0)" target="_blank">
-            <i class="socicon-twitter"></i></a>
-        <a class="social-button fa fa-instagram shape-none sb-dark" href="javascript:void(0)" target="_blank">
-            <i class="socicon-instagram"></i>
-        </a>
-        <a class="social-button fa fa-google-plus shape-none sb-dark" href="javascript:void(0)" target="_blank">
-            <i class="socicon-pinterest"></i>
-        </a>
-    </div>
-    <div class="topbar-column">
-        <a class="hidden-md-down" href="javascript:void(0)"><i class="icon-download"></i>&nbsp; Designed by <a
-                href="http://www.pvrtechstudio.com/" class="m-l-5" target="_blank">PVR Tech Studio</a></a>
-    </div>
-</div> -->
-<!-- END TOPBAR-->
 
 <!-- NAVBAR-->
 <header class="navbar navbar-sticky">
@@ -83,7 +59,7 @@
                 <a href="{% url 'bikes:list' %}"><span>{% trans 'Bikes' %}</span></a>
             </li>
             <li>
-                <a href="javascript:void(0)"><span>{% trans 'Report a stolen Bike?' %}</span></a>
+                <a href="{% url 'bikes:report-status' %}"><span>{% trans 'Report a stolen Bike?' %}</span></a>
                 
             </li>
             <li>
@@ -93,100 +69,22 @@
         </ul>
     </nav>
     <!-- END MAIN NAVIGATION-->
-    
-    
-    
-
     <!-- BEGIN TOOLBAR-->
     <div class="toolbar">
         <div class="inner">
             <div class="tools">
-                <!-- <div class="search">
-                    <i class="icon-search"></i>
-                </div> -->
-                <!-- <div class="cart">
-                    <a href="javascript:void(0)"></a><i class="icon-bell"></i>
-                    <span class="count">3</span><span class="subtotal">New Notification</span>
-                    <div class="toolbar-dropdown">
-                        <div class="dropdown-product-item">
-                            <span class="dropdown-product-remove">
-                                <i class="icon-cross"></i>
-                            </span>
-                            <a class="dropdown-product-thumb" href="javascript:void(0)">
-                                <img src="http://via.placeholder.com/128x128" alt="Product">
-                            </a>
-                            <div class="dropdown-product-info">
-                                <a class="dropdown-product-title" href="javascript:void(0)">
-                                    New User Registered
-                                </a>
-                                <span class="dropdown-product-details">
-                                    Lorem Ipsum is simply dummy text.
-                                </span>
-                            </div>
-                        </div>
-                        <div class="dropdown-product-item">
-                            <span class="dropdown-product-remove">
-                                <i class="icon-cross"></i>
-                            </span>
-                            <a class="dropdown-product-thumb" href="javascript:void(0)">
-                                <img src="http://via.placeholder.com/128x128" alt="Product">
-                            </a>
-                            <div class="dropdown-product-info">
-                                <a class="dropdown-product-title" href="javascript:void(0)">
-                                    John Smith
-                                </a>
-                                <span class="dropdown-product-details">
-                                    Lorem Ipsum is simply dummy text.
-                                </span>
-                            </div>
-                        </div>
-                        <div class="dropdown-product-item">
-                            <span class="dropdown-product-remove">
-                                <i class="icon-cross"></i>
-                            </span>
-                            <a class="dropdown-product-thumb" href="javascript:void(0)">
-                                <img src="http://via.placeholder.com/128x128" alt="Product">
-                            </a>
-                            <div class="dropdown-product-info">
-                                <a class="dropdown-product-title" href="javascript:void(0)">
-                                    Server Error Reports
-                                </a>
-                                <span class="dropdown-product-details">
-                                    Lorem Ipsum is simply dummy text.
-                                </span>
-                            </div>
-                        </div>
-                        <div class="toolbar-dropdown-group">
-                            <div class="column">
-                                <a class="btn btn-sm btn-block btn-secondary" href="javascript:void(0)">
-                                    Clear All
-                                </a>
-                            </div>
-                            <div class="column">
-                                <a class="btn btn-sm btn-block btn-success" href="javascript:void(0)">
-                                    View All
-                                </a>
-                            </div>
-                            <div class="column d-sm-block d-md-none" id="close_notification">
-                                <a class="btn btn-sm btn-block btn-success" href="javascript:void(0)">
-                                    Close
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="account">
                     <a href="javascript:void(0)"></a><i class="icon-head"></i>
                     <ul class="toolbar-dropdown">
                     {% if request.user.is_authenticated %}
                         <li class="sub-menu-user">
                             <div class="user-ava">
-                                {% avatar user   class="img-circle img-responsive" id="user_avatar" %}
+                                {% avatar user class="img-circle img-responsive" id="user_avatar" %}
                             </div>
                             
                             <div class="user-info">
                             
-                                <h6 class="user-name">{{ request.user }}</h6>
+                                <h6 class="user-name">{{ request.user.first_name|add_str:" "|add_str:request.user.last_name }}</h6>
                                 <span class="text-xs text-muted"></span>
                             </div>
                         </li>
@@ -205,10 +103,6 @@
                             </div>
                         </li>
                         <li><a href="{% url 'login'  %}"> <i class="icon-head"></i> {% trans 'Login/Register' %}</a></li>
-                       <!--  <li><a href="{% url 'login'  %}"> <i class="icon-user"></i> {% trans 'Login' %}</a></li> -->
-                        
-                        
-                        
                     </ul>
                     {% endif %}
                 </div>
@@ -219,14 +113,11 @@
 </header>
 
 <!-- BEGIN MAIN CONTENT-->
-
-
-	    
-<!-- </section>  -->
 {% block breadcrumbs %}
     {% clear_breadcrumbs %}
     {% breadcrumb 'Home' 'index' %}
 {% endblock %}
+
 <div class="offcanvas-wrapper">
     <div class="page-title m-b-0">
         <div class="container">
@@ -239,10 +130,25 @@
         </div>
     </div>
 
-   {%  block content  %}
-   {% endblock %}
-   
-    
+    <div id="container" class="container p-t-60">
+       {% if messages %}
+           <div class="row">
+               <div class="col-lg">
+                   {% for message in messages %}
+                       <div {% if message.tags %}class="alert alert-dismissible fade show text-center margin-bottom-1x {{ message.tags }}"{% endif %}>
+                           <span class="alert-close" data-dismiss="alert"></span>
+                           {{ message }}
+                       </div>
+                   {% endfor %}
+               </div>
+           </div>
+       {% endif %}
+       {%  block content  %}
+           <div class="row">
+               {% block main %}{% endblock %}
+           </div>
+       {% endblock %}
+    </div>
 
     <!-- BEGIN SITE FOOTER-->
     <footer class="site-footer">

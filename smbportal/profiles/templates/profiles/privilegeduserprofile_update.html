@@ -1,0 +1,31 @@
+{% extends 'profiles/base.html' %}
+{% load static %}
+{% load avatar_tags %}
+{% load crispy_forms_tags %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block page_title %}Your profile{% endblock %}
+{% block main %}
+    <div class="col-lg-4">
+        <div class="user-info">
+            <div class="user-avatar">
+                <a class="edit-avatar" href="{% url 'avatar_change' %}"><i class="fa fa-pencil-square-o"></i></a>
+                {% avatar user 150 class="rounded-circle" %}
+            </div>
+            <div class="user-data">
+                <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                <span>
+                    <i class="fa fa-user-o"></i> {{ user.username }}<br>
+                    <i class="fa fa-envelope-o"></i> {{ user.email }}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
+        </form>
+    </div>
+{% endblock %}

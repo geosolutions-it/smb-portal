@@ -1,24 +1,17 @@
 {% extends 'vehicles/base.html' %}
 
-{% load bootstrap4 %}
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block page_title %}Register new bike{% endblock %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.pk 'bikes:detail' pk=bike.pk %}
     {% breadcrumb 'new' 'bikes:create' %}
 {% endblock %}
 
 {% block main %}
     <div class="col-lg">
-        <form method="post" action="">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-outline-primary btn-lg">Register</button>
-            {% endbuttons %}
-        </form>
+        {% crispy form %}
     </div>
 {% endblock %}
