@@ -1,10 +1,13 @@
 {% extends 'profiles/base.html' %}
+
+{% load i18n %}
 {% load static %}
 {% load avatar_tags %}
 {% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
-{% block page_title %}Your profile{% endblock %}
+{% block page_title %}{% trans "Your profile" %}{% endblock %}
+
 {% block main %}
     <div class="col-lg-4">
         <div class="user-info">
@@ -25,7 +28,7 @@
         <form method="post">
             {% csrf_token %}
             {{ form|crispy }}
-            <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
+            <button type="submit" class="btn btn-outline-primary btn-lg">{% trans "Save" %}</button>
         </form>
     </div>
 {% endblock %}

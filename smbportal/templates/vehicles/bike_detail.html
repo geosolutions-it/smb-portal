@@ -1,0 +1,180 @@
+{% extends 'vehicles/base.html' %}
+
+{% load i18n %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block page_title %}{% trans "Bike details" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
+{% endblock %}
+
+{% block main %}
+    <div class="col-lg-9 col-md-8 order-md-1">
+        <h1>{{ bike.nickname }}</h1>
+        <div class="gallery-wrapper order-md-4" data-pswp-uid="1">
+            <div class="row">
+                {% for photo in bike.picture_gallery.sample %}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="gallery-item">
+                            <a href="{{ photo.image.url }}" data-size="{{ photo.image.width }}x{{ photo.image.height }}">
+                                <img src="{{ photo.get_display_url }}" class="img-thumbnail" alt="{{ photo.title }}">
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <ul class="list-group">
+            {% with status=bike.get_current_status %}
+                <li class="list-group-item list-group-item-action flex-column align-items-start {% if status.lost %}bg-danger text-white{% else %}bg-success text-white{% endif %}">
+                    <div class="d-flex justify-content-between">
+                        <h6 class="text-white">{% trans "Current status" %}</h6>
+                        <span>{% if status.lost %}{% trans "Lost" %}{% else %}{% trans "With owner" %}{% endif %}</span>
+                    </div>
+                </li>
+            {% endwith %}
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Registration code" %}</h6>
+                    <span>{{ bike.pk }}</span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Bike type" %}</h6>
+                    <span>{% blocktrans with bike_type=bike.bike_type %}{{ bike_type }}{% endblocktrans %}</span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Gears" %}</h6>
+                    <span>{% blocktrans with gear=bike.gear %}{{ gear }}{% endblocktrans %}</span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Brakes" %}</h6>
+                    <span>{% blocktrans with brakes=bike.brake %}{{ brakes }}{% endblocktrans %}</span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Brand" %}</h6>
+                    <span>{{ bike.brand }}</span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Model" %}</h6>
+                    <span>{{ bike.model }}</span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Color" %}</h6>
+                    <span>{{ bike.color }}</span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Saddle" %}</h6>
+                    <span>{{ bike.saddle }}</span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Basket" %}</h6>
+                    <span><i class="fa {% if bike.has_basket %}fa-check-square{% else %}fa-square-o{% endif %}"></i></span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Cargo rack" %}</h6>
+                    <span><i class="fa {% if bike.has_cargo_rack %}fa-check-square{% else %}fa-square-o{% endif %}"></i></span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Light" %}</h6>
+                    <span><i class="fa {% if bike.has_lights %}fa-check-square{% else %}fa-square-o{% endif %}"></i></span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Bags" %}</h6>
+                    <span><i class="fa {% if bike.has_bags %}fa-check-square{% else %}fa-square-o{% endif %}"></i></span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "SaveMyBike sticker" %}</h6>
+                    <span><i class="fa {% if bike.has_smb_sticker %}fa-check-square{% else %}fa-square-o{% endif %}"></i></span>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "Other details" %}</h6>
+                    <p>{{ bike.other_details }}</p>
+                </div>
+            </li>
+            <li class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex justify-content-between">
+                    <h6>{% trans "RFID tags" %}</h6>
+                    <ul>
+                        {% for tag in bike.tags.all %}
+                            <li>{{ tag.epc }}</li>
+                        {% empty %}
+                            <li>{% trans "This bike does not have any tags" %}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
+        <nav class="list-group">
+            <a href="" class="list-group-item list-group-item-action"><i class="fa fa-bicycle"></i> {% trans "Print bike registry info" %}</a>
+            <a href="{% url 'bikes:update' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-pencil-square-o"></i> {% trans "Edit bike details" %}</a>
+            <a href="{% url 'bikes:gallery' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-picture-o"></i> {% trans "Manage bike pictures" %}</a>
+            <a href="{% url 'bikes:report-status' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-file-text-o"></i> {% trans "Update bike status" %}</a>
+            <a href="{% url 'bikes:delete' pk=bike.pk %}" class="list-group-item list-group-item-action list-group-item-danger"><i class="fa fa-trash-o"></i> {% trans "Delete bike" %}</a>
+        </nav>
+    </div>
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__single-tap pswp__share-modal--hidden">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

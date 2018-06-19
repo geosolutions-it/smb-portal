@@ -1,8 +1,6 @@
 {% extends 'base/base.html' %}
-{% load i18n %}
-{% block thickness %}
 
-{% endblock %}
+{% load i18n %}
 
 {% block main %}
 <div class="col-md-12 margin-bottom-2x">
@@ -12,7 +10,7 @@
                 <div class="card-body">
                     <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Bikes' %}</h4>
                     <p class="card-text align-items-center d-flex justify-content-center">
-                        {% blocktrans %} Register new Bikes, update information about your bikes and delete bikes off the system. {% endblocktrans %}
+                        {% blocktrans %} Register new Bikes, update information about your bikes and delete bikes from the system. {% endblocktrans %}
                     </p>
                     <a class="btn btn-block btn-outline-primary" href="{% url 'bikes:list' %}">{% trans 'Bikes' %}</a>
                 </div>

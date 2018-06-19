@@ -1,13 +1,14 @@
 {% extends 'vehicles/base.html' %}
 
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
-{% block page_title %}Register new bike{% endblock %}
+{% block page_title %}{% trans "Register new bike" %}{% endblock %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb 'new' 'bikes:create' %}
+    {% breadcrumb _("new") 'bikes:create' %}
 {% endblock %}
 
 {% block main %}

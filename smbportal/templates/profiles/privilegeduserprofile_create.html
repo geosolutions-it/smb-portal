@@ -1,15 +1,18 @@
 {% extends 'profiles/base.html' %}
 
+{% load i18n %}
 {% load static %}
 {% load avatar_tags %}
 {% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
-{% block page_title %}Complete profile - Privileged user{% endblock %}
+{% block page_title %}{% trans "Complete profile - Privileged user" %}{% endblock %}
+
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb 'complete-profile-privileged' 'profile:create' %}
+    {% breadcrumb _("complete profile privileged user") 'profile:create' %}
 {% endblock %}
+
 {% block content %}
     <div id="container">
         <div class="container p-t-60">
@@ -32,19 +35,21 @@
                 <div class="col-lg-10">
                     <div class="card text-white bg-info text-center mb-3">
                         <div class="card-body">
-                            <h4 class="card-title">Note</h4>
+                            <h4 class="card-title">{% trans "Note" %}</h4>
                             <p class="card-text">
-                                Registering as a privileged user requires manual authorization from one of the platform's administrators.
-                                Your application will be moderated and you will be notified via e-mail. Until then you will not
-                                be able to use the portal
+                                {% blocktrans %}
+                                    Registering as a privileged user requires manual authorization from one of the platform's administrators.
+                                    Your application will be moderated and you will be notified via e-mail. Until then you will not
+                                    be able to use the portal
+                                {% endblocktrans %}
                             </p>
                         </div>
                     </div>
                     <form method="post">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <a href="{% url 'profile:create' %}" class="btn btn-outline-secondary btn-lg">Go back - Register as a regular user</a>
-                        <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
+                        <a href="{% url 'profile:create' %}" class="btn btn-outline-secondary btn-lg"><i class="fa fa-hand-o-left"></i> {% trans "Go back" %}</a>
+                        <button type="submit" class="btn btn-outline-primary btn-lg">{% trans "Register as privileged user" %}</button>
                     </form>
                 </div>
             </div>

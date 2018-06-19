@@ -1,0 +1,35 @@
+{% extends "vehicles/base.html" %}
+
+{% load i18n %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
+    {% breadcrumb _("manage pictures") 'bikes:gallery' pk=bike.pk %}
+{% endblock %}
+
+{% block page_title %}{% trans 'Bike Pictures' %}{% endblock %}
+
+{% block main %}
+    <div class="col-lg-9 col-md-8 order-md-1">
+        <h1>{% blocktrans with nickname=bike.nickname %}
+            Current pictures for bike {{ nickname }}
+        {% endblocktrans %}</h1>
+        {% for photo in gallery.public %}
+            <a href="{{ photo.image.url }}">
+                <img src="{{ photo.get_display_url }}" class="thumbnail" alt="{{ photo.title }}">
+            </a>
+        {% endfor %}
+    </div>
+    <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
+        <nav class="list-group">
+            <a href="{% url 'bikes:picture-upload' pk=bike.pk %}" class="list-group-item list-group-item-action list-group-item-info">
+                <i class="fa fa-plus-circle"></i> {% trans 'Add pictures' %}
+            </a>
+            <a href="{% url 'bikes:pictures-delete' pk=bike.pk %}" class="list-group-item list-group-item-action list-group-item-danger">
+                <i class="fa fa-trash-o"></i> {% trans 'Delete pictures' %}
+            </a>
+        </nav>
+    </div>
+{% endblock %}
