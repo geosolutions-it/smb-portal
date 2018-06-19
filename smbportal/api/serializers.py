@@ -15,9 +15,11 @@ import logging
 from rest_framework.reverse import reverse
 import photologue.models
 from rest_framework import serializers
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 import profiles.models
 import vehicles.models
+import vehiclemonitor.models
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +62,7 @@ class SmbUserHyperlinkedRelatedField(serializers.HyperlinkedRelatedField):
         )
 
     def get_object(self, view_name, view_args, view_kwargs):
-        return self.get_queryset().get(kycloak__UID=view_kwargs.get("pk"))
+        return self.get_queryset().get(keycloak__UID=view_kwargs.get("pk"))
 
     def use_pk_only_optimization(self):
         return False
@@ -150,11 +152,16 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_current_status(self, obj):
         current_status = obj.get_current_status()
-        url = reverse(
-            viewname="api:statuses-detail",
-            kwargs={"pk": current_status.pk}
-        )
-        return url
+        return {
+            "lost": current_status.lost,
+            "url": reverse(
+                "api:bike-statuses-detail",
+                kwargs={
+                    "pk": current_status.pk
+                },
+                request=self.context.get("request")
+            )
+        }
 
     class Meta:
         model = vehicles.models.Bike
@@ -168,37 +175,11 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class BikeDetailSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name="api:bikes-detail",
-    )
-    owner = SmbUserHyperlinkedRelatedField(
-        view_name="api:users-detail",
-        read_only=True
-    )
-    tags = serializers.HyperlinkedRelatedField(
-        view_name="api:tags-detail",
-        many=True,
-        read_only=True
-    )
-    status_history = serializers.HyperlinkedRelatedField(
-        view_name="api:statuses-detail",
-        many=True,
-        read_only=True
-    )
+class BikeDetailSerializer(BikeListSerializer):
     picture_gallery = serializers.HyperlinkedRelatedField(
         view_name="api:picture-galleries-detail",
         read_only=True
     )
-    current_status = serializers.SerializerMethodField()
-
-    def get_current_status(self, obj):
-        current_status = obj.get_current_status()
-        serializer = BikeStatusSerializer(
-            instance=current_status,
-            context=self.context
-        )
-        return serializer.data
 
     class Meta:
         model = vehicles.models.Bike
@@ -207,7 +188,6 @@ class BikeDetailSerializer(serializers.HyperlinkedModelSerializer):
             "owner",
             "picture_gallery",
             "tags",
-            "status_history",
             "last_update",
             "bike_type",
             "gear",
@@ -245,61 +225,49 @@ class PhysicalTagSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class MyBikeStatusSerializer(serializers.HyperlinkedModelSerializer):
+class BikeStatusSerializer(GeoFeatureModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name="api:statuses-detail",
+        view_name="api:bike-statuses-detail",
     )
     bike = serializers.HyperlinkedRelatedField(
         view_name="api:bikes-detail",
         queryset=vehicles.models.Bike.objects.all()
     )
-    reporter = SmbUserHyperlinkedRelatedField(
-        view_name="api:users-detail",
-        read_only=True
-    )
 
     class Meta:
         model = vehicles.models.BikeStatus
+        geo_field = "position"
         fields = (
             "url",
             "bike",
-            "reporter",
             "lost",
             "creation_date",
             "details",
         )
 
-    def save(self, **kwargs):
-        request = self.context.get("request")
-        current_user = request.user
-        return super().save(
-            reporter=current_user
-        )
+    def __init__(self, *args, **kwargs):
+        """Initialize serializer
 
+        This method is reimplemented in order to provide the ability to remove
+        fields dynamically, as documented at:
 
-class BikeStatusSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name="api:statuses-detail",
-    )
-    bike = serializers.HyperlinkedRelatedField(
-        view_name="api:bikes-detail",
-        queryset=vehicles.models.Bike.objects.all()
-    )
-    reporter = SmbUserHyperlinkedRelatedField(
-        view_name="api:users-detail",
-        queryset=profiles.models.SmbUser.objects.all()
-    )
+            http://www.django-rest-framework.org/api-guide/
+                serializers/#dynamically-modifying-fields
 
-    class Meta:
-        model = vehicles.models.BikeStatus
-        fields = (
-            "url",
-            "bike",
-            "reporter",
-            "lost",
-            "creation_date",
-            "details",
-        )
+        This feature is handy since this serializer is used both in a
+        standalone resource view and also as part of the representation for
+        bikes. In the second case it is unnecessary to include the bike
+        URL again.
+
+        """
+
+        fields = kwargs.pop("fields", None)
+        super().__init__(*args, **kwargs)
+        if fields is not None:
+            allowed_fields = set(fields)
+            existing_fields = set(self.fields)
+            for field_name in existing_fields - allowed_fields:
+                self.fields.pop(field_name)
 
 
 class GallerySerializer(serializers.HyperlinkedModelSerializer):
@@ -342,4 +310,33 @@ class PictureSerializer(serializers.HyperlinkedModelSerializer):
             "url",
             "image",
             "galleries",
+        )
+
+
+class BikeObservationSerializer(GeoFeatureModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:bike-observations-detail",
+    )
+    bike = serializers.HyperlinkedRelatedField(
+        view_name="api:bikes-detail",
+        queryset=vehicles.models.Bike.objects.all()
+        # read_only=True
+    )
+    reporter = SmbUserHyperlinkedRelatedField(
+        view_name="api:users-detail",
+        queryset=profiles.models.SmbUser.objects.all()
+        # read_only=True
+    )
+
+    class Meta:
+        model = vehiclemonitor.models.BikeObservation
+        geo_field = "position"
+        fields = (
+            "url",
+            "bike",
+            "reporter",
+            "address",
+            "created_at",
+            "observed_at",
+            "details",
         )

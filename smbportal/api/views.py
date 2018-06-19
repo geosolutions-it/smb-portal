@@ -16,6 +16,7 @@ from rest_framework import viewsets
 
 import profiles.models
 import vehicles.models
+import vehiclemonitor.models
 from . import serializers
 
 logger = logging.getLogger(__name__)
@@ -64,7 +65,7 @@ class MyPhysicalTagViewSet(viewsets.ReadOnlyModelViewSet):
 
 class MyBikeStatusViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
                           mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    serializer_class = serializers.MyBikeStatusSerializer
+    serializer_class = serializers.BikeStatusSerializer
     required_permissions = (
         "vehicles.can_list_own_bike_status",
         "vehicles.can_create_own_bike_status",
@@ -108,16 +109,15 @@ class BikeViewSet(viewsets.ReadOnlyModelViewSet):
         return serializer_class
 
 
+# TODO: should external users be allowed to delete existing tags?
 class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                         mixins.CreateModelMixin, mixins.DestroyModelMixin,
+                         mixins.CreateModelMixin,  # mixins.DestroyModelMixin,
                          viewsets.GenericViewSet):
     serializer_class = serializers.PhysicalTagSerializer
     queryset = vehicles.models.PhysicalTag.objects.all()
     required_permissions = (
         "vehicles.can_list_physical_tags",
-    )
-    required_object_permissions = (
-        "vehicles.can_delete_physical_tags",
+        "vehicles.can_create_physical_tag",
     )
 
 
@@ -143,3 +143,12 @@ class PictureViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return photologue.models.Photo.objects.all()
+
+
+class BikeObservationViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                             mixins.CreateModelMixin, viewsets.GenericViewSet):
+    serializer_class = serializers.BikeObservationSerializer
+    required_permissions = (
+        "vehiclemonitor.can_list_bike_observation",
+    )
+    queryset = vehiclemonitor.models.BikeObservation.objects.all()

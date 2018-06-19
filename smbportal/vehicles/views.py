@@ -95,7 +95,6 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         bike = self.object
         bike_status = models.BikeStatus(
             bike=bike,
-            reporter=bike.owner,
             lost=False
         )
         bike_status.save()

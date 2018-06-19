@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "django.contrib.sites",
     "rest_framework",
+    "rest_framework_gis",
     "drf_yasg",
     "bossoidc",
     "djangooidc",
