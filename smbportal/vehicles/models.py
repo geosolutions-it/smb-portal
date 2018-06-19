@@ -52,7 +52,6 @@ class BikeManager(models.Manager):
         bike.save()
         status_history = BikeStatus(
             bike=bike,
-            reporter=bike.owner,
             lost=False
         )
         status_history.save()
@@ -175,10 +174,6 @@ class BikeStatus(models.Model):
         "Bike",
         on_delete=models.CASCADE,
         related_name="status_history"
-    )
-    reporter = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
     )
     lost = models.BooleanField(default=False)
     creation_date = models.DateTimeField(auto_now_add=True)

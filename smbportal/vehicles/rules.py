@@ -32,7 +32,7 @@ for perm, predicate in {
     "can_create_bike": profile_rules.is_end_user,
     "can_create_bike_status": profile_rules.is_privileged_user,
     "can_create_own_bike_status": profile_rules.is_end_user,
-    "can_create_physical_tag": profile_rules.is_end_user,
+    "can_create_physical_tag": profile_rules.is_privileged_user,
     "can_delete_physical_tags": profile_rules.is_privileged_user,
     "can_edit_bike": is_bike_owner,
     "can_edit_physical_tag": is_bike_owner,

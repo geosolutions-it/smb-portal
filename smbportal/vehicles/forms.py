@@ -173,16 +173,18 @@ class BikeStatusForm(forms.ModelForm):
         bike = kwargs.pop("bike", None)
         submit_value = "Report lost bike" if not bike else "Update bike status"
         super().__init__(*args, **kwargs)
-        self.instance.reporter = user
         self.helper = FormHelper()
         self.helper.layout = layout.Layout(
             layout.Field("bike"),
             layout.Field("lost"),
             layout.Field("details"),
-            layout.Field("position"),
+            layout.Div(
+                layout.Field("position"),
+                css_class="row"
+            ),
             bootstrap.FormActions(
                 layout.Submit("submit", submit_value)
-            )
+            ),
         )
         if bike is None:  # TODO: show only bikes that are not currently lost
             self.fields["bike"].queryset = models.Bike.objects.filter(
