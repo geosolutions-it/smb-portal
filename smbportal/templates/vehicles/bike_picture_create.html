@@ -7,18 +7,18 @@
 {% block breadcrumbs %}
     {{ block.super }}
     {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
-    {% breadcrumb 'pictures' 'bikes:gallery' pk=bike.pk %}
-    {% breadcrumb 'add picture' 'bikes:picture-upload' pk=bike.pk %}
+    {% breadcrumb _("manage pictures") 'bikes:gallery' pk=bike.pk %}
+    {% breadcrumb _("add picture") 'bikes:picture-upload' pk=bike.pk %}
 {% endblock %}
 
-{% block page_title %}Add picture{% endblock %}
+{% block page_title %}{% trans "Add picture" %}{% endblock %}
 
 {% block main %}
     <div class="col-lg-12">
         <form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
-            <button type="submit" class="btn btn-outline-primary btn-lg">Submit</button>
+            <button type="submit" class="btn btn-outline-primary btn-lg"><i class="fa fa-upload"></i> {% trans "Upload picture" %}</button>
         </form>
     </div>
 {% endblock %}

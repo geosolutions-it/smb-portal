@@ -175,11 +175,17 @@ class BikeStatusForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = layout.Layout(
-            layout.Field("bike"),
-            layout.Field("lost"),
-            layout.Field("details"),
             layout.Div(
-                layout.Field("position"),
+                layout.Div(
+                    layout.Field("bike"),
+                    layout.Field("lost"),
+                    layout.Field("details"),
+                    css_class="col-lg-6"
+                ),
+                layout.Div(
+                    layout.Field("position"),
+                    css_class="col-lg-6"
+                ),
                 css_class="row"
             ),
             bootstrap.FormActions(

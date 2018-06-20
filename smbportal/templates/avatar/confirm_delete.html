@@ -1,17 +1,17 @@
 {% extends "base/base.html" %}
 
 {% load i18n %}
-{% load bootstrap4 %}
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb 'profile' 'profile:update' %}
-    {% breadcrumb 'avatar' 'avatar_change' %}
-    {% breadcrumb 'delete' 'avatar_delete' %}
+    {% breadcrumb _("profile") 'profile:update' %}
+    {% breadcrumb _("avatar") 'avatar_change' %}
+    {% breadcrumb _("delete") 'avatar_delete' %}
 {% endblock %}
 
-{%  block page_title %}Delete avatars{% endblock %}
+{%  block page_title %}{% trans "Delete avatars" %}{% endblock %}
 
 {% block main %}
     <div class="col-lg">
@@ -23,10 +23,8 @@
         <form method="POST" action="{% url 'avatar_delete' %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{% url 'avatar_change' %}">
-            {% bootstrap_form delete_avatar_form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-danger">{% trans "Delete selected" %}</button>
-            {% endbuttons %}
+            {{ delete_avatar_form|crispy }}
+            <button type="submit" class="btn btn-danger">{% trans "Delete selected" %}</button>
         </form>
     </div>
 {% endblock %}

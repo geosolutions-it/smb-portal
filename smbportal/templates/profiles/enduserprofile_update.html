@@ -1,10 +1,13 @@
 {% extends 'profiles/base.html' %}
+
+{% load i18n %}
 {% load static %}
 {% load avatar_tags %}
 {% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
-{% block page_title %}Your profile{% endblock %}
+{% block page_title %}{% trans "Your profile" %}{% endblock %}
+
 {% block main %}
     <div class="col-lg-4">
         <div class="user-info">
@@ -25,16 +28,16 @@
         <form method="post">
             {% csrf_token %}
             {{ form|crispy }}
-            <button type="submit" class="btn btn-outline-primary btn-lg">Save</button>
+            <button type="submit" class="btn btn-outline-primary btn-lg">{% trans "Save" %}</button>
         </form>
         {% if enduserprofile.mobility_habits_surveys %}
-            <h4>Mobility surveys</h4>
+            <h4>{% trans "Mobility surveys" %}</h4>
             <ul>
                 {% for survey in enduserprofile.mobility_habits_surveys.all %}
                     <li><a href="{% url 'profile:survey' pk=survey.pk %}">{{ survey.date_answered }}</a></li>
                 {% endfor %}
             </ul>
-            <a class="btn btn-outline-secondary btn-sm" href="{% url 'profile:create-survey' %}">Answer the mobility survey again</a>
+            <a class="btn btn-outline-secondary btn-sm" href="{% url 'profile:create-survey' %}">{% trans "Answer mobility survey again" %}</a>
         {% endif %}
     </div>
 {% endblock %}

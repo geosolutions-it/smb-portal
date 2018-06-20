@@ -1,15 +1,16 @@
 {% extends 'profiles/base.html' %}
 
+{% load i18n %}
 {% load static %}
 {% load django_bootstrap_breadcrumbs %}
 {% load base_extras %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb 'mobility survey '|add_str:survey.pk 'profile:survey' pk=survey.pk %}
+    {% breadcrumb survey.pk 'profile:survey' pk=survey.pk %}
 {% endblock %}
 
-{% block page_title %}Mobility survey{% endblock %}
+{% block page_title %}{% trans "Mobility survey" %}{% endblock %}
 
 {% block main %}
     {{ survey }}
