@@ -10,14 +10,17 @@
 
 import logging
 
+from django_filters.rest_framework import DjangoFilterBackend
 import photologue.models
 from rest_framework import mixins
 from rest_framework import viewsets
+from rest_framework_gis.pagination import GeoJsonPagination
 
 import profiles.models
 import vehicles.models
 import vehiclemonitor.models
 from . import serializers
+from . import filters
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +53,22 @@ class MyBikeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return vehicles.models.Bike.objects.filter(owner=self.request.user)
+
+
+class MyBikeObservationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = serializers.BikeObservationSerializer
+    required_permissions = (
+        "vehiclemonitor.can_list_own_bike_observation",
+    )
+    pagination_class = GeoJsonPagination
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_class = filters.BikeObservationFilterset
+
+    def get_queryset(self):
+        return vehiclemonitor.models.BikeObservation.objects.filter(
+            bike__owner=self.request.user)
 
 
 class MyPhysicalTagViewSet(viewsets.ReadOnlyModelViewSet):

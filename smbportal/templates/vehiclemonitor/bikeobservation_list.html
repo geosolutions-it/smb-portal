@@ -1,0 +1,61 @@
+{% extends 'vehiclemonitor/base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block extra_head %}
+    <link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.js"></script>
+    <!--
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol-debug.js"></script>
+    -->
+{% endblock %}
+
+{% block page_title %}{% trans "Bike observations" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+{% endblock %}
+
+{% block main %}
+    <div class="col-lg-9 col-md-8 order-md-1">
+        <h1>{% trans "Latest observations" %}</h1>
+        <div class="col-lg-12 p-b-20">
+            <ul class="list-group">
+                {% for observation in observations %}
+                    <li name="observation" id="observation-{{ observation.pk }}" class="list-group-item list-group-item-action">
+                        <i class="fa fa-calendar"></i>{{ observation.created_at }}<br>
+                        <i class="fa fa-user-o"></i>{{ observation.reporter }}<br>
+                        {% if observation.position %}
+                            <i class="fa fa-map-marker"></i> {{ observation.position.coords }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div id="bike-map" class="map"></div>
+                <div id="map-info"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-map-marker" aria-hidden="true"></i> {% trans "Bike observations" %}
+            </div>
+            <div class="card-body">
+                <p>{% trans "Bikes that have RFID tags may be monitored when circulating on the street" %}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        const observationsUrl = '{% url "api:my-bike-observations-list"%}?bike={{ bike.pk }}'
+    </script>
+    <script src="{% static 'vehiclemonitor/js/bikeobservations.js' %}"></script>
+{% endblock %}

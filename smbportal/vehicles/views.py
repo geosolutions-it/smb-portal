@@ -30,6 +30,7 @@ from photologue.models import Gallery
 from photologue.models import Photo
 
 from base import mixins
+from base.utils import get_current_bike
 from profiles import rules as profiles_rules
 from . import models
 from . import forms
@@ -161,11 +162,11 @@ class BikeGalleryDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data["bike"] = _get_current_bike(self.kwargs)
+        context_data["bike"] = get_current_bike(self.kwargs)
         return context_data
 
     def get_object(self, queryset=None):
-        bike = _get_current_bike(self.kwargs)
+        bike = get_current_bike(self.kwargs)
         return bike.picture_gallery
 
 
@@ -178,25 +179,25 @@ class BikePictureUploadView(LoginRequiredMixin,
     success_message = "Bike picture uploaded!"
 
     def get_success_url(self):
-        bike = _get_current_bike(self.kwargs)
+        bike = get_current_bike(self.kwargs)
         return reverse("bikes:gallery", kwargs={"pk": bike.pk})
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data["bike"] = _get_current_bike(self.kwargs)
+        context_data["bike"] = get_current_bike(self.kwargs)
         return context_data
 
     def get_form_kwargs(self):
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
-            "bike": _get_current_bike(self.kwargs),
+            "bike": get_current_bike(self.kwargs),
         })
         return form_kwargs
 
     def form_valid(self, form):
         response = super().form_valid(form)
         photo = self.object
-        current_bike = _get_current_bike(self.kwargs)
+        current_bike = get_current_bike(self.kwargs)
         gallery = current_bike.picture_gallery
         gallery.photos.add(photo)
         return response
@@ -221,7 +222,7 @@ class BikePictureDeleteView(LoginRequiredMixin, View):
                 picture = Photo.objects.get(pk=picture_id)
                 picture.delete()
             messages.success(request, "Pictures have been deleted!")
-            bike = _get_current_bike(kwargs)
+            bike = get_current_bike(kwargs)
             result = redirect("bikes:gallery", pk=bike.pk)
         else:
             result = render(
@@ -233,12 +234,12 @@ class BikePictureDeleteView(LoginRequiredMixin, View):
 
     def get_context_data(self, **kwargs):
         context_data = kwargs.copy()
-        context_data["bike"] = _get_current_bike(self.kwargs)
+        context_data["bike"] = get_current_bike(self.kwargs)
         return context_data
 
     def get_form_kwargs(self):
         return {
-            "bike": _get_current_bike(self.kwargs),
+            "bike": get_current_bike(self.kwargs),
         }
 
 
@@ -263,21 +264,13 @@ class BikeStatusCreateView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data["bike"] = _get_current_bike(self.kwargs)
+        context_data["bike"] = get_current_bike(self.kwargs)
         return context_data
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({
-            "bike": _get_current_bike(self.kwargs),
+            "bike": get_current_bike(self.kwargs),
             "user": self.request.user,
         })
         return kwargs
-
-
-def _get_current_bike(view_kwargs):
-    try:
-        bike = models.Bike.objects.get(pk=view_kwargs.get("pk"))
-    except models.Bike.DoesNotExist:
-        bike = None
-    return bike
