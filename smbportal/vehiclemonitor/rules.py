@@ -24,5 +24,6 @@ logger = logging.getLogger(__name__)
 
 for perm, predicate in {
     "can_list_bike_observation": profiles.rules.is_privileged_user,
+    "can_list_own_bike_observation": profiles.rules.is_end_user,
 }.items():
     rules.add_perm("vehiclemonitor.{}".format(perm), predicate)

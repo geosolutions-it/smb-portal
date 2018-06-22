@@ -333,6 +333,7 @@ class BikeObservationSerializer(GeoFeatureModelSerializer):
         geo_field = "position"
         fields = (
             "url",
+            "id",
             "bike",
             "reporter",
             "address",

@@ -15,7 +15,6 @@
     {{ block.super }}
     {% if bike %}
         {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
-        {% breadcrumb _("edit") 'bikes:update' pk=bike.pk %}
         {% breadcrumb _("update status") 'bikes:report-status' pk=bike.pk %}
     {% else %}
         {% breadcrumb _("report lost") 'bikes:report-status' pk=bike.pk %}

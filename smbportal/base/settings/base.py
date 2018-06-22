@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "rest_framework",
     "rest_framework_gis",
+    "django_filters",
     "drf_yasg",
     "bossoidc",
     "djangooidc",
@@ -211,6 +212,9 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
         "keycloakauth.permissions.DjangoRulesPermission",
     ),
+    "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
+    )
 }
 
 AVATAR_AUTO_GENERATE_SIZES = (
