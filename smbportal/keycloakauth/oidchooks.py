@@ -41,6 +41,12 @@ def update_user_data(user, token):
     logger.debug("django groups_to_act_upon: {}".format(groups))
     revoke_stale_memberships(user, groups)
     create_django_memberships(user, groups)
+    update_user_details(user, token)
+
+
+def update_user_details(user, token):
+    user.email = token["email"]
+    user.save()
 
 
 def load_user_roles(user, roles):

@@ -26,159 +26,202 @@
 </head>
 
 <body>
-<!-- NAVBAR-->
-<header class="navbar navbar-sticky">
-    <div class="site-branding">
-        <div class="inner">
-            <a class="site-logo" href="{% url 'index' %}">
-                <img src="{% static 'base/img/logo.png' %}" alt="save-my-bike logo">
-            </a>
+    <!-- NAVBAR-->
+    <header class="navbar sticky">
+        <div class="site-branding">
+            <div class="inner">
+                <a class="site-logo" href="{% url 'index' %}">
+                    <img src="{% static 'base/img/logo.png' %}" alt="save-my-bike logo">
+                </a>
+            </div>
         </div>
-    </div>
-    <!-- BEGIN MAIN NAVIGATION-->
-    <nav class="site-menu">
-        <ul>
-            <li><a href="{% url 'bikes:list' %}"><span>{% trans 'Bikes' %}</span></a></li>
-            <li><a href="{% url 'bikes:report-status' %}"><span>{% trans 'Report a lost Bike' %}</span></a></li>
-            <li><a href="javascript:void(0)"><span>{% trans 'About' %}</span></a></li>
-        </ul>
-    </nav>
-    <!-- END MAIN NAVIGATION-->
-    <!-- BEGIN TOOLBAR-->
-    <div class="toolbar">
-        <div class="inner">
-            <div class="tools">
-                <div class="account">
-                    <a href="{% url 'profile:update' %}"></a><i class="icon-head"></i>
-                    <ul class="toolbar-dropdown">
-                    {% if request.user.is_authenticated %}
-                        <li class="sub-menu-user">
+        <!-- BEGIN MAIN NAVIGATION-->
+        <nav class="site-menu">
+            <ul>
+                <li><a href="{% url 'bikes:list' %}"><span>{% trans 'Bikes' %}</span></a></li>
+                <li><a href="{% url 'bikes:report-status' %}"><span>{% trans 'Report a lost Bike' %}</span></a></li>
+                <li><a href="javascript:void(0)"><span>{% trans 'About' %}</span></a></li>
+            </ul>
+        </nav>
+        <!-- END MAIN NAVIGATION-->
+        <!-- BEGIN TOOLBAR-->
+        <div class="toolbar">
+            <div class="inner">
+                <div class="tools">
+                    <div class="cart">
+                        <a href="javascript:void(0)"></a>
+                        <i class="fa fa-flag-o" title="Select language"></i>
+                        <div class="toolbar-dropdown">
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <input name="next" type="hidden" value="{% url 'index' %}">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+                                {% for language in languages  %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value="{{ language.code }}" name="language" id="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}checked{% endif %}>
+                                        <label class="form-check-label" for="{{ language.code }}">
+                                            {{ language.name_local }} ({{ language.code }})
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                                <input class="btn btn-secondary" type="submit" value="{% trans 'Change language' %}">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="account">
+                        <a href="javascript:void(0)"></a>
+                        {% if request.user.is_authenticated %}
                             <div class="user-ava">
-                                {% avatar user class="img-circle img-responsive" id="user_avatar" %}
+                                {% avatar user class="rounded-circle img-responsive" %}
                             </div>
-                            <div class="user-info">
-                                <h6 class="user-name">{{ request.user.first_name|add_str:" "|add_str:request.user.last_name }}</h6>
-                                <span class="text-xs text-muted"></span>
-                            </div>
-                        </li>
-                        <li><a href="{% url 'profile:update' %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
-                        <li><a href="javascript:void(0)"> <i class="icon-mail"></i> {% trans 'Messages' %}</a></li>
-                        <li class="sub-menu-separator"></li>
-                        <li><a href="{% url 'logout' %}"> <i class="icon-lock"></i> {% trans 'Logout' %}</a></li>
-                    {% else %}
-                        <li><a href="{% url 'login'  %}"> <i class="icon-head"></i> {% trans 'Login/Register' %}</a></li>
-                    </ul>
-                    {% endif %}
+                        {% else %}
+                            <a href="{% url 'profile:update' %}"></a><i class="icon-head"></i>
+                        {% endif %}
+                        <ul class="toolbar-dropdown">
+                        {% if request.user.is_authenticated %}
+                            <li class="sub-menu-user">
+                                <div class="user-ava">
+                                    {% avatar user class="img-circle img-responsive" id="user_avatar" %}
+                                </div>
+                                <div class="user-info">
+                                    <h6 class="user-name">{{ request.user.first_name|add_str:" "|add_str:request.user.last_name }}</h6>
+                                    <span class="text-xs text-muted"></span>
+                                </div>
+                            </li>
+                            <li><a href="{% url 'profile:update' %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
+                            <li><a href="javascript:void(0)"> <i class="icon-mail"></i> {% trans 'Messages' %}</a></li>
+                            <li class="sub-menu-separator"></li>
+                            <li><a href="{% url 'logout' %}"> <i class="icon-lock"></i> {% trans 'Logout' %}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login'  %}"> <i class="icon-head"></i> {% trans 'Login/Register' %}</a></li>
+                        </ul>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- END TOOLBAR-->
-</header>
+        <!-- END TOOLBAR-->
+    </header>
 
-<!-- BEGIN MAIN CONTENT-->
-{% block breadcrumbs %}
-    {% clear_breadcrumbs %}
-    {% breadcrumb _("Home") 'index' %}
-{% endblock %}
+    <!-- BEGIN MAIN CONTENT-->
+    {% block breadcrumbs %}
+        {% clear_breadcrumbs %}
+        {% breadcrumb _("Home") 'index' %}
+    {% endblock %}
 
-<div class="offcanvas-wrapper">
-    <div class="page-title m-b-0">
-        <div class="container">
-            <div class="column">
-                <h1>{% block page_title %}{% endblock %}</h1>
-            </div>
-            <div class="column">
-                {% render_breadcrumbs %}
+    <div class="offcanvas-wrapper">
+        <div class="page-title m-b-0">
+            <div class="container">
+                <div class="column">
+                    <h1>{% block page_title %}{% endblock %}</h1>
+                </div>
+                <div class="column">
+                    {% render_breadcrumbs %}
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="container" class="container p-t-60">
-       {% if messages %}
-           <div class="row">
-               <div class="col-lg">
-                   {% for message in messages %}
-                       <div {% if message.tags %}class="alert alert-dismissible fade show text-center margin-bottom-1x {{ message.tags }}"{% endif %}>
-                           <span class="alert-close" data-dismiss="alert"></span>
-                           {{ message }}
-                       </div>
-                   {% endfor %}
+        <div id="container" class="container p-t-60">
+           {% if messages %}
+               <div class="row">
+                   <div class="col-lg">
+                       {% for message in messages %}
+                           <div {% if message.tags %}class="alert alert-dismissible fade show text-center margin-bottom-1x {{ message.tags }}"{% endif %}>
+                               <span class="alert-close" data-dismiss="alert"></span>
+                               {{ message }}
+                           </div>
+                       {% endfor %}
+                   </div>
                </div>
-           </div>
-       {% endif %}
-       {%  block content  %}
-           <div class="row">
-               {% block main %}{% endblock %}
-           </div>
-       {% endblock %}
-    </div>
+           {% endif %}
+           {%  block content  %}
+               <div class="row">
+                   {% block main %}{% endblock %}
+               </div>
+           {% endblock %}
+        </div>
+        <!-- BEGIN SITE FOOTER-->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row p-t-70">
+                    <div class="col-lg-3 col-md-6">
+                        <!-- Contact Info-->
 
-    <!-- BEGIN SITE FOOTER-->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="row p-t-70">
-                <div class="col-lg-3 col-md-6">
-                    <!-- Contact Info-->
-                    
+                    </div>
+
+                    <div class="col-lg-9 col-md-9">
+                        <!-- About Us-->
+                        <section class="widget widget-links widget-light-skin">
+                            <span>Save my Bike // info@savemybike.eu // Privacy Policy // Credits</span>
+                             <a class="social-button shape-circle sb-facebook sb-light-skin" href="javascript:void(0)">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a class="social-button shape-circle sb-twitter sb-light-skin" href="javascript:void(0)">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a class="social-button shape-circle sb-instagram sb-light-skin" href="javascript:void(0)">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                            <a class="social-button shape-circle sb-google-plus sb-light-skin" href="javascript:void(0)">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                        </section>
+                    </div>
+
                 </div>
-                
-                <div class="col-lg-9 col-md-9">
-                    <!-- About Us-->
-                    <section class="widget widget-links widget-light-skin">
-                        <span>Save my Bike // info@savemybike.eu // Privacy Policy // Credits</span>
-                         <a class="social-button shape-circle sb-facebook sb-light-skin" href="javascript:void(0)">
-                            <i class="fa fa-facebook"></i>
-                        </a>
-                        <a class="social-button shape-circle sb-twitter sb-light-skin" href="javascript:void(0)">
-                            <i class="fa fa-twitter"></i>
-                        </a>
-                        <a class="social-button shape-circle sb-instagram sb-light-skin" href="javascript:void(0)">
-                            <i class="fa fa-instagram"></i>
-                        </a>
-                        <a class="social-button shape-circle sb-google-plus sb-light-skin" href="javascript:void(0)">
-                            <i class="fa fa-google-plus"></i>
-                        </a>
-                    </section>
+                <!-- Copyright-->
+                <div class="container footer-copyright">
+                    <!-- COPYRIGHT-->
+
+                    <div class="column footer_right">
+                        <!-- <a href="http://www.pvrtechstudio.com/" target="_blank">PVR Tech Studio</a> We Design Your Future. -->
+                    </div>
                 </div>
-                
             </div>
-            <!-- Copyright-->
-            <div class="container footer-copyright">
-                <!-- COPYRIGHT-->
-                
-                <div class="column footer_right">
-                    <!-- <a href="http://www.pvrtechstudio.com/" target="_blank">PVR Tech Studio</a> We Design Your Future. -->
+        </footer>
+        <!-- END SITE FOOTER-->
+    </div>
+    <!-- END MAIN CONTENT-->
+
+    <!-- BEGIN BACK TO TOP BUTTON-->
+    <a class="scroll-to-top-btn" href="javascript:void(0)">
+        <i class="icon-arrow-up"></i>
+    </a>
+    <!-- END BACK TO TOP BUTTON-->
+    <!-- Backdrop-->
+    <div class="site-backdrop"></div>
+    <!-- BEGIN PRELOADER -->
+    <div id="preloader">
+        <div class="inner">
+            <span class="loader"></span>
+        </div>
+    </div>
+    <!-- END PRELOADER -->
+    {% block modals %}
+        <div id="smbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="smbModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Modal body</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="primaryButton" type="submit" class="btn btn-primary"></button>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
-    <!-- END SITE FOOTER-->
-</div>
-<!-- END MAIN CONTENT-->
-
-<!-- BEGIN BACK TO TOP BUTTON-->
-<a class="scroll-to-top-btn" href="javascript:void(0)">
-    <i class="icon-arrow-up"></i>
-</a>
-<!-- END BACK TO TOP BUTTON-->
-
-<!-- Backdrop-->
-<div class="site-backdrop"></div>
-
-<!-- BEGIN PRELOADER -->
-<div id="preloader">
-    <div class="inner">
-        <span class="loader"></span>
-    </div>
-</div>
-<!-- END PRELOADER -->
-
-
-<!-- BEGIN CORE JS -->
-<script src="{% static 'base/js/vendor.min.js' %}"></script>
-<script src="{% static 'base/js/scripts.min.js' %}"></script>
-{% block js %}
-{% endblock %}
+    {% endblock modals %}
+    <!-- BEGIN CORE JS -->
+    <script src="{% static 'base/js/vendor.min.js' %}"></script>
+    <script src="{% static 'base/js/scripts.min.js' %}"></script>
+    {% block js %}
+    {% endblock %}
 </body>
 </html>

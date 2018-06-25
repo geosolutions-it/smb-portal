@@ -14,12 +14,14 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
+from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils.text import slugify
+from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
@@ -36,6 +38,25 @@ from . import models
 from . import forms
 
 logger = logging.getLogger(__name__)
+
+
+class AjaxTemplateMixin(object):
+
+    def dispatch(self, request, *args, **kwargs):
+        if not hasattr(self, "ajax_template_name"):
+            try:
+                self.ajax_template_name = self.template_name.replace(
+                    ".html",
+                    "_inner.html"
+                )
+            except AttributeError:
+                raise ImproperlyConfigured(
+                    "Could not determine ajax_template_name. Set it as an "
+                    "attribute on the view"
+                )
+        if request.is_ajax():
+            self.template_name = self.ajax_template_name
+        return super().dispatch(request, *args, **kwargs)
 
 
 class BikeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -56,14 +77,15 @@ class BikeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 
 class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
-                     CreateView):
+                     AjaxTemplateMixin, CreateView):
     model = models.Bike
     form_class = forms.BikeForm
     template_name_suffix = "_create"
+    ajax_template_name = "vehicles/bike_create_inner.html"
 
     @property
     def success_message(self):
-        return "Created bike {!r}".format(self.object.nickname)
+        return _("Created bike {}".format(self.object.nickname))
 
     def get_success_url(self):
         return reverse("bikes:detail", kwargs={"pk": self.object.pk})
@@ -80,7 +102,9 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
             "user": self.request.user,
+            "is_ajax": self.request.is_ajax(),
             "submit_value": "Create bike",
+            "action": reverse("bikes:create")
         })
         return form_kwargs
 
@@ -110,11 +134,12 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
 
 
 class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
-                     UpdateView):
+                     AjaxTemplateMixin, UpdateView):
     model = models.Bike
     form_class = forms.BikeForm
     template_name_suffix = "_update"
-    success_message = "Bike details updated!"
+    success_message = _("Bike details updated!")
+    ajax_template_name = "vehicles/bike_create_inner.html"
 
     def get_success_url(self):
         bike = self.get_object()
@@ -132,7 +157,9 @@ class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
             "user": self.request.user,
-            "submit_value": "Update bike details",
+            "submit_value": _("Update bike details"),
+            "is_ajax": self.request.is_ajax(),
+            "action": reverse("bikes:update", kwargs={"pk": self.kwargs["pk"]})
         })
         logger.debug("BikeUpdateView form kwargs: {}".format(form_kwargs))
         return form_kwargs
@@ -143,11 +170,12 @@ class BikeDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "bike"
 
 
-class BikeDeleteView(LoginRequiredMixin, DeleteView):
+class BikeDeleteView(LoginRequiredMixin, AjaxTemplateMixin, DeleteView):
     model = models.Bike
     context_object_name = "bike"
     success_url = reverse_lazy("bikes:list")
-    success_message = "Bike deleted!"
+    success_message = _("Bike deleted!")
+    ajax_template_name = "vehicles/bike_confirm_delete_inner.html"
 
     def delete(self, request, *args, **kwargs):
         result = super().delete(request, *args, **kwargs)
@@ -176,7 +204,7 @@ class BikePictureUploadView(LoginRequiredMixin,
     model = Photo
     form_class = forms.BikePictureForm
     template_name = "vehicles/bike_picture_create.html"
-    success_message = "Bike picture uploaded!"
+    success_message = _("Bike picture uploaded!")
 
     def get_success_url(self):
         bike = get_current_bike(self.kwargs)
@@ -221,7 +249,7 @@ class BikePictureDeleteView(LoginRequiredMixin, View):
             for picture_id in form.cleaned_data["choices"]:
                 picture = Photo.objects.get(pk=picture_id)
                 picture.delete()
-            messages.success(request, "Pictures have been deleted!")
+            messages.success(request, _("Pictures have been deleted!"))
             bike = get_current_bike(kwargs)
             result = redirect("bikes:gallery", pk=bike.pk)
         else:
@@ -249,7 +277,7 @@ class BikeStatusCreateView(LoginRequiredMixin,
     model = models.BikeStatus
     form_class = forms.BikeStatusForm
     template_name_suffix = "_create"
-    success_message = "Bike status updated!"
+    success_message = _("Bike status updated!")
 
     def get_success_url(self):
         pk = self.kwargs.get("pk")

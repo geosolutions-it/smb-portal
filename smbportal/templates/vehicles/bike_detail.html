@@ -1,6 +1,7 @@
 {% extends 'vehicles/base.html' %}
 
 {% load i18n %}
+{% load static %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block page_title %}{% trans "Bike details" %}{% endblock %}
@@ -137,12 +138,37 @@
         <nav class="list-group">
             <a href="" class="list-group-item list-group-item-action"><i class="fa fa-bicycle"></i> {% trans "Print bike registry info" %}</a>
             <a href="{% url 'monitor:list' bike_pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-map-o"></i> {% trans "View bike observations" %}</a>
-            <a href="{% url 'bikes:update' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-pencil-square-o"></i> {% trans "Edit bike details" %}</a>
+            <a
+                    id="updateBike"
+                    data-toggle="modal"
+                    data-action-url="{% url 'bikes:update' pk=bike.pk %}"
+                    data-primary-button-value="{% trans 'Update bike' %}"
+                    data-primary-button-icon="fa fa-pencil-square-o"
+                    data-primary-button-classes="btn btn-primary"
+                    data-title="{% trans 'Update bike' %}"
+                    href="#smbModal"
+                    class="list-group-item list-group-item-action"
+            ><i class="fa fa-pencil-square-o"></i> {% trans "Edit bike details" %}</a>
+
             <a href="{% url 'bikes:gallery' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-picture-o"></i> {% trans "Manage bike pictures" %}</a>
             <a href="{% url 'bikes:report-status' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-file-text-o"></i> {% trans "Update bike status" %}</a>
-            <a href="{% url 'bikes:delete' pk=bike.pk %}" class="list-group-item list-group-item-action list-group-item-danger"><i class="fa fa-trash-o"></i> {% trans "Delete bike" %}</a>
+            <a
+                    id="deleteBike"
+                    data-toggle="modal"
+                    data-action-url="{% url 'bikes:delete' pk=bike.pk %}"
+                    data-primary-button-value="{% trans 'Delete bike' %}"
+                    data-primary-button-icon="fa fa-trash-o"
+                    data-primary-button-classes="btn btn-danger"
+                    data-title="{% trans 'Delete bike' %}"
+                    href="#smbModal"
+                    class="list-group-item list-group-item-action list-group-item-danger"
+            ><i class="fa fa-trash-o"></i> {% trans "Delete bike" %}</a>
         </nav>
     </div>
+{% endblock %}
+
+{% block modals %}
+    {{ block.super }}
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="pswp__bg"></div>
         <div class="pswp__scroll-wrap">
@@ -177,5 +203,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
+{% block js %}
+    <script src="{% static 'base/js/smb-utils.js' %}"></script>
+    <script src="{% static 'vehicles/js/bike-detail.js' %}"></script>
 {% endblock %}

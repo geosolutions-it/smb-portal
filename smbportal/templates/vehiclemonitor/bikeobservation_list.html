@@ -36,7 +36,7 @@
         </div>
         <div class="col-lg-12">
             <div class="card">
-                <div id="bike-map" class="map"></div>
+                <div id="bike-map" class="map" data-observations-url='{% url "api:my-bike-observations-list"%}?bike={{ bike.pk }}'></div>
                 <div id="map-info"></div>
             </div>
         </div>
@@ -54,8 +54,5 @@
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript">
-        const observationsUrl = '{% url "api:my-bike-observations-list"%}?bike={{ bike.pk }}'
-    </script>
     <script src="{% static 'vehiclemonitor/js/bikeobservations.js' %}"></script>
 {% endblock %}

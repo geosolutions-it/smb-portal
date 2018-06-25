@@ -15,7 +15,63 @@ from vehicles.models import PhysicalTag
 
 pytestmark = pytest.mark.integration
 
-# TODO: also test that other user types cannot perform these actions
+
+@pytest.mark.parametrize("endpoint", [
+    "api:my-bikes-list",
+    "api:my-bike-observations-list",
+    "api:my-bike-statuses-list",
+    "api:my-tags-list",
+])
+@pytest.mark.django_db
+def test_end_user_can_access_list_endpoint(endpoint, api_client, end_user):
+    api_client.force_authenticate(user=end_user)
+    response = api_client.get(reverse(endpoint))
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize("endpoint", [
+    "api:bikes-list",
+    "api:bike-observations-list",
+    "api:bike-statuses-list",
+    "api:tags-list",
+    "api:users-list",
+    "api:picture-galleries-list",
+    "api:pictures-list",
+])
+@pytest.mark.django_db
+def test_end_user_cannot_access_list_endpoint(endpoint, api_client, end_user):
+    api_client.force_authenticate(user=end_user)
+    response = api_client.get(reverse(endpoint))
+    assert response.status_code == 403
+
+
+@pytest.mark.parametrize("endpoint", [
+    "api:bikes-list",
+    "api:bike-observations-list",
+    "api:bike-statuses-list",
+    "api:tags-list",
+    "api:users-list",
+    "api:picture-galleries-list",
+    "api:pictures-list",
+])
+def test_privileged_user_can_access_list_endpoint(endpoint, privileged_user,
+                                                  api_client):
+    api_client.force_authenticate(user=privileged_user)
+    response = api_client.get(reverse(endpoint))
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize("endpoint", [
+    "api:my-bikes-list",
+    "api:my-bike-observations-list",
+    "api:my-bike-statuses-list",
+    "api:my-tags-list",
+])
+def test_privileged_user_cannot_access_list_endpoint(endpoint, privileged_user,
+                                                     api_client):
+    api_client.force_authenticate(user=privileged_user)
+    response = api_client.get(reverse(endpoint))
+    assert response.status_code == 403
 
 
 @pytest.mark.django_db
@@ -63,12 +119,7 @@ def test_privileged_user_can_register_new_tag(api_client, privileged_user,
     response = api_client.post(
         reverse("api:tags-list"),
         {
-            "bike": reverse(
-                "api:bikes-detail",
-                kwargs={
-                    "pk": bike_owned_by_end_user.pk
-                }
-            ),
+            "bike": bike_owned_by_end_user.pk,
             "epc": "some-fake-code"
         },
         format="json"
@@ -76,7 +127,7 @@ def test_privileged_user_can_register_new_tag(api_client, privileged_user,
     assert response.status_code == 201
 
 
-@pytest.mark.xfail(reason="Did not implement API filtering yet")
+@pytest.mark.django_db
 def test_privileged_can_filter_bikes_using_tag_epc(api_client,
                                                    privileged_user,
                                                    bike_owned_by_end_user):
@@ -86,14 +137,11 @@ def test_privileged_can_filter_bikes_using_tag_epc(api_client,
         epc=tag_epc,
         bike=bike_owned_by_end_user
     )
-    response = api_client.post(
-        reverse(
-            "api:tags-list",
-            kwargs={
-                "epc": tag_epc
-            }
-        ),
-        format="json"
+    response = api_client.get(
+        reverse("api:bikes-list"),
+        kwargs={
+            "tag": tag_epc
+        }
     )
     assert response.status_code == 200
 

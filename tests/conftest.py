@@ -58,6 +58,7 @@ def privileged_user(db, django_user_model, settings):
     group = Group.objects.get_or_create(
         name=settings.PRIVILEGED_USER_PROFILE)[0]
     user = django_user_model.objects.create(username="privileged")
+    Keycloak.objects.create(user=user, UID="keycloakuuid-abcd-456")
     group.user_set.add(user)
     group.save()
     return user

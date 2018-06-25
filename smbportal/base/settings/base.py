@@ -13,7 +13,7 @@
 import os
 import pathlib
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.messages import constants as message_constants
 from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
@@ -172,7 +172,7 @@ AUTHENTICATION_BACKENDS = (
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "it"
 
 TIME_ZONE = "UTC"
 
@@ -183,7 +183,6 @@ LANGUAGES = (
     ("it", _("Italian")),
 )
 
-# LANGUAGE_CODE = "en-us"
 USE_L10N = True
 
 USE_TZ = True
@@ -200,6 +199,14 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+EMAIL_HOST = "smtp.geo-solutions.it"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = get_environment_variable("DJANGO_EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = get_environment_variable("DJANGO_EMAIL_HOST_PASSWORD")
+
+MAIL_SENDER_ADDRESS = get_environment_variable(
+    "DJANGO_EMAIL_SENDER", default_value=EMAIL_HOST_USER)
 
 BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
 

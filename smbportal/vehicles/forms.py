@@ -17,6 +17,7 @@ from django import forms
 from django.contrib.gis import forms as gis_forms
 from django.utils.text import mark_safe
 from django.utils.text import slugify
+from django.utils.translation import gettext as _
 from photologue.models import Photo
 
 from . import models
@@ -28,9 +29,15 @@ class BikeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop("user")
+        is_ajax = kwargs.pop("is_ajax", None)
+        action = kwargs.pop("action", None)
         submit_value = kwargs.pop("submit_value", "OK")
         super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
+        self.helper = FormHelper(
+        )
+        self.helper.form_id = "bikeForm"
+        if action is not None:
+            self.helper.form_action = action
         self.helper.layout = layout.Layout(
             layout.Field("nickname"),
             layout.Div(
@@ -82,10 +89,13 @@ class BikeForm(forms.ModelForm):
                 css_class="row"
             ),
             layout.Field("other_details"),
-            bootstrap.FormActions(
-                layout.Submit("submit", submit_value)
-            ),
         )
+        if not is_ajax:
+            self.helper.layout.append(
+                bootstrap.FormActions(
+                    layout.Submit("submit", submit_value)
+                ),
+            )
 
     def clean(self):
         """Perform validation of fields that depend on each other
@@ -125,7 +135,7 @@ class BikeForm(forms.ModelForm):
             #        we are at least rendering a correctly styled error in the
             #        template
             self.add_error(
-                None, "A bike with that nickname already exists")
+                None, _("A bike with that nickname already exists"))
 
     def save(self, commit=True):
         self.instance.owner = self.user
@@ -171,7 +181,8 @@ class BikeStatusForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user")
         bike = kwargs.pop("bike", None)
-        submit_value = "Report lost bike" if not bike else "Update bike status"
+        submit_value = _(
+            "Report lost bike") if not bike else _("Update bike status")
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = layout.Layout(
@@ -243,7 +254,8 @@ class BikePictureForm(forms.ModelForm):
             #        message next to the failing field. By passing ``None``
             #        we are at least rendering a correctly styled error in the
             #        template
-            self.add_error(None, "Already uploaded a picture with that name")
+            self.add_error(
+                None, _("Already uploaded a picture with that name"))
         else:
             self.instance.title = title
 
@@ -276,6 +288,6 @@ class BikePictureDeleteForm(forms.Form):
             choices=choices,
             widget=forms.CheckboxSelectMultiple,
             error_messages={
-                "required": "Must select at least one picture to delete",
+                "required": _("Must select at least one picture to delete"),
             }
         )
