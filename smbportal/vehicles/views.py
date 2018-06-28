@@ -14,7 +14,6 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
-from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -40,25 +39,6 @@ from . import forms
 logger = logging.getLogger(__name__)
 
 
-class AjaxTemplateMixin(object):
-
-    def dispatch(self, request, *args, **kwargs):
-        if not hasattr(self, "ajax_template_name"):
-            try:
-                self.ajax_template_name = self.template_name.replace(
-                    ".html",
-                    "_inner.html"
-                )
-            except AttributeError:
-                raise ImproperlyConfigured(
-                    "Could not determine ajax_template_name. Set it as an "
-                    "attribute on the view"
-                )
-        if request.is_ajax():
-            self.template_name = self.ajax_template_name
-        return super().dispatch(request, *args, **kwargs)
-
-
 class BikeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = "bikes"
     permission_required = "vehicles.can_list_own_bikes"
@@ -77,7 +57,7 @@ class BikeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 
 class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
-                     AjaxTemplateMixin, CreateView):
+                     mixins.AjaxTemplateMixin, CreateView):
     model = models.Bike
     form_class = forms.BikeForm
     template_name_suffix = "_create"
@@ -134,7 +114,7 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
 
 
 class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
-                     AjaxTemplateMixin, UpdateView):
+                     mixins.AjaxTemplateMixin, UpdateView):
     model = models.Bike
     form_class = forms.BikeForm
     template_name_suffix = "_update"
@@ -170,7 +150,7 @@ class BikeDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "bike"
 
 
-class BikeDeleteView(LoginRequiredMixin, AjaxTemplateMixin, DeleteView):
+class BikeDeleteView(LoginRequiredMixin, mixins.AjaxTemplateMixin, DeleteView):
     model = models.Bike
     context_object_name = "bike"
     success_url = reverse_lazy("bikes:list")

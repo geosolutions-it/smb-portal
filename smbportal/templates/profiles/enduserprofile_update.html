@@ -34,10 +34,21 @@
             <h4>{% trans "Mobility surveys" %}</h4>
             <ul>
                 {% for survey in enduserprofile.mobility_habits_surveys.all %}
-                    <li><a href="{% url 'profile:survey' pk=survey.pk %}">{{ survey.date_answered }}</a></li>
+                    <li><a
+                            id="showMobilitySurvey"
+                            href="#smbModal"
+                            data-contents-url="{% url 'profile:survey' pk=survey.pk %}"
+                            data-toggle="modal"
+                            data-title="{% trans 'Mobility survey' %}"
+                    >{{ survey.date_answered }}</a></li>
                 {% endfor %}
             </ul>
             <a class="btn btn-outline-secondary btn-sm" href="{% url 'profile:create-survey' %}">{% trans "Answer mobility survey again" %}</a>
         {% endif %}
     </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'base/js/smb-utils.js' %}"></script>
+    <script src="{% static 'profiles/js/profile-update.js' %}"></script>
 {% endblock %}
