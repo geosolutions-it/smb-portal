@@ -164,7 +164,7 @@ msgstr "Registrati"
 
 #: templates/base/base.html:111
 msgid "Home"
-msgstr "Pagina iniaziale"
+msgstr "Pagina iniziale"
 
 #: templates/base/home.html:13
 msgid ""
