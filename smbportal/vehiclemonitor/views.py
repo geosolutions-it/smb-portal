@@ -37,4 +37,3 @@ class BikeObservationListView(LoginRequiredMixin, PermissionRequiredMixin,
         if current_bike is not None:
             qs = qs.filter(bike=current_bike)
         return qs
-

@@ -1,8 +1,7 @@
 /* global ol */
-/* global observationsUrl */
 
 const observationsSource = new ol.source.Vector({
-  url: observationsUrl,
+  url: document.getElementById('bike-map').dataset.observationsUrl,
   format: new ol.format.GeoJSON()
 })
 

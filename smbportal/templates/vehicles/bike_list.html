@@ -29,7 +29,22 @@
     </div>
     <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
         <nav class="list-group">
-            <a href="{% url 'bikes:create' %}" class="list-group-item list-group-item-action"><i class="fa fa-plus-circle"></i> {% trans "Register a new bike" %}</a>
+            <a
+                    id="createBike"
+                    href="#smbModal"
+                    class="list-group-item list-group-item-action"
+                    data-action-url="{% url 'bikes:create' %}"
+                    data-primary-button-value="{% trans 'Register a new bike' %}"
+                    data-toggle="modal"
+                    data-primary-button-icon="fa fa-plus-circle"
+                    data-primary-button-classes="btn btn-primary"
+                    data-title="{% trans 'Create bike' %}"
+            ><i class="fa fa-plus-circle"></i> {% trans "Register a new bike" %}</a>
         </nav>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'base/js/smb-utils.js' %}"></script>
+    <script src="{% static 'vehicles/js/bike-list.js' %}"></script>
 {% endblock %}

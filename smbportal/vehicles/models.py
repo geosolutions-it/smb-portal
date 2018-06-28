@@ -15,6 +15,7 @@ from django.contrib.gis.db import models as gis_models
 from django.conf import settings
 from django.shortcuts import reverse
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 from photologue.models import Gallery
 
 
@@ -183,7 +184,7 @@ class BikeStatus(models.Model):
     position = gis_models.PointField(
         null=True,
         blank=True,
-        help_text="Bike last seen position"
+        help_text=_("Bike last seen position")
     )
 
     def __str__(self):
@@ -205,7 +206,7 @@ class PhysicalTag(models.Model):
         related_name="tags",
     )
     epc = models.TextField(
-        help_text="Electronic Product Code",
+        help_text=_("Electronic Product Code"),
         unique=True
     )
     creation_date = models.DateTimeField(auto_now_add=True)

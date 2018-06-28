@@ -167,6 +167,7 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
         model = vehicles.models.Bike
         fields = (
             "url",
+            "id",
             "nickname",
             "owner",
             "tags",
@@ -185,6 +186,7 @@ class BikeDetailSerializer(BikeListSerializer):
         model = vehicles.models.Bike
         fields = (
             "url",
+            "id",
             "owner",
             "picture_gallery",
             "tags",
@@ -206,21 +208,20 @@ class BikeDetailSerializer(BikeListSerializer):
         )
 
 
-class PhysicalTagSerializer(serializers.HyperlinkedModelSerializer):
+class PhysicalTagSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:tags-detail",
-    )
-    bike = serializers.HyperlinkedRelatedField(
-        view_name="api:bikes-detail",
-        queryset=vehicles.models.Bike.objects.all(),
+        lookup_field="epc",
+        lookup_url_kwarg="pk",
     )
 
     class Meta:
         model = vehicles.models.PhysicalTag
         fields = (
             "url",
-            "bike",
+            "id",
             "epc",
+            "bike",
             "creation_date",
         )
 
@@ -239,6 +240,7 @@ class BikeStatusSerializer(GeoFeatureModelSerializer):
         geo_field = "position"
         fields = (
             "url",
+            "id",
             "bike",
             "lost",
             "creation_date",
@@ -288,6 +290,7 @@ class GallerySerializer(serializers.HyperlinkedModelSerializer):
         model = photologue.models.Gallery
         fields = (
             "url",
+            "id",
             "bike",
             "title",
             "photos",
@@ -308,6 +311,7 @@ class PictureSerializer(serializers.HyperlinkedModelSerializer):
         model = photologue.models.Photo
         fields = (
             "url",
+            "id",
             "image",
             "galleries",
         )
@@ -320,12 +324,10 @@ class BikeObservationSerializer(GeoFeatureModelSerializer):
     bike = serializers.HyperlinkedRelatedField(
         view_name="api:bikes-detail",
         queryset=vehicles.models.Bike.objects.all()
-        # read_only=True
     )
     reporter = SmbUserHyperlinkedRelatedField(
         view_name="api:users-detail",
         queryset=profiles.models.SmbUser.objects.all()
-        # read_only=True
     )
 
     class Meta:

@@ -15,16 +15,18 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.urls import reverse
-from django.utils.safestring import mark_safe
+from django.utils.translation import gettext as _
 from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import UpdateView
 
 from base import mixins
+from base import utils
 from keycloakauth import oidchooks
 from keycloakauth.keycloakadmin import KeycloakManager
 from . import forms
@@ -113,7 +115,7 @@ class PrivilegedUserProfileCreateView(LoginRequiredMixin,
                                       CreateView):
     model = models.PrivilegedUserProfile
     template_name_suffix = "_create"
-    success_message = "privileged-user profile created!"
+    success_message = _("Privileged user profile created!")
     success_url = settings.LOGOUT_URL
     permission_required = "profiles.can_create_profile"
     fields = ()
@@ -134,8 +136,6 @@ class PrivilegedUserProfileCreateView(LoginRequiredMixin,
         form.instance.user = self.request.user
         super().form_valid(form)
         id_token = self.request.session.get("id_token")
-        logger.debug(
-            "current_keycloak_groups: {}".format(id_token.get("groups", [])))
         try:
             update_user_groups(
                 user=self.request.user,
@@ -144,12 +144,25 @@ class PrivilegedUserProfileCreateView(LoginRequiredMixin,
             )
             result = redirect("home")
         except RuntimeError:
-            messages.info(self.request, "Registration request sent to admins")
-            messages.info(self.request, "You have been logged out")
+            messages.info(
+                self.request, _("Registration request sent to admins"))
+            messages.info(self.request, _("You have been logged out"))
             logger.debug(
                 "About to notify admin that user {!r} wants to register with "
                 "role {!r}".format(self.request.user.username,
                                    settings.PRIVILEGED_USER_PROFILE)
+            )
+            template_name_pattern = (
+                "profiles/mail/privilegeduser_registration_request_{}.txt")
+            utils.send_email_to_admins(
+                template_name_pattern.format("subject"),
+                template_name_pattern.format("message"),
+                context={
+                    "username": self.request.user.username,
+                    "email": self.request.user.email,
+                    "keycloak_base_url": settings.KEYCLOAK["base_url"],
+                    "site_name": get_current_site(self.request),
+                }
             )
             result = redirect(settings.LOGOUT_URL)
         return result
@@ -172,15 +185,7 @@ class EndUserProfileCreateView(LoginRequiredMixin,
     template_name_suffix = "_create"
     permission_required = "profiles.can_create_profile"
     success_url = reverse_lazy("profile:update")
-
-    @property
-    def success_message(self):
-        create_bike_url = reverse("bikes:create")
-        return mark_safe(
-            "end-user profile created! "
-            "You can <a href='{}'>add a new bike now</a>".format(
-                create_bike_url)
-        )
+    success_message = _("User profile created. You can now add some bikes")
 
     def get_login_url(self):
         if not self.request.user.is_authenticated:
@@ -240,7 +245,7 @@ class ProfileUpdateView(LoginRequiredMixin,
                         mixins.FormUpdatedMessageMixin,
                         UpdateView):
     permission_required = "profiles.can_edit_profile"
-    success_message = "user profile updated!"
+    success_message = _("User profile updated!")
 
     def has_permission(self):
         user = self.request.user
@@ -262,14 +267,10 @@ class ProfileUpdateView(LoginRequiredMixin,
         return [template_name]
 
     def get_queryset(self):
-        logger.debug("On the get_queryset method of ProfileUpdateView")
-        print("On the get_queryset method of ProfileUpdateView")
         profile_class = type(self.request.user.profile)
         return profile_class.objects.get(pk=self.request.user.profile.pk)
 
     def get_form_class(self):
-        logger.debug("On the get_form_class method of ProfileUpdateView")
-        print("On the get_form_class method of ProfileUpdateView")
         profile_class = type(self.request.user.profile)
         return {
             models.EndUserProfile: forms.EndUserProfileForm,
@@ -280,6 +281,10 @@ class ProfileUpdateView(LoginRequiredMixin,
         if not self.request.user.is_authenticated:
             result = settings.LOGIN_URL
         else:
+            messages.info(
+                self.request,
+                _("Please complete your user profile before continuing")
+            )
             result = reverse("profile:create")
         return result
 

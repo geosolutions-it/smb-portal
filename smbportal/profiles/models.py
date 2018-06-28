@@ -13,6 +13,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 # TODO: do we need to add the `status` attribute?
@@ -86,7 +87,7 @@ class EndUserProfile(models.Model):
         validators=[PHONE_NUMBER_REGEX_VALIDATOR]
     )
     bio = models.TextField(
-        help_text="Short user biography",
+        help_text=_("Short user biography"),
         blank=True
     )
 

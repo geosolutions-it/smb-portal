@@ -50,6 +50,7 @@ class MyBikeViewSet(viewsets.ModelViewSet):
         "vehicles.can_list_own_bikes",
         "vehicles.can_create_bike",
     )
+    filter_class = filters.BikeFilterSet
 
     def get_queryset(self):
         return vehicles.models.Bike.objects.filter(owner=self.request.user)
@@ -64,7 +65,7 @@ class MyBikeObservationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     filter_backends = (
         DjangoFilterBackend,
     )
-    filter_class = filters.BikeObservationFilterset
+    filter_class = filters.BikeObservationFilterSet
 
     def get_queryset(self):
         return vehiclemonitor.models.BikeObservation.objects.filter(
@@ -119,6 +120,7 @@ class BikeViewSet(viewsets.ReadOnlyModelViewSet):
     required_permissions = (
         "vehicles.can_list_bikes",
     )
+    filter_class = filters.BikeFilterSet
 
     def get_serializer_class(self):
         if self.action == "retrieve":
@@ -152,6 +154,12 @@ class BikeStatusViewSet(viewsets.ReadOnlyModelViewSet):
 
 class GalleryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.GallerySerializer
+    required_permissions = (
+        "vehicles.can_list_bikes",
+    )
+    required_object_permissions = (
+        "vehicles.can_edit_bike",
+    )
 
     def get_queryset(self):
         return photologue.models.Gallery.objects.all()
@@ -159,6 +167,12 @@ class GalleryViewSet(viewsets.ReadOnlyModelViewSet):
 
 class PictureViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.PictureSerializer
+    required_permissions = (
+        "vehicles.can_list_bikes",
+    )
+    required_object_permissions = (
+        "vehicles.can_edit_bike",
+    )
 
     def get_queryset(self):
         return photologue.models.Photo.objects.all()
