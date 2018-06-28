@@ -103,29 +103,29 @@ class Bike(Vehicle):
     bike_type = models.CharField(
         max_length=20,
         choices=(
-            (RACING_BIKE, RACING_BIKE),
-            (CITY_BIKE, CITY_BIKE),
-            (MOUNTAIN_BIKE, MOUNTAIN_BIKE),
-            (FOLDABLE_BIKE, FOLDABLE_BIKE),
+            (RACING_BIKE, _("racing")),
+            (CITY_BIKE, _("city")),
+            (MOUNTAIN_BIKE, _("mountain")),
+            (FOLDABLE_BIKE, _("foldable")),
         ),
         default=CITY_BIKE,
     )
     gear = models.CharField(
         max_length=50,
         choices=(
-            (SINGLE_RING_GEAR, SINGLE_RING_GEAR),
-            (GROUPSET_UNDER_18_SPEED_GEAR, GROUPSET_UNDER_18_SPEED_GEAR),
-            (GROUPSET_ABOVE_18_SPEED_GEAR, GROUPSET_ABOVE_18_SPEED_GEAR),
-            (ELECTRIC_GEAR, ELECTRIC_GEAR),
+            (SINGLE_RING_GEAR, _("single ring")),
+            (GROUPSET_UNDER_18_SPEED_GEAR, _("groupset below 18 speeds")),
+            (GROUPSET_ABOVE_18_SPEED_GEAR, _("groupset above 18 speeds")),
+            (ELECTRIC_GEAR, _("electric")),
         ),
         default=GROUPSET_ABOVE_18_SPEED_GEAR,
     )
     brake = models.CharField(
         max_length=30,
         choices=(
-            (DISK_BRAKE, DISK_BRAKE),
-            (CANTILEVER_BRAKE, CANTILEVER_BRAKE),
-            (COASTER_BRAKE, COASTER_BRAKE),
+            (DISK_BRAKE, _("disk")),
+            (CANTILEVER_BRAKE, _("cantilevel")),
+            (COASTER_BRAKE, _("coaster")),
         ),
         default=DISK_BRAKE,
     )

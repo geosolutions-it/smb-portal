@@ -129,19 +129,19 @@ class MobilityHabitsSurvey(models.Model):
         choices=(
             (
                 FREQUENT_PUBLIC_TRANSPORT_USER,
-                "Habitual (more than 10 travels per month)"
+                _("Habitual (more than 10 travels per month)")
             ),
             (
                 OCCASIONAL_PUBLIC_TRANSPORT_USER,
-                "Occasional (once per month)"
+                _("Occasional (once per month)")
             ),
             (
                 RARE_PUBLIC_TRANSPORT_USER,
-                "Rare (less than 10 travels per year)"
+                _("Rare (less than 10 travels per year)")
             ),
             (
                 NOT_A_PUBLIC_TRANSPORT_USER,
-                "Never"
+                _("Never")
             ),
         ),
         default=RARE_PUBLIC_TRANSPORT_USER,
@@ -160,23 +160,23 @@ class MobilityHabitsSurvey(models.Model):
         choices=(
             (
                 FREQUENT_BICYCLE_USER,
-                "Habitual (at least once a week on average)"
+                _("Habitual (at least once a week on average)")
             ),
             (
                 OCCASIONAL_BICYCLE_USER,
-                "Habitual (at least once a month)"
+                _("Habitual (at least once a month)")
             ),
             (
                 SEASONAL_BICYCLE_USER,
-                "Seasonal (mainly used in the Summer)"
+                _("Seasonal (mainly used in the Summer)")
             ),
             (
                 RARE_BICYCLE_USER,
-                "Rare (less than once a month)"
+                _("Rare (less than once a month)")
             ),
             (
                 NOT_A_BICYCLE_USER,
-                "Never use a bicycle to move around in the city"
+                _("Never use a bicycle to move around in the city")
             ),
         ),
         default=RARE_BICYCLE_USER,

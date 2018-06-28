@@ -194,6 +194,10 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = get_environment_variable(
+    "DJANGO_STATIC_ROOT",
+    default_value=str(pathlib.Path(BASE_DIR).parent / "static_root"),
+)
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [

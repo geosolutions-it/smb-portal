@@ -1,0 +1,40 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <link rel="stylesheet" media="all" href="{% static 'base/css/vendor.min.css' %}">
+    <link id="mainStyles" rel="stylesheet" media="all" href="{% static 'base/css/styles.css'%}">
+    <title>Save my bike</title>
+</head>
+<body>
+    <div class="container">
+        <div class="card margin-top-1x border-primary">
+            <div class="card-header text-center bg-white">
+                <img src="{% static 'base/img/logo.png' %}" alt="save-my-bike logo">
+            </div>
+            <div class="card-body bg_svg_green text-center text-white">
+                <h3 class="card-title">{% blocktrans with nickname=bike.nickname %}Registration code for bike {{ nickname }}{% endblocktrans %}</h3>
+                <div>
+                    <i class="fa fa-bicycle f-s-200"></i>
+                </div>
+                <h4 class="text-white">{% blocktrans with email=user.email %}User: {{ email }}{%endblocktrans%}</h4>
+                <p class="card-text text-sm">{% blocktrans with uid=user.keycloak.UID %}User ID: {{ uid }}{%endblocktrans%}</p>
+                <p class="card-text text-lg">{% blocktrans %}Use your bike's registration code to obtain RFID tags. Apply these tags to your bike and enable additional functionality on the portal, such as tracking your bike
+                {% endblocktrans %}</p>
+            </div>
+            <div class="card-footer bg-white text-center">
+                <span class="text-muted text-sm">{% trans 'Registration code' %}</span>
+                <h1>{{ bike.pk }}</h1>
+                <button id="printButton" type="button" class="btn btn-outline-primary">{% trans 'Print registration information' %}</button>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+    document.getElementById('printButton').addEventListener('click', function () {
+      window.print()
+    })
+</script>
+</body>
+</html>

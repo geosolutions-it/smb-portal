@@ -26,6 +26,7 @@ from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from django.views.generic import DetailView
 from django.views.generic import ListView
+from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 from photologue.models import Gallery
 from photologue.models import Photo
@@ -282,3 +283,13 @@ class BikeStatusCreateView(LoginRequiredMixin,
             "user": self.request.user,
         })
         return kwargs
+
+
+class TagRegistrationTemplateView(LoginRequiredMixin, TemplateView):
+    template_name = "vehicles/tagregistration.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_bike = get_current_bike(self.kwargs)
+        context["bike"] = current_bike
+        return context
