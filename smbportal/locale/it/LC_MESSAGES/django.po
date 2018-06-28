@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-28 09:15+0000\n"
+"POT-Creation-Date: 2018-06-28 15:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,6 +28,42 @@ msgstr "Italian"
 #: profiles/models.py:90
 msgid "Short user biography"
 msgstr "Breve biografia"
+
+#: profiles/models.py:132
+msgid "Habitual (more than 10 travels per month)"
+msgstr ""
+
+#: profiles/models.py:136
+msgid "Occasional (once per month)"
+msgstr ""
+
+#: profiles/models.py:140
+msgid "Rare (less than 10 travels per year)"
+msgstr ""
+
+#: profiles/models.py:144
+msgid "Never"
+msgstr ""
+
+#: profiles/models.py:163
+msgid "Habitual (at least once a week on average)"
+msgstr ""
+
+#: profiles/models.py:167
+msgid "Habitual (at least once a month)"
+msgstr ""
+
+#: profiles/models.py:171
+msgid "Seasonal (mainly used in the Summer)"
+msgstr ""
+
+#: profiles/models.py:175
+msgid "Rare (less than once a month)"
+msgstr ""
+
+#: profiles/models.py:179
+msgid "Never use a bicycle to move around in the city"
+msgstr ""
 
 #: profiles/views.py:118
 #, fuzzy
@@ -328,23 +364,20 @@ msgstr "Completa il profilo per utente con ruolo speciale"
 msgid "Note"
 msgstr ""
 
-#: templates/profiles/privilegeduserprofile_create.html:40
+#: templates/profiles/privilegeduserprofile_create.html:39
 msgid ""
-"\n"
-"                                    Registering as a privileged user "
-"requires manual authorization from one of the platform's administrators.\n"
-"                                    Your application will be moderated and "
-"you will be notified via e-mail. Until then you will not\n"
-"                                    be able to use the portal\n"
-"                                "
+"Registering as a privileged user requires manual authorization from one of "
+"the platform's administrators. Your application will be moderated and you "
+"will be notified via e-mail. Until then you will not be able to use the "
+"portal"
 msgstr ""
 
-#: templates/profiles/privilegeduserprofile_create.html:51
+#: templates/profiles/privilegeduserprofile_create.html:45
 #: templates/vehicles/bike_picture_confirm_delete.html:23
 msgid "Go back"
 msgstr "Torna indietro"
 
-#: templates/profiles/privilegeduserprofile_create.html:52
+#: templates/profiles/privilegeduserprofile_create.html:46
 msgid "Register as privileged user"
 msgstr "Registrati per un altro ruolo utente"
 
@@ -447,6 +480,7 @@ msgid "With owner"
 msgstr "In possesso del propretario"
 
 #: templates/vehicles/bike_detail.html:41
+#: templates/vehicles/tagregistration.html:28
 msgid "Registration code"
 msgstr "Registrazione"
 
@@ -625,6 +659,36 @@ msgstr "Segnala come smarrita"
 msgid "Report lost bike"
 msgstr "Segnala una bici smarrita"
 
+#: templates/vehicles/tagregistration.html:18
+#, fuzzy, python-format
+#| msgid "Registration code"
+msgid "Registration code for bike %(nickname)s"
+msgstr "Registrazione"
+
+#: templates/vehicles/tagregistration.html:22
+#, python-format
+msgid "User: %(email)s"
+msgstr ""
+
+#: templates/vehicles/tagregistration.html:23
+#, python-format
+msgid "User ID: %(uid)s"
+msgstr ""
+
+#: templates/vehicles/tagregistration.html:24
+msgid ""
+"Use your bike's registration code to obtain RFID tags. Apply these tags to "
+"your bike and enable additional functionality on the portal, such as "
+"tracking your bike\n"
+"                "
+msgstr ""
+
+#: templates/vehicles/tagregistration.html:30
+#, fuzzy
+#| msgid "Print bike registry info"
+msgid "Print registration information"
+msgstr "Stampa le informazioni di registrazione della bicibletta"
+
 #: vehiclemonitor/models.py:31
 msgid "Either this field or `address` must be given"
 msgstr ""
@@ -651,6 +715,50 @@ msgstr "E' stata già inserita una foto con lo stesso nome"
 msgid "Must select at least one picture to delete"
 msgstr "Selezionare almeno un'immagine da eliminare"
 
+#: vehicles/models.py:106
+msgid "racing"
+msgstr ""
+
+#: vehicles/models.py:107
+msgid "city"
+msgstr ""
+
+#: vehicles/models.py:108
+msgid "mountain"
+msgstr ""
+
+#: vehicles/models.py:109
+msgid "foldable"
+msgstr ""
+
+#: vehicles/models.py:116
+msgid "single ring"
+msgstr ""
+
+#: vehicles/models.py:117
+msgid "groupset below 18 speeds"
+msgstr ""
+
+#: vehicles/models.py:118
+msgid "groupset above 18 speeds"
+msgstr ""
+
+#: vehicles/models.py:119
+msgid "electric"
+msgstr ""
+
+#: vehicles/models.py:126
+msgid "disk"
+msgstr ""
+
+#: vehicles/models.py:127
+msgid "cantilevel"
+msgstr ""
+
+#: vehicles/models.py:128
+msgid "coaster"
+msgstr ""
+
 #: vehicles/models.py:187
 msgid "Bike last seen position"
 msgstr "Ultima positione rilevata della bicicletta"
@@ -659,41 +767,41 @@ msgstr "Ultima positione rilevata della bicicletta"
 msgid "Electronic Product Code"
 msgstr "Codice prodotto"
 
-#: vehicles/views.py:68
+#: vehicles/views.py:69
 #, fuzzy
 #| msgid "Create bike"
 msgid "Created bike {}"
 msgstr "Aggiungi una nuova bicicletta"
 
-#: vehicles/views.py:121
+#: vehicles/views.py:122
 #, fuzzy
 #| msgid "Bike details"
 msgid "Bike details updated!"
 msgstr "Dettagli della bici"
 
-#: vehicles/views.py:140
+#: vehicles/views.py:141
 #, fuzzy
 #| msgid "Edit bike details"
 msgid "Update bike details"
 msgstr "Modifica i dati della bicicletta"
 
-#: vehicles/views.py:157
+#: vehicles/views.py:158
 #, fuzzy
 #| msgid "Bike details"
 msgid "Bike deleted!"
 msgstr "Dettagli della bici"
 
-#: vehicles/views.py:187
+#: vehicles/views.py:188
 #, fuzzy
 #| msgid "Bike Pictures"
 msgid "Bike picture uploaded!"
 msgstr "Foto della bicicletta"
 
-#: vehicles/views.py:232
+#: vehicles/views.py:233
 msgid "Pictures have been deleted!"
 msgstr "Immagini eliminate!"
 
-#: vehicles/views.py:260
+#: vehicles/views.py:261
 msgid "Bike status updated!"
 msgstr "Lo stato è stato aggiornato!"
 
