@@ -40,76 +40,76 @@ msgstr ""
 
 #: templates/avatar/add.html:12 templates/vehicles/bike_create.html:11
 msgid "new"
-msgstr ""
+msgstr "Nuovo"
 
 #: templates/avatar/add.html:15
 msgid "Add avatar"
-msgstr ""
+msgstr "Aggiungi immagine del profile"
 
 #: templates/avatar/add.html:19
 msgid "Current avatar:"
-msgstr ""
+msgstr "Immagine del profilo"
 
 #: templates/avatar/add.html:24 templates/avatar/change.html:32
 msgid "You haven't uploaded an avatar yet. Please upload one now."
-msgstr ""
+msgstr "Non hai ancora inserito un imagine per il tuo profilo. Potresti aggiungerne una?"
 
 #: templates/avatar/add.html:30
 msgid "Upload"
-msgstr ""
+msgstr "Carica"
 
 #: templates/avatar/change.html:14
 msgid "Change avatar"
-msgstr ""
+msgstr "Modifica immagine profile"
 
 #: templates/avatar/change.html:27
 msgid "Change"
-msgstr ""
+msgstr "Modifica"
 
 #: templates/avatar/change.html:28 templates/avatar/change.html:33
 msgid "Upload new avatar"
-msgstr ""
+msgstr "Carica nuova immagine profilo"
 
 #: templates/avatar/change.html:29 templates/avatar/change.html:34
 #: templates/avatar/confirm_delete.html:14
 msgid "Delete avatars"
-msgstr ""
+msgstr "Elimina immagini profilo"
 
 #: templates/avatar/confirm_delete.html:11
 #: templates/vehicles/bike_confirm_delete.html:11
 #: templates/vehicles/bike_picture_confirm_delete.html:11
 msgid "delete"
-msgstr ""
+msgstr "Elimina"
 
 #: templates/avatar/confirm_delete.html:18
 msgid "Please select the avatars that you would like to delete."
-msgstr ""
+msgstr "Selezioa le immagini del profilo che vuoi rimuovere"
 
 #: templates/avatar/confirm_delete.html:21
 #, python-format
 msgid ""
 "You have no avatars to delete. Please <a href=\"%(avatar_add_url)s\">upload "
 "one</a> now."
-msgstr ""
+msgstr "Non ci sono immagini del profilo da elminare. Aggiungine una."
 
 #: templates/avatar/confirm_delete.html:27
 msgid "Delete selected"
-msgstr ""
+msgstr "Elimina selezionati"
 
 #: templates/base/base.html:41 templates/base/home.html:11
 #: templates/base/home.html:15
 msgid "Bikes"
-msgstr "Bici"
+msgstr "Biciclette"
 
 #: templates/base/base.html:42
 #, fuzzy
 #| msgid "Report a stolen Bike?"
 msgid "Report a lost Bike"
-msgstr "Segnala una bici rubata"
+msgstr "Segnala una bicicletta rubata"
 
 #: templates/base/base.html:43
 msgid "About"
-msgstr "Di"
+msgstr "Info"
 
 #: templates/base/base.html:64
 msgid "My Profile"
@@ -117,21 +117,21 @@ msgstr "Il mio profilo"
 
 #: templates/base/base.html:65
 msgid "Messages"
-msgstr "messaggi"
+msgstr "Messaggi"
 
 #: templates/base/base.html:67
 msgid "Logout"
-msgstr "Disconnettersi"
+msgstr "Disconnetti"
 
 #: templates/base/base.html:69
 #, fuzzy
 #| msgid "Register"
 msgid "Login/Register"
-msgstr "Registrare"
+msgstr "Registrati"
 
 #: templates/base/base.html:82
 msgid "Home"
-msgstr "Casa"
+msgstr "Pagina iniaziale"
 
 #: templates/base/home.html:13
 #, fuzzy
@@ -143,11 +143,11 @@ msgid ""
 "from the system. "
 msgstr ""
 "Registra nuove biciclette, aggiorna le informazioni sulle tue bici ed "
-"elimina biciclette fuori dal sistema. "
+"elimina biciclette. "
 
 #: templates/base/home.html:22
 msgid "Prizes"
-msgstr "I premi"
+msgstr "Premi"
 
 #: templates/base/home.html:24
 #, fuzzy
@@ -161,7 +161,7 @@ msgstr ""
 #: templates/base/home.html:26 templates/base/home.html:37
 #: templates/base/home.html:50
 msgid "Coming soon"
-msgstr ""
+msgstr "In arrivo..."
 
 #: templates/base/home.html:33
 msgid "Tags"
@@ -171,7 +171,7 @@ msgstr "Tags"
 #, fuzzy
 #| msgid "Add rfid support to your bikes here"
 msgid "Want protection? Add rfid support to your bikes here"
-msgstr "Aggiungi il supporto di rfid alle tue bici qui"
+msgstr "Vuoi proteggere la tua bici? Aggiungi il supporto RFID"
 
 #: templates/base/home.html:46
 msgid "Badges"
@@ -190,33 +190,33 @@ msgstr ""
 
 #: templates/profiles/enduserprofile_create.html:9
 msgid "Complete profile"
-msgstr ""
+msgstr "Completa il tuo profilo"
 
 #: templates/profiles/enduserprofile_create.html:13
 msgid "complete profile"
-msgstr ""
+msgstr "Profilo copleto"
 
 #: templates/profiles/enduserprofile_create.html:39
 msgid "Mobility Survey"
-msgstr ""
+msgstr "Sondaggio sulla mobilità"
 
 #: templates/profiles/enduserprofile_create.html:40
 msgid ""
 "Please complete this short survey as a final step for creating your profile"
-msgstr ""
+msgstr "Completa questo breve sondaggio per completare il tuo profilo"
 
 #: templates/profiles/enduserprofile_create.html:42
 #: templates/profiles/enduserprofile_update.html:31
 #: templates/profiles/mobilityhabitssurvey_create.html:19
 #: templates/profiles/privilegeduserprofile_update.html:31
 msgid "Save"
-msgstr ""
+msgstr "Salva"
 
 #: templates/profiles/enduserprofile_create.html:45
 #, python-format
 msgid ""
 "You can also <a href=\"%(privileged_url)s\">register as a different user type"
-msgstr ""
+msgstr "Registrati come un altro utente"
 
 #: templates/profiles/enduserprofile_update.html:9
 #: templates/profiles/privilegeduserprofile_update.html:9
@@ -227,11 +227,11 @@ msgstr "Il mio profilo"
 
 #: templates/profiles/enduserprofile_update.html:34
 msgid "Mobility surveys"
-msgstr ""
+msgstr "Sondaggi sulla mobilità"
 
 #: templates/profiles/enduserprofile_update.html:40
 msgid "Answer mobility survey again"
-msgstr ""
+msgstr "Rispondi nuovamente al sondaggio sulla mobilità"
 
 #: templates/profiles/mail/privilegeduser_registration_request_message.txt:1
 #, python-format
@@ -254,15 +254,15 @@ msgstr ""
 
 #: templates/profiles/mail/privilegeduser_registration_request_subject.txt:1
 msgid "Privileged user registration request"
-msgstr ""
+msgstr "Richiesta di registrazione da un utente privilegiato"
 
 #: templates/profiles/mobilityhabitssurvey_create.html:9
 msgid "new survey"
-msgstr ""
+msgstr "Nuovo sondaggio"
 
 #: templates/profiles/mobilityhabitssurvey_create.html:12
 msgid "New mobility survey"
-msgstr ""
+msgstr "Nuovo sondagio sulla mobilità"
 
 #: templates/profiles/mobilityhabitssurvey_detail.html:13
 msgid "Mobility survey"
@@ -294,27 +294,27 @@ msgstr ""
 #: templates/profiles/privilegeduserprofile_create.html:51
 #: templates/vehicles/bike_picture_confirm_delete.html:23
 msgid "Go back"
-msgstr ""
+msgstr "Torna indietro"
 
 #: templates/profiles/privilegeduserprofile_create.html:52
 msgid "Register as privileged user"
-msgstr ""
+msgstr "Registrati per un altro ruolo utente"
 
 #: templates/registration/newuser.html:108
 msgid "No Account? Register"
-msgstr "Nessun account? Registrare"
+msgstr "Nessun account? Registrati"
 
 #: templates/registration/newuser.html:109
 msgid ""
 "Registration takes less than a minute but gives you full control over your "
 "account."
 msgstr ""
-"La registrazione richiede meno di un minuto ma ti dà il pieno controllo del "
-"tuo"
+"La registrazione richiede meno di un minuto ma ti dà il pieno controllo sul "
+"tuo account"
 
 #: templates/registration/newuser.html:114
 msgid "First Name"
-msgstr "Nome di battesimo"
+msgstr "Nome"
 
 #: templates/registration/newuser.html:120
 msgid "Last Name"
@@ -330,57 +330,57 @@ msgstr "Numero di telefono"
 
 #: templates/registration/newuser.html:138
 msgid "Password"
-msgstr "Parola d'ordine"
+msgstr "Password"
 
 #: templates/registration/newuser.html:144
 msgid "Confirm Password"
-msgstr "conferma password"
+msgstr "Conferma password"
 
 #: templates/registration/newuser.html:150
 msgid "Register"
-msgstr "Registrare"
+msgstr "Registrati"
 
 #: templates/vehiclemonitor/base.html:8 templates/vehicles/base.html:8
 #, fuzzy
 #| msgid "Bikes"
 msgid "bikes"
-msgstr "Bici"
+msgstr "Biciclette"
 
 #: templates/vehiclemonitor/base.html:10
 msgid "observations"
-msgstr ""
+msgstr "Rilevazioni"
 
 #: templates/vehiclemonitor/bikeobservation_list.html:15
 #: templates/vehiclemonitor/bikeobservation_list.html:47
 msgid "Bike observations"
-msgstr ""
+msgstr "Rilevazioni bicicletta"
 
 #: templates/vehiclemonitor/bikeobservation_list.html:23
 msgid "Latest observations"
-msgstr ""
+msgstr "Ultime rilevazioni"
 
 #: templates/vehiclemonitor/bikeobservation_list.html:50
 msgid ""
 "Bikes that have RFID tags may be monitored when circulating on the street"
-msgstr ""
+msgstr "Le biciclette con un RFID installato possono essere monitorate durante la circolazione per le strade"
 
 #: templates/vehicles/bike_confirm_delete.html:6
 #: templates/vehicles/bike_detail.html:158
 #: templates/vehicles/bike_detail.html:160
 #: templates/vehicles/bike_detail.html:163
 msgid "Delete bike"
-msgstr ""
+msgstr "Elimina bicicletta"
 
 #: templates/vehicles/bike_confirm_delete_inner.html:4
 #, python-format
 msgid "Are you sure you want to delete bike <strong>%(nickname)s</strong>?"
-msgstr ""
+msgstr "Sei sicuro di voler rimuovere questa bicicletta <strong>%(nickname)s</strong>?"
 
 #: templates/vehicles/bike_create.html:7
 #, fuzzy
 #| msgid "Register"
 msgid "Register new bike"
-msgstr "Registrare"
+msgstr "Registra una nuova bicicletta"
 
 #: templates/vehicles/bike_detail.html:7
 msgid "Bike details"
@@ -388,15 +388,15 @@ msgstr "Dettagli della bici"
 
 #: templates/vehicles/bike_detail.html:34
 msgid "Current status"
-msgstr ""
+msgstr "Stato della bicicletta"
 
 #: templates/vehicles/bike_detail.html:35
 msgid "Lost"
-msgstr ""
+msgstr "Smarrita"
 
 #: templates/vehicles/bike_detail.html:35
 msgid "With owner"
-msgstr ""
+msgstr "In possesso del propretario"
 
 #: templates/vehicles/bike_detail.html:41
 #, fuzzy
@@ -406,16 +406,16 @@ msgstr "Registrazione"
 
 #: templates/vehicles/bike_detail.html:47
 msgid "Bike type"
-msgstr ""
+msgstr "Tipo di bicicletta"
 
 #: templates/vehicles/bike_detail.html:48
 #, python-format
 msgid "%(bike_type)s"
-msgstr ""
+msgstr "Biciclette"
 
 #: templates/vehicles/bike_detail.html:53
 msgid "Gears"
-msgstr ""
+msgstr "Cambio"
 
 #: templates/vehicles/bike_detail.html:54
 #, python-format
@@ -424,7 +424,7 @@ msgstr ""
 
 #: templates/vehicles/bike_detail.html:59
 msgid "Brakes"
-msgstr ""
+msgstr "Freni"
 
 #: templates/vehicles/bike_detail.html:60
 #, python-format
@@ -433,128 +433,128 @@ msgstr ""
 
 #: templates/vehicles/bike_detail.html:65
 msgid "Brand"
-msgstr ""
+msgstr "Marca"
 
 #: templates/vehicles/bike_detail.html:71
 msgid "Model"
-msgstr ""
+msgstr "Modello"
 
 #: templates/vehicles/bike_detail.html:77
 msgid "Color"
-msgstr ""
+msgstr "Colore"
 
 #: templates/vehicles/bike_detail.html:83
 msgid "Saddle"
-msgstr ""
+msgstr "Sella"
 
 #: templates/vehicles/bike_detail.html:89
 msgid "Basket"
-msgstr ""
+msgstr "Cestino"
 
 #: templates/vehicles/bike_detail.html:95
 msgid "Cargo rack"
-msgstr ""
+msgstr "Portapacchi"
 
 #: templates/vehicles/bike_detail.html:101
 msgid "Light"
-msgstr ""
+msgstr "Luci"
 
 #: templates/vehicles/bike_detail.html:107
 msgid "Bags"
-msgstr ""
+msgstr "Borse"
 
 #: templates/vehicles/bike_detail.html:113
 msgid "SaveMyBike sticker"
-msgstr ""
+msgstr "Adesivo SaveMyBike"
 
 #: templates/vehicles/bike_detail.html:119
 msgid "Other details"
-msgstr ""
+msgstr "Altri dettagli"
 
 #: templates/vehicles/bike_detail.html:125
 msgid "RFID tags"
-msgstr ""
+msgstr "Tag RFID"
 
 #: templates/vehicles/bike_detail.html:130
 msgid "This bike does not have any tags"
-msgstr ""
+msgstr "Queta bicicletta non ha associato nessun tag"
 
 #: templates/vehicles/bike_detail.html:139
 msgid "Print bike registry info"
-msgstr ""
+msgstr "Stampa le informazioni di registrazione della bicibletta"
 
 #: templates/vehicles/bike_detail.html:140
 msgid "View bike observations"
-msgstr ""
+msgstr "Visualizza le rilevazioni della bicicletta"
 
 #: templates/vehicles/bike_detail.html:145
 #: templates/vehicles/bike_detail.html:147
 msgid "Update bike"
-msgstr ""
+msgstr "Aggiorna bicicletta"
 
 #: templates/vehicles/bike_detail.html:150
 msgid "Edit bike details"
-msgstr ""
+msgstr "Modifica i dati della bicicletta"
 
 #: templates/vehicles/bike_detail.html:152
 msgid "Manage bike pictures"
-msgstr ""
+msgstr "Gestisci le foto della bicicletta"
 
 #: templates/vehicles/bike_detail.html:153
 #: templates/vehicles/bikestatus_create.html:24
 msgid "Update bike status"
-msgstr ""
+msgstr "Aggiorna lo stato della bicicletta"
 
 #: templates/vehicles/bike_list.html:7
 msgid "Your bikes"
-msgstr "Le tue bici"
+msgstr "Le tue biciclette"
 
 #: templates/vehicles/bike_list.html:23
 msgid "This bike is currently reported as lost"
-msgstr ""
+msgstr "Questa bicicletta è segnalato come smarrita"
 
 #: templates/vehicles/bike_list.html:37 templates/vehicles/bike_list.html:41
 msgid "Register a new bike"
-msgstr ""
+msgstr "Registra una nuova bicicletta"
 
 #: templates/vehicles/bike_list.html:40
 msgid "Create bike"
-msgstr ""
+msgstr "Aggiungi una nuova bicicletta"
 
 #: templates/vehicles/bike_picture_confirm_delete.html:10
 #: templates/vehicles/bike_picture_create.html:10
 #: templates/vehicles/bikegallery_detail.html:9
 msgid "manage pictures"
-msgstr ""
+msgstr "Gestisci le foto"
 
 #: templates/vehicles/bike_picture_confirm_delete.html:14
 #: templates/vehicles/bikegallery_detail.html:31
 msgid "Delete pictures"
-msgstr ""
+msgstr "Elimina foto"
 
 #: templates/vehicles/bike_picture_confirm_delete.html:18
 msgid "Please select the pictures that you would like to delete."
-msgstr ""
+msgstr "Selezioare le immmagini che si vogliono eliminare"
 
 #: templates/vehicles/bike_picture_confirm_delete.html:24
 msgid "Delete selected pictures"
-msgstr ""
+msgstr "Elminia le immagini selezionate"
 
 #: templates/vehicles/bike_picture_create.html:11
 msgid "add picture"
-msgstr ""
+msgstr "Aggiungi nuove foto"
 
 #: templates/vehicles/bike_picture_create.html:14
 msgid "Add picture"
-msgstr ""
+msgstr "Aggiungi foto"
 
 #: templates/vehicles/bike_picture_create.html:21
 msgid "Upload picture"
-msgstr ""
+msgstr "Carica foto"
 
 #: templates/vehicles/bikegallery_detail.html:12
 msgid "Bike Pictures"
-msgstr ""
+msgstr "Foto della bicicletta"
 
 #: templates/vehicles/bikegallery_detail.html:16
 #, python-format
@@ -562,34 +562,34 @@ msgid ""
 "\n"
 "            Current pictures for bike %(nickname)s\n"
 "        "
-msgstr ""
+msgstr "Immagini delle bicicletta %(nickname)s\n"
 
 #: templates/vehicles/bikegallery_detail.html:28
 msgid "Add pictures"
-msgstr ""
+msgstr "Aggiungi foto"
 
 #: templates/vehicles/bikestatus_create.html:18
 msgid "update status"
-msgstr ""
+msgstr "Aggiorna stato"
 
 #: templates/vehicles/bikestatus_create.html:20
 msgid "report lost"
-msgstr ""
+msgstr "Segnala come smarrita"
 
 #: templates/vehicles/bikestatus_create.html:24
 #, fuzzy
 #| msgid "Report a stolen Bike?"
 msgid "Report lost bike"
-msgstr "Segnala una bici rubata"
+msgstr "Segnala una bici smarrita"
 
 #~ msgid "Settings"
-#~ msgstr "impostazioni"
+#~ msgstr "Impostazioni"
 
 #~ msgid "Lock Screen"
 #~ msgstr "Blocca schermo"
 
 #~ msgid "Restricted Area"
-#~ msgstr "area riservata"
+#~ msgstr "Area riservata"
 
 #~ msgid "Login"
 #~ msgstr "Accesso"
