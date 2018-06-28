@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -28,8 +27,6 @@ msgstr "Italian"
 
 #: templates/avatar/add.html:10 templates/avatar/change.html:10
 #: templates/avatar/confirm_delete.html:9 templates/profiles/base.html:8
-#, fuzzy
-#| msgid "My Profile"
 msgid "profile"
 msgstr "Il mio profilo"
 
@@ -102,8 +99,6 @@ msgid "Bikes"
 msgstr "Biciclette"
 
 #: templates/base/base.html:42
-#, fuzzy
-#| msgid "Report a stolen Bike?"
 msgid "Report a lost Bike"
 msgstr "Segnala una bicicletta rubata"
 
@@ -124,8 +119,6 @@ msgid "Logout"
 msgstr "Disconnetti"
 
 #: templates/base/base.html:69
-#, fuzzy
-#| msgid "Register"
 msgid "Login/Register"
 msgstr "Registrati"
 
@@ -133,11 +126,7 @@ msgstr "Registrati"
 msgid "Home"
 msgstr "Pagina iniaziale"
 
-#: templates/base/home.html:13
-#, fuzzy
-#| msgid ""
-#| " Register new Bikes, update information about your bikes and delete \n"
-#| "                                    bikes off the system. "
+#: templates/base/home.html:13                                  bikes off the system. "
 msgid ""
 " Register new Bikes, update information about your bikes and delete bikes "
 "from the system. "
@@ -150,10 +139,6 @@ msgid "Prizes"
 msgstr "Premi"
 
 #: templates/base/home.html:24
-#, fuzzy
-#| msgid ""
-#| " View all the prizes you can available in your \n"
-#| "                                    city."
 msgid " View all the prizes you can available in your city."
 msgstr ""
 "Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
@@ -168,8 +153,6 @@ msgid "Tags"
 msgstr "Tags"
 
 #: templates/base/home.html:35
-#, fuzzy
-#| msgid "Add rfid support to your bikes here"
 msgid "Want protection? Add rfid support to your bikes here"
 msgstr "Vuoi proteggere la tua bici? Aggiungi il supporto RFID"
 
@@ -178,10 +161,6 @@ msgid "Badges"
 msgstr "Badges"
 
 #: templates/base/home.html:48
-#, fuzzy
-#| msgid ""
-#| "View all your Badges, the ones you've unlocked and \n"
-#| "                                    ones you need to get."
 msgid ""
 "View all your Badges, the ones you've unlocked and ones you need to get."
 msgstr ""
@@ -220,8 +199,6 @@ msgstr "<a href=\"%(privileged_url)s\">Registrati come un altro utente"
 
 #: templates/profiles/enduserprofile_update.html:9
 #: templates/profiles/privilegeduserprofile_update.html:9
-#, fuzzy
-#| msgid "My Profile"
 msgid "Your profile"
 msgstr "Il mio profilo"
 
@@ -341,8 +318,6 @@ msgid "Register"
 msgstr "Registrati"
 
 #: templates/vehiclemonitor/base.html:8 templates/vehicles/base.html:8
-#, fuzzy
-#| msgid "Bikes"
 msgid "bikes"
 msgstr "Biciclette"
 
@@ -377,8 +352,6 @@ msgid "Are you sure you want to delete bike <strong>%(nickname)s</strong>?"
 msgstr "Sei sicuro di voler rimuovere questa bicicletta <strong>%(nickname)s</strong>?"
 
 #: templates/vehicles/bike_create.html:7
-#, fuzzy
-#| msgid "Register"
 msgid "Register new bike"
 msgstr "Registra una nuova bicicletta"
 
@@ -399,8 +372,6 @@ msgid "With owner"
 msgstr "In possesso del propretario"
 
 #: templates/vehicles/bike_detail.html:41
-#, fuzzy
-#| msgid "Registration"
 msgid "Registration code"
 msgstr "Registrazione"
 
@@ -579,8 +550,6 @@ msgid "report lost"
 msgstr "Segnala come smarrita"
 
 #: templates/vehicles/bikestatus_create.html:24
-#, fuzzy
-#| msgid "Report a stolen Bike?"
 msgid "Report lost bike"
 msgstr "Segnala una bici smarrita"
 
