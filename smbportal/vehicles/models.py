@@ -28,6 +28,7 @@ class Vehicle(models.Model):
     last_position = models.ForeignKey(
         "tracks.CollectedPoint",
         models.CASCADE,
+        verbose_name=_("last position"),
         blank=True,
         null=True
     )
@@ -89,18 +90,22 @@ class Bike(Vehicle):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="bikes",
+        verbose_name=_("owner")
     )
     picture_gallery = models.OneToOneField(
         "photologue.Gallery",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
+        verbose_name=_("picture_gallery")
     )
     last_update = models.DateTimeField(
+        _("last update"),
         auto_now=True,
         db_column="lastupdate",
     )
     bike_type = models.CharField(
+        _("bike type"),
         max_length=20,
         choices=(
             (RACING_BIKE, _("racing")),
@@ -111,6 +116,7 @@ class Bike(Vehicle):
         default=CITY_BIKE,
     )
     gear = models.CharField(
+        _("gear"),
         max_length=50,
         choices=(
             (SINGLE_RING_GEAR, _("single ring")),
@@ -121,6 +127,7 @@ class Bike(Vehicle):
         default=GROUPSET_ABOVE_18_SPEED_GEAR,
     )
     brake = models.CharField(
+        _("brake"),
         max_length=30,
         choices=(
             (DISK_BRAKE, _("disk")),
@@ -129,20 +136,54 @@ class Bike(Vehicle):
         ),
         default=DISK_BRAKE,
     )
-    nickname = models.CharField(max_length=100)
-    brand = models.CharField(max_length=50, blank=True)
-    model = models.CharField(max_length=50, blank=True)
-    color = models.CharField(max_length=100, blank=True)
-    saddle = models.CharField(max_length=100, blank=True)
-    has_basket = models.BooleanField(default=False)
-    has_cargo_rack = models.BooleanField(default=False)
-    has_lights = models.BooleanField(default=False)
-    has_bags = models.BooleanField(default=False)
-    has_smb_sticker = models.BooleanField(
-        default=False,
-        verbose_name="has SaveMyBike sticker"
+    nickname = models.CharField(
+        _("nickname"),
+        max_length=100
     )
-    other_details = models.TextField(blank=True)
+    brand = models.CharField(
+        _("brand"),
+        max_length=50,
+        blank=True
+    )
+    model = models.CharField(
+        _("model"),
+        max_length=50,
+        blank=True
+    )
+    color = models.CharField(
+        _("color"),
+        max_length=100,
+        blank=True
+    )
+    saddle = models.CharField(
+        _("saddle"),
+        max_length=100,
+        blank=True
+    )
+    has_basket = models.BooleanField(
+        _("has basket"),
+        default=False
+    )
+    has_cargo_rack = models.BooleanField(
+        _("has cargo rack"),
+        default=False
+    )
+    has_lights = models.BooleanField(
+        _("has lights"),
+        default=False
+    )
+    has_bags = models.BooleanField(
+        _("has bags"),
+        default=False
+    )
+    has_smb_sticker = models.BooleanField(
+        _("has SaveMyBike sticker"),
+        default=False
+    )
+    other_details = models.TextField(
+        _("other details"),
+        blank=True
+    )
 
     class Meta:
         unique_together = ("owner", "nickname")
@@ -174,14 +215,23 @@ class BikeStatus(models.Model):
     bike = models.ForeignKey(
         "Bike",
         on_delete=models.CASCADE,
-        related_name="status_history"
+        related_name="status_history",
+        verbose_name=_("bike")
     )
-    lost = models.BooleanField(default=False)
-    creation_date = models.DateTimeField(auto_now_add=True)
+    lost = models.BooleanField(
+        _("lost"),
+        default=False
+    )
+    creation_date = models.DateTimeField(
+        _("creation date"),
+        auto_now_add=True
+    )
     details = models.TextField(
+        _("details"),
         blank=True
     )
     position = gis_models.PointField(
+        _("position"),
         null=True,
         blank=True,
         help_text=_("Bike last seen position")
@@ -204,9 +254,14 @@ class PhysicalTag(models.Model):
         "Bike",
         on_delete=models.CASCADE,
         related_name="tags",
+        verbose_name=_("bike")
     )
     epc = models.TextField(
+        _("epc"),
         help_text=_("Electronic Product Code"),
         unique=True
     )
-    creation_date = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateTimeField(
+        _("creation date"),
+        auto_now_add=True
+    )
