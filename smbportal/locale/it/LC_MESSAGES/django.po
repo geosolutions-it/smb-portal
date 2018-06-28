@@ -27,7 +27,7 @@ msgstr "Italian"
 
 #: profiles/models.py:90
 msgid "Short user biography"
-msgstr ""
+msgstr "Breve biografia"
 
 #: profiles/views.py:118
 #, fuzzy
@@ -37,23 +37,23 @@ msgstr "Richiesta di registrazione da un utente privilegiato"
 
 #: profiles/views.py:148
 msgid "Registration request sent to admins"
-msgstr ""
+msgstr "La richeista di registrazione è stata inviata agli amministratori"
 
 #: profiles/views.py:149
 msgid "You have been logged out"
-msgstr ""
+msgstr "Disconnesso"
 
 #: profiles/views.py:188
 msgid "User profile created. You can now add some bikes"
-msgstr ""
+msgstr "Profilo utente createo. Adesso puoi aggiungere le tue biciclette"
 
 #: profiles/views.py:248
 msgid "User profile updated!"
-msgstr ""
+msgstr "Profilo utente aggiornato!"
 
 #: profiles/views.py:286
 msgid "Please complete your user profile before continuing"
-msgstr ""
+msgstr "Completa il tuo profilo utente per poter continuare nella navigazione"
 
 #: templates/avatar/add.html:10 templates/avatar/change.html:10
 #: templates/avatar/confirm_delete.html:9 templates/profiles/base.html:8
@@ -63,7 +63,7 @@ msgstr "Il mio profilo"
 #: templates/avatar/add.html:11 templates/avatar/base.html:8
 #: templates/avatar/change.html:11 templates/avatar/confirm_delete.html:10
 msgid "avatar"
-msgstr ""
+msgstr "Immagine del profilo"
 
 #: templates/avatar/add.html:12 templates/vehicles/bike_create.html:11
 msgid "new"
@@ -249,7 +249,7 @@ msgstr "Sondaggi sulla mobilità"
 #: templates/profiles/enduserprofile_update.html:42
 #: templates/profiles/mobilityhabitssurvey_detail.html:11
 msgid "Mobility survey"
-msgstr ""
+msgstr "Sondaggio sulla mobilità"
 
 #: templates/profiles/enduserprofile_update.html:46
 msgid "Answer mobility survey again"
@@ -302,7 +302,7 @@ msgstr ""
 
 #: templates/profiles/mobilityhabitssurvey_detail_inner.html:18
 msgid "Uses bike sharing services"
-msgstr ""
+msgstr "Utilizzo servizi di bike sharing"
 
 #: templates/profiles/mobilityhabitssurvey_detail_inner.html:24
 msgid "Uses electric car sharing services"
@@ -310,7 +310,7 @@ msgstr ""
 
 #: templates/profiles/mobilityhabitssurvey_detail_inner.html:30
 msgid "Uses fuel car sharing services"
-msgstr ""
+msgstr "Uso servizi di car sharing"
 
 #: templates/profiles/mobilityhabitssurvey_detail_inner.html:36
 msgid "Date answered"
@@ -318,11 +318,11 @@ msgstr ""
 
 #: templates/profiles/privilegeduserprofile_create.html:9
 msgid "Complete profile - Privileged user"
-msgstr ""
+msgstr "Completa il profilo - Utente con ruolo speciale"
 
 #: templates/profiles/privilegeduserprofile_create.html:13
 msgid "complete profile privileged user"
-msgstr ""
+msgstr "Completa il profilo per utente con ruolo speciale"
 
 #: templates/profiles/privilegeduserprofile_create.html:38
 msgid "Note"
@@ -641,23 +641,23 @@ msgstr "Visualizza le rilevazioni della bicicletta"
 
 #: vehicles/forms.py:138
 msgid "A bike with that nickname already exists"
-msgstr ""
+msgstr "E' già presente una bicicletta con questo nome"
 
 #: vehicles/forms.py:258
 msgid "Already uploaded a picture with that name"
-msgstr ""
+msgstr "E' stata già inserita una foto con lo stesso nome"
 
 #: vehicles/forms.py:291
 msgid "Must select at least one picture to delete"
-msgstr ""
+msgstr "Selezionare almeno un'immagine da eliminare"
 
 #: vehicles/models.py:187
 msgid "Bike last seen position"
-msgstr ""
+msgstr "Ultima positione rilevata della bicicletta"
 
 #: vehicles/models.py:209
 msgid "Electronic Product Code"
-msgstr ""
+msgstr "Codice prodotto"
 
 #: vehicles/views.py:68
 #, fuzzy
@@ -691,11 +691,11 @@ msgstr "Foto della bicicletta"
 
 #: vehicles/views.py:232
 msgid "Pictures have been deleted!"
-msgstr ""
+msgstr "Immagini eliminate!"
 
 #: vehicles/views.py:260
 msgid "Bike status updated!"
-msgstr ""
+msgstr "Lo stato è stato aggiornato!"
 
 #~ msgid "Settings"
 #~ msgstr "Impostazioni"
