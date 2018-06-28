@@ -1,4 +1,4 @@
-#SOME DESCRIPTIVE TITLE.
+# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-27 16:12+0000\n"
+"POT-Creation-Date: 2018-06-28 09:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,36 @@ msgstr "English"
 #: base/settings/base.py:183
 msgid "Italian"
 msgstr "Italian"
+
+#: profiles/models.py:90
+msgid "Short user biography"
+msgstr ""
+
+#: profiles/views.py:118
+#, fuzzy
+#| msgid "Privileged user registration request"
+msgid "Privileged user profile created!"
+msgstr "Richiesta di registrazione da un utente privilegiato"
+
+#: profiles/views.py:148
+msgid "Registration request sent to admins"
+msgstr ""
+
+#: profiles/views.py:149
+msgid "You have been logged out"
+msgstr ""
+
+#: profiles/views.py:188
+msgid "User profile created. You can now add some bikes"
+msgstr ""
+
+#: profiles/views.py:248
+msgid "User profile updated!"
+msgstr ""
+
+#: profiles/views.py:286
+msgid "Please complete your user profile before continuing"
+msgstr ""
 
 #: templates/avatar/add.html:10 templates/avatar/change.html:10
 #: templates/avatar/confirm_delete.html:9 templates/profiles/base.html:8
@@ -49,7 +79,9 @@ msgstr "Immagine del profilo"
 
 #: templates/avatar/add.html:24 templates/avatar/change.html:32
 msgid "You haven't uploaded an avatar yet. Please upload one now."
-msgstr "Non hai ancora inserito un imagine per il tuo profilo. Potresti aggiungerne una?"
+msgstr ""
+"Non hai ancora inserito un imagine per il tuo profilo. Potresti aggiungerne "
+"una?"
 
 #: templates/avatar/add.html:30
 msgid "Upload"
@@ -87,7 +119,9 @@ msgstr "Selezioa le immagini del profilo che vuoi rimuovere"
 msgid ""
 "You have no avatars to delete. Please <a href=\"%(avatar_add_url)s\">upload "
 "one</a> now."
-msgstr "Non ci sono immagini del profilo da elminare. <a href=\"%(avatar_add_url)s\">Aggiungine una."
+msgstr ""
+"Non ci sono immagini del profilo da elminare. <a href=\"%(avatar_add_url)s"
+"\">Aggiungine una."
 
 #: templates/avatar/confirm_delete.html:27
 msgid "Delete selected"
@@ -106,27 +140,33 @@ msgstr "Segnala una bicicletta rubata"
 msgid "About"
 msgstr "Info"
 
-#: templates/base/base.html:64
+#: templates/base/base.html:69
+#, fuzzy
+#| msgid "Change avatar"
+msgid "Change language"
+msgstr "Modifica immagine profile"
+
+#: templates/base/base.html:93
 msgid "My Profile"
 msgstr "Il mio profilo"
 
-#: templates/base/base.html:65
+#: templates/base/base.html:94
 msgid "Messages"
 msgstr "Messaggi"
 
-#: templates/base/base.html:67
+#: templates/base/base.html:96
 msgid "Logout"
 msgstr "Disconnetti"
 
-#: templates/base/base.html:69
+#: templates/base/base.html:98
 msgid "Login/Register"
 msgstr "Registrati"
 
-#: templates/base/base.html:82
+#: templates/base/base.html:111
 msgid "Home"
 msgstr "Pagina iniaziale"
 
-#: templates/base/home.html:13                                  bikes off the system. "
+#: templates/base/home.html:13
 msgid ""
 " Register new Bikes, update information about your bikes and delete bikes "
 "from the system. "
@@ -206,7 +246,12 @@ msgstr "Il mio profilo"
 msgid "Mobility surveys"
 msgstr "Sondaggi sulla mobilità"
 
-#: templates/profiles/enduserprofile_update.html:40
+#: templates/profiles/enduserprofile_update.html:42
+#: templates/profiles/mobilityhabitssurvey_detail.html:11
+msgid "Mobility survey"
+msgstr ""
+
+#: templates/profiles/enduserprofile_update.html:46
 msgid "Answer mobility survey again"
 msgstr "Rispondi nuovamente al sondaggio sulla mobilità"
 
@@ -241,8 +286,34 @@ msgstr "Nuovo sondaggio"
 msgid "New mobility survey"
 msgstr "Nuovo sondagio sulla mobilità"
 
-#: templates/profiles/mobilityhabitssurvey_detail.html:13
-msgid "Mobility survey"
+#: templates/profiles/mobilityhabitssurvey_detail.html:19
+#, fuzzy
+#| msgid "new survey"
+msgid "Answer new survey"
+msgstr "Nuovo sondaggio"
+
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:6
+msgid "Bicycle usage"
+msgstr ""
+
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:12
+msgid "Public transport usage"
+msgstr ""
+
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:18
+msgid "Uses bike sharing services"
+msgstr ""
+
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:24
+msgid "Uses electric car sharing services"
+msgstr ""
+
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:30
+msgid "Uses fuel car sharing services"
+msgstr ""
+
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:36
+msgid "Date answered"
 msgstr ""
 
 #: templates/profiles/privilegeduserprofile_create.html:9
@@ -337,21 +408,25 @@ msgstr "Ultime rilevazioni"
 #: templates/vehiclemonitor/bikeobservation_list.html:50
 msgid ""
 "Bikes that have RFID tags may be monitored when circulating on the street"
-msgstr "Le biciclette con un RFID installato possono essere monitorate durante la circolazione per le strade"
+msgstr ""
+"Le biciclette con un RFID installato possono essere monitorate durante la "
+"circolazione per le strade"
 
 #: templates/vehicles/bike_confirm_delete.html:6
-#: templates/vehicles/bike_detail.html:158
-#: templates/vehicles/bike_detail.html:160
-#: templates/vehicles/bike_detail.html:163
+#: templates/vehicles/bike_detail.html:159
+#: templates/vehicles/bike_detail.html:162
+#: templates/vehicles/bike_detail.html:165
 msgid "Delete bike"
 msgstr "Elimina bicicletta"
 
 #: templates/vehicles/bike_confirm_delete_inner.html:4
 #, python-format
 msgid "Are you sure you want to delete bike <strong>%(nickname)s</strong>?"
-msgstr "Sei sicuro di voler rimuovere questa bicicletta <strong>%(nickname)s</strong>?"
+msgstr ""
+"Sei sicuro di voler rimuovere questa bicicletta <strong>%(nickname)s</"
+"strong>?"
 
-#: templates/vehicles/bike_create.html:7
+#: templates/vehicles/bike_create.html:7 templates/vehicles/bike_list.html:41
 msgid "Register new bike"
 msgstr "Registra una nuova bicicletta"
 
@@ -459,20 +534,20 @@ msgid "View bike observations"
 msgstr "Visualizza le rilevazioni della bicicletta"
 
 #: templates/vehicles/bike_detail.html:145
-#: templates/vehicles/bike_detail.html:147
 msgid "Update bike"
 msgstr "Aggiorna bicicletta"
 
-#: templates/vehicles/bike_detail.html:150
+#: templates/vehicles/bike_detail.html:148
+#: templates/vehicles/bike_detail.html:151
 msgid "Edit bike details"
 msgstr "Modifica i dati della bicicletta"
 
-#: templates/vehicles/bike_detail.html:152
+#: templates/vehicles/bike_detail.html:153
 msgid "Manage bike pictures"
 msgstr "Gestisci le foto della bicicletta"
 
-#: templates/vehicles/bike_detail.html:153
-#: templates/vehicles/bikestatus_create.html:24
+#: templates/vehicles/bike_detail.html:154
+#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:185
 msgid "Update bike status"
 msgstr "Aggiorna lo stato della bicicletta"
 
@@ -484,13 +559,9 @@ msgstr "Le tue biciclette"
 msgid "This bike is currently reported as lost"
 msgstr "Questa bicicletta è segnalato come smarrita"
 
-#: templates/vehicles/bike_list.html:37 templates/vehicles/bike_list.html:41
+#: templates/vehicles/bike_list.html:37 templates/vehicles/bike_list.html:42
 msgid "Register a new bike"
 msgstr "Registra una nuova bicicletta"
-
-#: templates/vehicles/bike_list.html:40
-msgid "Create bike"
-msgstr "Aggiungi una nuova bicicletta"
 
 #: templates/vehicles/bike_picture_confirm_delete.html:10
 #: templates/vehicles/bike_picture_create.html:10
@@ -533,7 +604,8 @@ msgid ""
 "\n"
 "            Current pictures for bike %(nickname)s\n"
 "        "
-msgstr "\n"
+msgstr ""
+"\n"
 "            Immagini delle bicicletta %(nickname)s\n"
 "        "
 
@@ -549,9 +621,81 @@ msgstr "Aggiorna stato"
 msgid "report lost"
 msgstr "Segnala come smarrita"
 
-#: templates/vehicles/bikestatus_create.html:24
+#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:185
 msgid "Report lost bike"
 msgstr "Segnala una bici smarrita"
+
+#: vehiclemonitor/models.py:31
+msgid "Either this field or `address` must be given"
+msgstr ""
+
+#: vehiclemonitor/models.py:35
+msgid "Approximate address. Either this field or `position` must be given"
+msgstr ""
+
+#: vehiclemonitor/models.py:44
+#, fuzzy
+#| msgid "View bike observations"
+msgid "When the observation was made"
+msgstr "Visualizza le rilevazioni della bicicletta"
+
+#: vehicles/forms.py:138
+msgid "A bike with that nickname already exists"
+msgstr ""
+
+#: vehicles/forms.py:258
+msgid "Already uploaded a picture with that name"
+msgstr ""
+
+#: vehicles/forms.py:291
+msgid "Must select at least one picture to delete"
+msgstr ""
+
+#: vehicles/models.py:187
+msgid "Bike last seen position"
+msgstr ""
+
+#: vehicles/models.py:209
+msgid "Electronic Product Code"
+msgstr ""
+
+#: vehicles/views.py:68
+#, fuzzy
+#| msgid "Create bike"
+msgid "Created bike {}"
+msgstr "Aggiungi una nuova bicicletta"
+
+#: vehicles/views.py:121
+#, fuzzy
+#| msgid "Bike details"
+msgid "Bike details updated!"
+msgstr "Dettagli della bici"
+
+#: vehicles/views.py:140
+#, fuzzy
+#| msgid "Edit bike details"
+msgid "Update bike details"
+msgstr "Modifica i dati della bicicletta"
+
+#: vehicles/views.py:157
+#, fuzzy
+#| msgid "Bike details"
+msgid "Bike deleted!"
+msgstr "Dettagli della bici"
+
+#: vehicles/views.py:187
+#, fuzzy
+#| msgid "Bike Pictures"
+msgid "Bike picture uploaded!"
+msgstr "Foto della bicicletta"
+
+#: vehicles/views.py:232
+msgid "Pictures have been deleted!"
+msgstr ""
+
+#: vehicles/views.py:260
+msgid "Bike status updated!"
+msgstr ""
 
 #~ msgid "Settings"
 #~ msgstr "Impostazioni"
@@ -564,4 +708,3 @@ msgstr "Segnala una bici smarrita"
 
 #~ msgid "Login"
 #~ msgstr "Accesso"
-
