@@ -1,9 +1,33 @@
 /* global $ */
 
+const setupSmbModalDisplay = function (anchorId) {
+  document.getElementById(anchorId).addEventListener('click', function () {
+    const modalAttrs = getDataAttrsDisplay('#' + anchorId)
+    console.log('modalAttrs: ' + modalAttrs)
+    setModalTitle(modalAttrs.title)
+    loadDataIntoModalBody(modalAttrs.url)
+  })
+}
+
+const getDataAttrsDisplay = function (anchorSelector) {
+  return {
+    title: document.querySelector(anchorSelector).dataset.title,
+    url: document.querySelector(anchorSelector).dataset.contentsUrl,
+  }
+}
+
+const loadDataIntoModalBody = function (url) {
+  const primaryButtonElement = document.querySelector(
+    '#smbModal .modal-footer #primaryButton')
+  primaryButtonElement.parentElement.removeChild(primaryButtonElement)
+  $('#smbModal .modal-dialog .modal-content .modal-body').load(url)
+}
+
+
 const setupSmbModal = function (anchorId) {
   document.getElementById(anchorId).addEventListener('click', function () {
     const modalAttrs = getDataAttrs('#' + anchorId)
-    setModalTitle(modalAttrs)
+    setModalTitle(modalAttrs.title)
     updateModalPrimaryButton(
       modalAttrs.primary.value,
       modalAttrs.primary.iconClasses,
@@ -41,9 +65,9 @@ const getDataAttrs = function (anchorSelector) {
   }
 }
 
-const setModalTitle = function (modalAttrs) {
+const setModalTitle = function (title) {
   const modalTitleElement = document.querySelector('#smbModal .modal-title')
-  modalTitleElement.textContent = modalAttrs.title
+  modalTitleElement.textContent = title
 }
 
 const loadFormIntoModalBody = function (formAction) {

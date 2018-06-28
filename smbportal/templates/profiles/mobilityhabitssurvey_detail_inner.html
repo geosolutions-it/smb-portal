@@ -1,0 +1,40 @@
+{% load i18n %}
+
+<ul class="list-group">
+    <li class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex justify-content-between">
+            <h6>{% trans 'Bicycle usage' %}</h6>
+            <span>{{ survey.bicycle_usage }}</span>
+        </div>
+    </li>
+    <li class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex justify-content-between">
+            <h6>{% trans 'Public transport usage' %}</h6>
+            <span>{{ survey.public_transport_usage }}</span>
+        </div>
+    </li>
+    <li class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex justify-content-between">
+            <h6>{% trans 'Uses bike sharing services' %}</h6>
+            <span><i class="fa {% if survey.uses_bike_sharing_services %}fa-check-square{% else %}fa-square-o{% endif %}"></i></span>
+        </div>
+    </li>
+    <li class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex justify-content-between">
+            <h6>{% trans 'Uses electric car sharing services' %}</h6>
+            <span><i class="fa {% if survey.uses_electrical_car_sharing_services %}fa-check-square{% else %}fa-square-o{% endif %}"></i></span>
+        </div>
+    </li>
+    <li class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex justify-content-between">
+            <h6>{% trans 'Uses fuel car sharing services' %}</h6>
+            <span><i class="fa {% if survey.uses_fuel_car_sharing_services %}fa-check-square{% else %}fa-square-o{% endif %}"></i></span>
+        </div>
+    </li>
+    <li class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex justify-content-between">
+            <h6>{% trans 'Date answered' %}</h6>
+            <span>{{ survey.date_answered }}</span>
+        </div>
+    </li>
+</ul>

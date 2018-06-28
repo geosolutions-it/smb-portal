@@ -328,7 +328,9 @@ class MobilityHabitsSurveyCreateView(LoginRequiredMixin,
 
 class MobilityHabitsSurveyDetailView(LoginRequiredMixin,
                                      PermissionRequiredMixin,
+                                     mixins.AjaxTemplateMixin,
                                      DetailView):
     model = models.MobilityHabitsSurvey
     context_object_name = "survey"
     permission_required = "profiles.can_view_profile"
+    ajax_template_name = "profiles/mobilityhabitssurvey_detail_inner.html"
