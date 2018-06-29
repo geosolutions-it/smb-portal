@@ -26,9 +26,11 @@ class SmbUser(AbstractUser):
     """
 
     nickname = models.CharField(
+        _("nickname"),
         max_length=100,
     )
     language_preference = models.CharField(
+        _("language preference"),
         max_length=20,
         choices=((k, v) for k, v in settings.LANGUAGES),
         default="en"
@@ -64,11 +66,14 @@ class EndUserProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        verbose_name=_("user")
     )
     date_updated = models.DateTimeField(
+        _("date updated"),
         auto_now=True
     )
     gender = models.CharField(
+        _("gender"),
         max_length=20,
         blank=False,
         choices=(
@@ -82,11 +87,13 @@ class EndUserProfile(models.Model):
         message="Use the format +99999999. From 8 to 15 digits allowed"
     )
     phone_number = models.CharField(
+        _("phone number"),
         max_length=16,
         blank=True,
         validators=[PHONE_NUMBER_REGEX_VALIDATOR]
     )
     bio = models.TextField(
+        _("bio"),
         help_text=_("Short user biography"),
         blank=True
     )
@@ -98,7 +105,8 @@ class EndUserProfile(models.Model):
 class PrivilegedUserProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name=_("user")
     )
 
 
@@ -119,12 +127,15 @@ class MobilityHabitsSurvey(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="mobility_habits_surveys"
+        related_name="mobility_habits_surveys",
+        verbose_name=_("end user")
     )
     date_answered = models.DateTimeField(
+        _("date answered"),
         auto_now_add=True
     )
     public_transport_usage = models.CharField(
+        _("public transport usage"),
         max_length=100,
         choices=(
             (
@@ -147,15 +158,19 @@ class MobilityHabitsSurvey(models.Model):
         default=RARE_PUBLIC_TRANSPORT_USER,
     )
     uses_bike_sharing_services = models.BooleanField(
+        _("uses bike sharing services"),
         default=False
     )
     uses_electrical_car_sharing_services = models.BooleanField(
+        _("uses electrical car sharing services"),
         default=False
     )
     uses_fuel_car_sharing_services = models.BooleanField(
+        _("uses fuel car sharing services"),
         default=False
     )
     bicycle_usage = models.CharField(
+        _("bicycle usage"),
         max_length=100,
         choices=(
             (
