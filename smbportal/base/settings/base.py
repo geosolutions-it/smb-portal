@@ -266,8 +266,8 @@ KEYCLOAK = {
     "base_url": get_environment_variable(
         "KEYCLOAK_BASE_URL", "http://localhost:8080"),
     "realm": get_environment_variable("KEYCLOAK_REALM"),
-    "admin_role": "realm_admin",
-    "staff_role": "staff_member",
+    "admin_role": "portal_admin",
+    "staff_role": "portal_staff",
     "client_id": get_environment_variable("DJANGO_KEYCLOAK_CLIENT_ID"),
     "client_public_uri": get_environment_variable(
         "DJANGO_PUBLIC_URL", "http://localhost:8000"),
