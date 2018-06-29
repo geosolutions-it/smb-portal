@@ -171,6 +171,8 @@ class BikeStatusForm(forms.ModelForm):
         required=False,
         widget=gis_forms.OSMWidget(
             attrs={
+                "map_height": "100%",
+                "map_width": "100%",
                 "default_lon": 12,
                 "default_lat": 41,
                 "default_zoom": 6,
@@ -191,11 +193,11 @@ class BikeStatusForm(forms.ModelForm):
                     layout.Field("bike"),
                     layout.Field("lost"),
                     layout.Field("details"),
-                    css_class="col-lg-6"
+                    css_class="col-lg-3"
                 ),
                 layout.Div(
                     layout.Field("position"),
-                    css_class="col-lg-6"
+                    css_class="col-lg-9"
                 ),
                 css_class="row"
             ),
@@ -207,7 +209,6 @@ class BikeStatusForm(forms.ModelForm):
             self.fields["bike"].queryset = models.Bike.objects.filter(
                 owner=user)
             self.instance.lost = True
-            self.helper.layout.pop(1)
             del self.fields["lost"]
         else:
             current_status = bike.get_current_status()
