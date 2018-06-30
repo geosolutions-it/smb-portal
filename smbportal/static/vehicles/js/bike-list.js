@@ -1,3 +1,4 @@
-/* global setupSmbModal */
+/* global setupModal */
+/* global validateAddition */
 
-setupSmbModal('createBike')
+setupModal('createBike', !validateAddition('createBike'))

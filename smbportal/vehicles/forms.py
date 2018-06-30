@@ -21,6 +21,7 @@ from django.utils.translation import gettext as _
 from photologue.models import Photo
 
 from . import models
+from . import validators
 
 logger = logging.getLogger(__name__)
 
@@ -227,11 +228,45 @@ class BikeStatusForm(forms.ModelForm):
 
 
 class BikePictureForm(forms.ModelForm):
+    image = forms.ImageField(
+        label=_("image"),
+    )
 
     def __init__(self, *args, **kwargs):
         self.bike = kwargs.pop("bike", None)
+        is_ajax = kwargs.pop("is_ajax", None)
+        action = kwargs.pop("action", None)
         super().__init__(*args, **kwargs)
         self.instance.gallery = self.bike.picture_gallery
+        self.helper = FormHelper()
+        if action is not None:
+            self.helper.form_action = action
+        self.helper.layout = layout.Layout(
+            layout.Field("image"),
+        )
+        form_id = "bikePictureForm"
+        self.helper.form_id = form_id
+        if not is_ajax:
+            self.helper.layout.append(
+                bootstrap.FormActions(
+                    bootstrap.StrictButton(
+                        mark_safe('<i class="fa fa-upload"></i> ') + _(
+                            "Upload picture"),
+                        type="submit",
+                        form=form_id,
+                        css_class="btn btn-primary"
+                    ),
+                )
+            )
+
+    def clean_image(self):
+        data = self.cleaned_data.get("image")
+        logger.debug("data: {}".format(data))
+        if data is not None:
+            validators.validate_file_size(data)
+        else:
+            raise forms.ValidationError(_("could not read uploaded image"))
+        return data
 
     def clean(self):
         """Perform validation of fields that depend on each other
@@ -245,30 +280,34 @@ class BikePictureForm(forms.ModelForm):
         """
 
         super().clean()
-        file_name = self.cleaned_data["image"].name
-        title = "-".join((str(self.bike.pk), file_name))
-        slugged_title = slugify(title)
-        gallery = self.bike.picture_gallery
-        if gallery.photos.filter(slug=slugged_title).exists():
-            # FIXME: should be passing "image" as the ``field`` value here
-            #        However, that makes the template render a non-styled
-            #        message next to the failing field. By passing ``None``
-            #        we are at least rendering a correctly styled error in the
-            #        template
-            self.add_error(
-                None, _("Already uploaded a picture with that name"))
-        else:
-            self.instance.title = title
+        uploaded_image = self.cleaned_data.get("image")
+        if uploaded_image is not None:
+            file_name = uploaded_image.name
+            title = "-".join((str(self.bike.pk), file_name))
+            slugged_title = slugify(title)
+            gallery = self.bike.picture_gallery
+            if gallery.photos.filter(slug=slugged_title).exists():
+                # FIXME: should be passing "image" as the ``field`` value here
+                #        However, that makes the template render a non-styled
+                #        message next to the failing field. By passing ``None``
+                #        we are at least rendering a correctly styled error
+                #        in the template
+                self.add_error(
+                    None, _("Already uploaded a picture with that name"))
+            else:
+                self.instance.title = title
 
     def save(self, commit=True):
         self.instance.slug = slugify(self.instance.title)
+        self.instance.caption = "caption for photo {}".format(
+            self.instance.title)
         return super().save(commit=commit)
 
     class Meta:
         model = Photo
         fields = (
             "image",
-            "caption",
+            # "caption",
         )
 
 

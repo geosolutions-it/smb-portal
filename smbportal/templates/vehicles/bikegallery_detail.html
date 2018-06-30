@@ -1,35 +1,57 @@
 {% extends "vehicles/base.html" %}
 
 {% load i18n %}
+{% load static %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
-    {% breadcrumb _("manage pictures") 'bikes:gallery' pk=bike.pk %}
+    {% breadcrumb gallery.bike.nickname 'bikes:detail' pk=gallery.bike.pk %}
+    {% breadcrumb _("manage pictures") 'bikes:gallery' pk=gallery.bike.pk %}
 {% endblock %}
 
 {% block page_title %}{% trans 'Bike Pictures' %}{% endblock %}
 
 {% block main %}
     <div class="col-lg-9 col-md-8 order-md-1">
-        <h1>{% blocktrans with nickname=bike.nickname %}
-            Current pictures for bike {{ nickname }}
-        {% endblocktrans %}</h1>
+        {% if gallery.photo_count >= max_pictures %}
+            <p>{% trans 'This bike already has the maximum number of pictures. Cannot add more.' %}</p>
+        {% endif %}
         {% for photo in gallery.public %}
             <a href="{{ photo.image.url }}">
                 <img src="{{ photo.get_display_url }}" class="thumbnail" alt="{{ photo.title }}">
             </a>
+        {% empty %}
+            <p>{% trans 'There are no pictures for this bike yet' %}</p>
         {% endfor %}
     </div>
     <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
         <nav class="list-group">
-            <a href="{% url 'bikes:picture-upload' pk=bike.pk %}" class="list-group-item list-group-item-action list-group-item-info">
-                <i class="fa fa-plus-circle"></i> {% trans 'Add pictures' %}
+            <a
+                    id="addPicture"
+                    class="list-group-item list-group-item-action"
+                    data-toggle="modal"
+                    href="#"
+                    data-action-url="{% url 'bikes:picture-upload' pk=gallery.bike.pk %}"
+                    data-primary-button-value="{% trans 'Upload picture' %}"
+                    data-primary-button-icon="fa fa-upload"
+                    data-primary-button-classes="btn btn-primary"
+                    data-title="{% trans 'Upload bike picture' %}"
+                    data-denial-title="{% trans 'Bike pictures limit reached' %}"
+                    data-denial-content="{% trans 'Bike pictures limit reached. Cannot add more pictures. Delete some existing pictures first.' %}"
+                    data-threshold="{{ max_pictures }}"
+                    data-current="{{ gallery.photo_count }}"
+            >
+                <i class="fa fa-plus-circle"></i> {% trans 'Add picture' %}
             </a>
-            <a href="{% url 'bikes:pictures-delete' pk=bike.pk %}" class="list-group-item list-group-item-action list-group-item-danger">
+            <a href="{% url 'bikes:pictures-delete' pk=gallery.bike.pk %}" class="list-group-item list-group-item-action list-group-item-danger">
                 <i class="fa fa-trash-o"></i> {% trans 'Delete pictures' %}
             </a>
         </nav>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'base/js/smb-utils.js' %}"></script>
+    <script src="{% static 'vehicles/js/bikegallery-detail.js' %}"></script>
 {% endblock %}

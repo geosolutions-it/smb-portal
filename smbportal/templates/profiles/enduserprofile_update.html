@@ -35,8 +35,8 @@
             <ul>
                 {% for survey in enduserprofile.mobility_habits_surveys.all %}
                     <li><a
-                            id="showMobilitySurvey"
-                            href="#smbModal"
+                            name="showMobilitySurvey"
+                            href="#smbDisplayModal"
                             data-contents-url="{% url 'profile:survey' pk=survey.pk %}"
                             data-toggle="modal"
                             data-title="{% trans 'Mobility survey' %}"

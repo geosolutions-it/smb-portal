@@ -47,6 +47,12 @@ class BikeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_queryset(self):
         return models.Bike.objects.filter(owner=self.request.user)
 
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data["max_bikes"] = settings.SMB_PORTAL.get(
+            "max_bikes_per_user", 5)
+        return context_data
+
     def get_login_url(self):
         if not self.request.user.is_authenticated:
             result = settings.LOGIN_URL
@@ -171,7 +177,8 @@ class BikeGalleryDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data["bike"] = get_current_bike(self.kwargs)
+        context_data["max_pictures"] = settings.SMB_PORTAL.get(
+            "max_pictures_per_bike", 10)
         return context_data
 
     def get_object(self, queryset=None):
@@ -181,10 +188,12 @@ class BikeGalleryDetailView(LoginRequiredMixin, DetailView):
 
 class BikePictureUploadView(LoginRequiredMixin,
                             mixins.FormUpdatedMessageMixin,
+                            mixins.AjaxTemplateMixin,
                             CreateView):
     model = Photo
     form_class = forms.BikePictureForm
     template_name = "vehicles/bike_picture_create.html"
+    ajax_template_name = "vehicles/bike_picture_create_inner.html"
     success_message = _("Bike picture uploaded!")
 
     def get_success_url(self):
@@ -200,6 +209,11 @@ class BikePictureUploadView(LoginRequiredMixin,
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
             "bike": get_current_bike(self.kwargs),
+            "action": reverse(
+                "bikes:picture-upload",
+                kwargs={"pk": self.kwargs["pk"]}
+            ),
+            "is_ajax": self.request.is_ajax(),
         })
         return form_kwargs
 
