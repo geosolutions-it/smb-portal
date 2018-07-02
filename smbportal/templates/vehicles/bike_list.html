@@ -31,7 +31,7 @@
         <nav class="list-group">
             <a
                     id="createBike"
-                    href="#smbModal"
+                    href="#"
                     class="list-group-item list-group-item-action"
                     data-action-url="{% url 'bikes:create' %}"
                     data-primary-button-value="{% trans 'Register a new bike' %}"
@@ -39,6 +39,10 @@
                     data-primary-button-icon="fa fa-plus-circle"
                     data-primary-button-classes="btn btn-primary"
                     data-title="{% trans 'Register new bike' %}"
+                    data-denial-title="{% trans 'Bikes limit reached' %}"
+                    data-denial-content="{% trans 'Bikes limit reached. Cannot add more bikes. Delete some existing bikes first.' %}"
+                    data-threshold="{{ max_bikes }}"
+                    data-current="{{ bikes.count }}"
             ><i class="fa fa-plus-circle"></i> {% trans "Register a new bike" %}</a>
         </nav>
     </div>

@@ -1,4 +1,4 @@
-/* global setupSmbModal */
+/* global setupModal */
 
-setupSmbModal('deleteBike')
-setupSmbModal('updateBike')
+setupModal('deleteBike')
+setupModal('updateBike')

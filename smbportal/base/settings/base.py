@@ -333,3 +333,9 @@ OIDC_AUTH = {
 UPDATE_USER_DATA = "keycloakauth.oidchooks.update_user_data"
 
 LOAD_USER_ROLES = "keycloakauth.oidchooks.load_user_roles"
+
+SMB_PORTAL = {
+    "max_upload_size_megabytes": 2,
+    "max_bikes_per_user": 5,
+    "max_pictures_per_bike": 5,
+}

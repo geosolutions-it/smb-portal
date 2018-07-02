@@ -16,7 +16,7 @@
         <h1>{{ bike.nickname }}</h1>
         <div class="gallery-wrapper order-md-4" data-pswp-uid="1">
             <div class="row">
-                {% for photo in bike.picture_gallery.sample %}
+                {% for photo in bike.picture_gallery.photos.all %}
                     <div class="col-md-4 col-sm-6">
                         <div class="gallery-item">
                             <a href="{{ photo.image.url }}" data-size="{{ photo.image.width }}x{{ photo.image.height }}">
@@ -146,7 +146,7 @@
                     data-primary-button-icon="fa fa-pencil-square-o"
                     data-primary-button-classes="btn btn-primary"
                     data-title="{% trans 'Edit bike details' %}"
-                    href="#smbModal"
+                    href="#"
                     class="list-group-item list-group-item-action"
             ><i class="fa fa-pencil-square-o"></i> {% trans "Edit bike details" %}</a>
 
@@ -160,7 +160,7 @@
                     data-primary-button-icon="fa fa-trash-o"
                     data-primary-button-classes="btn btn-danger"
                     data-title="{% trans 'Delete bike' %}"
-                    href="#smbModal"
+                    href="#"
                     class="list-group-item list-group-item-action list-group-item-danger"
             ><i class="fa fa-trash-o"></i> {% trans "Delete bike" %}</a>
         </nav>

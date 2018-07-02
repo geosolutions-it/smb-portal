@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-28 21:25+0000\n"
+"POT-Creation-Date: 2018-06-30 00:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -631,7 +631,7 @@ msgid "Manage bike pictures"
 msgstr "Gestisci le foto della bicicletta"
 
 #: templates/vehicles/bike_detail.html:154
-#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:185
+#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:190
 msgid "Update bike status"
 msgstr "Aggiorna lo stato della bicicletta"
 
@@ -643,18 +643,27 @@ msgstr "Le tue biciclette"
 msgid "This bike is currently reported as lost"
 msgstr "Questa bicicletta è segnalato come smarrita"
 
-#: templates/vehicles/bike_list.html:37 templates/vehicles/bike_list.html:42
+#: templates/vehicles/bike_list.html:37 templates/vehicles/bike_list.html:46
 msgid "Register a new bike"
 msgstr "Registra una nuova bicicletta"
 
+#: templates/vehicles/bike_list.html:42
+msgid "Bikes limit reached"
+msgstr ""
+
+#: templates/vehicles/bike_list.html:43
+msgid ""
+"Bikes limit reached. Cannot add more bikes. Delete some existing bikes first."
+msgstr ""
+
 #: templates/vehicles/bike_picture_confirm_delete.html:10
 #: templates/vehicles/bike_picture_create.html:10
-#: templates/vehicles/bikegallery_detail.html:9
+#: templates/vehicles/bikegallery_detail.html:10
 msgid "manage pictures"
 msgstr "Gestisci le foto"
 
 #: templates/vehicles/bike_picture_confirm_delete.html:14
-#: templates/vehicles/bikegallery_detail.html:31
+#: templates/vehicles/bikegallery_detail.html:48
 msgid "Delete pictures"
 msgstr "Elimina foto"
 
@@ -671,31 +680,39 @@ msgid "add picture"
 msgstr "Aggiungi nuove foto"
 
 #: templates/vehicles/bike_picture_create.html:14
+#: templates/vehicles/bikegallery_detail.html:45
 msgid "Add picture"
 msgstr "Aggiungi foto"
 
-#: templates/vehicles/bike_picture_create.html:21
-msgid "Upload picture"
-msgstr "Carica foto"
-
-#: templates/vehicles/bikegallery_detail.html:12
+#: templates/vehicles/bikegallery_detail.html:13
 msgid "Bike Pictures"
 msgstr "Foto della bicicletta"
 
-#: templates/vehicles/bikegallery_detail.html:16
-#, python-format
-msgid ""
-"\n"
-"            Current pictures for bike %(nickname)s\n"
-"        "
+#: templates/vehicles/bikegallery_detail.html:18
+msgid "This bike already has the maximum number of pictures. Cannot add more."
 msgstr ""
-"\n"
-"            Immagini delle bicicletta %(nickname)s\n"
-"        "
 
-#: templates/vehicles/bikegallery_detail.html:28
-msgid "Add pictures"
-msgstr "Aggiungi foto"
+#: templates/vehicles/bikegallery_detail.html:25
+msgid "There are no pictures for this bike yet"
+msgstr ""
+
+#: templates/vehicles/bikegallery_detail.html:36 vehicles/forms.py:256
+msgid "Upload picture"
+msgstr "Carica foto"
+
+#: templates/vehicles/bikegallery_detail.html:39
+msgid "Upload bike picture"
+msgstr "Carica foto"
+
+#: templates/vehicles/bikegallery_detail.html:40
+msgid "Bike pictures limit reached"
+msgstr ""
+
+#: templates/vehicles/bikegallery_detail.html:41
+msgid ""
+"Bike pictures limit reached. Cannot add more pictures. Delete some existing "
+"pictures first."
+msgstr ""
 
 #: templates/vehicles/bikestatus_create.html:18
 msgid "update status"
@@ -705,7 +722,7 @@ msgstr "Aggiorna stato"
 msgid "report lost"
 msgstr "Segnala come smarrita"
 
-#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:185
+#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:190
 msgid "Report lost bike"
 msgstr "Segnala una bici smarrita"
 
@@ -776,15 +793,23 @@ msgstr ""
 msgid "details"
 msgstr ""
 
-#: vehicles/forms.py:138
+#: vehicles/forms.py:141
 msgid "A bike with that nickname already exists"
 msgstr "E' già presente una bicicletta con questo nome"
 
-#: vehicles/forms.py:258
+#: vehicles/forms.py:234
+msgid "image"
+msgstr ""
+
+#: vehicles/forms.py:270
+msgid "could not read uploaded image"
+msgstr ""
+
+#: vehicles/forms.py:298
 msgid "Already uploaded a picture with that name"
 msgstr "E' stata già inserita una foto con lo stesso nome"
 
-#: vehicles/forms.py:291
+#: vehicles/forms.py:333
 msgid "Must select at least one picture to delete"
 msgstr "Selezionare almeno un'immagine da eliminare"
 
@@ -920,33 +945,50 @@ msgstr ""
 msgid "Electronic Product Code"
 msgstr "Codice prodotto"
 
-#: vehicles/views.py:69
+#: vehicles/validators.py:31
+#, python-format
+msgid "Uploaded file is too large. File size must not exceed %(max_size)s MB"
+msgstr ""
+
+#: vehicles/views.py:75
 msgid "Created bike {}"
 msgstr ""
 
-#: vehicles/views.py:122
+#: vehicles/views.py:128
 msgid "Bike details updated!"
 msgstr ""
 
-#: vehicles/views.py:141
+#: vehicles/views.py:147
 msgid "Update bike details"
 msgstr "Modifica i dati della bicicletta"
 
-#: vehicles/views.py:158
+#: vehicles/views.py:164
 msgid "Bike deleted!"
 msgstr ""
 
-#: vehicles/views.py:188
+#: vehicles/views.py:197
 msgid "Bike picture uploaded!"
 msgstr ""
 
-#: vehicles/views.py:233
+#: vehicles/views.py:247
 msgid "Pictures have been deleted!"
 msgstr "Immagini eliminate!"
 
-#: vehicles/views.py:261
+#: vehicles/views.py:275
 msgid "Bike status updated!"
 msgstr "Lo stato è stato aggiornato!"
+
+#~ msgid ""
+#~ "\n"
+#~ "            Current pictures for bike %(nickname)s\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "            Immagini delle bicicletta %(nickname)s\n"
+#~ "        "
+
+#~ msgid "Add pictures"
+#~ msgstr "Aggiungi foto"
 
 #~ msgid "Settings"
 #~ msgstr "Impostazioni"

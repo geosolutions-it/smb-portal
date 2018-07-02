@@ -67,4 +67,3 @@ class AjaxTemplateMixin(object):
         if request.is_ajax():
             self.template_name = self.ajax_template_name
         return super().dispatch(request, *args, **kwargs)
-

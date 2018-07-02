@@ -1,86 +1,97 @@
 /* global $ */
 
-const setupSmbModalDisplay = function (anchorId) {
-  document.getElementById(anchorId).addEventListener('click', function () {
-    const modalAttrs = getDataAttrsDisplay('#' + anchorId)
-    console.log('modalAttrs: ' + modalAttrs)
-    setModalTitle(modalAttrs.title)
-    loadDataIntoModalBody(modalAttrs.url)
-  })
+const handleDenyModal = function (modalElement, modalTitle, modalContent) {
+  setModalTitle(modalElement, modalTitle)
+  const modalBodyElement = modalElement.querySelector('.modal-body')
+  modalBodyElement.innerHTML = modalContent
 }
 
-const getDataAttrsDisplay = function (anchorSelector) {
-  return {
-    title: document.querySelector(anchorSelector).dataset.title,
-    url: document.querySelector(anchorSelector).dataset.contentsUrl,
+const setupModal = function (anchorId, deny) {
+  const anchorElement = document.getElementById(anchorId)
+  const dataAttrs = {
+    title: anchorElement.dataset.title,
+    formAction: anchorElement.dataset.actionUrl,
+    primary: {
+      classes: anchorElement.dataset.primaryButtonClasses,
+      iconClasses: anchorElement.dataset.primaryButtonIcon,
+      value: anchorElement.dataset.primaryButtonValue
+    },
+    denial: {
+      title: anchorElement.dataset.denialTitle,
+      content: anchorElement.dataset.denialContent
+    }
   }
-}
-
-const loadDataIntoModalBody = function (url) {
-  const primaryButtonElement = document.querySelector(
-    '#smbModal .modal-footer #primaryButton')
-  primaryButtonElement.parentElement.removeChild(primaryButtonElement)
-  $('#smbModal .modal-dialog .modal-content .modal-body').load(url)
-}
-
-
-const setupSmbModal = function (anchorId) {
-  document.getElementById(anchorId).addEventListener('click', function () {
-    const modalAttrs = getDataAttrs('#' + anchorId)
-    setModalTitle(modalAttrs.title)
-    updateModalPrimaryButton(
-      modalAttrs.primary.value,
-      modalAttrs.primary.iconClasses,
-      modalAttrs.primary.classes
+  let modalId = 'smbFormModal'
+  if (deny) {
+    modalId = 'smbDisplayModal'
+    handleDenyModal(
+      document.getElementById(modalId),
+      dataAttrs.denial.title,
+      dataAttrs.denial.content
     )
-    loadFormIntoModalBody(modalAttrs.formAction)
+  } else {
+    anchorElement.addEventListener('click', function () {
+      const modalElement = document.getElementById(modalId)
+      const primaryButtonElement = updateButton(
+        modalElement.querySelector('#primaryButton'),
+        dataAttrs.primary.value,
+        dataAttrs.primary.iconClasses,
+        dataAttrs.primary.classes
+      )
+      setModalTitle(modalElement, dataAttrs.title)
+      const modalBodyElement = modalElement.querySelector('.modal-body')
+      $(modalBodyElement).load(
+        dataAttrs.formAction,
+        null,
+        function () {
+          const loadedFormElement = modalBodyElement.querySelector('form')
+          primaryButtonElement.setAttribute('form', loadedFormElement.id)
+        }
+      )
+    })
+  }
+  anchorElement.setAttribute('href', `#${modalId}`)
+}
+
+const setupModalDisplay = function (dataElement) {
+  const dataAttrs = {
+    title: dataElement.dataset.title,
+    url: dataElement.dataset.contentsUrl
+  }
+  const modalElement = document.getElementById('smbDisplayModal')
+  dataElement.addEventListener('click', function () {
+    setModalTitle(modalElement, dataAttrs.title)
+    const modalBodyElement = modalElement.querySelector('.modal-body')
+    $(modalBodyElement).load(dataAttrs.url)
   })
 }
 
-const updateModalPrimaryButton = function (text, iconClasses, buttonClasses) {
-  const primaryButtonElement = document.querySelector(
-    '#smbModal .modal-footer #primaryButton')
-  primaryButtonElement.classList.add('btn-primary')
-  primaryButtonElement.setAttribute('class', buttonClasses)
+const updateButton = function (button, text, iconClasses, buttonClasses) {
+  button.setAttribute('class', buttonClasses)
   const iElement = document.createElement('i')
   iElement.setAttribute('class', iconClasses)
   const primaryButtonText = document.createTextNode(' ' + text)
-  while (primaryButtonElement.firstChild) {
-    primaryButtonElement.firstChild.remove()
+  while (button.firstChild) {
+    button.firstChild.remove()
   }
-  primaryButtonElement.appendChild(iElement)
-  primaryButtonElement.appendChild(primaryButtonText)
-  return primaryButtonElement
+  button.appendChild(iElement)
+  button.appendChild(primaryButtonText)
+  return button
 }
 
-const getDataAttrs = function (anchorSelector) {
-  return {
-    title: document.querySelector(anchorSelector).dataset.title,
-    formAction: document.querySelector(anchorSelector).dataset.actionUrl,
-    primary: {
-      classes: document.querySelector(anchorSelector).dataset.primaryButtonClasses,
-      iconClasses: document.querySelector(anchorSelector).dataset.primaryButtonIcon,
-      value: document.querySelector(anchorSelector).dataset.primaryButtonValue
-    }
-  }
-}
-
-const setModalTitle = function (title) {
-  const modalTitleElement = document.querySelector('#smbModal .modal-title')
+const setModalTitle = function (modalElement, title) {
+  const modalTitleElement = modalElement.querySelector('.modal-title')
   modalTitleElement.textContent = title
 }
 
-const loadFormIntoModalBody = function (formAction) {
-  const primaryButtonElement = document.querySelector(
-    '#smbModal .modal-footer #primaryButton')
-  console.log('primaryButtonElement: ' + primaryButtonElement)
-  $('#smbModal .modal-dialog .modal-content .modal-body').load(
-    formAction,
-    null,
-    function () {
-      const loadedFormElement = document.querySelector(
-        '#smbModal .modal-body form')
-      primaryButtonElement.setAttribute('form', loadedFormElement.id)
-    }
-  )
+const validateAddition = function (anchorId) {
+  const anchorElement = document.querySelector(`#${anchorId}`)
+  const threshold = Number(anchorElement.dataset.threshold)
+  const current = Number(anchorElement.dataset.current)
+  let result = true
+  if (current >= threshold) {
+    console.log('cannot add more objects')
+    result = false
+  }
+  return result
 }

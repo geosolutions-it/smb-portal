@@ -1,1 +1,6 @@
 @import url('_styles.css');
+
+.fa-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
