@@ -35,6 +35,7 @@
                 <div class="col-lg-10">
                     <form method="post">
                         {% csrf_token %}
+                        {{ user_form|crispy }}
                         {{ form|crispy }}
                         <h4>{% trans "Mobility Survey" %}</h4>
                         <p>{% trans "Please complete this short survey as a final step for creating your profile" %}</p>
