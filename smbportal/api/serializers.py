@@ -181,6 +181,15 @@ class BikeDetailSerializer(BikeListSerializer):
         view_name="api:picture-galleries-detail",
         read_only=True
     )
+    pictures = serializers.SerializerMethodField()
+
+    def get_pictures(self, bike):
+        serializer = PictureSerializer(
+            instance=bike.picture_gallery.photos.all(),
+            context=self.context,
+            many=True
+        )
+        return [item["image"] for item in serializer.data]
 
     class Meta:
         model = vehicles.models.Bike
@@ -189,6 +198,7 @@ class BikeDetailSerializer(BikeListSerializer):
             "id",
             "owner",
             "picture_gallery",
+            "pictures",
             "tags",
             "last_update",
             "bike_type",
