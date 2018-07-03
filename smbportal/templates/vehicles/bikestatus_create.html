@@ -28,3 +28,8 @@
         {% crispy form %}
     </div>
 {% endblock %}
+
+{% block js %}
+    <script src="{% static 'base/js/smb-utils.js' %}"></script>
+    <script src="{% static 'vehicles/js/bikestatus-create.js' %}"></script>
+{% endblock %}

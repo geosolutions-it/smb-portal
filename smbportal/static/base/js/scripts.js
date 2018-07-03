@@ -1,12 +1,6 @@
 "use strict";
 var plugin_path = 'assets/plugins/';
 
-jQuery("#preloader").length > 0 && jQuery(window).on("load", function () {
-    jQuery("#preloader").fadeOut(1e3, function () {
-        jQuery("#preloader").remove()
-    })
-});
-
 /** Load Script
 
  USAGE
@@ -61,8 +55,9 @@ var pvrWriteCopyrights = function () {
         "use strict";
         var year = new Date().getFullYear();
         $("#pvrWriteCopyrights").text(year);
-    },
-    mainApplication = function () {
+}
+
+var mainApplication = function () {
         jQuery(document).ready(function (a) {
             "use strict";
             var width = $(window).width();
@@ -1307,37 +1302,38 @@ var pvrWriteCopyrights = function () {
             });
         }
     }
-    ,
-    App = function () {
-        "use strict";
-        return {
-            init               : function () {
-                this.initComponent();
-            },
-            BeforeDocumentReady: function () {
-                pvrWriteCopyrights()
-            },
-            initComponent      : function () {
-                pvrWriteCopyrights();
-                mainApplication();
-                pvrCountJS();
-                pvrTypeitJS();
-                _chat_popup();
-                _live_customizer();
-                _url_parameters_ui_elements();
-                _UI_elements();
-                _showSwal();
-                _MultiLevelMenu();
-                _cookie_bar();
-                _instafeed();
-                _email_page();
-                _validation();
-                _date_time();
-            }
-        }
-    }();
+
+var App = function () {
+  "use strict"
+  return {
+    init: function () {
+        this.initComponent()
+    },
+    BeforeDocumentReady: function () {
+      pvrWriteCopyrights()
+    },
+    initComponent: function () {
+      pvrWriteCopyrights();
+      mainApplication();
+      pvrCountJS();
+      pvrTypeitJS();
+      // _chat_popup();
+      // _live_customizer();
+      _url_parameters_ui_elements();
+      _UI_elements();
+      _showSwal();
+      _MultiLevelMenu();
+      _cookie_bar();
+      _instafeed();
+      _email_page();
+      _validation();
+      _date_time();
+    }
+  }
+}();
 
 App.BeforeDocumentReady();
+
 $(function () {
     App.init();
 });

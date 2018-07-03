@@ -17,5 +17,3 @@ def set_user_language(sender, request=None, **kwargs):
     user_language = request.user.language_preference
     translation.activate(user_language)
     request.session[translation.LANGUAGE_SESSION_KEY] = user_language
-
-

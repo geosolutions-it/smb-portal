@@ -13,7 +13,6 @@ class SmbUserForm(forms.ModelForm):
         )
 
 
-
 class EndUserProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):

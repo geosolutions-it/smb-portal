@@ -95,3 +95,13 @@ const validateAddition = function (anchorId) {
   }
   return result
 }
+
+/**
+ * Highlight the relevant menu item
+ * @param {string} elementId
+ */
+const highlightMenuItem = function (elementId) {
+  document.addEventListener('DOMContentLoaded', function (evt) {
+    document.getElementById(elementId).classList.add('active')
+  })
+}

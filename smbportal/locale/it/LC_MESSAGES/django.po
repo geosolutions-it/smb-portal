@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-02 17:41+0000\n"
+"POT-Creation-Date: 2018-07-03 14:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -217,38 +217,42 @@ msgstr ""
 msgid "Delete selected"
 msgstr "Elimina selezionati"
 
-#: templates/base/base.html:41 templates/base/home.html:11
+#: templates/base/base.html:40 templates/base/home.html:11
 #: templates/base/home.html:15
 msgid "Bikes"
 msgstr "Biciclette"
 
-#: templates/base/base.html:42
+#: templates/base/base.html:41
 msgid "Report a lost Bike"
 msgstr "Segnala una bicicletta smarrita"
 
-#: templates/base/base.html:43
+#: templates/base/base.html:42
 msgid "About"
 msgstr "Info"
 
-#: templates/base/base.html:71
+#: templates/base/base.html:70
 msgid "My Profile"
 msgstr "Il mio profilo"
 
-#: templates/base/base.html:72
+#: templates/base/base.html:71
 msgid "Messages"
 msgstr "Messaggi"
 
-#: templates/base/base.html:74
+#: templates/base/base.html:73
 msgid "Logout"
 msgstr "Disconnetti"
 
-#: templates/base/base.html:76
+#: templates/base/base.html:75
 msgid "Login/Register"
 msgstr "Registrati"
 
-#: templates/base/base.html:89
+#: templates/base/base.html:88
 msgid "Home"
 msgstr "Pagina iniziale"
+
+#: templates/base/base.html:193
+msgid "Close"
+msgstr ""
 
 #: templates/base/home.html:13
 msgid ""
@@ -366,10 +370,9 @@ msgstr ""
 "\n"
 "Wntra quindi nella sezione `users -> %(email)s` e procedi così:\n"
 "\n"
-"- Aggiungi l'utente %(email)s al gruppo `privileged_users`"
-"section;\n"
-"- Abilita l'utente attivando le opzioni dedicate nella sezione `details -> User "
-"enabled`\n"
+"- Aggiungi l'utente %(email)s al gruppo `privileged_users`section;\n"
+"- Abilita l'utente attivando le opzioni dedicate nella sezione `details -> "
+"User enabled`\n"
 "\n"
 
 #: templates/profiles/mail/privilegeduser_registration_request_subject.txt:1
@@ -431,10 +434,10 @@ msgid ""
 "will be notified via e-mail. Until then you will not be able to use the "
 "portal"
 msgstr ""
-"La registrazione come utente privilegiato necessita dell'autorizzazion manuale da parte di un "
-"amministratore del portale. Appena la richeista sarà processata "
-"verrà spedita una notiva via email. Fino ad allora non sarà possibile accedere al "
-"portale"
+"La registrazione come utente privilegiato necessita dell'autorizzazion "
+"manuale da parte di un amministratore del portale. Appena la richeista sarà "
+"processata verrà spedita una notiva via email. Fino ad allora non sarà "
+"possibile accedere al portale"
 
 #: templates/profiles/privilegeduserprofile_create.html:46
 #: templates/vehicles/bike_picture_confirm_delete.html:23
@@ -485,7 +488,7 @@ msgstr "Conferma password"
 msgid "Register"
 msgstr "Registrati"
 
-#: templates/vehiclemonitor/base.html:8 templates/vehicles/base.html:8
+#: templates/vehiclemonitor/base.html:8 templates/vehicles/base.html:9
 msgid "bikes"
 msgstr "Biciclette"
 
@@ -668,7 +671,9 @@ msgstr ""
 #: templates/vehicles/bike_list.html:43
 msgid ""
 "Bikes limit reached. Cannot add more bikes. Delete some existing bikes first."
-msgstr "E' stato raggiunto il limite delle biciclette registrabili. Per registrare una nuova bicicletta rimuovere è necessario rimuoverne una esistente."
+msgstr ""
+"E' stato raggiunto il limite delle biciclette registrabili. Per registrare "
+"una nuova bicicletta rimuovere è necessario rimuoverne una esistente."
 
 #: templates/vehicles/bike_picture_confirm_delete.html:10
 #: templates/vehicles/bike_picture_create.html:10
@@ -704,7 +709,9 @@ msgstr "Foto della bicicletta"
 
 #: templates/vehicles/bikegallery_detail.html:18
 msgid "This bike already has the maximum number of pictures. Cannot add more."
-msgstr "Questa bicicletta ha raggiunto il limite di foto associabili. Non è possibile aggiungerne altre"
+msgstr ""
+"Questa bicicletta ha raggiunto il limite di foto associabili. Non è "
+"possibile aggiungerne altre"
 
 #: templates/vehicles/bikegallery_detail.html:25
 msgid "There are no pictures for this bike yet"
@@ -727,7 +734,8 @@ msgid ""
 "Bike pictures limit reached. Cannot add more pictures. Delete some existing "
 "pictures first."
 msgstr ""
-"Bhai raggiunto il limite di foto associabili alla bicicletta. Per aggiungere altre foto rimuovere una o più di quelle già presenti"
+"Bhai raggiunto il limite di foto associabili alla bicicletta. Per aggiungere "
+"altre foto rimuovere una o più di quelle già presenti"
 
 #: templates/vehicles/bikestatus_create.html:18
 msgid "update status"
@@ -790,7 +798,8 @@ msgstr "Indirizzo"
 
 #: vehiclemonitor/models.py:39
 msgid "Approximate address. Either this field or `position` must be given"
-msgstr "Indirizzo. Questo campo o la posizione sulla mappa devono essere compilati"
+msgstr ""
+"Indirizzo. Questo campo o la posizione sulla mappa devono essere compilati"
 
 #: vehiclemonitor/models.py:44
 msgid "created at"
@@ -963,7 +972,8 @@ msgstr "Codice prodotto"
 #: vehicles/validators.py:31
 #, python-format
 msgid "Uploaded file is too large. File size must not exceed %(max_size)s MB"
-msgstr "Il file caricato è troppo grande. I file non possono eccedere %(max_size)s MB"
+msgstr ""
+"Il file caricato è troppo grande. I file non possono eccedere %(max_size)s MB"
 
 #: vehicles/views.py:75
 msgid "Created bike {}"
