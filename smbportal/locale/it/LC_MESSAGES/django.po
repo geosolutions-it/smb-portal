@@ -668,7 +668,6 @@ msgstr ""
 #: templates/vehicles/bike_list.html:43
 msgid ""
 "Bikes limit reached. Cannot add more bikes. Delete some existing bikes first."
-msgstr ""
 msgstr "E' stato raggiunto il limite delle biciclette registrabili. Per registrare una nuova bicicletta rimuovere è necessario rimuoverne una esistente."
 
 #: templates/vehicles/bike_picture_confirm_delete.html:10
