@@ -10,6 +10,7 @@
 
 import logging
 
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import ListView
@@ -36,4 +37,5 @@ class BikeObservationListView(LoginRequiredMixin, PermissionRequiredMixin,
             bike__owner=self.request.user)
         if current_bike is not None:
             qs = qs.filter(bike=current_bike)
-        return qs
+        num_observations = settings.SMB_PORTAL.get("num_latest_observations")
+        return qs.order_by("-observed_at")[:num_observations]

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-03 14:42+0000\n"
+"POT-Creation-Date: 2018-07-03 17:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr "English"
 msgid "Italian"
 msgstr "Italian"
 
-#: profiles/models.py:29 vehicles/models.py:140
+#: profiles/models.py:29 vehicles/models.py:145
 msgid "nickname"
 msgstr ""
 
@@ -497,7 +497,7 @@ msgid "observations"
 msgstr "Rilevazioni"
 
 #: templates/vehiclemonitor/bikeobservation_list.html:15
-#: templates/vehiclemonitor/bikeobservation_list.html:47
+#: templates/vehiclemonitor/bikeobservation_list.html:51
 msgid "Bike observations"
 msgstr "Rilevazioni bicicletta"
 
@@ -505,7 +505,11 @@ msgstr "Rilevazioni bicicletta"
 msgid "Latest observations"
 msgstr "Ultime rilevazioni"
 
-#: templates/vehiclemonitor/bikeobservation_list.html:50
+#: templates/vehiclemonitor/bikeobservation_list.html:45
+msgid "This bike has no observations yet"
+msgstr ""
+
+#: templates/vehiclemonitor/bikeobservation_list.html:54
 msgid ""
 "Bikes that have RFID tags may be monitored when circulating on the street"
 msgstr ""
@@ -526,7 +530,7 @@ msgstr ""
 "Sei sicuro di voler rimuovere questa bicicletta <strong>%(nickname)s</"
 "strong>?"
 
-#: templates/vehicles/bike_create.html:7 templates/vehicles/bike_list.html:41
+#: templates/vehicles/bike_create.html:7 templates/vehicles/bike_list.html:43
 msgid "Register new bike"
 msgstr "Registra una nuova bicicletta"
 
@@ -648,7 +652,7 @@ msgid "Manage bike pictures"
 msgstr "Gestisci le foto della bicicletta"
 
 #: templates/vehicles/bike_detail.html:154
-#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:188
+#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:185
 msgid "Update bike status"
 msgstr "Aggiorna lo stato della bicicletta"
 
@@ -660,15 +664,19 @@ msgstr "Le tue biciclette"
 msgid "This bike is currently reported as lost"
 msgstr "Questa bicicletta è segnalato come smarrita"
 
-#: templates/vehicles/bike_list.html:37 templates/vehicles/bike_list.html:46
+#: templates/vehicles/bike_list.html:28
+msgid "You do not have any bikes yet"
+msgstr ""
+
+#: templates/vehicles/bike_list.html:39 templates/vehicles/bike_list.html:48
 msgid "Register a new bike"
 msgstr "Registra una nuova bicicletta"
 
-#: templates/vehicles/bike_list.html:42
+#: templates/vehicles/bike_list.html:44
 msgid "Bikes limit reached"
 msgstr ""
 
-#: templates/vehicles/bike_list.html:43
+#: templates/vehicles/bike_list.html:45 vehicles/models.py:204
 msgid ""
 "Bikes limit reached. Cannot add more bikes. Delete some existing bikes first."
 msgstr ""
@@ -717,7 +725,7 @@ msgstr ""
 msgid "There are no pictures for this bike yet"
 msgstr "Non sono predenti fotografie di questa bicicletta"
 
-#: templates/vehicles/bikegallery_detail.html:36 vehicles/forms.py:254
+#: templates/vehicles/bikegallery_detail.html:36 vehicles/forms.py:251
 msgid "Upload picture"
 msgstr "Carica foto"
 
@@ -729,7 +737,7 @@ msgstr "Carica foto"
 msgid "Bike pictures limit reached"
 msgstr "Hai raggiunto il limite di foto caricabili"
 
-#: templates/vehicles/bikegallery_detail.html:41
+#: templates/vehicles/bikegallery_detail.html:41 vehicles/models.py:294
 msgid ""
 "Bike pictures limit reached. Cannot add more pictures. Delete some existing "
 "pictures first."
@@ -745,7 +753,7 @@ msgstr "Aggiorna stato"
 msgid "report lost"
 msgstr "Segnala come smarrita"
 
-#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:188
+#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:185
 msgid "Report lost bike"
 msgstr "Segnala una bici smarrita"
 
@@ -776,7 +784,7 @@ msgstr ""
 msgid "Print registration information"
 msgstr "Stampa le informazioni di registrazione della bicibletta"
 
-#: vehiclemonitor/models.py:23 vehicles/models.py:219 vehicles/models.py:257
+#: vehiclemonitor/models.py:23 vehicles/models.py:233 vehicles/models.py:271
 msgid "bike"
 msgstr "Bicicletta"
 
@@ -784,7 +792,7 @@ msgstr "Bicicletta"
 msgid "reporter"
 msgstr "Segnalata da"
 
-#: vehiclemonitor/models.py:31 vehicles/models.py:234
+#: vehiclemonitor/models.py:31 vehicles/models.py:248
 msgid "position"
 msgstr "Posizione"
 
@@ -813,159 +821,159 @@ msgstr "Rilevata il"
 msgid "When the observation was made"
 msgstr "Quando è stata fatta la rilevazione"
 
-#: vehiclemonitor/models.py:53 vehicles/models.py:230
+#: vehiclemonitor/models.py:53 vehicles/models.py:244
 msgid "details"
 msgstr "Dettagli"
 
-#: vehicles/forms.py:139
+#: vehicles/forms.py:140
 msgid "A bike with that nickname already exists"
 msgstr "E' già presente una bicicletta con questo nome"
 
-#: vehicles/forms.py:232
+#: vehicles/forms.py:229
 msgid "image"
 msgstr "Immagine"
 
-#: vehicles/forms.py:268
+#: vehicles/forms.py:265
 msgid "could not read uploaded image"
 msgstr "Non è stato possibile leggere l'immagine caricata"
 
-#: vehicles/forms.py:296
+#: vehicles/forms.py:293
 msgid "Already uploaded a picture with that name"
 msgstr "E' stata già inserita una foto con lo stesso nome"
 
-#: vehicles/forms.py:331
+#: vehicles/forms.py:329
 msgid "Must select at least one picture to delete"
 msgstr "Selezionare almeno un'immagine da eliminare"
 
-#: vehicles/models.py:31
+#: vehicles/models.py:36
 msgid "last position"
 msgstr "Ultima positione rilevata della bicicletta"
 
-#: vehicles/models.py:93
+#: vehicles/models.py:98
 msgid "owner"
 msgstr "In possesso del propretario"
 
-#: vehicles/models.py:100
+#: vehicles/models.py:105
 msgid "picture_gallery"
 msgstr "Galleria immagini"
 
-#: vehicles/models.py:103
+#: vehicles/models.py:108
 msgid "last update"
 msgstr "Ultimo aggiornamento"
 
-#: vehicles/models.py:108
+#: vehicles/models.py:113
 msgid "bike type"
 msgstr "tipo di bicicletta"
 
-#: vehicles/models.py:111
+#: vehicles/models.py:116
 msgid "racing"
 msgstr "da competizione"
 
-#: vehicles/models.py:112
+#: vehicles/models.py:117
 msgid "city"
 msgstr "da città"
 
-#: vehicles/models.py:113
+#: vehicles/models.py:118
 msgid "mountain"
 msgstr "mountain bike"
 
-#: vehicles/models.py:114
+#: vehicles/models.py:119
 msgid "foldable"
 msgstr "ripiegabile"
 
-#: vehicles/models.py:119
+#: vehicles/models.py:124
 msgid "gear"
 msgstr "cambio"
 
-#: vehicles/models.py:122
+#: vehicles/models.py:127
 msgid "single ring"
 msgstr "corona singola"
 
-#: vehicles/models.py:123
+#: vehicles/models.py:128
 msgid "groupset below 18 speeds"
 msgstr "cambio con < 18 velocità"
 
-#: vehicles/models.py:124
+#: vehicles/models.py:129
 msgid "groupset above 18 speeds"
 msgstr "cambio con > 18 velocità"
 
-#: vehicles/models.py:125
+#: vehicles/models.py:130
 msgid "electric"
 msgstr "elettrica"
 
-#: vehicles/models.py:130
+#: vehicles/models.py:135
 msgid "brake"
 msgstr "freni"
 
-#: vehicles/models.py:133
+#: vehicles/models.py:138
 msgid "disk"
 msgstr "a disco"
 
-#: vehicles/models.py:134
+#: vehicles/models.py:139
 msgid "cantilevel"
 msgstr "cantilever"
 
-#: vehicles/models.py:135
+#: vehicles/models.py:140
 msgid "coaster"
 msgstr "contropedale"
 
-#: vehicles/models.py:144
+#: vehicles/models.py:149
 msgid "brand"
 msgstr "marca"
 
-#: vehicles/models.py:149
+#: vehicles/models.py:154
 msgid "model"
 msgstr "modello"
 
-#: vehicles/models.py:154
+#: vehicles/models.py:159
 msgid "color"
 msgstr "colore"
 
-#: vehicles/models.py:159
+#: vehicles/models.py:164
 msgid "saddle"
 msgstr "sella"
 
-#: vehicles/models.py:164
+#: vehicles/models.py:169
 msgid "has basket"
 msgstr "cestino"
 
-#: vehicles/models.py:168
+#: vehicles/models.py:173
 msgid "has cargo rack"
 msgstr "portapacchi"
 
-#: vehicles/models.py:172
+#: vehicles/models.py:177
 msgid "has lights"
 msgstr "luci"
 
-#: vehicles/models.py:176
+#: vehicles/models.py:181
 msgid "has bags"
 msgstr "borse"
 
-#: vehicles/models.py:180
+#: vehicles/models.py:185
 msgid "has SaveMyBike sticker"
 msgstr "adesivo SaveMyBike"
 
-#: vehicles/models.py:184
+#: vehicles/models.py:189
 msgid "other details"
 msgstr "altri dettagli"
 
-#: vehicles/models.py:222
+#: vehicles/models.py:236
 msgid "lost"
 msgstr "smarrita"
 
-#: vehicles/models.py:226 vehicles/models.py:265
+#: vehicles/models.py:240 vehicles/models.py:279
 msgid "creation date"
 msgstr "data di inserimento"
 
-#: vehicles/models.py:237
+#: vehicles/models.py:251
 msgid "Bike last seen position"
 msgstr "Ultima positione rilevata della bicicletta"
 
-#: vehicles/models.py:260
+#: vehicles/models.py:274
 msgid "epc"
 msgstr "epc"
 
-#: vehicles/models.py:261
+#: vehicles/models.py:275
 msgid "Electronic Product Code"
 msgstr "Codice prodotto"
 
@@ -976,8 +984,8 @@ msgstr ""
 "Il file caricato è troppo grande. I file non possono eccedere %(max_size)s MB"
 
 #: vehicles/views.py:75
-msgid "Created bike {}"
-msgstr "Bicicletta {* inserita"
+msgid "Bike created!"
+msgstr "Bicicletta inserita!"
 
 #: vehicles/views.py:128
 msgid "Bike details updated!"
@@ -987,19 +995,19 @@ msgstr "Dettagli bicicletta aggiornati!"
 msgid "Update bike details"
 msgstr "Modifica i dati della bicicletta"
 
-#: vehicles/views.py:164
+#: vehicles/views.py:168
 msgid "Bike deleted!"
 msgstr "La bicicletta è stata rimossa"
 
-#: vehicles/views.py:197
+#: vehicles/views.py:204
 msgid "Bike picture uploaded!"
 msgstr "La foto è stata caricata correttamente!"
 
-#: vehicles/views.py:247
+#: vehicles/views.py:254
 msgid "Pictures have been deleted!"
 msgstr "Le foto sono state eliminate!"
 
-#: vehicles/views.py:275
+#: vehicles/views.py:285
 msgid "Bike status updated!"
 msgstr "Lo stato è stato aggiornato!"
 

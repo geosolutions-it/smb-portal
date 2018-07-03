@@ -18,7 +18,6 @@ from django.contrib.gis import forms as gis_forms
 from django.utils.text import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
-from photologue.models import Photo
 
 from . import models
 from . import validators
@@ -34,6 +33,7 @@ class BikeForm(forms.ModelForm):
         action = kwargs.pop("action", None)
         submit_value = kwargs.pop("submit_value", "OK")
         super().__init__(*args, **kwargs)
+        self.instance.owner = self.user
         self.helper = FormHelper(
         )
         self.helper.form_id = "bikeForm"
@@ -137,10 +137,6 @@ class BikeForm(forms.ModelForm):
             #        template
             self.add_error(
                 None, _("A bike with that nickname already exists"))
-
-    def save(self, commit=True):
-        self.instance.owner = self.user
-        return super().save(commit=commit)
 
     class Meta:
         model = models.Bike
@@ -304,7 +300,7 @@ class BikePictureForm(forms.ModelForm):
         return super().save(commit=commit)
 
     class Meta:
-        model = Photo
+        model = models.BikePicture
         fields = (
             "image",
             # "caption",

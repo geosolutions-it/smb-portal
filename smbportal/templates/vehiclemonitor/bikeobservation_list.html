@@ -21,25 +21,29 @@
 {% block main %}
     <div class="col-lg-9 col-md-8 order-md-1">
         <h1>{% trans "Latest observations" %}</h1>
-        <div class="col-lg-12 p-b-20">
-            <ul class="list-group">
-                {% for observation in observations %}
-                    <li name="observation" id="observation-{{ observation.pk }}" class="list-group-item list-group-item-action">
-                        <i class="fa fa-calendar"></i>{{ observation.created_at }}<br>
-                        <i class="fa fa-user-o"></i>{{ observation.reporter }}<br>
-                        {% if observation.position %}
-                            <i class="fa fa-map-marker"></i> {{ observation.position.coords }}
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-lg-12">
-            <div class="card">
-                <div id="bike-map" class="map" data-observations-url='{% url "api:my-bike-observations-list"%}?bike={{ bike.pk }}'></div>
-                <div id="map-info"></div>
+        {% if observations %}
+            <div class="col-lg-12 p-b-20">
+                <ul class="list-group">
+                    {% for observation in observations %}
+                        <li name="observation" id="observation-{{ observation.pk }}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-calendar"></i>{{ observation.created_at }}<br>
+                            <i class="fa fa-user-o"></i>{{ observation.reporter }}<br>
+                            {% if observation.position %}
+                                <i class="fa fa-map-marker"></i> {{ observation.position.coords }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-        </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div id="bike-map" class="map" data-observations-url='{% url "api:my-bike-observations-list"%}?bike={{ bike.pk }}'></div>
+                    <div id="map-info"></div>
+                </div>
+            </div>
+        {% else %}
+            <p>{% trans 'This bike has no observations yet' %}</p>
+        {% endif %}
     </div>
     <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
         <div class="card">

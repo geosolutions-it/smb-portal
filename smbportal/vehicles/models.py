@@ -8,15 +8,20 @@
 #
 #########################################################################
 
+import logging
 import uuid
 
 from django.db import models
 from django.contrib.gis.db import models as gis_models
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.shortcuts import reverse
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from photologue.models import Gallery
+from photologue.models import Photo
+
+logger = logging.getLogger(__name__)
 
 
 class Vehicle(models.Model):
@@ -191,6 +196,15 @@ class Bike(Vehicle):
     def __str__(self):
         return "{0.nickname}".format(self)
 
+    def clean(self):
+        max_bikes = settings.SMB_PORTAL.get("max_bikes_per_user", 5)
+        if self._state.adding and self.owner.bikes.count() >= max_bikes:
+            logger.error("Cannot create a new bike. Limit reached")
+            raise ValidationError(
+                _("Bikes limit reached. Cannot add more bikes. Delete some "
+                  "existing bikes first.")
+            )
+
     def get_absolute_url(self):
         return reverse("bikes:detail", kwargs={"pk": self.id})
 
@@ -265,3 +279,18 @@ class PhysicalTag(models.Model):
         _("creation date"),
         auto_now_add=True
     )
+
+
+class BikePicture(Photo):
+
+    class Meta:
+        proxy = True
+
+    def clean(self):
+        max_pictures = settings.SMB_PORTAL.get("max_pictures_per_bike", 5)
+        if self._state.adding and self.gallery.photos.count() >= max_pictures:
+            logger.error("Cannot upload a new picture. Limit reached")
+            raise ValidationError(
+                _("Bike pictures limit reached. Cannot add more pictures. "
+                  "Delete some existing pictures first.")
+            )
