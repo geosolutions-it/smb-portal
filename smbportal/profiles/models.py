@@ -28,12 +28,13 @@ class SmbUser(AbstractUser):
     nickname = models.CharField(
         _("nickname"),
         max_length=100,
+        blank=True,
     )
     language_preference = models.CharField(
         _("language preference"),
         max_length=20,
         choices=((k, v) for k, v in settings.LANGUAGES),
-        default="en"
+        default="en",
     )
 
     @property
@@ -52,6 +53,9 @@ class SmbUser(AbstractUser):
         else:
             profile = None
         return profile
+
+    def get_absolute_url(self):
+        return reverse("profile:update")
 
 
 # TODO: Integrate data sharing policies
@@ -99,7 +103,7 @@ class EndUserProfile(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse("profile:update")
+        return self.user.get_absolute_url()
 
 
 class PrivilegedUserProfile(models.Model):
@@ -108,6 +112,9 @@ class PrivilegedUserProfile(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_("user")
     )
+
+    def get_absolute_url(self):
+        return self.user.get_absolute_url()
 
 
 class MobilityHabitsSurvey(models.Model):

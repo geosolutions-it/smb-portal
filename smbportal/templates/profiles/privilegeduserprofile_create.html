@@ -41,9 +41,10 @@
                     </div>
                     <form method="post">
                         {% csrf_token %}
+                        {{ user_form|crispy }}
                         {{ form|crispy }}
                         <a href="{% url 'profile:create' %}" class="btn btn-outline-secondary btn-lg"><i class="fa fa-hand-o-left"></i> {% trans "Go back" %}</a>
-                        <button type="submit" class="btn btn-outline-primary btn-lg">{% trans "Register as privileged user" %}</button>
+                        <button type="submit" class="btn btn-primary">{% trans "Register as privileged user" %}</button>
                     </form>
                 </div>
             </div>

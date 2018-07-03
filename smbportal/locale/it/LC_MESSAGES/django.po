@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-30 00:04+0000\n"
+"POT-Creation-Date: 2018-07-02 17:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,119 +29,119 @@ msgstr "Italian"
 msgid "nickname"
 msgstr ""
 
-#: profiles/models.py:33
+#: profiles/models.py:34
 msgid "language preference"
 msgstr ""
 
-#: profiles/models.py:69 profiles/models.py:109
+#: profiles/models.py:73 profiles/models.py:113
 msgid "user"
 msgstr ""
 
-#: profiles/models.py:72
+#: profiles/models.py:76
 msgid "date updated"
 msgstr ""
 
-#: profiles/models.py:76
+#: profiles/models.py:80
 msgid "gender"
 msgstr ""
 
-#: profiles/models.py:90
+#: profiles/models.py:94
 msgid "phone number"
 msgstr "numero di telefono"
 
-#: profiles/models.py:96
+#: profiles/models.py:100
 msgid "bio"
 msgstr ""
 
-#: profiles/models.py:97
+#: profiles/models.py:101
 msgid "Short user biography"
 msgstr "Breve biografia"
 
-#: profiles/models.py:131
+#: profiles/models.py:138
 msgid "end user"
 msgstr ""
 
-#: profiles/models.py:134
+#: profiles/models.py:141
 msgid "date answered"
 msgstr ""
 
-#: profiles/models.py:138
+#: profiles/models.py:145
 msgid "public transport usage"
 msgstr ""
 
-#: profiles/models.py:143
+#: profiles/models.py:150
 msgid "Habitual (more than 10 travels per month)"
 msgstr ""
 
-#: profiles/models.py:147
+#: profiles/models.py:154
 msgid "Occasional (once per month)"
 msgstr ""
 
-#: profiles/models.py:151
+#: profiles/models.py:158
 msgid "Rare (less than 10 travels per year)"
 msgstr ""
 
-#: profiles/models.py:155
+#: profiles/models.py:162
 msgid "Never"
 msgstr ""
 
-#: profiles/models.py:161
+#: profiles/models.py:168
 msgid "uses bike sharing services"
 msgstr "utilizzo servizi di bike sharing"
 
-#: profiles/models.py:165
+#: profiles/models.py:172
 msgid "uses electrical car sharing services"
 msgstr ""
 
-#: profiles/models.py:169
+#: profiles/models.py:176
 msgid "uses fuel car sharing services"
 msgstr "uso servizi di car sharing"
 
-#: profiles/models.py:173
+#: profiles/models.py:180
 msgid "bicycle usage"
 msgstr ""
 
-#: profiles/models.py:178
+#: profiles/models.py:185
 msgid "Habitual (at least once a week on average)"
 msgstr ""
 
-#: profiles/models.py:182
+#: profiles/models.py:189
 msgid "Habitual (at least once a month)"
 msgstr ""
 
-#: profiles/models.py:186
+#: profiles/models.py:193
 msgid "Seasonal (mainly used in the Summer)"
 msgstr ""
 
-#: profiles/models.py:190
+#: profiles/models.py:197
 msgid "Rare (less than once a month)"
 msgstr ""
 
-#: profiles/models.py:194
+#: profiles/models.py:201
 msgid "Never use a bicycle to move around in the city"
 msgstr ""
 
-#: profiles/views.py:118
+#: profiles/views.py:135
 msgid "Privileged user profile created!"
 msgstr ""
 
-#: profiles/views.py:148
+#: profiles/views.py:171
 msgid "Registration request sent to admins"
 msgstr "La richeista di registrazione è stata inviata agli amministratori"
 
-#: profiles/views.py:149
+#: profiles/views.py:172
 msgid "You have been logged out"
 msgstr "Disconnesso"
 
-#: profiles/views.py:188
+#: profiles/views.py:218
 msgid "User profile created. You can now add some bikes"
 msgstr "Profilo utente createo. Adesso puoi aggiungere le tue biciclette"
 
-#: profiles/views.py:248
+#: profiles/views.py:288
 msgid "User profile updated!"
 msgstr "Profilo utente aggiornato!"
 
-#: profiles/views.py:286
+#: profiles/views.py:331
 msgid "Please complete your user profile before continuing"
 msgstr "Completa il tuo profilo utente per poter continuare nella navigazione"
 
@@ -230,27 +230,23 @@ msgstr "Segnala una bicicletta rubata"
 msgid "About"
 msgstr "Info"
 
-#: templates/base/base.html:69
-msgid "Change language"
-msgstr ""
-
-#: templates/base/base.html:93
+#: templates/base/base.html:71
 msgid "My Profile"
 msgstr "Il mio profilo"
 
-#: templates/base/base.html:94
+#: templates/base/base.html:72
 msgid "Messages"
 msgstr "Messaggi"
 
-#: templates/base/base.html:96
+#: templates/base/base.html:74
 msgid "Logout"
 msgstr "Disconnetti"
 
-#: templates/base/base.html:98
+#: templates/base/base.html:76
 msgid "Login/Register"
 msgstr "Registrati"
 
-#: templates/base/base.html:111
+#: templates/base/base.html:89
 msgid "Home"
 msgstr "Pagina iniziale"
 
@@ -303,23 +299,23 @@ msgstr "Completa il tuo profilo"
 msgid "complete profile"
 msgstr "Profilo copleto"
 
-#: templates/profiles/enduserprofile_create.html:39
+#: templates/profiles/enduserprofile_create.html:40
 msgid "Mobility Survey"
 msgstr "Sondaggio sulla mobilità"
 
-#: templates/profiles/enduserprofile_create.html:40
+#: templates/profiles/enduserprofile_create.html:41
 msgid ""
 "Please complete this short survey as a final step for creating your profile"
 msgstr "Completa questo breve sondaggio per completare il tuo profilo"
 
-#: templates/profiles/enduserprofile_create.html:42
-#: templates/profiles/enduserprofile_update.html:31
+#: templates/profiles/enduserprofile_create.html:43
+#: templates/profiles/enduserprofile_update.html:32
 #: templates/profiles/mobilityhabitssurvey_create.html:19
-#: templates/profiles/privilegeduserprofile_update.html:31
+#: templates/profiles/privilegeduserprofile_update.html:32
 msgid "Save"
 msgstr "Salva"
 
-#: templates/profiles/enduserprofile_create.html:45
+#: templates/profiles/enduserprofile_create.html:46
 #, python-format
 msgid ""
 "You can also <a href=\"%(privileged_url)s\">register as a different user type"
@@ -330,16 +326,16 @@ msgstr "<a href=\"%(privileged_url)s\">Registrati come un altro utente"
 msgid "Your profile"
 msgstr "Il mio profilo"
 
-#: templates/profiles/enduserprofile_update.html:34
+#: templates/profiles/enduserprofile_update.html:35
 msgid "Mobility surveys"
 msgstr "Sondaggi sulla mobilità"
 
-#: templates/profiles/enduserprofile_update.html:42
+#: templates/profiles/enduserprofile_update.html:44
 #: templates/profiles/mobilityhabitssurvey_detail.html:11
 msgid "Mobility survey"
 msgstr "Sondaggio sulla mobilità"
 
-#: templates/profiles/enduserprofile_update.html:46
+#: templates/profiles/enduserprofile_update.html:48
 msgid "Answer mobility survey again"
 msgstr "Rispondi nuovamente al sondaggio sulla mobilità"
 
@@ -422,12 +418,12 @@ msgid ""
 "portal"
 msgstr ""
 
-#: templates/profiles/privilegeduserprofile_create.html:45
+#: templates/profiles/privilegeduserprofile_create.html:46
 #: templates/vehicles/bike_picture_confirm_delete.html:23
 msgid "Go back"
 msgstr "Torna indietro"
 
-#: templates/profiles/privilegeduserprofile_create.html:46
+#: templates/profiles/privilegeduserprofile_create.html:47
 msgid "Register as privileged user"
 msgstr "Registrati per un altro ruolo utente"
 
@@ -631,7 +627,7 @@ msgid "Manage bike pictures"
 msgstr "Gestisci le foto della bicicletta"
 
 #: templates/vehicles/bike_detail.html:154
-#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:190
+#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:188
 msgid "Update bike status"
 msgstr "Aggiorna lo stato della bicicletta"
 
@@ -696,7 +692,7 @@ msgstr ""
 msgid "There are no pictures for this bike yet"
 msgstr ""
 
-#: templates/vehicles/bikegallery_detail.html:36 vehicles/forms.py:256
+#: templates/vehicles/bikegallery_detail.html:36 vehicles/forms.py:254
 msgid "Upload picture"
 msgstr "Carica foto"
 
@@ -722,7 +718,7 @@ msgstr "Aggiorna stato"
 msgid "report lost"
 msgstr "Segnala come smarrita"
 
-#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:190
+#: templates/vehicles/bikestatus_create.html:24 vehicles/forms.py:188
 msgid "Report lost bike"
 msgstr "Segnala una bici smarrita"
 
@@ -793,23 +789,23 @@ msgstr ""
 msgid "details"
 msgstr ""
 
-#: vehicles/forms.py:141
+#: vehicles/forms.py:139
 msgid "A bike with that nickname already exists"
 msgstr "E' già presente una bicicletta con questo nome"
 
-#: vehicles/forms.py:234
+#: vehicles/forms.py:232
 msgid "image"
 msgstr ""
 
-#: vehicles/forms.py:270
+#: vehicles/forms.py:268
 msgid "could not read uploaded image"
 msgstr ""
 
-#: vehicles/forms.py:298
+#: vehicles/forms.py:296
 msgid "Already uploaded a picture with that name"
 msgstr "E' stata già inserita una foto con lo stesso nome"
 
-#: vehicles/forms.py:333
+#: vehicles/forms.py:331
 msgid "Must select at least one picture to delete"
 msgstr "Selezionare almeno un'immagine da eliminare"
 

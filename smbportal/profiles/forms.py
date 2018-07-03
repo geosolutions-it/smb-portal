@@ -3,7 +3,21 @@ from django import forms
 from . import models
 
 
+class SmbUserForm(forms.ModelForm):
+
+    class Meta:
+        model = models.SmbUser
+        fields = (
+            "nickname",
+            "language_preference",
+        )
+
+
+
 class EndUserProfileForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     class Meta:
         model = models.EndUserProfile

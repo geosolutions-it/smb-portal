@@ -27,8 +27,9 @@
     <div class="col-lg-8">
         <form method="post">
             {% csrf_token %}
+            {{ user_form|crispy }}
             {{ form|crispy }}
-            <button type="submit" class="btn btn-outline-primary btn-lg">{% trans "Save" %}</button>
+            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
         </form>
     </div>
 {% endblock %}

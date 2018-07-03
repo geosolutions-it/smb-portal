@@ -20,6 +20,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.urls import reverse
+from django.utils import translation
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView
 from django.views.generic import DetailView
@@ -34,6 +35,12 @@ from . import models
 from .rules import has_profile
 
 logger = logging.getLogger(__name__)
+
+
+def activate_language(language_code, request):
+    logger.debug("activate_language called")
+    translation.activate(language_code)
+    request.session[translation.LANGUAGE_SESSION_KEY] = language_code
 
 
 def update_user_groups(user: models.SmbUser, user_profile: str,
@@ -115,16 +122,28 @@ class PrivilegedUserProfileCreateView(LoginRequiredMixin,
                                       CreateView):
     model = models.PrivilegedUserProfile
     template_name_suffix = "_create"
-    success_message = _("Privileged user profile created!")
     success_url = settings.LOGOUT_URL
     permission_required = "profiles.can_create_profile"
     fields = ()
+    admin_email_subject_template_name = (
+        "profiles/mail/privilegeduser_registration_request_subject.txt")
+    admin_email_message_template_name = (
+        "profiles/mail/privilegeduser_registration_request_message.txt")
+
+    @property
+    def success_message(self):
+        return _("Privileged user profile created!")
 
     def get_login_url(self):
         if not self.request.user.is_authenticated:
             return settings.LOGIN_URL
         elif has_profile(self.request.user):
             raise PermissionDenied("User already has a profile")
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data["user_form"] = self._get_user_form()
+        return context_data
 
     def form_valid(self, form):
         """Assign the request's user to the form and perform profile moderation
@@ -134,38 +153,46 @@ class PrivilegedUserProfileCreateView(LoginRequiredMixin,
         """
 
         form.instance.user = self.request.user
-        super().form_valid(form)
-        id_token = self.request.session.get("id_token")
-        try:
-            update_user_groups(
-                user=self.request.user,
-                user_profile=settings.PRIVILEGED_USER_PROFILE,
-                current_keycloak_groups=id_token.get("groups", [])
-            )
-            result = redirect("home")
-        except RuntimeError:
-            messages.info(
-                self.request, _("Registration request sent to admins"))
-            messages.info(self.request, _("You have been logged out"))
-            logger.debug(
-                "About to notify admin that user {!r} wants to register with "
-                "role {!r}".format(self.request.user.username,
-                                   settings.PRIVILEGED_USER_PROFILE)
-            )
-            template_name_pattern = (
-                "profiles/mail/privilegeduser_registration_request_{}.txt")
-            utils.send_email_to_admins(
-                template_name_pattern.format("subject"),
-                template_name_pattern.format("message"),
-                context={
-                    "username": self.request.user.username,
-                    "email": self.request.user.email,
-                    "keycloak_base_url": settings.KEYCLOAK["base_url"],
-                    "site_name": get_current_site(self.request),
-                }
-            )
-            result = redirect(settings.LOGOUT_URL)
+        user_form = self._get_user_form()
+        if user_form.is_valid():
+            user = user_form.save()
+            activate_language(user.language_preference, self.request)
+            super().form_valid(form)
+            id_token = self.request.session.get("id_token")
+            try:
+                update_user_groups(
+                    user=self.request.user,
+                    user_profile=settings.PRIVILEGED_USER_PROFILE,
+                    current_keycloak_groups=id_token.get("groups", [])
+                )
+                result = redirect("home")
+            except RuntimeError:
+                messages.info(
+                    self.request, _("Registration request sent to admins"))
+                messages.info(self.request, _("You have been logged out"))
+                utils.send_email_to_admins(
+                    self.admin_email_subject_template_name,
+                    self.admin_email_message_template_name,
+                    context={
+                        "username": self.request.user.username,
+                        "email": self.request.user.email,
+                        "keycloak_base_url": settings.KEYCLOAK["base_url"],
+                        "site_name": get_current_site(self.request),
+                    }
+                )
+                result = redirect(settings.LOGOUT_URL)
+        else:
+            result = self.form_invalid(form)
         return result
+
+    def form_invalid(self, form):
+        user_form = self._get_user_form()
+        return self.render_to_response(
+            self.get_context_data(form=form, user_form=user_form))
+
+    def _get_user_form(self):
+        data = self.request.POST if self.request.method == "POST" else None
+        return forms.SmbUserForm(data=data, instance=self.request.user)
 
 
 class EndUserProfileCreateView(LoginRequiredMixin,
@@ -185,7 +212,10 @@ class EndUserProfileCreateView(LoginRequiredMixin,
     template_name_suffix = "_create"
     permission_required = "profiles.can_create_profile"
     success_url = reverse_lazy("profile:update")
-    success_message = _("User profile created. You can now add some bikes")
+
+    @property
+    def success_message(self):
+        return _("User profile created. You can now add some bikes")
 
     def get_login_url(self):
         if not self.request.user.is_authenticated:
@@ -195,11 +225,7 @@ class EndUserProfileCreateView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.method == "POST":
-            context["mobility_form"] = forms.UserMobilityHabitsForm(
-                self.request.POST)
-        else:
-            context["mobility_form"] = forms.UserMobilityHabitsForm()
+        context.update(self._get_extra_forms())
         return context
 
     def form_valid(self, form):
@@ -211,15 +237,19 @@ class EndUserProfileCreateView(LoginRequiredMixin,
         """
 
         form.instance.user = self.request.user
-        # validate mobility survey before saving anything
-        mobility_form = self.get_context_data()["mobility_form"]
-        if mobility_form.is_valid():
-            logger.debug("mobility_form is valid")
-            response = super().form_valid(form)
+        # validate extra forms before saving anything
+        extra_forms = self._get_extra_forms()
+        if all([f.is_valid() for f in extra_forms.values()]):
+            super().form_valid(form)
             # upon calling super().form_valid(form) the property self.object
             # points to the newly created enduser profile
+            mobility_form = extra_forms["mobility_form"]
             mobility_form.instance.end_user = self.object
             mobility_form.save()
+            user_form = extra_forms["user_form"]
+            user = user_form.save()
+            activate_language(user.language_preference, self.request)
+            response = redirect(self.get_success_url())
             id_token = self.request.session.get("id_token")
             update_user_groups(
                 user=self.request.user,
@@ -228,14 +258,21 @@ class EndUserProfileCreateView(LoginRequiredMixin,
             )
         else:
             response = self.form_invalid(form)
+        logger.debug("response: {}".format(response))
         return response
 
     def form_invalid(self, form):
-        mobility_form = self.get_context_data()["mobility_form"]
-        logger.error("main form errors: {}".format(form.errors))
-        logger.error("mobility form errors: {}".format(mobility_form.errors))
+        extra_forms = self._get_extra_forms()
         return self.render_to_response(
-            self.get_context_data(form=form, mobility_form=mobility_form))
+            self.get_context_data(form=form, **extra_forms))
+
+    def _get_extra_forms(self):
+        data = self.request.POST if self.request.method == "POST" else None
+        return {
+            "user_form": forms.SmbUserForm(data=data,
+                                           instance=self.request.user),
+            "mobility_form": forms.UserMobilityHabitsForm(data=data)
+        }
 
 
 class ProfileUpdateView(LoginRequiredMixin,
@@ -245,7 +282,10 @@ class ProfileUpdateView(LoginRequiredMixin,
                         mixins.FormUpdatedMessageMixin,
                         UpdateView):
     permission_required = "profiles.can_edit_profile"
-    success_message = _("User profile updated!")
+
+    @property
+    def success_message(self):
+        return _("User profile updated!")
 
     def has_permission(self):
         user = self.request.user
@@ -277,6 +317,11 @@ class ProfileUpdateView(LoginRequiredMixin,
             models.PrivilegedUserProfile: forms.PrivilegedUserProfileForm,
         }.get(profile_class)
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data["user_form"] = self._get_user_form()
+        return context_data
+
     def get_login_url(self):
         if not self.request.user.is_authenticated:
             result = settings.LOGIN_URL
@@ -289,8 +334,31 @@ class ProfileUpdateView(LoginRequiredMixin,
         return result
 
     def form_valid(self, form):
+        """Process uploaded form data after the form has been validated
+
+        Reimplemented in order to also perform validation on the other form,
+        for the SmbUser model, and handle all uploaded data.
+
+        """
+
         form.instance.user = self.request.user
-        return super().form_valid(form)
+        user_form = self._get_user_form()
+        if user_form.is_valid():
+            user = user_form.save()
+            activate_language(user.language_preference, self.request)
+            response = super().form_valid(form)
+        else:
+            response = self.form_invalid(form)
+        return response
+
+    def form_invalid(self, form):
+        user_form = self._get_user_form()
+        return self.render_to_response(
+            self.get_context_data(form=form, user_form=user_form))
+
+    def _get_user_form(self):
+        data = self.request.POST if self.request.method == "POST" else None
+        return forms.SmbUserForm(data=data, instance=self.request.user)
 
 
 class MobilityHabitsSurveyCreateView(LoginRequiredMixin,
