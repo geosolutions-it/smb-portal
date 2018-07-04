@@ -4,6 +4,14 @@
 {% load static %}
 {% load django_bootstrap_breadcrumbs %}
 
+{% block extra_head %}
+    {% comment %}
+        Adding the openlayers css and js here since they might be needed if the user chooses to update bike status
+    {% endcomment %}
+    <link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.css">
+    <link rel="stylesheet" media="screen" href="{% static 'gis/css/ol3.css' %}">
+{% endblock %}
+
 {% block page_title %}{% trans "Bike details" %}{% endblock %}
 
 {% block breadcrumbs %}
@@ -151,7 +159,17 @@
             ><i class="fa fa-pencil-square-o"></i> {% trans "Edit bike details" %}</a>
 
             <a href="{% url 'bikes:gallery' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-picture-o"></i> {% trans "Manage bike pictures" %}</a>
-            <a href="{% url 'bikes:report-status' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-file-text-o"></i> {% trans "Update bike status" %}</a>
+            <a
+                    id="reportBikeStatus"
+                    data-toggle="modal"
+                    data-action-url="{% url 'bikes:report-status' pk=bike.pk %}"
+                    data-primary-button-value="{% trans 'Update bike status' %}"
+                    data-primary-button-icon="fa fa-file-text-o"
+                    data-primary-button-classes="btn btn-primary"
+                    data-title="{% trans 'Update bike status' %}"
+                    href="#"
+                    class="list-group-item list-group-item-action"
+            ><i class="fa fa-file-text-o"></i> {% trans "Update bike status" %}</a>
             <a
                     id="deleteBike"
                     data-toggle="modal"
@@ -206,6 +224,8 @@
 {% endblock %}
 
 {% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.js"></script>
+    <script src="{% static 'gis/js/OLMapWidget.js' %}"></script>
     {{ block.super }}
     <script src="{% static 'vehicles/js/bike-detail.js' %}"></script>
 {% endblock %}

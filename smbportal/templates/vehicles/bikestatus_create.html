@@ -2,13 +2,18 @@
 
 {% load i18n %}
 {% load static %}
-{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block extra_head %}
-    {{ form.media }}
-    <link rel="stylesheet" media="screen" href="{% static 'base/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css' %}">
-    <script src="{% static 'base/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+
+    {% comment %}
+        Adding the openlayers css and js here since they are not being
+        inherited by our custom SmbOsmWidget widget class anymore
+    {% endcomment %}
+    <link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.css">
+    <link rel="stylesheet" media="screen" href="{% static 'gis/css/ol3.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.js"></script>
+    <script src="{% static 'gis/js/OLMapWidget.js' %}"></script>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -25,7 +30,7 @@
 
 {% block main %}
     <div class="col-lg-12">
-        {% crispy form %}
+        {% include 'vehicles/bikestatus_create_inner.html' %}
     </div>
 {% endblock %}
 

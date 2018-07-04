@@ -19,6 +19,7 @@ from django.utils.text import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
+from base import widgets
 from . import models
 from . import validators
 
@@ -166,10 +167,8 @@ class BikeForm(forms.ModelForm):
 class BikeStatusForm(forms.ModelForm):
     position = gis_forms.PointField(
         required=False,
-        widget=gis_forms.OSMWidget(
+        widget=widgets.SmbOsmWidget(
             attrs={
-                "map_height": "100%",
-                "map_width": "100%",
                 "default_lon": 12,
                 "default_lat": 41,
                 "default_zoom": 6,
@@ -180,28 +179,45 @@ class BikeStatusForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user")
         bike = kwargs.pop("bike", None)
+        is_ajax = kwargs.pop("is_ajax", None)
+        action = kwargs.pop("action", None)
         submit_value = _(
             "Report lost bike") if not bike else _("Update bike status")
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.layout = layout.Layout(
-            layout.Div(
+        self.helper.form_id = "statusForm"
+        if action is not None:
+            self.helper.form_action = action
+        if is_ajax:
+            form_layout = layout.Layout(
+                layout.Fieldset(
+                    None,
+                    "bike",
+                    "lost",
+                    "details",
+                    "position",
+                )
+            )
+        else:
+            form_layout = layout.Layout(
                 layout.Div(
-                    layout.Field("bike"),
-                    layout.Field("lost"),
-                    layout.Field("details"),
-                    css_class="col-lg-3"
+                    layout.Div(
+                        layout.Field("bike"),
+                        layout.Field("lost"),
+                        layout.Field("details"),
+                        css_class="col-lg-3"
+                    ),
+                    layout.Div(
+                        layout.Field("position"),
+                        css_class="col-lg-9",
+                    ),
+                    css_class="row"
                 ),
-                layout.Div(
-                    layout.Field("position"),
-                    css_class="col-lg-9"
+                bootstrap.FormActions(
+                    layout.Submit("submit", submit_value)
                 ),
-                css_class="row"
-            ),
-            bootstrap.FormActions(
-                layout.Submit("submit", submit_value)
-            ),
-        )
+            )
+        self.helper.layout = form_layout
         if bike is None:  # TODO: show only bikes that are not currently lost
             self.fields["bike"].queryset = models.Bike.objects.filter(
                 owner=user)

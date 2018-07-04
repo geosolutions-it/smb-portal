@@ -275,10 +275,12 @@ class BikePictureDeleteView(LoginRequiredMixin, View):
 
 class BikeStatusCreateView(LoginRequiredMixin,
                            mixins.FormUpdatedMessageMixin,
+                           mixins.AjaxTemplateMixin,
                            CreateView):
     model = models.BikeStatus
     form_class = forms.BikeStatusForm
     template_name_suffix = "_create"
+    ajax_template_name = "vehicles/bikestatus_create_inner.html"
 
     @property
     def success_message(self):
@@ -305,6 +307,9 @@ class BikeStatusCreateView(LoginRequiredMixin,
         kwargs.update({
             "bike": get_current_bike(self.kwargs),
             "user": self.request.user,
+            "is_ajax": self.request.is_ajax(),
+            "action": reverse(
+                "bikes:report-status", kwargs={"pk": self.kwargs.get("pk")})
         })
         return kwargs
 
