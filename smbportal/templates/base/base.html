@@ -18,9 +18,8 @@
     <link rel="stylesheet" media="screen" href="{% static 'base/css/vendor.min.css' %}">
     <!-- Main Template Styles-->
     <link id="mainStyles" rel="stylesheet" media="screen" href="{% static 'base/css/styles.css'%}">
-    <!-- Modernizr-->
     <script src="{% static 'base/js/modernizr.min.js' %}"></script>
-    <!-- <script src ="{% static 'base/js/dashboard_v3.js' %}"></script> -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>-->
     {% block extra_head %}
     {% endblock %}
 </head>
@@ -38,9 +37,9 @@
         <!-- BEGIN MAIN NAVIGATION-->
         <nav class="site-menu">
             <ul>
-                <li><a href="{% url 'bikes:list' %}"><span>{% trans 'Bikes' %}</span></a></li>
-                <li><a href="{% url 'bikes:report-status' %}"><span>{% trans 'Report a lost Bike' %}</span></a></li>
-                <li><a href="https://www.savemybike.eu" target="_blank"><span>{% trans 'About' %}</span></a></li>
+                <li id="bikes"><a href="{% url 'bikes:list' %}"><span>{% trans 'Bikes' %}</span></a></li>
+                <li id="reportLost"><a href="{% url 'bikes:report-status' %}"><span>{% trans 'Report a lost Bike' %}</span></a></li>
+                <li id="about"><a href="https://www.savemybike.eu" target="_blank"><span>{% trans 'About' %}</span></a></li>
             </ul>
         </nav>
         <!-- END MAIN NAVIGATION-->
@@ -171,11 +170,13 @@
     <!-- Backdrop-->
     <div class="site-backdrop"></div>
     <!-- BEGIN PRELOADER -->
+    <!--
     <div id="preloader">
         <div class="inner">
             <span class="loader"></span>
         </div>
     </div>
+    -->
     <!-- END PRELOADER -->
     {% block modals %}
         <div id="smbFormModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="smbModalLabel" aria-hidden="true">
@@ -189,7 +190,7 @@
                     </div>
                     <div class="modal-body">Modal body</div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Close' %}</button>
                         <button id="primaryButton" type="submit" class="btn btn-primary"></button>
                     </div>
                 </div>
@@ -211,7 +212,8 @@
     {% endblock modals %}
     <!-- BEGIN CORE JS -->
     <script src="{% static 'base/js/vendor.min.js' %}"></script>
-    <script src="{% static 'base/js/scripts.min.js' %}"></script>
+    <script src="{% static 'base/js/base.js' %}"></script>
+    <script src="{% static 'base/js/scripts.js' %}"></script>
     {% block js %}
     {% endblock %}
 </body>
