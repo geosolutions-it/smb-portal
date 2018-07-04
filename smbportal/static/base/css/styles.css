@@ -23,6 +23,10 @@ a:hover {
     color: #F51DAF;
 }
 
+#container {
+    padding-bottom: 160px;
+}
+
 .page-title h1, .page-title h2, .page-title h3 {
     border-left: 4px solid #F51DAF;
 }
@@ -35,6 +39,10 @@ a:hover {
 .site-footer {
     text-align: center;
     padding: 0px 0px 0px 0px;
+    position: absolute;
+    height: 86px;
+    bottom: 0px;
+    width: 100%;
 }
 
 .footer-widgets {
