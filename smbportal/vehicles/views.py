@@ -72,7 +72,7 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
 
     @property
     def success_message(self):
-        return _("Created bike {}".format(self.object.nickname))
+        return _("Bike created!")
 
     def get_success_url(self):
         return reverse("bikes:detail", kwargs={"pk": self.object.pk})
@@ -161,8 +161,11 @@ class BikeDeleteView(LoginRequiredMixin, mixins.AjaxTemplateMixin, DeleteView):
     model = models.Bike
     context_object_name = "bike"
     success_url = reverse_lazy("bikes:list")
-    success_message = _("Bike deleted!")
     ajax_template_name = "vehicles/bike_confirm_delete_inner.html"
+
+    @property
+    def success_message(self):
+        return _("Bike deleted!")
 
     def delete(self, request, *args, **kwargs):
         result = super().delete(request, *args, **kwargs)
@@ -190,11 +193,15 @@ class BikePictureUploadView(LoginRequiredMixin,
                             mixins.FormUpdatedMessageMixin,
                             mixins.AjaxTemplateMixin,
                             CreateView):
-    model = Photo
+    # model = Photo
+    model = models.BikePicture
     form_class = forms.BikePictureForm
     template_name = "vehicles/bike_picture_create.html"
     ajax_template_name = "vehicles/bike_picture_create_inner.html"
-    success_message = _("Bike picture uploaded!")
+
+    @property
+    def success_message(self):
+        return _("Bike picture uploaded!")
 
     def get_success_url(self):
         bike = get_current_bike(self.kwargs)
@@ -272,7 +279,10 @@ class BikeStatusCreateView(LoginRequiredMixin,
     model = models.BikeStatus
     form_class = forms.BikeStatusForm
     template_name_suffix = "_create"
-    success_message = _("Bike status updated!")
+
+    @property
+    def success_message(self):
+        return _("Bike status updated!")
 
     def get_success_url(self):
         pk = self.kwargs.get("pk")

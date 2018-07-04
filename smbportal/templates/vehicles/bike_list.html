@@ -24,6 +24,8 @@
                         </a>
                     </div>
                 </div>
+            {% empty %}
+                <p>{% trans 'You do not have any bikes yet' %}</p>
             {% endfor %}
         </div>
     </div>

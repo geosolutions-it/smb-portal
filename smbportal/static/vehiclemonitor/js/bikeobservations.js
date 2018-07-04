@@ -11,7 +11,8 @@ observationsSource.on('change', function (evt) {
     // recenter map based on loaded data's extent
     view.fit(this.getExtent(), {
       size: map.getSize(),
-      padding: [5, 5, 5, 5]
+      padding: [5, 5, 5, 5],
+      maxZoom: 18
     })
     // setup event listeners for listgroup items
     const observationElements = document.getElementsByName('observation')

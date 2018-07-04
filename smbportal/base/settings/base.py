@@ -338,4 +338,5 @@ SMB_PORTAL = {
     "max_upload_size_megabytes": 2,
     "max_bikes_per_user": 5,
     "max_pictures_per_bike": 5,
+    "num_latest_observations": 5,
 }

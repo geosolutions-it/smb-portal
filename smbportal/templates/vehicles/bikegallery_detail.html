@@ -14,10 +14,10 @@
 
 {% block main %}
     <div class="col-lg-9 col-md-8 order-md-1">
-        {% if gallery.photo_count >= max_pictures %}
+        {% if gallery.photos.count >= max_pictures %}
             <p>{% trans 'This bike already has the maximum number of pictures. Cannot add more.' %}</p>
         {% endif %}
-        {% for photo in gallery.public %}
+        {% for photo in gallery.photos.all %}
             <a href="{{ photo.image.url }}">
                 <img src="{{ photo.get_display_url }}" class="thumbnail" alt="{{ photo.title }}">
             </a>
@@ -40,7 +40,7 @@
                     data-denial-title="{% trans 'Bike pictures limit reached' %}"
                     data-denial-content="{% trans 'Bike pictures limit reached. Cannot add more pictures. Delete some existing pictures first.' %}"
                     data-threshold="{{ max_pictures }}"
-                    data-current="{{ gallery.photo_count }}"
+                    data-current="{{ gallery.photos.count }}"
             >
                 <i class="fa fa-plus-circle"></i> {% trans 'Add picture' %}
             </a>
