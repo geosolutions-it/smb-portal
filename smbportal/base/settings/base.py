@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.gis",
     "django.contrib.sites",
+    "django.forms",
     "rest_framework",
     "rest_framework_gis",
     "django_filters",
@@ -128,6 +129,8 @@ TEMPLATES = [
         },
     },
 ]
+
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 WSGI_APPLICATION = "base.wsgi.application"
 
