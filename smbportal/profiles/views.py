@@ -29,7 +29,7 @@ from django.views.generic import UpdateView
 from base import mixins
 from base import utils
 from keycloakauth import oidchooks
-from keycloakauth.keycloakadmin import KeycloakManager
+from keycloakauth.keycloakadmin import get_manager as get_keycloak_manager
 from . import forms
 from . import models
 from .rules import has_profile
@@ -49,18 +49,18 @@ def update_user_groups(user: models.SmbUser, user_profile: str,
 
     The workflow is:
 
-    - user asks KeyCloak to become a member of the group(s) corresponding
+    - user asks Keycloak to become a member of the group(s) corresponding
       to its profile
-    - KeyCloak either accepts and creates the memberships or denies and
+    - Keycloak either accepts and creates the memberships or denies and
       notifies an admin that user wants to be given membership of said groups
-    - if KeyCloak created the relevant memberships, we update the user's
+    - if Keycloak created the relevant memberships, we update the user's
       django groups
 
     Note:
 
-    We do not use permissions here because we want keycloak to be the
+    We do not use permissions here because we want Keycloak to be the
     authority on the user group memberships. In order to do that we can only
-    update a django user's django group when we are certain that keycloak
+    update a django user's django group when we are certain that Keycloak
     already has reflected that membership in its own user database
 
     """
@@ -88,15 +88,16 @@ def enforce_keycloak_group_memberships(user_id: str, user_profile: str,
     if set(current_groups) == set(memberships_to_enforce):
         result = current_groups
     else:
-        keycloak_manager = KeycloakManager(
+        keycloak_manager = get_keycloak_manager(
             base_url=settings.KEYCLOAK["base_url"],
             realm=settings.KEYCLOAK["realm"],
-            admin_username=settings.KEYCLOAK["admin_username"],
-            admin_password=settings.KEYCLOAK["admin_password"],
+            client_id=settings.KEYCLOAK["client_id"],
+            username=settings.KEYCLOAK["admin_username"],
+            password=settings.KEYCLOAK["admin_password"],
         )
         if user_profile == settings.END_USER_PROFILE:
-            missing_memberships = set(current_groups) - set(
-                memberships_to_enforce)
+            missing_memberships = set(
+                memberships_to_enforce) - set(current_groups)
             if any(missing_memberships):
                 for group_path in missing_memberships:
                     keycloak_manager.add_user_to_group(user_id, group_path)
