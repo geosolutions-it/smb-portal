@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-04 16:59+0000\n"
+"POT-Creation-Date: 2018-07-06 14:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,115 +33,143 @@ msgstr ""
 msgid "language preference"
 msgstr ""
 
-#: profiles/models.py:73 profiles/models.py:113
+#: profiles/models.py:74 profiles/models.py:126
 msgid "user"
 msgstr ""
 
-#: profiles/models.py:76
+#: profiles/models.py:77
 msgid "date updated"
 msgstr ""
 
-#: profiles/models.py:80
+#: profiles/models.py:81
 msgid "gender"
 msgstr ""
 
-#: profiles/models.py:94
+#: profiles/models.py:85
+msgid "female"
+msgstr ""
+
+#: profiles/models.py:86
+msgid "male"
+msgstr ""
+
+#: profiles/models.py:91
+msgid "age"
+msgstr ""
+
+#: profiles/models.py:95
+msgid "< 19"
+msgstr ""
+
+#: profiles/models.py:96
+msgid "19 - 30"
+msgstr ""
+
+#: profiles/models.py:97
+msgid "30 - 65"
+msgstr ""
+
+#: profiles/models.py:98
+msgid "65+"
+msgstr ""
+
+#: profiles/models.py:107
 msgid "phone number"
 msgstr "numero di telefono"
 
-#: profiles/models.py:100
+#: profiles/models.py:113
 msgid "bio"
 msgstr ""
 
-#: profiles/models.py:101
+#: profiles/models.py:114
 msgid "Short user biography"
 msgstr "Breve biografia"
 
-#: profiles/models.py:138
+#: profiles/models.py:151
 msgid "end user"
 msgstr ""
 
-#: profiles/models.py:141
+#: profiles/models.py:154
 msgid "date answered"
 msgstr ""
 
-#: profiles/models.py:145
+#: profiles/models.py:158
 msgid "public transport usage"
 msgstr ""
 
-#: profiles/models.py:150
+#: profiles/models.py:163
 msgid "Habitual (more than 10 travels per month)"
 msgstr ""
 
-#: profiles/models.py:154
+#: profiles/models.py:167
 msgid "Occasional (once per month)"
 msgstr ""
 
-#: profiles/models.py:158
+#: profiles/models.py:171
 msgid "Rare (less than 10 travels per year)"
 msgstr ""
 
-#: profiles/models.py:162
+#: profiles/models.py:175
 msgid "Never"
 msgstr ""
 
-#: profiles/models.py:168
+#: profiles/models.py:181
 msgid "uses bike sharing services"
 msgstr "utilizzo servizi di bike sharing"
 
-#: profiles/models.py:172
+#: profiles/models.py:185
 msgid "uses electrical car sharing services"
 msgstr ""
 
-#: profiles/models.py:176
+#: profiles/models.py:189
 msgid "uses fuel car sharing services"
 msgstr "uso servizi di car sharing"
 
-#: profiles/models.py:180
+#: profiles/models.py:193
 msgid "bicycle usage"
 msgstr ""
 
-#: profiles/models.py:185
+#: profiles/models.py:198
 msgid "Habitual (at least once a week on average)"
 msgstr ""
 
-#: profiles/models.py:189
+#: profiles/models.py:202
 msgid "Habitual (at least once a month)"
 msgstr ""
 
-#: profiles/models.py:193
+#: profiles/models.py:206
 msgid "Seasonal (mainly used in the Summer)"
 msgstr ""
 
-#: profiles/models.py:197
+#: profiles/models.py:210
 msgid "Rare (less than once a month)"
 msgstr ""
 
-#: profiles/models.py:201
+#: profiles/models.py:214
 msgid "Never use a bicycle to move around in the city"
 msgstr ""
 
-#: profiles/views.py:135
+#: profiles/views.py:136
 msgid "Privileged user profile created!"
 msgstr ""
 
-#: profiles/views.py:171
+#: profiles/views.py:172
 msgid "Registration request sent to admins"
 msgstr "La richeista di registrazione è stata inviata agli amministratori"
 
-#: profiles/views.py:172
+#: profiles/views.py:173
 msgid "You have been logged out"
 msgstr "Disconnesso"
 
-#: profiles/views.py:218
+#: profiles/views.py:219
 msgid "User profile created. You can now add some bikes"
 msgstr "Profilo utente createo. Adesso puoi aggiungere le tue biciclette"
 
-#: profiles/views.py:288
+#: profiles/views.py:289
 msgid "User profile updated!"
 msgstr "Profilo utente aggiornato!"
 
-#: profiles/views.py:331
+#: profiles/views.py:332
 msgid "Please complete your user profile before continuing"
 msgstr "Completa il tuo profilo utente per poter continuare nella navigazione"
 
@@ -250,7 +278,7 @@ msgstr "Registrati"
 msgid "Home"
 msgstr "Pagina iniziale"
 
-#: templates/base/base.html:180
+#: templates/base/base.html:183
 msgid "Close"
 msgstr ""
 
@@ -525,9 +553,9 @@ msgstr ""
 "circolazione per le strade"
 
 #: templates/vehicles/bike_confirm_delete.html:6
-#: templates/vehicles/bike_detail.html:179
-#: templates/vehicles/bike_detail.html:182
-#: templates/vehicles/bike_detail.html:185
+#: templates/vehicles/bike_detail.html:178
+#: templates/vehicles/bike_detail.html:181
+#: templates/vehicles/bike_detail.html:184
 msgid "Delete bike"
 msgstr "Elimina bicicletta"
 
@@ -659,10 +687,9 @@ msgstr "Modifica i dati della bicicletta"
 msgid "Manage bike pictures"
 msgstr "Gestisci le foto della bicicletta"
 
-#: templates/vehicles/bike_detail.html:163
-#: templates/vehicles/bike_detail.html:168
-#: templates/vehicles/bike_detail.html:171
-#: templates/vehicles/bike_detail.html:174
+#: templates/vehicles/bike_detail.html:167
+#: templates/vehicles/bike_detail.html:170
+#: templates/vehicles/bike_detail.html:173
 #: templates/vehicles/bikestatus_create.html:30 vehicles/forms.py:185
 msgid "Update bike status"
 msgstr "Aggiorna lo stato della bicicletta"

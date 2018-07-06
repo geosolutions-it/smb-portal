@@ -23,6 +23,7 @@ class EndUserProfileForm(forms.ModelForm):
         fields = (
             "bio",
             "gender",
+            "age",
             "phone_number",
         )
         widgets = {

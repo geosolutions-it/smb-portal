@@ -122,6 +122,7 @@ class EndUserProfileSerializer(serializers.ModelSerializer):
         model = profiles.models.EndUserProfile
         fields = (
             "gender",
+            "age",
             "phone_number",
             "bio",
             "date_updated",
