@@ -57,6 +57,11 @@ LOGGING = {
             "level": "DEBUG",
             "propagate": False,
         },
+        "vehiclemonitor": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
         "keycloakauth": {
             "handlers": ["console"],
             "level": "DEBUG",

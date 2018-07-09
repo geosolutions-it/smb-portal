@@ -8,14 +8,20 @@
 #
 #########################################################################
 
+import logging
 import uuid
 
 from django.db import models
 from django.contrib.gis.db import models as gis_models
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.shortcuts import reverse
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 from photologue.models import Gallery
+from photologue.models import Photo
+
+logger = logging.getLogger(__name__)
 
 
 class Vehicle(models.Model):
@@ -27,6 +33,7 @@ class Vehicle(models.Model):
     last_position = models.ForeignKey(
         "tracks.CollectedPoint",
         models.CASCADE,
+        verbose_name=_("last position"),
         blank=True,
         null=True
     )
@@ -52,7 +59,6 @@ class BikeManager(models.Manager):
         bike.save()
         status_history = BikeStatus(
             bike=bike,
-            reporter=bike.owner,
             lost=False
         )
         status_history.save()
@@ -89,66 +95,115 @@ class Bike(Vehicle):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="bikes",
+        verbose_name=_("owner")
     )
     picture_gallery = models.OneToOneField(
         "photologue.Gallery",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
+        verbose_name=_("picture_gallery")
     )
     last_update = models.DateTimeField(
+        _("last update"),
         auto_now=True,
         db_column="lastupdate",
     )
     bike_type = models.CharField(
+        _("bike type"),
         max_length=20,
         choices=(
-            (RACING_BIKE, RACING_BIKE),
-            (CITY_BIKE, CITY_BIKE),
-            (MOUNTAIN_BIKE, MOUNTAIN_BIKE),
-            (FOLDABLE_BIKE, FOLDABLE_BIKE),
+            (RACING_BIKE, _("racing")),
+            (CITY_BIKE, _("city")),
+            (MOUNTAIN_BIKE, _("mountain")),
+            (FOLDABLE_BIKE, _("foldable")),
         ),
         default=CITY_BIKE,
     )
     gear = models.CharField(
+        _("gear"),
         max_length=50,
         choices=(
-            (SINGLE_RING_GEAR, SINGLE_RING_GEAR),
-            (GROUPSET_UNDER_18_SPEED_GEAR, GROUPSET_UNDER_18_SPEED_GEAR),
-            (GROUPSET_ABOVE_18_SPEED_GEAR, GROUPSET_ABOVE_18_SPEED_GEAR),
-            (ELECTRIC_GEAR, ELECTRIC_GEAR),
+            (SINGLE_RING_GEAR, _("single ring")),
+            (GROUPSET_UNDER_18_SPEED_GEAR, _("groupset below 18 speeds")),
+            (GROUPSET_ABOVE_18_SPEED_GEAR, _("groupset above 18 speeds")),
+            (ELECTRIC_GEAR, _("electric")),
         ),
         default=GROUPSET_ABOVE_18_SPEED_GEAR,
     )
     brake = models.CharField(
+        _("brake"),
         max_length=30,
         choices=(
-            (DISK_BRAKE, DISK_BRAKE),
-            (CANTILEVER_BRAKE, CANTILEVER_BRAKE),
-            (COASTER_BRAKE, COASTER_BRAKE),
+            (DISK_BRAKE, _("disk")),
+            (CANTILEVER_BRAKE, _("cantilevel")),
+            (COASTER_BRAKE, _("coaster")),
         ),
         default=DISK_BRAKE,
     )
-    nickname = models.CharField(max_length=100)
-    brand = models.CharField(max_length=50, blank=True)
-    model = models.CharField(max_length=50, blank=True)
-    color = models.CharField(max_length=100, blank=True)
-    saddle = models.CharField(max_length=100, blank=True)
-    has_basket = models.BooleanField(default=False)
-    has_cargo_rack = models.BooleanField(default=False)
-    has_lights = models.BooleanField(default=False)
-    has_bags = models.BooleanField(default=False)
-    has_smb_sticker = models.BooleanField(
-        default=False,
-        verbose_name="has SaveMyBike sticker"
+    nickname = models.CharField(
+        _("nickname"),
+        max_length=100
     )
-    other_details = models.TextField(blank=True)
+    brand = models.CharField(
+        _("brand"),
+        max_length=50,
+        blank=True
+    )
+    model = models.CharField(
+        _("model"),
+        max_length=50,
+        blank=True
+    )
+    color = models.CharField(
+        _("color"),
+        max_length=100,
+        blank=True
+    )
+    saddle = models.CharField(
+        _("saddle"),
+        max_length=100,
+        blank=True
+    )
+    has_basket = models.BooleanField(
+        _("has basket"),
+        default=False
+    )
+    has_cargo_rack = models.BooleanField(
+        _("has cargo rack"),
+        default=False
+    )
+    has_lights = models.BooleanField(
+        _("has lights"),
+        default=False
+    )
+    has_bags = models.BooleanField(
+        _("has bags"),
+        default=False
+    )
+    has_smb_sticker = models.BooleanField(
+        _("has SaveMyBike sticker"),
+        default=False
+    )
+    other_details = models.TextField(
+        _("other details"),
+        blank=True
+    )
 
     class Meta:
         unique_together = ("owner", "nickname")
 
     def __str__(self):
         return "{0.nickname}".format(self)
+
+    def clean(self):
+        max_bikes = settings.SMB_PORTAL.get("max_bikes_per_user", 5)
+        if self._state.adding and self.owner.bikes.count() >= max_bikes:
+            logger.error("Cannot create a new bike. Limit reached")
+            raise ValidationError(
+                _("Bikes limit reached. Cannot add more bikes. Delete some "
+                  "existing bikes first.")
+            )
 
     def get_absolute_url(self):
         return reverse("bikes:detail", kwargs={"pk": self.id})
@@ -174,21 +229,26 @@ class BikeStatus(models.Model):
     bike = models.ForeignKey(
         "Bike",
         on_delete=models.CASCADE,
-        related_name="status_history"
+        related_name="status_history",
+        verbose_name=_("bike")
     )
-    reporter = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+    lost = models.BooleanField(
+        _("lost"),
+        default=False
     )
-    lost = models.BooleanField(default=False)
-    creation_date = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateTimeField(
+        _("creation date"),
+        auto_now_add=True
+    )
     details = models.TextField(
+        _("details"),
         blank=True
     )
     position = gis_models.PointField(
+        _("position"),
         null=True,
         blank=True,
-        help_text="Bike last seen position"
+        help_text=_("Bike last seen position")
     )
 
     def __str__(self):
@@ -208,9 +268,29 @@ class PhysicalTag(models.Model):
         "Bike",
         on_delete=models.CASCADE,
         related_name="tags",
+        verbose_name=_("bike")
     )
     epc = models.TextField(
-        help_text="Electronic Product Code",
+        _("epc"),
+        help_text=_("Electronic Product Code"),
         unique=True
     )
-    creation_date = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateTimeField(
+        _("creation date"),
+        auto_now_add=True
+    )
+
+
+class BikePicture(Photo):
+
+    class Meta:
+        proxy = True
+
+    def clean(self):
+        max_pictures = settings.SMB_PORTAL.get("max_pictures_per_bike", 5)
+        if self._state.adding and self.gallery.photos.count() >= max_pictures:
+            logger.error("Cannot upload a new picture. Limit reached")
+            raise ValidationError(
+                _("Bike pictures limit reached. Cannot add more pictures. "
+                  "Delete some existing pictures first.")
+            )

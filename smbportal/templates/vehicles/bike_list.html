@@ -1,0 +1,56 @@
+{% extends 'vehicles/base.html' %}
+
+{% load i18n %}
+{% load django_bootstrap_breadcrumbs %}
+{% load static %}
+
+{% block page_title %}{% trans "Your bikes" %}{% endblock %}
+
+{% block main %}
+    <div class="col-lg-9 col-md-8 order-md-1">
+        <div class="card-columns">
+            {% for bike in bikes %}
+                <div class="card">
+                    <a href="{% url 'bikes:detail' pk=bike.pk %}">
+                    {% if bike.picture_gallery.photo_count == 0 %}
+                        <img class="card-img-top" src="{% static 'base/img/default-bike-display-size.png' %}" alt="{{ bike.nickname }}">
+                    {% else %}
+                        <img src="{{ bike.picture_gallery.photos.first.get_display_url }}" alt="{{ photo.title }}">
+                    {% endif %}
+                    </a>
+                    <div class="card-body">
+                        <a href="{% url 'bikes:detail' pk=bike.pk %}">
+                            <h5 class="card-title">{{ bike.nickname }} {% if bike.get_current_status.lost %}<i class="fa fa-ban fa-pull-right" title="{% trans "This bike is currently reported as lost" %}"></i>{% endif %}</h5>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <p>{% trans 'You do not have any bikes yet' %}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
+        <nav class="list-group">
+            <a
+                    id="createBike"
+                    href="#"
+                    class="list-group-item list-group-item-action"
+                    data-action-url="{% url 'bikes:create' %}"
+                    data-primary-button-value="{% trans 'Register a new bike' %}"
+                    data-toggle="modal"
+                    data-primary-button-icon="fa fa-plus-circle"
+                    data-primary-button-classes="btn btn-primary"
+                    data-title="{% trans 'Register new bike' %}"
+                    data-denial-title="{% trans 'Bikes limit reached' %}"
+                    data-denial-content="{% trans 'Bikes limit reached. Cannot add more bikes. Delete some existing bikes first.' %}"
+                    data-threshold="{{ max_bikes }}"
+                    data-current="{{ bikes.count }}"
+            ><i class="fa fa-plus-circle"></i> {% trans "Register a new bike" %}</a>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'vehicles/js/bike-list.js' %}"></script>
+{% endblock %}

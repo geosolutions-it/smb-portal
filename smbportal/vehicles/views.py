@@ -20,16 +20,19 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils.text import slugify
+from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from django.views.generic import DetailView
 from django.views.generic import ListView
+from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 from photologue.models import Gallery
 from photologue.models import Photo
 
 from base import mixins
+from base.utils import get_current_bike
 from profiles import rules as profiles_rules
 from . import models
 from . import forms
@@ -44,6 +47,12 @@ class BikeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_queryset(self):
         return models.Bike.objects.filter(owner=self.request.user)
 
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data["max_bikes"] = settings.SMB_PORTAL.get(
+            "max_bikes_per_user", 5)
+        return context_data
+
     def get_login_url(self):
         if not self.request.user.is_authenticated:
             result = settings.LOGIN_URL
@@ -55,14 +64,15 @@ class BikeListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 
 class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
-                     CreateView):
+                     mixins.AjaxTemplateMixin, CreateView):
     model = models.Bike
     form_class = forms.BikeForm
     template_name_suffix = "_create"
+    ajax_template_name = "vehicles/bike_create_inner.html"
 
     @property
     def success_message(self):
-        return "Created bike {!r}".format(self.object.nickname)
+        return _("Bike created!")
 
     def get_success_url(self):
         return reverse("bikes:detail", kwargs={"pk": self.object.pk})
@@ -79,7 +89,9 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
             "user": self.request.user,
+            "is_ajax": self.request.is_ajax(),
             "submit_value": "Create bike",
+            "action": reverse("bikes:create")
         })
         return form_kwargs
 
@@ -95,7 +107,6 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         bike = self.object
         bike_status = models.BikeStatus(
             bike=bike,
-            reporter=bike.owner,
             lost=False
         )
         bike_status.save()
@@ -110,11 +121,12 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
 
 
 class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
-                     UpdateView):
+                     mixins.AjaxTemplateMixin, UpdateView):
     model = models.Bike
     form_class = forms.BikeForm
     template_name_suffix = "_update"
-    success_message = "Bike details updated!"
+    success_message = _("Bike details updated!")
+    ajax_template_name = "vehicles/bike_create_inner.html"
 
     def get_success_url(self):
         bike = self.get_object()
@@ -132,7 +144,9 @@ class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
             "user": self.request.user,
-            "submit_value": "Update bike details",
+            "submit_value": _("Update bike details"),
+            "is_ajax": self.request.is_ajax(),
+            "action": reverse("bikes:update", kwargs={"pk": self.kwargs["pk"]})
         })
         logger.debug("BikeUpdateView form kwargs: {}".format(form_kwargs))
         return form_kwargs
@@ -143,11 +157,15 @@ class BikeDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "bike"
 
 
-class BikeDeleteView(LoginRequiredMixin, DeleteView):
+class BikeDeleteView(LoginRequiredMixin, mixins.AjaxTemplateMixin, DeleteView):
     model = models.Bike
     context_object_name = "bike"
     success_url = reverse_lazy("bikes:list")
-    success_message = "Bike deleted!"
+    ajax_template_name = "vehicles/bike_confirm_delete_inner.html"
+
+    @property
+    def success_message(self):
+        return _("Bike deleted!")
 
     def delete(self, request, *args, **kwargs):
         result = super().delete(request, *args, **kwargs)
@@ -162,42 +180,54 @@ class BikeGalleryDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data["bike"] = _get_current_bike(self.kwargs)
+        context_data["max_pictures"] = settings.SMB_PORTAL.get(
+            "max_pictures_per_bike", 10)
         return context_data
 
     def get_object(self, queryset=None):
-        bike = _get_current_bike(self.kwargs)
+        bike = get_current_bike(self.kwargs)
         return bike.picture_gallery
 
 
 class BikePictureUploadView(LoginRequiredMixin,
                             mixins.FormUpdatedMessageMixin,
+                            mixins.AjaxTemplateMixin,
                             CreateView):
-    model = Photo
+    # model = Photo
+    model = models.BikePicture
     form_class = forms.BikePictureForm
     template_name = "vehicles/bike_picture_create.html"
-    success_message = "Bike picture uploaded!"
+    ajax_template_name = "vehicles/bike_picture_create_inner.html"
+
+    @property
+    def success_message(self):
+        return _("Bike picture uploaded!")
 
     def get_success_url(self):
-        bike = _get_current_bike(self.kwargs)
+        bike = get_current_bike(self.kwargs)
         return reverse("bikes:gallery", kwargs={"pk": bike.pk})
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data["bike"] = _get_current_bike(self.kwargs)
+        context_data["bike"] = get_current_bike(self.kwargs)
         return context_data
 
     def get_form_kwargs(self):
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
-            "bike": _get_current_bike(self.kwargs),
+            "bike": get_current_bike(self.kwargs),
+            "action": reverse(
+                "bikes:picture-upload",
+                kwargs={"pk": self.kwargs["pk"]}
+            ),
+            "is_ajax": self.request.is_ajax(),
         })
         return form_kwargs
 
     def form_valid(self, form):
         response = super().form_valid(form)
         photo = self.object
-        current_bike = _get_current_bike(self.kwargs)
+        current_bike = get_current_bike(self.kwargs)
         gallery = current_bike.picture_gallery
         gallery.photos.add(photo)
         return response
@@ -221,8 +251,8 @@ class BikePictureDeleteView(LoginRequiredMixin, View):
             for picture_id in form.cleaned_data["choices"]:
                 picture = Photo.objects.get(pk=picture_id)
                 picture.delete()
-            messages.success(request, "Pictures have been deleted!")
-            bike = _get_current_bike(kwargs)
+            messages.success(request, _("Pictures have been deleted!"))
+            bike = get_current_bike(kwargs)
             result = redirect("bikes:gallery", pk=bike.pk)
         else:
             result = render(
@@ -234,22 +264,27 @@ class BikePictureDeleteView(LoginRequiredMixin, View):
 
     def get_context_data(self, **kwargs):
         context_data = kwargs.copy()
-        context_data["bike"] = _get_current_bike(self.kwargs)
+        context_data["bike"] = get_current_bike(self.kwargs)
         return context_data
 
     def get_form_kwargs(self):
         return {
-            "bike": _get_current_bike(self.kwargs),
+            "bike": get_current_bike(self.kwargs),
         }
 
 
 class BikeStatusCreateView(LoginRequiredMixin,
                            mixins.FormUpdatedMessageMixin,
+                           mixins.AjaxTemplateMixin,
                            CreateView):
     model = models.BikeStatus
     form_class = forms.BikeStatusForm
     template_name_suffix = "_create"
-    success_message = "Bike status updated!"
+    ajax_template_name = "vehicles/bikestatus_create_inner.html"
+
+    @property
+    def success_message(self):
+        return _("Bike status updated!")
 
     def get_success_url(self):
         pk = self.kwargs.get("pk")
@@ -264,21 +299,26 @@ class BikeStatusCreateView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data["bike"] = _get_current_bike(self.kwargs)
+        context_data["bike"] = get_current_bike(self.kwargs)
         return context_data
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({
-            "bike": _get_current_bike(self.kwargs),
+            "bike": get_current_bike(self.kwargs),
             "user": self.request.user,
+            "is_ajax": self.request.is_ajax(),
+            "action": reverse(
+                "bikes:report-status", kwargs={"pk": self.kwargs.get("pk")})
         })
         return kwargs
 
 
-def _get_current_bike(view_kwargs):
-    try:
-        bike = models.Bike.objects.get(pk=view_kwargs.get("pk"))
-    except models.Bike.DoesNotExist:
-        bike = None
-    return bike
+class TagRegistrationTemplateView(LoginRequiredMixin, TemplateView):
+    template_name = "vehicles/tagregistration.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_bike = get_current_bike(self.kwargs)
+        context["bike"] = current_bike
+        return context

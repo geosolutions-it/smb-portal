@@ -12,6 +12,7 @@ from django.conf import settings
 from django.contrib.gis.db import models as gis_models
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class BikeObservation(gis_models.Model):
@@ -19,30 +20,39 @@ class BikeObservation(gis_models.Model):
         "vehicles.Bike",
         on_delete=models.CASCADE,
         related_name="observations",
+        verbose_name=_("bike")
     )
     reporter = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        verbose_name=_("reporter")
     )
     position = gis_models.PointField(
+        _("position"),
         null=True,
         blank=True,
-        help_text="Either this field or `address` must be given"
+        help_text=_("Either this field or `address` must be given")
     )
     address = models.CharField(
+        _("address"),
         max_length=255,
-        help_text="Approximate address. Either this field or `position` must "
-                  "be given",
+        help_text=_("Approximate address. Either this field or `position` "
+                    "must be given"),
         blank=True
     )
     created_at = models.DateTimeField(
+        _("created at"),
         auto_now_add=True
     )
     observed_at = models.DateTimeField(
+        _("observed at"),
         default=timezone.now,
-        help_text="When the observation was made."
+        help_text=_("When the observation was made")
     )
-    details = models.TextField(blank=True)
+    details = models.TextField(
+        _("details"),
+        blank=True
+    )
 
     class Meta:
         ordering = (

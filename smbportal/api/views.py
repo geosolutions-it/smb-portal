@@ -10,13 +10,17 @@
 
 import logging
 
+from django_filters.rest_framework import DjangoFilterBackend
 import photologue.models
 from rest_framework import mixins
 from rest_framework import viewsets
+from rest_framework_gis.pagination import GeoJsonPagination
 
 import profiles.models
 import vehicles.models
+import vehiclemonitor.models
 from . import serializers
+from . import filters
 
 logger = logging.getLogger(__name__)
 
@@ -46,9 +50,26 @@ class MyBikeViewSet(viewsets.ModelViewSet):
         "vehicles.can_list_own_bikes",
         "vehicles.can_create_bike",
     )
+    filter_class = filters.BikeFilterSet
 
     def get_queryset(self):
         return vehicles.models.Bike.objects.filter(owner=self.request.user)
+
+
+class MyBikeObservationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = serializers.BikeObservationSerializer
+    required_permissions = (
+        "vehiclemonitor.can_list_own_bike_observation",
+    )
+    pagination_class = GeoJsonPagination
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_class = filters.BikeObservationFilterSet
+
+    def get_queryset(self):
+        return vehiclemonitor.models.BikeObservation.objects.filter(
+            bike__owner=self.request.user)
 
 
 class MyPhysicalTagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -64,7 +85,7 @@ class MyPhysicalTagViewSet(viewsets.ReadOnlyModelViewSet):
 
 class MyBikeStatusViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
                           mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    serializer_class = serializers.MyBikeStatusSerializer
+    serializer_class = serializers.BikeStatusSerializer
     required_permissions = (
         "vehicles.can_list_own_bike_status",
         "vehicles.can_create_own_bike_status",
@@ -99,6 +120,7 @@ class BikeViewSet(viewsets.ReadOnlyModelViewSet):
     required_permissions = (
         "vehicles.can_list_bikes",
     )
+    filter_class = filters.BikeFilterSet
 
     def get_serializer_class(self):
         if self.action == "retrieve":
@@ -108,16 +130,15 @@ class BikeViewSet(viewsets.ReadOnlyModelViewSet):
         return serializer_class
 
 
+# TODO: should external users be allowed to delete existing tags?
 class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                         mixins.CreateModelMixin, mixins.DestroyModelMixin,
+                         mixins.CreateModelMixin,  # mixins.DestroyModelMixin,
                          viewsets.GenericViewSet):
     serializer_class = serializers.PhysicalTagSerializer
     queryset = vehicles.models.PhysicalTag.objects.all()
     required_permissions = (
         "vehicles.can_list_physical_tags",
-    )
-    required_object_permissions = (
-        "vehicles.can_delete_physical_tags",
+        "vehicles.can_create_physical_tag",
     )
 
 
@@ -133,6 +154,12 @@ class BikeStatusViewSet(viewsets.ReadOnlyModelViewSet):
 
 class GalleryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.GallerySerializer
+    required_permissions = (
+        "vehicles.can_list_bikes",
+    )
+    required_object_permissions = (
+        "vehicles.can_edit_bike",
+    )
 
     def get_queryset(self):
         return photologue.models.Gallery.objects.all()
@@ -140,6 +167,21 @@ class GalleryViewSet(viewsets.ReadOnlyModelViewSet):
 
 class PictureViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.PictureSerializer
+    required_permissions = (
+        "vehicles.can_list_bikes",
+    )
+    required_object_permissions = (
+        "vehicles.can_edit_bike",
+    )
 
     def get_queryset(self):
         return photologue.models.Photo.objects.all()
+
+
+class BikeObservationViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                             mixins.CreateModelMixin, viewsets.GenericViewSet):
+    serializer_class = serializers.BikeObservationSerializer
+    required_permissions = (
+        "vehiclemonitor.can_list_bike_observation",
+    )
+    queryset = vehiclemonitor.models.BikeObservation.objects.all()

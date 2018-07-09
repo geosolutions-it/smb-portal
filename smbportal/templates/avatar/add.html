@@ -2,21 +2,21 @@
 
 {% load i18n %}
 {% load avatar_tags %}
-{% load bootstrap4 %}
+{% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb 'profile' 'profile:update' %}
-    {% breadcrumb 'avatar' 'avatar_change' %}
-    {% breadcrumb 'new' 'avatar_add' %}
+    {% breadcrumb _("profile") 'profile:update' %}
+    {% breadcrumb _("avatar") 'avatar_change' %}
+    {% breadcrumb _("new") 'avatar_add' %}
 {% endblock %}
 
-{%  block page_title %}Add avatar{% endblock %}
+{%  block page_title %}{% trans "Add avatar" %}{% endblock %}
 
 {% block main %}
     <div class="col-lg-4">
-        <p>Current avatar:</p>
+        <p>{% trans "Current avatar:" %}</p>
         {% avatar user 150 class="rounded-circle" %}
     </div>
     <div class="col-lg-8">
@@ -26,10 +26,8 @@
         <form enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{% url 'avatar_change' %}">
-            {% bootstrap_form upload_avatar_form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-outline-primary">{% trans "Upload" %}</button>
-            {% endbuttons %}
+            {{ upload_avatar_form|crispy }}
+            <button type="submit" class="btn btn-outline-primary">{% trans "Upload" %}</button>
         </form>
     </div>
 {% endblock %}

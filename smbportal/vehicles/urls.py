@@ -35,6 +35,11 @@ urlpatterns = [
         name="detail"
     ),
     path(
+        route="<pk>/tag-registration",
+        view=views.TagRegistrationTemplateView.as_view(),
+        name="tag-registration"
+    ),
+    path(
         route="<pk>/update",
         view=views.BikeUpdateView.as_view(),
         name="update"

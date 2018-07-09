@@ -1,8 +1,0 @@
-{% extends "base/base.html" %}
-
-{% load django_bootstrap_breadcrumbs %}
-
-{% block breadcrumbs %}
-    {{ block.super }}
-    {% breadcrumb 'bikes' 'bikes:list' %}
-{% endblock %}

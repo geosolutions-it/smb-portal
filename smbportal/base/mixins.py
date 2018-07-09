@@ -11,6 +11,7 @@
 import logging
 
 from django.contrib import messages
+from django.core.exceptions import ImproperlyConfigured
 
 logger = logging.getLogger(__name__)
 
@@ -47,3 +48,22 @@ class UserHasObjectPermissionMixin(object):
             permissions_to_check,
             obj=self.get_object()
         )
+
+
+class AjaxTemplateMixin(object):
+
+    def dispatch(self, request, *args, **kwargs):
+        if not hasattr(self, "ajax_template_name"):
+            try:
+                self.ajax_template_name = self.template_name.replace(
+                    ".html",
+                    "_inner.html"
+                )
+            except AttributeError:
+                raise ImproperlyConfigured(
+                    "Could not determine ajax_template_name. Set it as an "
+                    "attribute on the view"
+                )
+        if request.is_ajax():
+            self.template_name = self.ajax_template_name
+        return super().dispatch(request, *args, **kwargs)

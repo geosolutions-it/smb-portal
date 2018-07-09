@@ -1,0 +1,12 @@
+{% load i18n %}{% blocktrans %}User {{ email }} wants to register as a privileged user
+
+For moderating this membership request, please visit your keycloak admin area at:
+
+{{ keycloak_base_url }}
+
+Then visit the `users -> {{ email }}` section and proceed as follows:
+
+- Add user {{ email }} to the `privileged_users` group in the `groups` section;
+- Enable the user by toggling the relevant switch in `details -> User enabled`
+
+{% endblocktrans %}

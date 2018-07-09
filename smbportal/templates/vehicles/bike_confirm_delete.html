@@ -1,0 +1,22 @@
+{% extends 'vehicles/base.html' %}
+
+{% load i18n %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block page_title %}{% trans "Delete bike" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb bike.pk 'bikes:detail' pk=bike.pk %}
+    {% breadcrumb _("delete") 'bikes:delete' pk=bike.pk %}
+{% endblock %}
+
+{% block main %}
+    <div class="col-lg-12">
+        {% include 'vehicles/bike_confirm_delete_inner.html' %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+{% endblock %}

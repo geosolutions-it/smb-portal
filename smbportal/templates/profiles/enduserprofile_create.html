@@ -1,0 +1,51 @@
+{% extends 'profiles/base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load avatar_tags %}
+{% load crispy_forms_tags %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block page_title %}{% trans "Complete profile" %}{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb _("complete profile") 'profile:create' %}
+{% endblock %}
+
+{% block content %}
+    <div id="container">
+        <div class="container p-t-60">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <a class="edit-avatar" href="{% url 'avatar_change' %}"><i class="fa fa-pencil-square-o"></i></a>
+                            {% avatar user class="rounded-circle" %}
+                        </div>
+                        <div class="user-data">
+                            <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                            <span>
+                                <i class="fa fa-user-o"></i> {{ user.username }}<br>
+                                <i class="fa fa-envelope-o"></i> {{ user.email }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ user_form|crispy }}
+                        {{ form|crispy }}
+                        <h4>{% trans "Mobility Survey" %}</h4>
+                        <p>{% trans "Please complete this short survey as a final step for creating your profile" %}</p>
+                        {{ mobility_form|crispy }}
+                        <button type="submit" class="btn btn-outline-primary btn-lg">{% trans "Save" %}</button>
+                    </form>
+                    {% url "profile:create-privileged" as privileged_url %}
+                    <p>{% blocktrans %}You can also <a href="{{ privileged_url }}">register as a different user type{% endblocktrans %}</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

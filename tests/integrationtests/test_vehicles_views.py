@@ -30,37 +30,30 @@ def test_bike_list_requires_login(client, settings):
 
 
 @pytest.mark.django_db
-def test_bike_list_requires_enduser_profile(client, django_user_model):
+def test_bike_list_requires_enduser_profile(rf, django_user_model):
     user = django_user_model.objects.create(username="user")
-    client.force_login(user)
-    response = client.get(reverse("bikes:list"))
+
+    request = rf.get(reverse("bikes:list"))
+    request.user = user
+    response = vehicles.views.BikeListView.as_view()(request)
     redirected_to = urlparse(response["Location"])
     assert redirected_to.path == reverse("profile:create")
     assert response.status_code == 302
 
 
 @pytest.mark.django_db
-def test_bike_list_only_returns_owned_bikes(client, django_user_model,
-                                            settings):
+def test_bike_list_only_returns_owned_bikes(rf, django_user_model, settings):
     user1 = django_user_model.objects.create(username="user1")
-    profiles.models.EndUserProfile.objects.create(
-        user=user1
-    )
+    profiles.models.EndUserProfile.objects.create(user=user1)
     user2 = django_user_model.objects.create(username="user2")
     end_users_group = Group.objects.create(name=settings.END_USER_PROFILE)
     end_users_group.user_set.add(user1, user2)
-
-    bike1 = vehicles.models.Bike.objects.create(
-        nickname="bike1",
-        owner=user1
-    )
-    vehicles.models.Bike.objects.create(
-        nickname="bike2",
-        owner=user2
-    )
-    client.force_login(user1)
-    response = client.get(reverse("bikes:list"))
-    assert list(response.context["bikes"]) == [bike1]
+    bike1 = vehicles.models.Bike.objects.create(nickname="bike1", owner=user1)
+    vehicles.models.Bike.objects.create(nickname="bike2", owner=user2)
+    request = rf.get(reverse("bikes:list"))
+    request.user = user1
+    response = vehicles.views.BikeListView.as_view()(request)
+    assert list(response.context_data["bikes"]) == [bike1]
 
 
 @pytest.mark.django_db

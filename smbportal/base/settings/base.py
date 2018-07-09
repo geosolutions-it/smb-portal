@@ -13,7 +13,7 @@
 import os
 import pathlib
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.messages import constants as message_constants
 from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
@@ -73,7 +73,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.gis",
     "django.contrib.sites",
+    "django.forms",
     "rest_framework",
+    "rest_framework_gis",
+    "django_filters",
     "drf_yasg",
     "bossoidc",
     "djangooidc",
@@ -81,8 +84,8 @@ INSTALLED_APPS = [
     "photologue",
     "sortedm2m",
     "django_bootstrap_breadcrumbs",
-    "base",
     "avatar",
+    "base.apps.BaseConfig",
     "keycloakauth.apps.KeycloakauthConfig",
     "profiles.apps.ProfilesConfig",
     "vehicles.apps.VehiclesConfig",
@@ -127,6 +130,8 @@ TEMPLATES = [
     },
 ]
 
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+
 WSGI_APPLICATION = "base.wsgi.application"
 
 DATABASES = {
@@ -170,7 +175,7 @@ AUTHENTICATION_BACKENDS = (
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "it"
 
 TIME_ZONE = "UTC"
 
@@ -181,7 +186,6 @@ LANGUAGES = (
     ("it", _("Italian")),
 )
 
-# LANGUAGE_CODE = "en-us"
 USE_L10N = True
 
 USE_TZ = True
@@ -193,11 +197,23 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = get_environment_variable(
+    "DJANGO_STATIC_ROOT",
+    default_value=str(pathlib.Path(BASE_DIR).parent / "static_root"),
+)
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+EMAIL_HOST = "smtp.geo-solutions.it"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = get_environment_variable("DJANGO_EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = get_environment_variable("DJANGO_EMAIL_HOST_PASSWORD")
+
+MAIL_SENDER_ADDRESS = get_environment_variable(
+    "DJANGO_EMAIL_SENDER", default_value=EMAIL_HOST_USER)
 
 BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
 
@@ -210,6 +226,9 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
         "keycloakauth.permissions.DjangoRulesPermission",
     ),
+    "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
+    )
 }
 
 AVATAR_AUTO_GENERATE_SIZES = (
@@ -250,8 +269,8 @@ KEYCLOAK = {
     "base_url": get_environment_variable(
         "KEYCLOAK_BASE_URL", "http://localhost:8080"),
     "realm": get_environment_variable("KEYCLOAK_REALM"),
-    "admin_role": "realm_admin",
-    "staff_role": "staff_member",
+    "admin_role": "portal_admin",
+    "staff_role": "portal_staff",
     "client_id": get_environment_variable("DJANGO_KEYCLOAK_CLIENT_ID"),
     "client_public_uri": get_environment_variable(
         "DJANGO_PUBLIC_URL", "http://localhost:8000"),
@@ -317,3 +336,10 @@ OIDC_AUTH = {
 UPDATE_USER_DATA = "keycloakauth.oidchooks.update_user_data"
 
 LOAD_USER_ROLES = "keycloakauth.oidchooks.load_user_roles"
+
+SMB_PORTAL = {
+    "max_upload_size_megabytes": 2,
+    "max_bikes_per_user": 5,
+    "max_pictures_per_bike": 5,
+    "num_latest_observations": 5,
+}

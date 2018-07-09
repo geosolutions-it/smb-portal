@@ -1,0 +1,20 @@
+{% extends 'vehicles/base.html' %}
+
+{% load crispy_forms_tags %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block page_title %}Edit bike{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
+    {% breadcrumb 'edit' 'bikes:edit' pk=bike.pk %}
+{% endblock %}
+
+{% block content %}
+    {% crispy form %}
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+{% endblock %}

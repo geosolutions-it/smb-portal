@@ -41,6 +41,12 @@ def update_user_data(user, token):
     logger.debug("django groups_to_act_upon: {}".format(groups))
     revoke_stale_memberships(user, groups)
     create_django_memberships(user, groups)
+    update_user_details(user, token)
+
+
+def update_user_details(user, token):
+    user.email = token["email"]
+    user.save()
 
 
 def load_user_roles(user, roles):
@@ -118,7 +124,7 @@ def create_django_memberships(user: AbstractUser, group_paths: Iterable[str]):
 
     """
 
-    logger.debug("Creating new memberships for user {}...".format(user))
+    logger.debug("Creating new django memberships for user {}...".format(user))
     allowed_group_names = [path.rpartition("/")[-1] for path in group_paths]
     for group_name in allowed_group_names:
         group = Group.objects.get_or_create(name=group_name)[0]

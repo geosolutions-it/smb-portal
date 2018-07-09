@@ -23,49 +23,59 @@ app_name = "api"
 
 router = routers.DefaultRouter()
 router.register(
-    prefix=r"my-bikes",
+    prefix="my-bikes",
     viewset=views.MyBikeViewSet,
     base_name="my-bikes"
 )
 router.register(
-    prefix=r"my-tags",
+    prefix="my-tags",
     viewset=views.MyPhysicalTagViewSet,
     base_name="my-tags"
 )
 router.register(
-    prefix=r"my-bike-statuses",
+    prefix="my-bike-statuses",
     viewset=views.MyBikeStatusViewSet,
     base_name="my-bike-statuses"
 )
 router.register(
-    prefix=r"users",
+    prefix="my-bike-observations",
+    viewset=views.MyBikeObservationViewSet,
+    base_name="my-bike-observations"
+)
+router.register(
+    prefix="users",
     viewset=views.SmbUserViewSet,
     base_name="users"
 )
 router.register(
-    prefix=r"bikes",
+    prefix="bikes",
     viewset=views.BikeViewSet,
     base_name="bikes"
 )
 router.register(
-    prefix=r"tags",
+    prefix="tags",
     viewset=views.PhysicalTagViewSet,
     base_name="tags"
 )
 router.register(
-    prefix=r"statuses",
+    prefix="bike-statuses",
     viewset=views.BikeStatusViewSet,
-    base_name="statuses"
+    base_name="bike-statuses"
 )
 router.register(
-    prefix=r"picture-galleries",
+    prefix="picture-galleries",
     viewset=views.GalleryViewSet,
     base_name="picture-galleries"
 )
 router.register(
-    prefix=r"pictures",
+    prefix="pictures",
     viewset=views.PictureViewSet,
     base_name="pictures"
+)
+router.register(
+    prefix="bike-observations",
+    viewset=views.BikeObservationViewSet,
+    base_name="bike-observations"
 )
 
 schema_view = get_schema_view(

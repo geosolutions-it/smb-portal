@@ -1,0 +1,63 @@
+@import url('_styles.css');
+
+body {
+    font-size: 16px;
+}
+
+a {
+    color: #F51DAF;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #F51DAF;
+    text-decoration: none;
+}
+
+.site-menu ul > li:hover > a {
+    color: #606975;
+    border-top-color: #F51DAF;
+}
+
+.breadcrumbs > li > a:hover {
+    color: #F51DAF;
+}
+
+#container {
+    padding-bottom: 160px;
+}
+
+.page-title h1, .page-title h2, .page-title h3 {
+    border-left: 4px solid #F51DAF;
+}
+
+.fa-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.site-footer {
+    background-color: #282a2b;
+    text-align: center;
+    padding: 0px 0px 0px 0px;
+    position: absolute;
+    height: 86px;
+    bottom: 0px;
+    width: 100%;
+}
+
+.footer-widgets {
+    margin: 20px 0px 20px 0px
+}
+
+.footer-widgets a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer-widgets a:hover {
+    color: rgb(188, 193, 199);
+    text-decoration: none;
+}
+
+
