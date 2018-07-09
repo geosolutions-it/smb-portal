@@ -63,9 +63,10 @@ class EndUserProfile(models.Model):
     MALE_GENDER = "male"
     FEMALE_GENDER = "female"
 
-    PUBLIC = "public"
-    COMMUNITY = "community"
-    PRIVATE = "private"
+    AGE_YOUNGER_THAN_NINETEEN = "< 19"
+    AGE_BETWEEN_NINETEEN_AND_THIRTY = "19 - 30"
+    AGE_BETWEEN_THIRTY_AND_SIXTY_FIVE = "30 - 65"
+    AGE_OLDER_THAN_SIXTY_FIVE = "65+"
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -81,10 +82,22 @@ class EndUserProfile(models.Model):
         max_length=20,
         blank=False,
         choices=(
-            (FEMALE_GENDER, FEMALE_GENDER),
-            (MALE_GENDER, MALE_GENDER),
+            (FEMALE_GENDER, _("female")),
+            (MALE_GENDER, _("male")),
         ),
         default=FEMALE_GENDER,
+    )
+    age = models.CharField(
+        _("age"),
+        max_length=20,
+        blank=False,
+        choices=(
+            (AGE_YOUNGER_THAN_NINETEEN, _("< 19")),
+            (AGE_BETWEEN_NINETEEN_AND_THIRTY, _("19 - 30")),
+            (AGE_BETWEEN_THIRTY_AND_SIXTY_FIVE, _("30 - 65")),
+            (AGE_OLDER_THAN_SIXTY_FIVE, _("65+")),
+        ),
+        default=AGE_BETWEEN_NINETEEN_AND_THIRTY
     )
     PHONE_NUMBER_REGEX_VALIDATOR = RegexValidator(
         r"^\+\d{8,15}$",

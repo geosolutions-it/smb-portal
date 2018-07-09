@@ -18,6 +18,7 @@ import pytest
 from rest_framework.test import APIClient
 from rest_framework.test import APIRequestFactory
 
+import profiles.models
 from vehicles.models import Bike
 
 
@@ -73,6 +74,16 @@ def end_user(db, django_user_model, settings):
     group.user_set.add(user)
     group.save()
     return user
+
+
+@pytest.fixture
+def end_user_with_profile(db, end_user):
+    profiles.models.EndUserProfile.objects.create(
+        user=end_user,
+        gender=profiles.models.EndUserProfile.FEMALE_GENDER,
+        age=profiles.models.EndUserProfile.AGE_YOUNGER_THAN_NINETEEN,
+    )
+    return end_user
 
 
 @pytest.fixture
