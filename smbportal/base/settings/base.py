@@ -46,7 +46,7 @@ def get_list_env_value(environment_value, separator=":", default_value=None):
     return [item for item in raw_value.split(separator) if item != ""]
 
 
-BASE_DIR = str(pathlib.Path(__file__).parents[2])
+BASE_DIR = str(pathlib.Path(os.path.abspath(__file__)).parents[2])
 
 
 # Quick-start development settings - unsuitable for production
@@ -56,7 +56,7 @@ BASE_DIR = str(pathlib.Path(__file__).parents[2])
 SECRET_KEY = get_environment_variable("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = get_boolean_env_value("DJANGO_DEBUG", False)
+DEBUG = get_boolean_env_value("DJANGO_DEBUG", "false")
 
 ALLOWED_HOSTS = get_list_env_value(
     "DJANGO_ALLOWED_HOSTS", separator=" ", default_value="*")
