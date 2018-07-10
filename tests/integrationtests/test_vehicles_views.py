@@ -30,7 +30,7 @@ def test_bike_list_requires_login(client, settings):
 
 
 @pytest.mark.django_db
-def test_bike_list_requires_enduser_profile(rf, django_user_model):
+def test_bike_list_denied_if_not_member_endusers_group(rf, django_user_model):
     user = django_user_model.objects.create(username="user")
 
     request = rf.get(reverse("bikes:list"))
@@ -39,6 +39,14 @@ def test_bike_list_requires_enduser_profile(rf, django_user_model):
     redirected_to = urlparse(response["Location"])
     assert redirected_to.path == reverse("profile:create")
     assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_bike_list_accepted_if_member_endusers_group(rf, end_user):
+    request = rf.get(reverse("bikes:list"))
+    request.user = end_user
+    response = vehicles.views.BikeListView.as_view()(request)
+    assert response.status_code == 200
 
 
 @pytest.mark.django_db

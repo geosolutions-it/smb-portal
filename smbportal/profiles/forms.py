@@ -1,16 +1,32 @@
 from django import forms
+from django.utils.translation import gettext as _
 
 from . import models
 
 
 class SmbUserForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        include_accept_terms_field = kwargs.pop(
+            "include_accept_terms_field", None)
+        super().__init__(*args, **kwargs)
+        if include_accept_terms_field is not None:
+            del self.fields["accepted_terms_of_service"]
+
     class Meta:
         model = models.SmbUser
         fields = (
             "nickname",
             "language_preference",
+            "accepted_terms_of_service",
         )
+
+    def clean_accepted_terms_of_service(self):
+        data = self.cleaned_data.get("accepted_terms_of_service")
+        if not data:
+            raise forms.ValidationError(
+                _("Did not accept the portal's Terms of Service"))
+        return data
 
 
 class EndUserProfileForm(forms.ModelForm):

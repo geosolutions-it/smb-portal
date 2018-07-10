@@ -36,6 +36,10 @@ class SmbUser(AbstractUser):
         choices=((k, v) for k, v in settings.LANGUAGES),
         default="en",
     )
+    accepted_terms_of_service = models.BooleanField(
+        _("I accept the portal Terms of Service"),
+        default=False
+    )
 
     @property
     def profile(self):

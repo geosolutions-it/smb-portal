@@ -359,7 +359,11 @@ class ProfileUpdateView(LoginRequiredMixin,
 
     def _get_user_form(self):
         data = self.request.POST if self.request.method == "POST" else None
-        return forms.SmbUserForm(data=data, instance=self.request.user)
+        return forms.SmbUserForm(
+            data=data,
+            instance=self.request.user,
+            include_accept_terms_field=False
+        )
 
 
 class MobilityHabitsSurveyCreateView(LoginRequiredMixin,
