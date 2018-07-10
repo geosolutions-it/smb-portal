@@ -71,7 +71,7 @@ class BikeForm(forms.ModelForm):
                         "has_basket",
                         "has_cargo_rack",
                     ),
-                    css_class="col-lg-4",
+                    css_class="col-lg-6",
                 ),
                 layout.Div(
                     layout.Fieldset(
@@ -79,14 +79,7 @@ class BikeForm(forms.ModelForm):
                         "has_lights",
                         "has_bags",
                     ),
-                    css_class="col-lg-4",
-                ),
-                layout.Div(
-                    layout.Fieldset(
-                        None,
-                        "has_smb_sticker",
-                    ),
-                    css_class="col-lg-4",
+                    css_class="col-lg-6",
                 ),
                 css_class="row"
             ),
@@ -154,7 +147,6 @@ class BikeForm(forms.ModelForm):
             "has_cargo_rack",
             "has_lights",
             "has_bags",
-            "has_smb_sticker",
             "other_details",
         )
         widgets = {

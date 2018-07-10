@@ -213,7 +213,6 @@ class BikeDetailSerializer(BikeListSerializer):
             "has_basket",
             "has_cargo_rack",
             "has_bags",
-            "has_smb_sticker",
             "other_details",
             "current_status",
         )

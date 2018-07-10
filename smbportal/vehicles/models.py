@@ -181,10 +181,6 @@ class Bike(Vehicle):
         _("has bags"),
         default=False
     )
-    has_smb_sticker = models.BooleanField(
-        _("has SaveMyBike sticker"),
-        default=False
-    )
     other_details = models.TextField(
         _("other details"),
         blank=True
