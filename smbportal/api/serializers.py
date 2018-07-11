@@ -126,6 +126,7 @@ class EndUserProfileSerializer(serializers.ModelSerializer):
             "phone_number",
             "bio",
             "date_updated",
+            "occupation",
         )
 
 

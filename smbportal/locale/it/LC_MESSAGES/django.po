@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-10 17:22+0000\n"
+"POT-Creation-Date: 2018-07-11 21:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,119 +41,255 @@ msgstr ""
 msgid "I accept the portal Terms of Service"
 msgstr ""
 
-#: profiles/models.py:78 profiles/models.py:130
+#: profiles/models.py:112 profiles/models.py:204
 msgid "user"
 msgstr ""
 
-#: profiles/models.py:81
+#: profiles/models.py:115
 msgid "date updated"
 msgstr ""
 
-#: profiles/models.py:85
+#: profiles/models.py:119
 msgid "gender"
 msgstr ""
 
-#: profiles/models.py:89
+#: profiles/models.py:123
 msgid "female"
 msgstr ""
 
-#: profiles/models.py:90
+#: profiles/models.py:124
 msgid "male"
 msgstr ""
 
-#: profiles/models.py:95
+#: profiles/models.py:129
 msgid "age"
 msgstr ""
 
-#: profiles/models.py:99
+#: profiles/models.py:133
 msgid "< 19"
 msgstr ""
 
-#: profiles/models.py:100
+#: profiles/models.py:134
 msgid "19 - 30"
 msgstr ""
 
-#: profiles/models.py:101
+#: profiles/models.py:135
 msgid "30 - 65"
 msgstr ""
 
-#: profiles/models.py:102
+#: profiles/models.py:136
 msgid "65+"
 msgstr ""
 
-#: profiles/models.py:111
+#: profiles/models.py:145
 msgid "phone number"
 msgstr "numero di telefono"
 
-#: profiles/models.py:117
+#: profiles/models.py:151
 msgid "bio"
 msgstr ""
 
-#: profiles/models.py:118
+#: profiles/models.py:152
 msgid "Short user biography"
 msgstr "Breve biografia"
 
-#: profiles/models.py:155
+#: profiles/models.py:156
+msgid "occupation"
+msgstr ""
+
+#: profiles/models.py:159
+msgid "insurance agent"
+msgstr "agente assicurativo"
+
+#: profiles/models.py:160
+msgid "trading agent"
+msgstr "agente di commercio"
+
+#: profiles/models.py:161
+msgid "freelancer"
+msgstr "altra libera professione"
+
+#: profiles/models.py:162
+msgid "architect"
+msgstr "architetto"
+
+#: profiles/models.py:163
+msgid "craftsman"
+msgstr "artigiano"
+
+#: profiles/models.py:164
+msgid "artist"
+msgstr "artista"
+
+#: profiles/models.py:165
+msgid "lawyer"
+msgstr "avvocato"
+
+#: profiles/models.py:166
+msgid "housewife"
+msgstr "casalinga"
+
+#: profiles/models.py:167
+msgid "accountant"
+msgstr "commercialista"
+
+#: profiles/models.py:168
+msgid "dealer"
+msgstr "commerciante"
+
+#: profiles/models.py:169
+msgid "shop assistant"
+msgstr "commesso"
+
+#: profiles/models.py:170
+msgid "consultant"
+msgstr "consulente"
+
+#: profiles/models.py:171
+msgid "public agency employee"
+msgstr "dipendente pubblica amministrazione"
+
+#: profiles/models.py:172
+msgid "private sector employee"
+msgstr "dipendente di azienda privata"
+
+#: profiles/models.py:173
+msgid "manager"
+msgstr "dirigente"
+
+#: profiles/models.py:174
+msgid "public agency manager"
+msgstr "dirigente/funzionario p.a./ufficiale"
+
+#: profiles/models.py:175
+msgid "pharmacist"
+msgstr "farmacista"
+
+#: profiles/models.py:176
+msgid "surveyor"
+msgstr "geometra"
+
+#: profiles/models.py:177
+msgid "journalist"
+msgstr "giornalista"
+
+#: profiles/models.py:178
+msgid "entrepreneur"
+msgstr "imprenditore"
+
+#: profiles/models.py:179
+msgid "engineer"
+msgstr "ingegnere"
+
+#: profiles/models.py:180
+msgid "teacher"
+msgstr "insegnante"
+
+#: profiles/models.py:181
+msgid "doctor"
+msgstr "medico"
+
+#: profiles/models.py:182
+msgid "unemployed"
+msgstr "non occupato"
+
+#: profiles/models.py:183
+msgid "notary"
+msgstr "notaio"
+
+#: profiles/models.py:184
+msgid "worker"
+msgstr "operaio"
+
+#: profiles/models.py:185
+msgid "retired"
+msgstr "pensionato"
+
+#: profiles/models.py:186
+msgid "politician"
+msgstr "politico"
+
+#: profiles/models.py:187
+msgid "university professor"
+msgstr "professore universitario"
+
+#: profiles/models.py:188
+msgid "trainee"
+msgstr "stagista/tirocinante"
+
+#: profiles/models.py:189
+msgid "professional athlete"
+msgstr "sportivo professionista"
+
+#: profiles/models.py:190
+msgid "high school student"
+msgstr "studente scuola superiore"
+
+#: profiles/models.py:191
+msgid "college student"
+msgstr "studente universitario"
+
+#: profiles/models.py:229
 msgid "end user"
 msgstr ""
 
-#: profiles/models.py:158
+#: profiles/models.py:232
 msgid "date answered"
 msgstr ""
 
-#: profiles/models.py:162
+#: profiles/models.py:236
 msgid "public transport usage"
 msgstr ""
 
-#: profiles/models.py:167
+#: profiles/models.py:241
 msgid "Habitual (more than 10 travels per month)"
 msgstr ""
 
-#: profiles/models.py:171
+#: profiles/models.py:245
 msgid "Occasional (once per month)"
 msgstr ""
 
-#: profiles/models.py:175
+#: profiles/models.py:249
 msgid "Rare (less than 10 travels per year)"
 msgstr ""
 
-#: profiles/models.py:179
+#: profiles/models.py:253
 msgid "Never"
 msgstr ""
 
-#: profiles/models.py:185
+#: profiles/models.py:259
 msgid "uses bike sharing services"
 msgstr "utilizzo servizi di bike sharing"
 
-#: profiles/models.py:189
+#: profiles/models.py:263
 msgid "uses electrical car sharing services"
 msgstr ""
 
-#: profiles/models.py:193
+#: profiles/models.py:267
 msgid "uses fuel car sharing services"
 msgstr "uso servizi di car sharing"
 
-#: profiles/models.py:197
+#: profiles/models.py:271
 msgid "bicycle usage"
 msgstr ""
 
-#: profiles/models.py:202
+#: profiles/models.py:276
 msgid "Habitual (at least once a week on average)"
 msgstr ""
 
-#: profiles/models.py:206
+#: profiles/models.py:280
 msgid "Habitual (at least once a month)"
 msgstr ""
 
-#: profiles/models.py:210
+#: profiles/models.py:284
 msgid "Seasonal (mainly used in the Summer)"
 msgstr ""
 
-#: profiles/models.py:214
+#: profiles/models.py:288
 msgid "Rare (less than once a month)"
 msgstr ""
 
-#: profiles/models.py:218
+#: profiles/models.py:292
 msgid "Never use a bicycle to move around in the city"
 msgstr ""
 
