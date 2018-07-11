@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-11 21:16+0000\n"
+"POT-Creation-Date: 2018-07-11 22:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -962,44 +962,52 @@ msgstr ""
 msgid "Print registration information"
 msgstr "Stampa le informazioni di registrazione della bicibletta"
 
-#: vehiclemonitor/models.py:23 vehicles/models.py:229 vehicles/models.py:267
+#: vehiclemonitor/models.py:22 vehicles/models.py:229 vehicles/models.py:267
 msgid "bike"
 msgstr "Bicicletta"
 
-#: vehiclemonitor/models.py:28
-msgid "reporter"
-msgstr "Segnalata da"
+#: vehiclemonitor/models.py:25
+msgid "reporter id"
+msgstr ""
 
-#: vehiclemonitor/models.py:31 vehicles/models.py:244
+#: vehiclemonitor/models.py:29
+msgid "reporter type"
+msgstr ""
+
+#: vehiclemonitor/models.py:33
+msgid "reporter name"
+msgstr ""
+
+#: vehiclemonitor/models.py:38 vehicles/models.py:244
 msgid "position"
 msgstr "Posizione"
 
-#: vehiclemonitor/models.py:34
+#: vehiclemonitor/models.py:41
 msgid "Either this field or `address` must be given"
 msgstr "Questo campo o il campo 'indirizzo' devono essere compilati"
 
-#: vehiclemonitor/models.py:37
+#: vehiclemonitor/models.py:44
 msgid "address"
 msgstr "Indirizzo"
 
-#: vehiclemonitor/models.py:39
+#: vehiclemonitor/models.py:46
 msgid "Approximate address. Either this field or `position` must be given"
 msgstr ""
 "Indirizzo. Questo campo o la posizione sulla mappa devono essere compilati"
 
-#: vehiclemonitor/models.py:44
+#: vehiclemonitor/models.py:51
 msgid "created at"
 msgstr "Creata il"
 
-#: vehiclemonitor/models.py:48
+#: vehiclemonitor/models.py:55
 msgid "observed at"
 msgstr "Rilevata il"
 
-#: vehiclemonitor/models.py:50
+#: vehiclemonitor/models.py:57
 msgid "When the observation was made"
 msgstr "Quando è stata fatta la rilevazione"
 
-#: vehiclemonitor/models.py:53 vehicles/models.py:240
+#: vehiclemonitor/models.py:60 vehicles/models.py:240
 msgid "details"
 msgstr "Dettagli"
 

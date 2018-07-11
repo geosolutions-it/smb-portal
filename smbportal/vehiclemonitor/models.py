@@ -8,7 +8,6 @@
 #
 #########################################################################
 
-from django.conf import settings
 from django.contrib.gis.db import models as gis_models
 from django.db import models
 from django.utils import timezone
@@ -22,10 +21,18 @@ class BikeObservation(gis_models.Model):
         related_name="observations",
         verbose_name=_("bike")
     )
-    reporter = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        verbose_name=_("reporter")
+    reporter_id = models.CharField(
+        _("reporter id"),
+        max_length=50,
+    )
+    reporter_type = models.CharField(
+        _("reporter type"),
+        max_length=50
+    )
+    reporter_name = models.CharField(
+        _("reporter name"),
+        max_length=50,
+        blank=True
     )
     position = gis_models.PointField(
         _("position"),
