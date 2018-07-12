@@ -103,6 +103,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "base.middleware.TimezoneMiddleware",
 ]
 
 ROOT_URLCONF = "base.urls"
@@ -180,6 +181,15 @@ LANGUAGE_CODE = "it"
 TIME_ZONE = "UTC"
 
 USE_I18N = True
+
+GEOIP_PATH = get_environment_variable(
+    "DJANGO_GEOIP_PATH",
+    default_value=str(pathlib.Path(BASE_DIR).parent / "GeoLite2"),
+)
+
+IPWARE = {
+    "proxy_count": 1,
+}
 
 LANGUAGES = (
     ("en", _("English")),
