@@ -41,6 +41,7 @@ class EndUserProfileForm(forms.ModelForm):
             "gender",
             "age",
             "phone_number",
+            "occupation",
         )
         widgets = {
             "bio": forms.Textarea(

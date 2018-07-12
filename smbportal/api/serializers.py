@@ -126,6 +126,7 @@ class EndUserProfileSerializer(serializers.ModelSerializer):
             "phone_number",
             "bio",
             "date_updated",
+            "occupation",
         )
 
 
@@ -335,10 +336,6 @@ class BikeObservationSerializer(GeoFeatureModelSerializer):
         view_name="api:bikes-detail",
         queryset=vehicles.models.Bike.objects.all()
     )
-    reporter = SmbUserHyperlinkedRelatedField(
-        view_name="api:users-detail",
-        queryset=profiles.models.SmbUser.objects.all()
-    )
 
     class Meta:
         model = vehiclemonitor.models.BikeObservation
@@ -347,7 +344,9 @@ class BikeObservationSerializer(GeoFeatureModelSerializer):
             "url",
             "id",
             "bike",
-            "reporter",
+            "reporter_id",
+            "reporter_type",
+            "reporter_name",
             "address",
             "created_at",
             "observed_at",
