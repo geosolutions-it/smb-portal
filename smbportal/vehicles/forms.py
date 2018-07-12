@@ -180,36 +180,7 @@ class BikeStatusForm(forms.ModelForm):
         self.helper.form_id = "statusForm"
         if action is not None:
             self.helper.form_action = action
-        if is_ajax:
-            form_layout = layout.Layout(
-                layout.Fieldset(
-                    None,
-                    "bike",
-                    "lost",
-                    "details",
-                    "position",
-                )
-            )
-        else:
-            form_layout = layout.Layout(
-                layout.Div(
-                    layout.Div(
-                        layout.Field("bike"),
-                        layout.Field("lost"),
-                        layout.Field("details"),
-                        css_class="col-lg-3"
-                    ),
-                    layout.Div(
-                        layout.Field("position"),
-                        css_class="col-lg-9",
-                    ),
-                    css_class="row"
-                ),
-                bootstrap.FormActions(
-                    layout.Submit("submit", submit_value)
-                ),
-            )
-        self.helper.layout = form_layout
+
         if bike is None:  # TODO: show only bikes that are not currently lost
             self.fields["bike"].queryset = models.Bike.objects.filter(
                 owner=user)
@@ -221,6 +192,16 @@ class BikeStatusForm(forms.ModelForm):
             self.instance.bike = bike
             del self.fields["bike"]
 
+        if is_ajax:
+            form_layout = self._get_ajax_layout(
+                include_bike_field=bike is None)
+        else:
+            form_layout = self._get_layout(
+                submit_value,
+                include_lost_field=bike is not None
+            )
+        self.helper.layout = form_layout
+
     class Meta:
         model = models.BikeStatus
         fields = (
@@ -229,6 +210,43 @@ class BikeStatusForm(forms.ModelForm):
             "details",
             "position",
         )
+
+    def _get_ajax_layout(self, include_bike_field=True):
+        form_layout = layout.Layout(
+            layout.Fieldset(
+                None,
+                "bike",
+                "lost",
+                "details",
+                "position",
+            )
+        )
+        if not include_bike_field:
+            form_layout[0].pop(0)
+        return form_layout
+
+    def _get_layout(self, submit_value, include_lost_field=True):
+        form_layout = layout.Layout(
+            layout.Div(
+                layout.Div(
+                    layout.Field("bike"),
+                    layout.Field("lost"),
+                    layout.Field("details"),
+                    css_class="col-lg-3"
+                ),
+                layout.Div(
+                    layout.Field("position"),
+                    css_class="col-lg-9",
+                ),
+                css_class="row"
+            ),
+            bootstrap.FormActions(
+                layout.Submit("submit", submit_value)
+            ),
+        )
+        if not include_lost_field:
+            form_layout[0][0].pop(1)
+        return form_layout
 
 
 class BikePictureForm(forms.ModelForm):

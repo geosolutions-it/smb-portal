@@ -27,7 +27,7 @@ urlpatterns = [
     path(
         route="report-status",
         view=views.BikeStatusCreateView.as_view(),
-        name="report-status"
+        name="report-status-no-bike"
     ),
     path(
         route="<pk>",

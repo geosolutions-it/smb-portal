@@ -45,7 +45,6 @@ class TimezoneMiddleware(object):
     def __call__(self, request):
         current_timezone = request.session.get("user_time_zone", None)
         if current_timezone is None:
-            logger.debug("Getting request timezone...")
             current_timezone = get_timezone(request, self.geoip)
             request.session["user_time_zone"] = current_timezone
         logger.debug("current_timezone: {}".format(current_timezone))
