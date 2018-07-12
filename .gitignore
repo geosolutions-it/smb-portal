@@ -110,6 +110,9 @@ ENV/
 # IDEA
 .idea
 
+# geoip files
+GeoLite2
+
 .DS_Store
 =======
 # MACOS files
