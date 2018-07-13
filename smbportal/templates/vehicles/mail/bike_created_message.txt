@@ -1,0 +1,7 @@
+{% load i18n %}{% blocktrans %}Bike {{ nickname }} has been successfully registered on the portal.
+
+You can access the bike details page at:
+
+{{ bike_url }}
+
+{% endblocktrans %}

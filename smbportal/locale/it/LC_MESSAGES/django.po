@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-11 22:10+0000\n"
+"POT-Creation-Date: 2018-07-13 15:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: base/settings/base.py:185
+#: base/settings/base.py:197
 msgid "English"
 msgstr "English"
 
-#: base/settings/base.py:186
+#: base/settings/base.py:198
 msgid "Italian"
 msgstr "Italian"
 
@@ -559,6 +559,24 @@ msgstr ""
 msgid "Privileged user registration request"
 msgstr "Richiesta di registrazione da un utente privilegiato"
 
+#: templates/profiles/mail/profile_created_message.txt:1
+#, python-format
+msgid ""
+"Welcome to the savemybike portal!\n"
+"\n"
+"You registered a profile of type %(profile_type)s. Your username is "
+"%(username)s.\n"
+"\n"
+"Access your profile details page at:\n"
+"\n"
+"%(profile_url)s\n"
+"\n"
+msgstr ""
+
+#: templates/profiles/mail/profile_created_subject.txt:1
+msgid "User created"
+msgstr ""
+
 #: templates/profiles/mobilityhabitssurvey_create.html:9
 msgid "new survey"
 msgstr "Nuovo sondaggio"
@@ -903,7 +921,7 @@ msgstr ""
 msgid "There are no pictures for this bike yet"
 msgstr "Non sono predenti fotografie di questa bicicletta"
 
-#: templates/vehicles/bikegallery_detail.html:36 vehicles/forms.py:258
+#: templates/vehicles/bikegallery_detail.html:36 vehicles/forms.py:276
 msgid "Upload picture"
 msgstr "Carica foto"
 
@@ -934,6 +952,37 @@ msgstr "Segnala come smarrita"
 #: templates/vehicles/bikestatus_create.html:30 vehicles/forms.py:177
 msgid "Report lost bike"
 msgstr "Segnala una bici smarrita"
+
+#: templates/vehicles/mail/bike_created_message.txt:1
+#, python-format
+msgid ""
+"Bike %(nickname)s has been successfully registered on the portal.\n"
+"\n"
+"You can access the bike details page at:\n"
+"\n"
+"%(bike_url)s\n"
+"\n"
+msgstr ""
+
+#: templates/vehicles/mail/bike_created_subject.txt:1
+#, python-format
+msgid "Bike %(nickname)s has been registered"
+msgstr ""
+
+#: templates/vehicles/mail/bike_deleted_message.txt:1
+#, python-format
+msgid ""
+"Bike %(nickname)s has been successfully deleted from the portal.\n"
+"\n"
+"You can add more bikes by visiting:\n"
+"\n"
+"%(bike_list_url)s\n"
+"\n"
+msgstr ""
+
+#: templates/vehicles/mail/bike_deleted_subject.txt:1
+msgid "Bike %(nickname)s has been deleted"
+msgstr ""
 
 #: templates/vehicles/tagregistration.html:18
 #, python-format
@@ -1015,19 +1064,19 @@ msgstr "Dettagli"
 msgid "A bike with that nickname already exists"
 msgstr "E' già presente una bicicletta con questo nome"
 
-#: vehicles/forms.py:236
+#: vehicles/forms.py:254
 msgid "image"
 msgstr "Immagine"
 
-#: vehicles/forms.py:272
+#: vehicles/forms.py:290
 msgid "could not read uploaded image"
 msgstr "Non è stato possibile leggere l'immagine caricata"
 
-#: vehicles/forms.py:300
+#: vehicles/forms.py:318
 msgid "Already uploaded a picture with that name"
 msgstr "E' stata già inserita una foto con lo stesso nome"
 
-#: vehicles/forms.py:335
+#: vehicles/forms.py:353
 msgid "Must select at least one picture to delete"
 msgstr "Selezionare almeno un'immagine da eliminare"
 

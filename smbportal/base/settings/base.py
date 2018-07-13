@@ -191,6 +191,8 @@ IPWARE = {
     "proxy_count": 1,
 }
 
+SECURE_SSL_REDIRECT = True
+
 LANGUAGES = (
     ("en", _("English")),
     ("it", _("Italian")),

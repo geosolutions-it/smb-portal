@@ -8,18 +8,8 @@
 #
 #########################################################################
 
-import uuid
+"""This file is here to set some testing-specific values"""
 
-from django.apps import AppConfig
-from django.db.models.signals import post_save
+from .base import *
 
-
-class ProfilesConfig(AppConfig):
-    name = "profiles"
-
-    def ready(self):
-        from . import signals
-        post_save.connect(
-            signals.notify_profile_created,
-            dispatch_uid=str(uuid.uuid4())
-        )
+SECURE_SSL_REDIRECT = False
