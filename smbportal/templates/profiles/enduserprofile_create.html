@@ -40,7 +40,7 @@
                         <h4>{% trans "Mobility Survey" %}</h4>
                         <p>{% trans "Please complete this short survey as a final step for creating your profile" %}</p>
                         {{ mobility_form|crispy }}
-                        <button type="submit" class="btn btn-outline-primary btn-lg">{% trans "Save" %}</button>
+                        <button type="submit" class="btn btn-primary btn-lg">{% trans "Save" %}</button>
                     </form>
                     {% url "profile:create-privileged" as privileged_url %}
                     <p>{% blocktrans %}You can also <a href="{{ privileged_url }}">register as a different user type{% endblocktrans %}</a></p>
@@ -48,4 +48,8 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'profiles/js/profile-create.js' %}"></script>
 {% endblock %}

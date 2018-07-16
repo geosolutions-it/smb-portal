@@ -1,0 +1,7 @@
+{% load i18n %}{% blocktrans %}Bike {{ nickname }} has been successfully deleted from the portal.
+
+You can add more bikes by visiting:
+
+{{ bike_list_url }}
+
+{% endblocktrans %}

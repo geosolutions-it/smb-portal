@@ -156,12 +156,6 @@ def test_privileged_user_can_add_new_bike_observation(api_client,
             "pk": bike_owned_by_end_user.pk
         }
     )
-    reporter_url = reverse(
-        "api:users-detail",
-        kwargs={
-            "pk": str(bike_owned_by_end_user.owner.keycloak.UID)
-        }
-    )
     api_client.force_authenticate(user=privileged_user)
     response = api_client.post(
         reverse("api:bike-observations-list"),
@@ -173,9 +167,11 @@ def test_privileged_user_can_add_new_bike_observation(api_client,
             },
             "properties": {
                 "bike": bike_url,
-                "reporter": reporter_url,
+                "reporter_id": "fake_id",
+                "reporter_type": "fake_type",
             }
         },
         format="json"
     )
+    print(response.json())
     assert response.status_code == 201

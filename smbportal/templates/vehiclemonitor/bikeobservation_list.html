@@ -27,7 +27,7 @@
                     {% for observation in observations %}
                         <li name="observation" id="observation-{{ observation.pk }}" class="list-group-item list-group-item-action">
                             <i class="fa fa-calendar"></i>{{ observation.created_at }}<br>
-                            <i class="fa fa-user-o"></i>{{ observation.reporter }}<br>
+                            <i class="fa fa-user-o"></i>{{ observation.reporter_id }} - {{ observation.reporter_type }}({{ observation.reporter_name }})<br>
                             {% if observation.position %}
                                 <i class="fa fa-map-marker"></i> {{ observation.position.coords }}
                             {% endif %}

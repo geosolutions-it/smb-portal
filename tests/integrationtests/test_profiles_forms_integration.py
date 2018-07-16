@@ -20,6 +20,7 @@ pytestmark = pytest.mark.integration
     {
         "age": models.EndUserProfile.AGE_OLDER_THAN_SIXTY_FIVE,
         "gender": models.EndUserProfile.FEMALE_GENDER,
+        "occupation": models.EndUserProfile.OCCUPATION_UNEMPLOYED,
     }
 ])
 @pytest.mark.django_db
@@ -36,3 +37,41 @@ def test_enduserprofileform_update(end_user_with_profile, params):
     profile.refresh_from_db()
     for k, v in params.items():
         assert getattr(profile, k) == v
+
+
+@pytest.mark.parametrize("accepted_terms, expected", [
+    (None, False),
+    (False, False),
+    (True, True),
+])
+@pytest.mark.django_db
+def test_smbuserform_requires_accepting_terms(end_user, accepted_terms,
+                                              expected):
+    form = forms.SmbUserForm(
+        instance=end_user,
+        data={
+            "language_preference": "en",
+            "accepted_terms_of_service": accepted_terms,
+        }
+    )
+    valid = form.is_valid()
+    assert valid == expected
+
+
+@pytest.mark.parametrize("language, expected", [
+    (None, False),
+    ("en", True),
+    ("it", True),
+])
+@pytest.mark.django_db
+def test_smbuserform_requires_choosing_language(end_user, language,
+                                                expected):
+    form = forms.SmbUserForm(
+        instance=end_user,
+        data={
+            "accepted_terms_of_service": True,
+            "language_preference": language,
+        }
+    )
+    valid = form.is_valid()
+    assert valid == expected

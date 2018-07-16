@@ -291,7 +291,7 @@ class BikeStatusCreateView(LoginRequiredMixin,
         if pk is not None:
             result = reverse(
                 "bikes:detail",
-                kwargs={"pk": self.kwargs.get("pk")}
+                kwargs={"pk": pk}
             )
         else:
             result = reverse("bikes:list")
@@ -304,14 +304,21 @@ class BikeStatusCreateView(LoginRequiredMixin,
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        current_bike = get_current_bike(self.kwargs)
         kwargs.update({
             "bike": get_current_bike(self.kwargs),
             "user": self.request.user,
             "is_ajax": self.request.is_ajax(),
-            "action": reverse(
-                "bikes:report-status", kwargs={"pk": self.kwargs.get("pk")})
+            "action": self._get_action(current_bike)
         })
         return kwargs
+
+    def _get_action(self, bike):
+        if bike is None:
+            result = reverse("bikes:report-status-no-bike")
+        else:
+            result = reverse("bikes:report-status", kwargs={"pk": bike.pk})
+        return result
 
 
 class TagRegistrationTemplateView(LoginRequiredMixin, TemplateView):
