@@ -29,7 +29,7 @@ def test_send_email_to_admins(mock_render_to_string, mock_django_mail,
     sender_address = "sender@mail.com"
     recipient_address = "receiver@mail.com"
     settings.ADMINS = []
-    settings.MAIL_SENDER_ADDRESS = sender_address
+    settings.DEFAULT_FROM_EMAIL = sender_address
 
     mocked_qs = mock.MagicMock(spec=django_user_model.objects)
     mocked_qs.filter.return_value = mocked_qs

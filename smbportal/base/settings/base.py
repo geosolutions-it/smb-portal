@@ -191,8 +191,6 @@ IPWARE = {
     "proxy_count": 1,
 }
 
-SECURE_SSL_REDIRECT = False
-
 LANGUAGES = (
     ("en", _("English")),
     ("it", _("Italian")),
@@ -219,13 +217,13 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-EMAIL_HOST = "smtp.geo-solutions.it"
-EMAIL_PORT = 587
+EMAIL_HOST = get_environment_variable(
+    "DJANGO_EMAIL_HOST", "smtp.geo-solutions.it")
+EMAIL_USE_SSL = get_boolean_env_value("DJANGO_EMAIL_USE_SSL", "false")
+EMAIL_PORT = int(get_environment_variable("DJANGO_EMAIL_PORT", "587"))
 EMAIL_HOST_USER = get_environment_variable("DJANGO_EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = get_environment_variable("DJANGO_EMAIL_HOST_PASSWORD")
-
-MAIL_SENDER_ADDRESS = get_environment_variable(
-    "DJANGO_EMAIL_SENDER", default_value=EMAIL_HOST_USER)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
 
