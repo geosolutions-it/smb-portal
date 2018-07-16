@@ -16,6 +16,8 @@ INSTALLED_APPS.extend([
     "sslserver",
 ])
 
+SECURE_SSL_REDIRECT = True
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

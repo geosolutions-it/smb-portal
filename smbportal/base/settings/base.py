@@ -1,4 +1,4 @@
-#########################################################################
+########################################################################
 #
 # Copyright 2018, GeoSolutions Sas.
 # All rights reserved.
@@ -191,7 +191,7 @@ IPWARE = {
     "proxy_count": 1,
 }
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 LANGUAGES = (
     ("en", _("English")),
