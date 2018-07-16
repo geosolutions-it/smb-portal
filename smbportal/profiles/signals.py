@@ -44,6 +44,6 @@ def notify_profile_created(sender, **kwargs):
                 "profiles/mail/profile_created_subject.txt", context=context),
             message=render_to_string(
                 "profiles/mail/profile_created_message.txt", context=context),
-            from_email=settings.MAIL_SENDER_ADDRESS,
+            from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[user.email]
         )

@@ -34,7 +34,7 @@ def notify_bike_created(sender, **kwargs):
                 "vehicles/mail/bike_created_subject.txt", context=context),
             message=render_to_string(
                 "vehicles/mail/bike_created_message.txt", context=context),
-            from_email=settings.MAIL_SENDER_ADDRESS,
+            from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[bike.owner.email]
         )
 
@@ -55,6 +55,6 @@ def notify_bike_deleted(sender, **kwargs):
             "vehicles/mail/bike_deleted_subject.txt", context=context),
         message=render_to_string(
             "vehicles/mail/bike_deleted_message.txt", context=context),
-        from_email=settings.MAIL_SENDER_ADDRESS,
+        from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[bike.owner.email]
     )

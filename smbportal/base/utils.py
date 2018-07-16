@@ -47,6 +47,6 @@ def send_email_to_admins(subject_template, message_template, context=None):
     mail.send_mail(
         subject=render_to_string(subject_template, context=ctx),
         message=render_to_string(message_template, context=ctx),
-        from_email=settings.MAIL_SENDER_ADDRESS,
+        from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=list(unique_recipients)
     )
