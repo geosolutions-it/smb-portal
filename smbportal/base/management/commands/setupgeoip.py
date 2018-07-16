@@ -77,4 +77,3 @@ class Command(BaseCommand):
                     tar.extract(member, str(target_path.parent))
         self.stdout.write("Removing {}...".format(download_target))
         download_target.unlink()
-

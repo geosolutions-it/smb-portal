@@ -59,7 +59,7 @@ def test_bikeobservationfilterset_with_id(bike_owned_by_end_user,
     for address in addresses:
         vehiclemonitor.models.BikeObservation.objects.create(
             bike=bike_owned_by_end_user,
-            reporter=privileged_user,
+            reporter_id=privileged_user.pk,
             address=address
         )
     filter_set = filters.BikeObservationFilterSet(

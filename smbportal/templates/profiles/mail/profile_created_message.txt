@@ -1,0 +1,9 @@
+{% load i18n %}{% blocktrans %}Welcome to the savemybike portal!
+
+You registered a profile of type {{ profile_type }}. Your username is {{ username }}.
+
+Access your profile details page at:
+
+{{ profile_url }}
+
+{% endblocktrans %}

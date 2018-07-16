@@ -20,6 +20,7 @@ pytestmark = pytest.mark.integration
     {
         "age": models.EndUserProfile.AGE_OLDER_THAN_SIXTY_FIVE,
         "gender": models.EndUserProfile.FEMALE_GENDER,
+        "occupation": models.EndUserProfile.OCCUPATION_UNEMPLOYED,
     }
 ])
 @pytest.mark.django_db

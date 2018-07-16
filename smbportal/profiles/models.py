@@ -43,12 +43,12 @@ class SmbUser(AbstractUser):
 
     @property
     def profile(self):
-        attibute_names = (
+        attribute_names = (
             "enduserprofile",
             "privilegeduserprofile",
             # add more profiles for analysts, prize managers, etc
         )
-        for attr in attibute_names:
+        for attr in attribute_names:
             try:
                 profile = getattr(self, attr)
                 break
