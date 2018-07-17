@@ -116,18 +116,12 @@ class SmbUserViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class BikeViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.BikeDetailSerializer
     queryset = vehicles.models.Bike.objects.all()
     required_permissions = (
         "vehicles.can_list_bikes",
     )
     filter_class = filters.BikeFilterSet
-
-    def get_serializer_class(self):
-        if self.action == "retrieve":
-            serializer_class = serializers.BikeDetailSerializer
-        else:
-            serializer_class = serializers.BikeListSerializer
-        return serializer_class
 
 
 # TODO: should external users be allowed to delete existing tags?
