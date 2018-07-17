@@ -188,6 +188,9 @@ class Bike(Vehicle):
 
     class Meta:
         unique_together = ("owner", "nickname")
+        ordering = [
+            "id",
+        ]
 
     def __str__(self):
         return "{0.nickname}".format(self)
@@ -275,6 +278,11 @@ class PhysicalTag(models.Model):
         _("creation date"),
         auto_now_add=True
     )
+
+    class Meta:
+        ordering = [
+            "creation_date",
+        ]
 
 
 class BikePicture(Photo):

@@ -36,7 +36,7 @@ class SmbUserHyperlinkedIdentityField(serializers.HyperlinkedIdentityField):
         return reverse(
             view_name,
             kwargs={
-                "pk": obj.keycloak.UID
+                "uuid": obj.keycloak.UID
             },
             request=request,
             format=format
@@ -55,7 +55,7 @@ class SmbUserHyperlinkedRelatedField(serializers.HyperlinkedRelatedField):
         return reverse(
             view_name,
             kwargs={
-                "pk": obj.keycloak.UID
+                "uuid": obj.keycloak.UID
             },
             request=request,
             format=format
@@ -72,11 +72,11 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
     url = SmbUserHyperlinkedIdentityField(
         view_name="api:users-detail",
     )
-    id = serializers.SerializerMethodField()
+    uuid = serializers.SerializerMethodField()
     profile = serializers.SerializerMethodField()
     profile_type = serializers.SerializerMethodField()
 
-    def get_id(self, obj):
+    def get_uuid(self, obj):
         return obj.keycloak.UID
 
     def get_profile(self, obj):
@@ -87,12 +87,10 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
                 profiles.models.PrivilegedUserProfile: (
                     PrivilegedUserProfileSerializer),
             }.get(profile_class)
-            logger.debug("serializer_class: {}".format(serializer_class))
             serializer = serializer_class(
                 instance=obj.profile,
                 context=self.context
             )
-            logger.debug("serializer: {}".format(serializer))
             result = serializer.data
         else:
             result = None
@@ -105,14 +103,47 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
         model = profiles.models.SmbUser
         fields = (
             "url",
-            "id",
+            "uuid",
             "username",
             "email",
+            "date_joined",
+            "language_preference",
             "first_name",
             "last_name",
             "nickname",
             "profile",
             "profile_type",
+        )
+
+
+class UserDumpSerializer(SmbUserSerializer):
+    """Produce a User, its vehicles and Tags"""
+
+    vehicles = serializers.SerializerMethodField()
+
+    def get_vehicles(self, obj):
+        serializer = BikeDetailSerializer(
+            instance=obj.bikes.all(),
+            many=True,
+            context=self.context
+        )
+        return serializer.data
+
+    class Meta:
+        model = profiles.models.SmbUser
+        fields = (
+            "url",
+            "uuid",
+            "username",
+            "email",
+            "date_joined",
+            "language_preference",
+            "first_name",
+            "last_name",
+            "nickname",
+            "profile",
+            "profile_type",
+            "vehicles"
         )
 
 
