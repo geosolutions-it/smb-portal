@@ -16,7 +16,7 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
+    {% breadcrumb bike.nickname 'bikes:detail' slug=bike.short_uuid %}
 {% endblock %}
 
 {% block main %}
@@ -47,7 +47,7 @@
             <li class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex justify-content-between">
                     <h6>{% trans "Registration code" %}</h6>
-                    <span>{{ bike.pk }}</span>
+                    <span>{{ bike.short_uuid }}</span>
                 </div>
             </li>
             <li class="list-group-item list-group-item-action flex-column align-items-start">
@@ -138,12 +138,12 @@
     </div>
     <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
         <nav class="list-group">
-            <a href="{% url 'bikes:tag-registration' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-bicycle"></i> {% trans "Print bike registry info" %}</a>
-            <a href="{% url 'monitor:list' bike_pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-map-o"></i> {% trans "View bike observations" %}</a>
+            <a href="{% url 'bikes:tag-registration' slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-bicycle"></i> {% trans "Print bike registry info" %}</a>
+            <a href="{% url 'monitor:list' bike_slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-map-o"></i> {% trans "View bike observations" %}</a>
             <a
                     id="updateBike"
                     data-toggle="modal"
-                    data-action-url="{% url 'bikes:update' pk=bike.pk %}"
+                    data-action-url="{% url 'bikes:update' slug=bike.short_uuid %}"
                     data-primary-button-value="{% trans 'Update bike' %}"
                     data-primary-button-icon="fa fa-pencil-square-o"
                     data-primary-button-classes="btn btn-primary"
@@ -152,11 +152,11 @@
                     class="list-group-item list-group-item-action"
             ><i class="fa fa-pencil-square-o"></i> {% trans "Edit bike details" %}</a>
 
-            <a href="{% url 'bikes:gallery' pk=bike.pk %}" class="list-group-item list-group-item-action"><i class="fa fa-picture-o"></i> {% trans "Manage bike pictures" %}</a>
+            <a href="{% url 'bikes:gallery' slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-picture-o"></i> {% trans "Manage bike pictures" %}</a>
             <a
                     id="reportBikeStatus"
                     data-toggle="modal"
-                    data-action-url="{% url 'bikes:report-status' pk=bike.pk %}"
+                    data-action-url="{% url 'bikes:report-status' slug=bike.short_uuid %}"
                     data-primary-button-value="{% trans 'Update bike status' %}"
                     data-primary-button-icon="fa fa-file-text-o"
                     data-primary-button-classes="btn btn-primary"
@@ -167,7 +167,7 @@
             <a
                     id="deleteBike"
                     data-toggle="modal"
-                    data-action-url="{% url 'bikes:delete' pk=bike.pk %}"
+                    data-action-url="{% url 'bikes:delete' slug=bike.short_uuid %}"
                     data-primary-button-value="{% trans 'Delete bike' %}"
                     data-primary-button-icon="fa fa-trash-o"
                     data-primary-button-classes="btn btn-danger"

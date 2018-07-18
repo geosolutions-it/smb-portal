@@ -44,7 +44,7 @@ def test_smbuserhyperlinkedrelatedfield_returns_uuid(api_request_factory,
                                                      mocked_user):
     fake_uuid = "fake_uuid"
     fake_request = api_request_factory.get(
-        reverse("api:bikes-detail", kwargs={"pk": "phony"}))
+        reverse("api:bikes-detail", kwargs={"short_uuid": "phony"}))
     user_detail_view_name = "api:users-detail"
     field = serializers.SmbUserHyperlinkedRelatedField(
         view_name=user_detail_view_name,

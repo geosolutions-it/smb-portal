@@ -78,7 +78,8 @@ def test_bike_detail_requires_login(client, settings, admin_user):
         nickname="test",
         owner=admin_user
     )
-    response = client.get(reverse("bikes:detail", kwargs={"pk": bike.pk}))
+    response = client.get(
+        reverse("bikes:detail", kwargs={"slug": bike.short_uuid}))
     redirected_to = urlparse(response["Location"])
     assert redirected_to.path == settings.LOGIN_URL
     assert response.status_code == 302
@@ -90,7 +91,8 @@ def test_bike_update_requires_login(client, settings, admin_user):
         nickname="test",
         owner=admin_user
     )
-    response = client.get(reverse("bikes:update", kwargs={"pk": bike.pk}))
+    response = client.get(
+        reverse("bikes:update", kwargs={"slug": bike.short_uuid}))
     redirected_to = urlparse(response["Location"])
     assert redirected_to.path == settings.LOGIN_URL
     assert response.status_code == 302
@@ -102,7 +104,8 @@ def test_bike_delete_requires_login(client, settings, admin_user):
         nickname="test",
         owner=admin_user
     )
-    response = client.get(reverse("bikes:delete", kwargs={"pk": bike.pk}))
+    response = client.get(
+        reverse("bikes:delete", kwargs={"slug": bike.short_uuid}))
     redirected_to = urlparse(response["Location"])
     assert redirected_to.path == settings.LOGIN_URL
     assert response.status_code == 302
@@ -115,7 +118,7 @@ def test_bike_picture_upload_requires_login(client, settings, admin_user):
         owner=admin_user
     )
     response = client.get(
-        reverse("bikes:picture-upload", kwargs={"pk": bike.pk}))
+        reverse("bikes:picture-upload", kwargs={"slug": bike.short_uuid}))
     redirected_to = urlparse(response["Location"])
     assert redirected_to.path == settings.LOGIN_URL
     assert response.status_code == 302

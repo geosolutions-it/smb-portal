@@ -69,13 +69,14 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
     form_class = forms.BikeForm
     template_name_suffix = "_create"
     ajax_template_name = "vehicles/bike_create_inner.html"
+    slug_field = "short_uuid"
 
     @property
     def success_message(self):
         return _("Bike created!")
 
     def get_success_url(self):
-        return reverse("bikes:detail", kwargs={"pk": self.object.pk})
+        return reverse("bikes:detail", kwargs={"slug": self.object.short_uuid})
 
     def get_form_kwargs(self):
         """Instantiate a form object
@@ -125,12 +126,16 @@ class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
     model = models.Bike
     form_class = forms.BikeForm
     template_name_suffix = "_update"
-    success_message = _("Bike details updated!")
     ajax_template_name = "vehicles/bike_create_inner.html"
+    slug_field = "short_uuid"
 
     def get_success_url(self):
         bike = self.get_object()
-        return reverse("bikes:detail", kwargs={"pk": bike.pk})
+        return reverse("bikes:detail", kwargs={"slug": bike.short_uuid})
+
+    @property
+    def success_message(self):
+        return _("Bike details updated!")
 
     def get_form_kwargs(self):
         """Instantiate a form object
@@ -146,7 +151,8 @@ class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
             "user": self.request.user,
             "submit_value": _("Update bike details"),
             "is_ajax": self.request.is_ajax(),
-            "action": reverse("bikes:update", kwargs={"pk": self.kwargs["pk"]})
+            "action": reverse(
+                "bikes:update", kwargs={"slug": self.kwargs["slug"]})
         })
         logger.debug("BikeUpdateView form kwargs: {}".format(form_kwargs))
         return form_kwargs
@@ -155,6 +161,7 @@ class BikeUpdateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
 class BikeDetailView(LoginRequiredMixin, DetailView):
     model = models.Bike
     context_object_name = "bike"
+    slug_field = "short_uuid"
 
 
 class BikeDeleteView(LoginRequiredMixin, mixins.AjaxTemplateMixin, DeleteView):
@@ -162,6 +169,7 @@ class BikeDeleteView(LoginRequiredMixin, mixins.AjaxTemplateMixin, DeleteView):
     context_object_name = "bike"
     success_url = reverse_lazy("bikes:list")
     ajax_template_name = "vehicles/bike_confirm_delete_inner.html"
+    slug_field = "short_uuid"
 
     @property
     def success_message(self):
@@ -177,6 +185,7 @@ class BikeGalleryDetailView(LoginRequiredMixin, DetailView):
     model = Gallery
     context_object_name = "gallery"
     template_name = "vehicles/bikegallery_detail.html"
+    slug_field = "short_uuid"
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -198,6 +207,7 @@ class BikePictureUploadView(LoginRequiredMixin,
     form_class = forms.BikePictureForm
     template_name = "vehicles/bike_picture_create.html"
     ajax_template_name = "vehicles/bike_picture_create_inner.html"
+    slug_field = "short_uuid"
 
     @property
     def success_message(self):
@@ -205,7 +215,7 @@ class BikePictureUploadView(LoginRequiredMixin,
 
     def get_success_url(self):
         bike = get_current_bike(self.kwargs)
-        return reverse("bikes:gallery", kwargs={"pk": bike.pk})
+        return reverse("bikes:gallery", kwargs={"slug": bike.short_uuid})
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -218,7 +228,7 @@ class BikePictureUploadView(LoginRequiredMixin,
             "bike": get_current_bike(self.kwargs),
             "action": reverse(
                 "bikes:picture-upload",
-                kwargs={"pk": self.kwargs["pk"]}
+                kwargs={"slug": self.kwargs["slug"]}
             ),
             "is_ajax": self.request.is_ajax(),
         })
@@ -253,7 +263,7 @@ class BikePictureDeleteView(LoginRequiredMixin, View):
                 picture.delete()
             messages.success(request, _("Pictures have been deleted!"))
             bike = get_current_bike(kwargs)
-            result = redirect("bikes:gallery", pk=bike.pk)
+            result = redirect("bikes:gallery", slug=bike.short_uuid)
         else:
             result = render(
                 request,
@@ -281,17 +291,18 @@ class BikeStatusCreateView(LoginRequiredMixin,
     form_class = forms.BikeStatusForm
     template_name_suffix = "_create"
     ajax_template_name = "vehicles/bikestatus_create_inner.html"
+    slug_field = "short_uuid"
 
     @property
     def success_message(self):
         return _("Bike status updated!")
 
     def get_success_url(self):
-        pk = self.kwargs.get("pk")
-        if pk is not None:
+        slug = self.kwargs.get(self.slug_field)
+        if slug is not None:
             result = reverse(
                 "bikes:detail",
-                kwargs={"pk": pk}
+                kwargs={"slug": slug}
             )
         else:
             result = reverse("bikes:list")
@@ -317,7 +328,8 @@ class BikeStatusCreateView(LoginRequiredMixin,
         if bike is None:
             result = reverse("bikes:report-status-no-bike")
         else:
-            result = reverse("bikes:report-status", kwargs={"pk": bike.pk})
+            result = reverse(
+                "bikes:report-status", kwargs={"slug": bike.short_uuid})
         return result
 
 
@@ -327,5 +339,6 @@ class TagRegistrationTemplateView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_bike = get_current_bike(self.kwargs)
+        logger.debug("current_bike: {}".format(current_bike))
         context["bike"] = current_bike
         return context

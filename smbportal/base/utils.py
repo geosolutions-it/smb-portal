@@ -20,11 +20,17 @@ from vehicles import models
 logger = logging.getLogger(__name__)
 
 
-def get_current_bike(view_kwargs, pk_attr_name="pk"):
+def get_current_bike(view_kwargs, pk_kwarg_name="pk",
+                     slug_kwarg_name="slug",
+                     slug_attr_name="short_uuid"):
     try:
-        bike = models.Bike.objects.get(pk=view_kwargs.get(pk_attr_name))
+        bike = models.Bike.objects.get(pk=view_kwargs.get(pk_kwarg_name))
     except models.Bike.DoesNotExist:
-        bike = None
+        try:
+            bike = models.Bike.objects.get(
+                **{slug_attr_name: view_kwargs.get(slug_kwarg_name)})
+        except models.Bike.DoesNotExist:
+            bike = None
     return bike
 
 

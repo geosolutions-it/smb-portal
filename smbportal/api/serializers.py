@@ -171,6 +171,7 @@ class PrivilegedUserProfileSerializer(serializers.ModelSerializer):
 class BikeListSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:bikes-detail",
+        lookup_field="short_uuid",
     )
     owner = SmbUserHyperlinkedRelatedField(
         view_name="api:users-detail",
@@ -200,7 +201,7 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
         model = vehicles.models.Bike
         fields = (
             "url",
-            "id",
+            "short_uuid",
             "nickname",
             "owner",
             "tags",
@@ -228,7 +229,7 @@ class BikeDetailSerializer(BikeListSerializer):
         model = vehicles.models.Bike
         fields = (
             "url",
-            "id",
+            "short_uuid",
             "owner",
             "picture_gallery",
             "pictures",
@@ -256,6 +257,10 @@ class PhysicalTagSerializer(serializers.ModelSerializer):
         lookup_field="epc",
         lookup_url_kwarg="pk",
     )
+    bike = serializers.SlugRelatedField(
+        slug_field="short_uuid",
+        queryset=vehicles.models.Bike.objects.all()
+    )
 
     class Meta:
         model = vehicles.models.PhysicalTag
@@ -274,6 +279,7 @@ class BikeStatusSerializer(GeoFeatureModelSerializer):
     )
     bike = serializers.HyperlinkedRelatedField(
         view_name="api:bikes-detail",
+        lookup_field="short_uuid",
         queryset=vehicles.models.Bike.objects.all()
     )
 
@@ -320,6 +326,7 @@ class GallerySerializer(serializers.HyperlinkedModelSerializer):
     )
     bike = serializers.HyperlinkedRelatedField(
         view_name="api:bikes-detail",
+        lookup_field="short_uuid",
         read_only=True
     )
     photos = serializers.HyperlinkedRelatedField(
@@ -365,6 +372,7 @@ class BikeObservationSerializer(GeoFeatureModelSerializer):
     )
     bike = serializers.HyperlinkedRelatedField(
         view_name="api:bikes-detail",
+        lookup_field="short_uuid",
         queryset=vehicles.models.Bike.objects.all()
     )
 

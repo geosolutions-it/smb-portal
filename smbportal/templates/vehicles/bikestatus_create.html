@@ -19,10 +19,10 @@
 {% block breadcrumbs %}
     {{ block.super }}
     {% if bike %}
-        {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
-        {% breadcrumb _("update status") 'bikes:report-status' pk=bike.pk %}
+        {% breadcrumb bike.nickname 'bikes:detail' slug=bike.short_uuid %}
+        {% breadcrumb _("update status") 'bikes:report-status' slug=bike.short_uuid %}
     {% else %}
-        {% breadcrumb _("report lost") 'bikes:report-status' pk=bike.pk %}
+        {% breadcrumb _("report lost") 'bikes:report-status' slug=bike.short_uuid %}
     {% endif %}
 {% endblock %}
 

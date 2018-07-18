@@ -16,8 +16,8 @@ import vehiclemonitor.models
 
 
 class BikeFilterSet(django_filters.FilterSet):
-    id = django_filters.CharFilter(
-        lookup_expr="istartswith"
+    short_uuid = django_filters.CharFilter(
+        lookup_expr="istartswith",
     )
     tag = django_filters.CharFilter(
         name="tags__epc",
@@ -27,12 +27,17 @@ class BikeFilterSet(django_filters.FilterSet):
     class Meta:
         model = vehicles.models.Bike
         fields = [
-            "id",
+            "short_uuid",
             "tag",
         ]
 
 
 class BikeObservationFilterSet(django_filters.FilterSet):
+    bike = django_filters.CharFilter(
+        field_name="bike__short_uuid",
+        lookup_expr="istartswith",
+    )
+
     class Meta:
         model = vehiclemonitor.models.BikeObservation
         fields = [
