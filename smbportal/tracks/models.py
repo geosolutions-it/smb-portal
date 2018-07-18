@@ -62,7 +62,7 @@ class CollectedPoint(gismodels.Model):
     pressure = models.FloatField(blank=True, null=True)
     proximity = models.FloatField(blank=True, null=True)
     speed = models.FloatField(blank=True, null=True)
-    timestamp = models.BigIntegerField(blank=True, null=True)
     temperature = models.FloatField(blank=True, null=True)
     icon_color = models.BigIntegerField(blank=True, null=True)
     sessionid = models.BigIntegerField(blank=True, null=True)
+    timestamp = models.DateTimeField(blank=True, null=True)
