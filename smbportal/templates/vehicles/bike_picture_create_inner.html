@@ -1,3 +1,5 @@
+{% load i18n %}
 {% load crispy_forms_tags %}
 
+<p>{% blocktrans %}Upload pictures up to {{ MAX_UPLOAD_SIZE_MEGABYTES }} MB in size{% endblocktrans %}</p>
 {% crispy form %}

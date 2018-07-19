@@ -1,5 +1,6 @@
 {% extends 'vehicles/base.html' %}
 
+{% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
@@ -21,4 +22,5 @@
 
 {% block js %}
     {{ block.super }}
+    <script type="text/javascript" src="{% static 'vehicles/js/bikepicture-upload.js' %}"></script>
 {% endblock %}
