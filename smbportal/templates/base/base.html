@@ -14,6 +14,7 @@
     <!-- Favicon and Apple Icons-->
     <link rel="icon" type="image/png" href="{% static 'base/img/favicon.png' %}">
     <link rel="icon" type="image/png" href="{% static 'base/img/favicon.png' %}">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
     <!-- Vendor Styles including: Bootstrap, Font Icons, Plugins, etc.-->
     <link rel="stylesheet" media="screen" href="{% static 'base/css/vendor.min.css' %}">
     <!-- Main Template Styles-->
@@ -218,6 +219,27 @@
         s1.setAttribute('crossorigin','*');
         s0.parentNode.insertBefore(s1,s0);
         })();
+    </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+    <script>
+    window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#3c404d",
+          "text": "#d6d6d6"
+        },
+        "button": {
+          "background": "#F51DAF"
+        }
+      },
+      "position": "top",
+      "content": {
+        "message": "Usiamo i cookie per migliorare il servizio di SaveMyBike. Visitando questo sito acconsenti alla nostra politica sull'utilizzo dei cookie.",
+        "dismiss": "Capito!",
+        "link": "Termini di servizio"
+      }
+    })});
     </script>
 </body>
 </html>
