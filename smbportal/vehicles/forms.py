@@ -13,6 +13,7 @@ import logging
 from crispy_forms.helper import FormHelper
 from crispy_forms import layout
 from crispy_forms import bootstrap
+from django.conf import settings
 from django import forms
 from django.contrib.gis import forms as gis_forms
 from django.utils.text import mark_safe
@@ -252,6 +253,16 @@ class BikeStatusForm(forms.ModelForm):
 class BikePictureForm(forms.ModelForm):
     image = forms.ImageField(
         label=_("image"),
+        widget=forms.ClearableFileInput(
+            attrs={
+                "data-upload-max-size-megabytes": settings.SMB_PORTAL.get(
+                    "max_upload_size_megabytes", 2),
+                "data-success-message": _("Upload picture"),
+                "data-success-icon-classes": "fa fa-upload",
+                "data-error-message": _("Picture too big to upload"),
+                "data-error-icon-classes": "fa fa-ban",
+            }
+        )
     )
 
     def __init__(self, *args, **kwargs):

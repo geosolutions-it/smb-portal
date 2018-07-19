@@ -6,7 +6,7 @@ const handleDenyModal = function (modalElement, modalTitle, modalContent) {
   modalBodyElement.innerHTML = modalContent
 }
 
-const setupModal = function (anchorId, deny) {
+const setupModal = function (anchorId, deny, ajaxLoadedCallback) {
   const anchorElement = document.getElementById(anchorId)
   const dataAttrs = {
     title: anchorElement.dataset.title,
@@ -46,6 +46,9 @@ const setupModal = function (anchorId, deny) {
         function () {
           const loadedFormElement = modalBodyElement.querySelector('form')
           primaryButtonElement.setAttribute('form', loadedFormElement.id)
+          if (ajaxLoadedCallback !== undefined) {
+            ajaxLoadedCallback()
+          }
         }
       )
     })
@@ -96,6 +99,22 @@ const validateAddition = function (anchorId) {
   return result
 }
 
+const validateUploadSize = function (inputId) {
+  const inputElement = document.getElementById(inputId)
+  let result = false
+  if (inputElement !== null) {
+    const fileToUpload = inputElement.files.item(0)
+    if (fileToUpload !== null) {
+      const maxSize = Number(inputElement.dataset.uploadMaxSizeMegabytes)
+      const sizeMegabytes = fileToUpload.size / 1000000
+      if (sizeMegabytes <= maxSize) {
+        result = true
+      }
+    }
+  }
+  return result
+}
+
 /**
  * Highlight the relevant menu item
  * @param {string} elementId
@@ -104,4 +123,40 @@ const highlightMenuItem = function (elementId) {
   document.addEventListener('DOMContentLoaded', function (evt) {
     document.getElementById(elementId).classList.add('active')
   })
+}
+
+/**
+ * Toggle the upload button if the selected file is too big
+ * @param submitButtonElement
+ * @param fileInputElement
+ */
+const toggleUploadButton = function (submitButtonElement, fileInputElement) {
+  const okText = fileInputElement.dataset.successMessage
+  const okIconClasses = fileInputElement.dataset.successIconClasses
+  const koText = fileInputElement.dataset.errorMessage
+  const koIconClasses = fileInputElement.dataset.errorIconClasses
+  while (submitButtonElement.firstChild) {
+    submitButtonElement.firstChild.remove()
+  }
+
+  const iElement = document.createElement('i')
+  submitButtonElement.append(iElement)
+  const textNode = document.createTextNode('')
+
+  if (!validateUploadSize(fileInputElement.id)) {
+    submitButtonElement.disabled = true
+    if (fileInputElement.files.length === 0) {
+      iElement.setAttribute('class', okIconClasses)
+      textNode.textContent = ` ${okText}`
+    } else {
+      iElement.setAttribute('class', koIconClasses)
+      textNode.textContent = ` ${koText}`
+    }
+  } else {
+    submitButtonElement.disabled = false
+    iElement.setAttribute('class', okIconClasses)
+    textNode.textContent = ` ${okText}`
+  }
+  submitButtonElement.append(iElement)
+  submitButtonElement.append(textNode)
 }

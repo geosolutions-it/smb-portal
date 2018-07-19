@@ -219,7 +219,11 @@ class BikePictureUploadView(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data["bike"] = get_current_bike(self.kwargs)
+        context_data.update({
+            "bike": get_current_bike(self.kwargs),
+            "MAX_UPLOAD_SIZE_MEGABYTES": settings.SMB_PORTAL.get(
+                "max_upload_size_megabytes")
+        })
         return context_data
 
     def get_form_kwargs(self):

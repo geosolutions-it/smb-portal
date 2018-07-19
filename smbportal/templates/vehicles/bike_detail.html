@@ -138,8 +138,8 @@
     </div>
     <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
         <nav class="list-group">
-            <a href="{% url 'bikes:tag-registration' slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-bicycle"></i> {% trans "Print bike registry info" %}</a>
-            <a href="{% url 'monitor:list' bike_slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-map-o"></i> {% trans "View bike observations" %}</a>
+            <a href="{% url 'bikes:tag-registration' slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-bicycle fa-pink-marker"></i> {% trans "Print bike registry info" %}</a>
+            <a href="{% url 'monitor:list' bike_slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-map-o fa-pink-marker"></i> {% trans "View bike observations" %}</a>
             <a
                     id="updateBike"
                     data-toggle="modal"
@@ -150,9 +150,9 @@
                     data-title="{% trans 'Edit bike details' %}"
                     href="#"
                     class="list-group-item list-group-item-action"
-            ><i class="fa fa-pencil-square-o"></i> {% trans "Edit bike details" %}</a>
+            ><i class="fa fa-pencil-square-o fa-pink-marker"></i> {% trans "Edit bike details" %}</a>
 
-            <a href="{% url 'bikes:gallery' slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-picture-o"></i> {% trans "Manage bike pictures" %}</a>
+            <a href="{% url 'bikes:gallery' slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-picture-o fa-pink-marker"></i> {% trans "Manage bike pictures" %}</a>
             <a
                     id="reportBikeStatus"
                     data-toggle="modal"
@@ -163,7 +163,7 @@
                     data-title="{% trans 'Update bike status' %}"
                     href="#"
                     class="list-group-item list-group-item-action"
-            ><i class="fa fa-file-text-o"></i> {% trans "Update bike status" %}</a>
+            ><i class="fa fa-file-text-o fa-pink-marker"></i> {% trans "Update bike status" %}</a>
             <a
                     id="deleteBike"
                     data-toggle="modal"
