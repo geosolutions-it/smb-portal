@@ -27,43 +27,43 @@ msgstr "Italian"
 
 #: profiles/forms.py:28
 msgid "Did not accept the portal's Terms of Service"
-msgstr ""
+msgstr "Non sono stati accettati i termini di servizio della piattaforma"
 
 #: profiles/models.py:29 vehicles/models.py:162
 msgid "nickname"
-msgstr ""
+msgstr "Nome utente"
 
 #: profiles/models.py:34
 msgid "language preference"
-msgstr ""
+msgstr "Lingua preferita"
 
 #: profiles/models.py:40
 msgid "I accept the portal Terms of Service"
-msgstr ""
+msgstr "Accetto i termini di servizio della piattaforma"
 
 #: profiles/models.py:117 profiles/models.py:209
 msgid "user"
-msgstr ""
+msgstr "Utente"
 
 #: profiles/models.py:120
 msgid "date updated"
-msgstr ""
+msgstr "Data aggiornata"
 
 #: profiles/models.py:124
 msgid "gender"
-msgstr ""
+msgstr "Sesso"
 
 #: profiles/models.py:128
 msgid "female"
-msgstr ""
+msgstr "Femmina"
 
 #: profiles/models.py:129
 msgid "male"
-msgstr ""
+msgstr "Maschio"
 
 #: profiles/models.py:134
 msgid "age"
-msgstr ""
+msgstr "Età"
 
 #: profiles/models.py:138
 msgid "< 19"
@@ -83,11 +83,11 @@ msgstr ""
 
 #: profiles/models.py:150
 msgid "phone number"
-msgstr "numero di telefono"
+msgstr "Numero di telefono"
 
 #: profiles/models.py:156
 msgid "bio"
-msgstr ""
+msgstr "Bio"
 
 #: profiles/models.py:157
 msgid "Short user biography"
@@ -95,7 +95,7 @@ msgstr "Breve biografia"
 
 #: profiles/models.py:161
 msgid "occupation"
-msgstr ""
+msgstr "Occupazionte"
 
 #: profiles/models.py:164
 msgid "insurance agent"
@@ -231,31 +231,31 @@ msgstr "studente universitario"
 
 #: profiles/models.py:234
 msgid "end user"
-msgstr ""
+msgstr "Utente finale"
 
 #: profiles/models.py:237
 msgid "date answered"
-msgstr ""
+msgstr "Data della risposta"
 
 #: profiles/models.py:241
 msgid "public transport usage"
-msgstr ""
+msgstr "Utilizzo dei trasporti pubblici"
 
 #: profiles/models.py:246
 msgid "Habitual (more than 10 travels per month)"
-msgstr ""
+msgstr "Abituale (oltre 10 viaggi al mese)"
 
 #: profiles/models.py:250
 msgid "Occasional (once per month)"
-msgstr ""
+msgstr "Sporadico (un viaggio al mese)"
 
 #: profiles/models.py:254
 msgid "Rare (less than 10 travels per year)"
-msgstr ""
+msgstr "Raro (meno di 10 viaggi l'anno"
 
 #: profiles/models.py:258
 msgid "Never"
-msgstr ""
+msgstr "Mai"
 
 #: profiles/models.py:264
 msgid "uses bike sharing services"
@@ -263,7 +263,7 @@ msgstr "utilizzo servizi di bike sharing"
 
 #: profiles/models.py:268
 msgid "uses electrical car sharing services"
-msgstr ""
+msgstr "utilizzo servizi di car sharing elettrico"
 
 #: profiles/models.py:272
 msgid "uses fuel car sharing services"
@@ -271,31 +271,31 @@ msgstr "uso servizi di car sharing"
 
 #: profiles/models.py:276
 msgid "bicycle usage"
-msgstr ""
+msgstr "Utilizzo della bicicletta"
 
 #: profiles/models.py:281
 msgid "Habitual (at least once a week on average)"
-msgstr ""
+msgstr "Abituale (almeno una volta alla settimana)"
 
 #: profiles/models.py:285
 msgid "Habitual (at least once a month)"
-msgstr ""
+msgstr "Sporadico (almeno una volta al mese)"
 
 #: profiles/models.py:289
 msgid "Seasonal (mainly used in the Summer)"
-msgstr ""
+msgstr "Stagionale (principalmente in primavera/estate)"
 
 #: profiles/models.py:293
 msgid "Rare (less than once a month)"
-msgstr ""
+msgstr "Raro (meno di una volta al mese)"
 
 #: profiles/models.py:297
 msgid "Never use a bicycle to move around in the city"
-msgstr ""
+msgstr "Non utilizzo mai la bicicletta per muovermi in città"
 
 #: profiles/views.py:136
 msgid "Privileged user profile created!"
-msgstr ""
+msgstr "Creato utente con ruolo speciale"
 
 #: profiles/views.py:172
 msgid "Registration request sent to admins"
@@ -424,7 +424,7 @@ msgstr "Pagina iniziale"
 
 #: templates/base/base.html:183
 msgid "Close"
-msgstr ""
+msgstr "Chiudi"
 
 #: templates/base/home.html:13
 msgid ""
@@ -469,7 +469,7 @@ msgstr ""
 
 #: templates/gis/widgets/openlayers.html:11
 msgid "Delete all Features"
-msgstr ""
+msgstr "Elmina tutti gli elementi"
 
 #: templates/gis/widgets/openlayers.html:12
 msgid "Debugging window (serialized value)"
@@ -571,11 +571,19 @@ msgid ""
 "\n"
 "%(profile_url)s\n"
 "\n"
-msgstr ""
+msgstr "Benvenuto nella piattaforma GoodGo di SaveMyBike!\n"
+"\n"
+"Sei stato registrato come %(profile_type)s. Il tuo username è "
+"%(username)s.\n"
+"\n"
+"Accedi alla pagina del tuo profilo qua at:\n"
+"\n"
+"%(profile_url)s\n"
+"\n"
 
 #: templates/profiles/mail/profile_created_subject.txt:1
 msgid "User created"
-msgstr ""
+msgstr "Utente creato"
 
 #: templates/profiles/mobilityhabitssurvey_create.html:9
 msgid "new survey"
@@ -705,7 +713,7 @@ msgstr "Ultime rilevazioni"
 
 #: templates/vehiclemonitor/bikeobservation_list.html:45
 msgid "This bike has no observations yet"
-msgstr ""
+msgstr "Questa bicicletta non ha ancora posizioni rilevate"
 
 #: templates/vehiclemonitor/bikeobservation_list.html:54
 msgid ""
@@ -862,7 +870,7 @@ msgstr "Questa bicicletta è segnalato come smarrita"
 
 #: templates/vehicles/bike_list.html:28
 msgid "You do not have any bikes yet"
-msgstr ""
+msgstr "Non ha ancora biciclette registrate"
 
 #: templates/vehicles/bike_list.html:39 templates/vehicles/bike_list.html:48
 msgid "Register a new bike"
@@ -870,7 +878,7 @@ msgstr "Registra una nuova bicicletta"
 
 #: templates/vehicles/bike_list.html:44
 msgid "Bikes limit reached"
-msgstr ""
+msgstr "E' stato raggiunto il numero massimo di biciclette registrabili"
 
 #: templates/vehicles/bike_list.html:45 vehicles/models.py:220
 msgid ""
@@ -963,11 +971,17 @@ msgid ""
 "%(bike_url)s\n"
 "\n"
 msgstr ""
+"La bicicletta %(nickname)s è stata registrata correttamente.\n"
+"\n"
+"Qua puoi vedere la scheda della bicicletta:\n"
+"\n"
+"%(bike_url)s\n"
+"\n"
 
 #: templates/vehicles/mail/bike_created_subject.txt:1
 #, python-format
 msgid "Bike %(nickname)s has been registered"
-msgstr ""
+msgstr "La bicicletta  %(nickname)s è stata registrata"
 
 #: templates/vehicles/mail/bike_deleted_message.txt:1
 #, python-format
@@ -979,11 +993,17 @@ msgid ""
 "%(bike_list_url)s\n"
 "\n"
 msgstr ""
+"La biclcetta %(nickname)s è stata rimossa.\n"
+"\n"
+"Puoi aggiungere nuove biciclette visitando:\n"
+"\n"
+"%(bike_list_url)s\n"
+"\n"
 
 #: templates/vehicles/mail/bike_deleted_subject.txt:1
 #, python-format
 msgid "Bike %(nickname)s has been deleted"
-msgstr ""
+msgstr "La bicicletta %(nickname)s è stata rimossa"
 
 #: templates/vehicles/tagregistration.html:18
 #, python-format
@@ -1007,6 +1027,10 @@ msgid ""
 "tracking your bike\n"
 "                "
 msgstr ""
+"Utilizza il codice di registrazione della tua biciletta per richiedere un tag RFID. "
+"I tag, applicati alla bicicletta, ti permetteranno di fruire delle funzionalità per la ricerca e il ritrovamente "
+"delle biciclette smarrite\n"
+"                "
 
 #: templates/vehicles/tagregistration.html:30
 msgid "Print registration information"
@@ -1018,15 +1042,15 @@ msgstr "Bicicletta"
 
 #: vehiclemonitor/models.py:25
 msgid "reporter id"
-msgstr ""
+msgstr "ID rilevatore"
 
 #: vehiclemonitor/models.py:29
 msgid "reporter type"
-msgstr ""
+msgstr "Tipo di rilevatore"
 
 #: vehiclemonitor/models.py:33
 msgid "reporter name"
-msgstr ""
+msgstr "Nome del rilevatore"
 
 #: vehiclemonitor/models.py:38 vehicles/models.py:264
 msgid "position"
@@ -1083,7 +1107,7 @@ msgstr "Selezionare almeno un'immagine da eliminare"
 
 #: vehicles/models.py:39
 msgid "short identifier"
-msgstr ""
+msgstr "Identificatore breve"
 
 #: vehicles/models.py:48
 msgid "last position"
