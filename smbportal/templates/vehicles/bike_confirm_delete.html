@@ -7,8 +7,8 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.pk 'bikes:detail' pk=bike.pk %}
-    {% breadcrumb _("delete") 'bikes:delete' pk=bike.pk %}
+    {% breadcrumb bike.nickname 'bikes:detail' slug=bike.short_uuid %}
+    {% breadcrumb _("delete") 'bikes:delete' slug=bike.short_uuid %}
 {% endblock %}
 
 {% block main %}

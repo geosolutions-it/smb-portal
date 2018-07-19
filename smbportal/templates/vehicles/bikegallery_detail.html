@@ -6,8 +6,8 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb gallery.bike.nickname 'bikes:detail' pk=gallery.bike.pk %}
-    {% breadcrumb _("manage pictures") 'bikes:gallery' pk=gallery.bike.pk %}
+    {% breadcrumb gallery.bike.nickname 'bikes:detail' slug=gallery.bike.short_uuid %}
+    {% breadcrumb _("manage pictures") 'bikes:gallery' slug=gallery.bike.short_uuid %}
 {% endblock %}
 
 {% block page_title %}{% trans 'Bike Pictures' %}{% endblock %}
@@ -32,7 +32,7 @@
                     class="list-group-item list-group-item-action"
                     data-toggle="modal"
                     href="#"
-                    data-action-url="{% url 'bikes:picture-upload' pk=gallery.bike.pk %}"
+                    data-action-url="{% url 'bikes:picture-upload' slug=gallery.bike.short_uuid %}"
                     data-primary-button-value="{% trans 'Upload picture' %}"
                     data-primary-button-icon="fa fa-upload"
                     data-primary-button-classes="btn btn-primary"
@@ -44,7 +44,7 @@
             >
                 <i class="fa fa-plus-circle"></i> {% trans 'Add picture' %}
             </a>
-            <a href="{% url 'bikes:pictures-delete' pk=gallery.bike.pk %}" class="list-group-item list-group-item-action list-group-item-danger">
+            <a href="{% url 'bikes:pictures-delete' slug=gallery.bike.short_uuid %}" class="list-group-item list-group-item-action list-group-item-danger">
                 <i class="fa fa-trash-o"></i> {% trans 'Delete pictures' %}
             </a>
         </nav>

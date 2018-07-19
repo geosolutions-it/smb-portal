@@ -37,7 +37,7 @@
             </div>
             <div class="col-lg-12">
                 <div class="card">
-                    <div id="bike-map" class="map" data-observations-url='{% url "api:my-bike-observations-list"%}?bike={{ bike.pk }}'></div>
+                    <div id="bike-map" class="map" data-observations-url='{% url "api:my-bike-observations-list"%}?bike={{ bike.short_uuid }}'></div>
                     <div id="map-info"></div>
                 </div>
             </div>

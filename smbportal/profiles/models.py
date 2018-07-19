@@ -41,6 +41,11 @@ class SmbUser(AbstractUser):
         default=False
     )
 
+    class Meta:
+        ordering = [
+            "date_joined",
+        ]
+
     @property
     def profile(self):
         attribute_names = (

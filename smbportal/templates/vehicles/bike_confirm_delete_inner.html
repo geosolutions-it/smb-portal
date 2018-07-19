@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 <p>{% blocktrans with nickname=bike.nickname %}Are you sure you want to delete bike <strong>{{ nickname }}</strong>?{% endblocktrans %}</p>
-<form id="bikeDeleteForm" method="post" action="{% url 'bikes:delete' pk=bike.pk %}">
+<form id="bikeDeleteForm" method="post" action="{% url 'bikes:delete' slug=bike.short_uuid %}">
     {% csrf_token %}
     {{ form|crispy }}
     {% comment %}
