@@ -27,8 +27,28 @@ a:hover {
     padding-bottom: 160px;
 }
 
+.hero-slider {
+    min-height: 480px;
+}
+
+.hero-slider > .owl-carousel {
+    min-height: 480px;
+}
+
+.hero-slider .main-text {
+    font-size: 80px;
+}
+
+.force-white {
+    color: white !important
+}
+
 .page-title h1, .page-title h2, .page-title h3 {
     border-left: 4px solid #F51DAF;
+}
+
+.fa-pink-marker {
+    color: #F51DAF;
 }
 
 .fa-disabled {
