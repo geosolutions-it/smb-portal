@@ -6,9 +6,9 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
-    {% breadcrumb _("manage pictures") 'bikes:gallery' pk=bike.pk %}
-    {% breadcrumb _("add picture") 'bikes:picture-upload' pk=bike.pk %}
+    {% breadcrumb bike.nickname 'bikes:detail' slug=bike.short_uuid %}
+    {% breadcrumb _("manage pictures") 'bikes:gallery' slug=bike.short_uuid %}
+    {% breadcrumb _("add picture") 'bikes:picture-upload' slug=bike.short_uuid %}
 {% endblock %}
 
 {% block page_title %}{% trans "Add picture" %}{% endblock %}

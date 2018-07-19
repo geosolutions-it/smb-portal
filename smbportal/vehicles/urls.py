@@ -30,42 +30,42 @@ urlpatterns = [
         name="report-status-no-bike"
     ),
     path(
-        route="<pk>",
+        route="<slug>",
         view=views.BikeDetailView.as_view(),
         name="detail"
     ),
     path(
-        route="<pk>/tag-registration",
+        route="<slug>/tag-registration",
         view=views.TagRegistrationTemplateView.as_view(),
         name="tag-registration"
     ),
     path(
-        route="<pk>/update",
+        route="<slug>/update",
         view=views.BikeUpdateView.as_view(),
         name="update"
     ),
     path(
-        route="<pk>/delete",
+        route="<slug>/delete",
         view=views.BikeDeleteView.as_view(),
         name="delete"
     ),
     path(
-        route="<pk>/report-status",
+        route="<slug>/report-status",
         view=views.BikeStatusCreateView.as_view(),
         name="report-status"
     ),
     path(
-        route="<pk>/pictures",
+        route="<slug>/pictures",
         view=views.BikeGalleryDetailView.as_view(),
         name="gallery"
     ),
     path(
-        route="<pk>/pictures/upload",
+        route="<slug>/pictures/upload",
         view=views.BikePictureUploadView.as_view(),
         name="picture-upload"
     ),
     path(
-        route="<pk>/pictures/delete",
+        route="<slug>/pictures/delete",
         view=views.BikePictureDeleteView.as_view(),
         name="pictures-delete"
     ),

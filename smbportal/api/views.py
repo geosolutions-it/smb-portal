@@ -53,6 +53,7 @@ class MyBikeViewSet(viewsets.ModelViewSet):
         "vehicles.can_create_bike",
     )
     filter_class = filters.BikeFilterSet
+    lookup_field = "short_uuid"
 
     def get_queryset(self):
         return vehicles.models.Bike.objects.filter(owner=self.request.user)
@@ -147,6 +148,7 @@ class BikeViewSet(viewsets.ReadOnlyModelViewSet):
         "vehicles.can_list_bikes",
     )
     filter_class = filters.BikeFilterSet
+    lookup_field = "short_uuid"
 
 
 # TODO: should external users be allowed to delete existing tags?
