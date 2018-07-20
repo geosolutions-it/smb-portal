@@ -153,7 +153,7 @@ class BikeViewSet(viewsets.ReadOnlyModelViewSet):
 
 # TODO: should external users be allowed to delete existing tags?
 class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                         mixins.CreateModelMixin,  # mixins.DestroyModelMixin,
+                         mixins.CreateModelMixin,  mixins.DestroyModelMixin,
                          viewsets.GenericViewSet):
     serializer_class = serializers.PhysicalTagSerializer
     queryset = vehicles.models.PhysicalTag.objects.all()
@@ -200,7 +200,8 @@ class PictureViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class BikeObservationViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                             mixins.CreateModelMixin, viewsets.GenericViewSet):
+                             mixins.CreateModelMixin, mixins.DestroyModelMixin,
+                             viewsets.GenericViewSet):
     serializer_class = serializers.BikeObservationSerializer
     required_permissions = (
         "vehiclemonitor.can_list_bike_observation",

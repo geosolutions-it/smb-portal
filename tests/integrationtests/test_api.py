@@ -150,12 +150,6 @@ def test_privileged_can_filter_bikes_using_tag_epc(api_client,
 def test_privileged_user_can_add_new_bike_observation(api_client,
                                                       privileged_user,
                                                       bike_owned_by_end_user):
-    bike_url = reverse(
-        "api:bikes-detail",
-        kwargs={
-            "short_uuid": bike_owned_by_end_user.short_uuid
-        }
-    )
     api_client.force_authenticate(user=privileged_user)
     response = api_client.post(
         reverse("api:bike-observations-list"),
@@ -166,7 +160,7 @@ def test_privileged_user_can_add_new_bike_observation(api_client,
                 "coordinates": [0, 0]
             },
             "properties": {
-                "bike": bike_url,
+                "bike": bike_owned_by_end_user.short_uuid,
                 "reporter_id": "fake_id",
                 "reporter_type": "fake_type",
             }
