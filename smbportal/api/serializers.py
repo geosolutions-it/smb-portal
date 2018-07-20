@@ -261,6 +261,12 @@ class PhysicalTagSerializer(serializers.ModelSerializer):
         slug_field="short_uuid",
         queryset=vehicles.models.Bike.objects.all()
     )
+    bike_url = serializers.HyperlinkedRelatedField(
+        source="bike",
+        read_only=True,
+        view_name="api:bikes-detail",
+        lookup_field="short_uuid",
+    )
 
     class Meta:
         model = vehicles.models.PhysicalTag
@@ -269,6 +275,7 @@ class PhysicalTagSerializer(serializers.ModelSerializer):
             "id",
             "epc",
             "bike",
+            "bike_url",
             "creation_date",
         )
 
@@ -370,10 +377,15 @@ class BikeObservationSerializer(GeoFeatureModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:bike-observations-detail",
     )
-    bike = serializers.HyperlinkedRelatedField(
+    bike = serializers.SlugRelatedField(
+        slug_field="short_uuid",
+        queryset=vehicles.models.Bike.objects.all()
+    )
+    bike_url = serializers.HyperlinkedRelatedField(
+        source="bike",
+        read_only=True,
         view_name="api:bikes-detail",
         lookup_field="short_uuid",
-        queryset=vehicles.models.Bike.objects.all()
     )
 
     class Meta:
@@ -383,6 +395,7 @@ class BikeObservationSerializer(GeoFeatureModelSerializer):
             "url",
             "id",
             "bike",
+            "bike_url",
             "reporter_id",
             "reporter_type",
             "reporter_name",
