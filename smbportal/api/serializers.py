@@ -180,7 +180,8 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
     tags = serializers.HyperlinkedRelatedField(
         view_name="api:tags-detail",
         many=True,
-        read_only=True
+        read_only=True,
+        lookup_field="epc"
     )
     current_status = serializers.SerializerMethodField()
 
@@ -255,7 +256,7 @@ class PhysicalTagSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:tags-detail",
         lookup_field="epc",
-        lookup_url_kwarg="pk",
+        lookup_url_kwarg="epc",
     )
     bike = serializers.SlugRelatedField(
         slug_field="short_uuid",
@@ -272,7 +273,6 @@ class PhysicalTagSerializer(serializers.ModelSerializer):
         model = vehicles.models.PhysicalTag
         fields = (
             "url",
-            "id",
             "epc",
             "bike",
             "bike_url",
