@@ -161,6 +161,7 @@ class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "vehicles.can_list_physical_tags",
         "vehicles.can_create_physical_tag",
     )
+    lookup_field = "epc"
 
 
 class BikeStatusViewSet(viewsets.ReadOnlyModelViewSet):
