@@ -1006,11 +1006,11 @@ msgstr "Aggiorna stato"
 
 #: .\templates\vehicles\bikestatus_create.html:26
 msgid "report lost"
-msgstr "Segnala come smarrita"
+msgstr "Segnala bici smarrita"
 
 #: .\templates\vehicles\bikestatus_create.html:30 .\vehicles\forms.py:178
 msgid "Report lost bike"
-msgstr "Segnala una bici smarrita"
+msgstr "Segnala bicicletta smarrita"
 
 #: .\templates\vehicles\mail\bike_created_message.txt:1
 #, python-format
