@@ -90,6 +90,7 @@
     {% endblock %}
 
     <div class="offcanvas-wrapper">
+        {% block page_header %}
         <div class="page-title m-b-0">
             <div class="container">
                 <div class="column">
@@ -100,6 +101,7 @@
                 </div>
             </div>
         </div>
+        {% endblock %}
         <div id="container" class="">
             {% block hero %}{% endblock %}
             <div class="container p-t-60">
