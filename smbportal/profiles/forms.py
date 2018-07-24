@@ -13,7 +13,9 @@ class SmbUserForm(forms.ModelForm):
         include_accept_terms_field = kwargs.pop(
             "include_accept_terms_field", None)
         super().__init__(*args, **kwargs)
-        self.fields['accepted_terms_of_service'].label = format_lazy(_l("I've read the <a href='{url}' target='_blank'>Privacy Policy</a> and I accept the processing of personal data"),url=reverse('privacy_policy'))
+        self.fields['accepted_terms_of_service'].label = format_lazy(_l(
+            "I've read the <a href='{url}' target='_blank'>Privacy Policy</a> and I accept the processing of personal data"),
+                                                                     url=reverse('privacy_policy'))
 
         if include_accept_terms_field is not None:
             del self.fields["accepted_terms_of_service"]
@@ -52,8 +54,8 @@ class EndUserProfileForm(forms.ModelForm):
             "bio": forms.Textarea(
                 attrs={
                     "class": "form-control",
-                    }
-                ),
+                }
+            ),
             "gender": forms.RadioSelect(),
             "phone_number": forms.TextInput(
                 attrs={
@@ -67,14 +69,12 @@ class EndUserProfileForm(forms.ModelForm):
 
 
 class PrivilegedUserProfileForm(forms.ModelForm):
-
     class Meta:
         model = models.PrivilegedUserProfile
         fields = ()
 
 
 class UserMobilityHabitsForm(forms.ModelForm):
-
     class Meta:
         model = models.MobilityHabitsSurvey
         fields = (
