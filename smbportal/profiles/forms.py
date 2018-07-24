@@ -1,5 +1,8 @@
 from django import forms
+from django.urls import reverse
+from django.utils.text import format_lazy
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _l
 
 from . import models
 
@@ -10,6 +13,8 @@ class SmbUserForm(forms.ModelForm):
         include_accept_terms_field = kwargs.pop(
             "include_accept_terms_field", None)
         super().__init__(*args, **kwargs)
+        self.fields['accepted_terms_of_service'].label = format_lazy(_l("I've read the <a href='{url}' target='_blank'>Privacy Policy</a> and I accept the processing of personal data"),url=reverse('privacy_policy'))
+
         if include_accept_terms_field is not None:
             del self.fields["accepted_terms_of_service"]
 
