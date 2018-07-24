@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 00:13+0200\n"
+"POT-Creation-Date: 2018-07-25 00:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -463,48 +463,49 @@ msgid ""
 msgstr "Registra e gestisci le tue biciclette."
 
 #: .\templates\base\home.html:68
+msgid "Sensors"
+msgstr "Sensori"
+
+#: .\templates\base\home.html:70
+msgid "Want protection? Add rfid support to your bikes here"
+msgstr "Vuoi proteggere la tua bici? Prenota l'installazione dei sensori RFID"
+
+#: .\templates\base\home.html:72 .\templates\base\home.html:85
+#: .\templates\base\home.html:96 .\templates\base\home.html:107
+msgid "Coming soon"
+msgstr "In arrivo..."
+
+#: .\templates\base\home.html:81
 msgid "Activity"
 msgstr "Attività"
 
-#: .\templates\base\home.html:70
+#: .\templates\base\home.html:83
 msgid ""
 "View your tracks, calculate your gas emissions credits and the health "
 "impacts of cycling"
 msgstr ""
-"Visualizza i percorsi registrati, calcola quanti gas esausti hai risparmiato e i benefici alla tua salute"
-
-#: .\templates\base\home.html:72 .\templates\base\home.html:83
-#: .\templates\base\home.html:94 .\templates\base\home.html:107
-msgid "Coming soon"
-msgstr "In arrivo..."
-
-#: .\templates\base\home.html:79
-msgid "Tags"
-msgstr "Tags"
-
-#: .\templates\base\home.html:81
-msgid "Want protection? Add rfid support to your bikes here"
-msgstr "Vuoi proteggere la tua bici? Prenota l'installazione dei sensori RFID"
-
-#: .\templates\base\home.html:90
-msgid "Prizes"
-msgstr "Premi"
+"Visualizza i percorsi registrati, calcola quanti gas esausti hai risparmiato "
+"e i benefici alla tua salute"
 
 #: .\templates\base\home.html:92
-msgid " View all the prizes you can available in your city."
-msgstr ""
-"Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
-
-#: .\templates\base\home.html:103
 msgid "Badges"
 msgstr "Badges"
 
-#: .\templates\base\home.html:105
+#: .\templates\base\home.html:94
 msgid ""
 "View all your Badges, the ones you've unlocked and ones you need to get."
 msgstr ""
 "Visualizza tutti i tuoi badge, quelli che hai sbloccato e quelli che devi "
 "ottenere"
+
+#: .\templates\base\home.html:103
+msgid "Prizes"
+msgstr "Premi"
+
+#: .\templates\base\home.html:105
+msgid " View all the prizes you can available in your city."
+msgstr ""
+"Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
 
 #: .\templates\gis\widgets\openlayers.html:11
 msgid "Delete all Features"
@@ -1329,6 +1330,9 @@ msgstr "Le foto sono state eliminate!"
 #: .\vehicles\views.py:302
 msgid "Bike status updated!"
 msgstr "Lo stato è stato aggiornato!"
+
+#~ msgid "Tags"
+#~ msgstr "Tags"
 
 #~ msgid "Answer new survey"
 #~ msgstr "Nuovo sondaggio"
