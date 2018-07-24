@@ -128,7 +128,7 @@
                     <div class="col-lg-12 col-md-12">
                         <!-- About Us-->
                         <section class="footer-widgets widget widget-links widget-light-skin">
-                            <span><a href="https://www.savemybike.eu/" target="_blank">Save my Bike</a> // info@savemybike.eu // Privacy Policy // <a href="https://www.geo-solutions.it/" target="_blank">Credits</a></span>
+                            <span><a href="https://www.savemybike.eu/" target="_blank">Save my Bike</a> // info@savemybike.eu // <a href="{% url 'privacy_policy' %}">Privacy Policy</a> // <a href="https://www.geo-solutions.it/" target="_blank">Credits</a></span>
                              <a class="social-button shape-circle sb-facebook sb-light-skin" href="https://www.facebook.com/Savemybike-1505927189521211/" target="_blank">
                                 <i class="fa fa-facebook"></i>
                             </a>
@@ -237,8 +237,8 @@
       "content": {
         "message": "{% blocktrans %}We use cookies to help make SaveMyBike better. By visiting this site, you agree to our cookie policy{% endblocktrans %}.",
         "dismiss": "{% blocktrans %}Got it!{% endblocktrans %}",
-        "link": "{% blocktrans %}Terms of Service{% endblocktrans %}",
-        "href": "http://cookiesandyou.com"
+        "link": "{% blocktrans %}Privacy Policy{% endblocktrans %}",
+        "href": "{% url 'privacy_policy' %}"
       }
     })});
     </script>
