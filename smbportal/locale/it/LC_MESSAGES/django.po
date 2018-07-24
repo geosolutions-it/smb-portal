@@ -416,7 +416,7 @@ msgstr "Disconnetti"
 
 #: .\templates\base\base.html:76
 msgid "Login/Register"
-msgstr "Registrati"
+msgstr "Accedi o Registrati"
 
 #: .\templates\base\base.html:89
 msgid "Home"
