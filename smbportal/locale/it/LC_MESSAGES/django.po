@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-24 22:06+0200\n"
+"POT-Creation-Date: 2018-07-24 23:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,15 +25,7 @@ msgstr "English"
 msgid "Italian"
 msgstr "Italian"
 
-#: .\profiles\forms.py:16
-msgid ""
-"I've read the <a href='{url}' target='_blank'>Privacy Policy</a> and I "
-"accept the processing of personal data"
-msgstr ""
-"Ho letto l'<a href='{url}' target='_blank'>informativa sulla privacy</a> e acconsento "
-"al trattamento dei dati personali"
-
-#: .\profiles\forms.py:33
+#: .\profiles\forms.py:35
 msgid "Did not accept the portal's Terms of Service"
 msgstr "Non sono stati accettati i termini di servizio della piattaforma"
 
@@ -393,8 +385,8 @@ msgstr ""
 msgid "Delete selected"
 msgstr "Elimina selezionati"
 
-#: .\templates\base\base.html:41 .\templates\base\home.html:55
-#: .\templates\base\home.html:59
+#: .\templates\base\base.html:41 .\templates\base\home.html:57
+#: .\templates\base\home.html:61
 msgid "Bikes"
 msgstr "Biciclette"
 
@@ -426,11 +418,16 @@ msgstr "Accedi o Registrati"
 msgid "Home"
 msgstr "Pagina iniziale"
 
-#: .\templates\base\base.html:186
+#: .\templates\base\base.html:133 .\templates\base\base.html:242
+#: .\templates\privacy\privacy_policy.html:8
+msgid "Privacy Policy"
+msgstr "Informativa sulla privacy"
+
+#: .\templates\base\base.html:188
 msgid "Close"
 msgstr "Chiudi"
 
-#: .\templates\base\base.html:238
+#: .\templates\base\base.html:240
 msgid ""
 "We use cookies to help make SaveMyBike better. By visiting this site, you "
 "agree to our cookie policy"
@@ -438,32 +435,28 @@ msgstr ""
 "Usiamo i cookie per migliorare il servizio di SaveMyBike. Visitando questo "
 "sito acconsenti alla nostra politica sull'utilizzo dei cookie"
 
-#: .\templates\base\base.html:239
+#: .\templates\base\base.html:241
 msgid "Got it!"
 msgstr "Capito!"
 
-#: .\templates\base\base.html:240
-msgid "Privacy Policy"
-msgstr "Informativa sulla privacy"
-
-#: .\templates\base\home.html:16
+#: .\templates\base\home.html:18
 msgid " Welcome on GoodGo! "
 msgstr "Benvenuto su GoodGo!"
 
-#: .\templates\base\home.html:19
+#: .\templates\base\home.html:21
 msgid "The mobility game that rewards"
 msgstr "Il gioco della mobilità che ripaga"
 
-#: .\templates\base\home.html:35
+#: .\templates\base\home.html:37
 msgid "Protect your bikes"
 msgstr "Proteggi le tue bici"
 
-#: .\templates\base\home.html:38
+#: .\templates\base\home.html:40
 msgid "Request the RFID sensors to identify and localize them"
 msgstr ""
 "Richiedi i sensori RFID per poterle identificare e rilevarne la posizione"
 
-#: .\templates\base\home.html:57
+#: .\templates\base\home.html:59
 msgid ""
 " Register new Bikes, update information about your bikes and delete bikes "
 "from the system. "
@@ -471,33 +464,33 @@ msgstr ""
 "Registra nuove biciclette, aggiorna le informazioni sulle tue bici ed "
 "elimina biciclette. "
 
-#: .\templates\base\home.html:66
+#: .\templates\base\home.html:68
 msgid "Prizes"
 msgstr "Premi"
 
-#: .\templates\base\home.html:68
+#: .\templates\base\home.html:70
 msgid " View all the prizes you can available in your city."
 msgstr ""
 "Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
 
-#: .\templates\base\home.html:70 .\templates\base\home.html:81
-#: .\templates\base\home.html:94
+#: .\templates\base\home.html:72 .\templates\base\home.html:83
+#: .\templates\base\home.html:96
 msgid "Coming soon"
 msgstr "In arrivo..."
 
-#: .\templates\base\home.html:77
+#: .\templates\base\home.html:79
 msgid "Tags"
 msgstr "Tags"
 
-#: .\templates\base\home.html:79
+#: .\templates\base\home.html:81
 msgid "Want protection? Add rfid support to your bikes here"
 msgstr "Vuoi proteggere la tua bici? Aggiungi il supporto RFID"
 
-#: .\templates\base\home.html:90
+#: .\templates\base\home.html:92
 msgid "Badges"
 msgstr "Badges"
 
-#: .\templates\base\home.html:92
+#: .\templates\base\home.html:94
 msgid ""
 "View all your Badges, the ones you've unlocked and ones you need to get."
 msgstr ""
@@ -510,10 +503,6 @@ msgstr "Elmina tutti gli elementi"
 
 #: .\templates\gis\widgets\openlayers.html:12
 msgid "Debugging window (serialized value)"
-msgstr ""
-
-#: .\templates\privacy\privacy_policy.html:8
-msgid "privacy"
 msgstr ""
 
 #: .\templates\profiles\enduserprofile_create.html:9
@@ -1328,6 +1317,13 @@ msgstr "Le foto sono state eliminate!"
 #: .\vehicles\views.py:302
 msgid "Bike status updated!"
 msgstr "Lo stato è stato aggiornato!"
+
+#~ msgid ""
+#~ "I've read the <a href='{url}' target='_blank'>Privacy Policy</a> and I "
+#~ "accept the processing of personal data"
+#~ msgstr ""
+#~ "Ho letto l'<a href='{url}' target='_blank'>informativa sulla privacy</a> "
+#~ "e acconsento al trattamento dei dati personali"
 
 #~ msgid "I accept the portal Terms of Service"
 #~ msgstr "Accetto i termini di servizio della piattaforma"

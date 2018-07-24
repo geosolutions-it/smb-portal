@@ -53,19 +53,19 @@
             <li class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex justify-content-between">
                     <h6>{% trans "Bike type" %}</h6>
-                    <span>{% blocktrans with bike_type=bike.bike_type %}{{ bike_type }}{% endblocktrans %}</span>
+                    <span>{% blocktrans with bike_type=bike.get_bike_type_display %}{{ bike_type }}{% endblocktrans %}</span>
                 </div>
             </li>
             <li class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex justify-content-between">
                     <h6>{% trans "Gears" %}</h6>
-                    <span>{% blocktrans with gear=bike.gear %}{{ gear }}{% endblocktrans %}</span>
+                    <span>{% blocktrans with gear=bike.get_gear_display %}{{ gear }}{% endblocktrans %}</span>
                 </div>
             </li>
             <li class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex justify-content-between">
                     <h6>{% trans "Brakes" %}</h6>
-                    <span>{% blocktrans with brakes=bike.brake %}{{ brakes }}{% endblocktrans %}</span>
+                    <span>{% blocktrans with brakes=bike.get_brake_display %}{{ brakes }}{% endblocktrans %}</span>
                 </div>
             </li>
             <li class="list-group-item list-group-item-action flex-column align-items-start">

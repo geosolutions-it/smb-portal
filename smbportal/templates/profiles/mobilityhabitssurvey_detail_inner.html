@@ -4,13 +4,13 @@
     <li class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex justify-content-between">
             <h6>{% trans 'Bicycle usage' %}</h6>
-            <span>{{ survey.bicycle_usage }}</span>
+            <span>{% blocktrans with bicycle_usage=survey.get_bicycle_usage_display %}{{ bicycle_usage }}{% endblocktrans %}</span>
         </div>
     </li>
     <li class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex justify-content-between">
             <h6>{% trans 'Public transport usage' %}</h6>
-            <span>{{ survey.public_transport_usage }}</span>
+            <span>{% blocktrans with public_transport_usage=survey.get_public_transport_usage_display %}{{ public_transport_usage }}{% endblocktrans %}</span>
         </div>
     </li>
     <li class="list-group-item list-group-item-action flex-column align-items-start">
