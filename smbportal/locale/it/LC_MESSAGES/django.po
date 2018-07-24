@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-19 18:09+0200\n"
+"POT-Creation-Date: 2018-07-24 16:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr "Italian"
 msgid "Did not accept the portal's Terms of Service"
 msgstr "Non sono stati accettati i termini di servizio della piattaforma"
 
-#: .\profiles\models.py:29 .\vehicles\models.py:158
+#: .\profiles\models.py:29
 msgid "nickname"
 msgstr "Nome utente"
 
@@ -389,8 +389,8 @@ msgstr ""
 msgid "Delete selected"
 msgstr "Elimina selezionati"
 
-#: .\templates\base\base.html:41 .\templates\base\home.html:68
-#: .\templates\base\home.html:72
+#: .\templates\base\base.html:41 .\templates\base\home.html:55
+#: .\templates\base\home.html:59
 msgid "Bikes"
 msgstr "Biciclette"
 
@@ -430,7 +430,9 @@ msgstr "Chiudi"
 msgid ""
 "We use cookies to help make SaveMyBike better. By visiting this site, you "
 "agree to our cookie policy"
-msgstr "Usiamo i cookie per migliorare il servizio di SaveMyBike. Visitando questo sito acconsenti alla nostra politica sull'utilizzo dei cookie"
+msgstr ""
+"Usiamo i cookie per migliorare il servizio di SaveMyBike. Visitando questo "
+"sito acconsenti alla nostra politica sull'utilizzo dei cookie"
 
 #: .\templates\base\base.html:239
 msgid "Got it!"
@@ -445,20 +447,18 @@ msgid " Welcome on GoodGo! "
 msgstr "Benvenuto su GoodGo!"
 
 #: .\templates\base\home.html:19
-msgid " The mobility game that rewards.  "
-msgstr "Il gioco della mobilità che ripaga."
+msgid "The mobility game that rewards"
+msgstr "Il gioco della mobilità che ripaga"
 
-#: .\templates\base\home.html:32 .\templates\base\home.html:48
-msgid " Smart Watch Moto 360 2nd "
-msgstr ""
+#: .\templates\base\home.html:35
+msgid "Protect your bikes"
+msgstr "Proteggi le tue bici"
 
-#: .\templates\base\home.html:35 .\templates\base\home.html:51
-#, fuzzy
-#| msgid "trading agent"
-msgid " starting at "
-msgstr "agente di commercio"
+#: .\templates\base\home.html:38
+msgid "Request the RFID sensors to identify and localize them"
+msgstr "Richiedi i sensori RFID per poterle identificare e rilevarne la posizione"
 
-#: .\templates\base\home.html:70
+#: .\templates\base\home.html:57
 msgid ""
 " Register new Bikes, update information about your bikes and delete bikes "
 "from the system. "
@@ -466,33 +466,33 @@ msgstr ""
 "Registra nuove biciclette, aggiorna le informazioni sulle tue bici ed "
 "elimina biciclette. "
 
-#: .\templates\base\home.html:79
+#: .\templates\base\home.html:66
 msgid "Prizes"
 msgstr "Premi"
 
-#: .\templates\base\home.html:81
+#: .\templates\base\home.html:68
 msgid " View all the prizes you can available in your city."
 msgstr ""
 "Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
 
-#: .\templates\base\home.html:83 .\templates\base\home.html:94
-#: .\templates\base\home.html:107
+#: .\templates\base\home.html:70 .\templates\base\home.html:81
+#: .\templates\base\home.html:94
 msgid "Coming soon"
 msgstr "In arrivo..."
 
-#: .\templates\base\home.html:90
+#: .\templates\base\home.html:77
 msgid "Tags"
 msgstr "Tags"
 
-#: .\templates\base\home.html:92
+#: .\templates\base\home.html:79
 msgid "Want protection? Add rfid support to your bikes here"
 msgstr "Vuoi proteggere la tua bici? Aggiungi il supporto RFID"
 
-#: .\templates\base\home.html:103
+#: .\templates\base\home.html:90
 msgid "Badges"
 msgstr "Badges"
 
-#: .\templates\base\home.html:105
+#: .\templates\base\home.html:92
 msgid ""
 "View all your Badges, the ones you've unlocked and ones you need to get."
 msgstr ""
@@ -1226,6 +1226,10 @@ msgstr "cantilever"
 msgid "coaster"
 msgstr "contropedale"
 
+#: .\vehicles\models.py:158
+msgid "bikename"
+msgstr "Nome identificativo"
+
 #: .\vehicles\models.py:162
 msgid "brand"
 msgstr "marca"
@@ -1315,6 +1319,9 @@ msgstr "Le foto sono state eliminate!"
 #: .\vehicles\views.py:302
 msgid "Bike status updated!"
 msgstr "Lo stato è stato aggiornato!"
+
+#~ msgid " starting at "
+#~ msgstr "agente di commercio"
 
 #~ msgid "SaveMyBike sticker"
 #~ msgstr "Adesivo SaveMyBike"

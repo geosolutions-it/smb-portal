@@ -155,7 +155,7 @@ class Bike(Vehicle):
         default=DISK_BRAKE,
     )
     nickname = models.CharField(
-        _("nickname"),
+        _("bikename"),
         max_length=100
     )
     brand = models.CharField(

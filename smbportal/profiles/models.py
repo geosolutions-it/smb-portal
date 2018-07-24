@@ -34,7 +34,7 @@ class SmbUser(AbstractUser):
         _("language preference"),
         max_length=20,
         choices=((k, v) for k, v in settings.LANGUAGES),
-        default="en",
+        default="it",
     )
     accepted_terms_of_service = models.BooleanField(
         _("I accept the portal Terms of Service"),
