@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-24 23:15+0200\n"
+"POT-Creation-Date: 2018-07-25 00:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -460,20 +460,21 @@ msgstr ""
 msgid ""
 " Register new Bikes, update information about your bikes and delete bikes "
 "from the system. "
-msgstr ""
-"Registra e gestisci le tue biciclette."
+msgstr "Registra e gestisci le tue biciclette."
 
 #: .\templates\base\home.html:68
-msgid "Prizes"
-msgstr "Premi"
+msgid "Activity"
+msgstr "Attività"
 
 #: .\templates\base\home.html:70
-msgid " View all the prizes you can available in your city."
+msgid ""
+"View your tracks, calculate your gas emissions credits and the health "
+"impacts of cycling"
 msgstr ""
-"Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
+"Visualizza i percorsi registrati, calcola quanti gas esausti hai risparmiato e i benefici alla tua salute"
 
 #: .\templates\base\home.html:72 .\templates\base\home.html:83
-#: .\templates\base\home.html:96
+#: .\templates\base\home.html:94 .\templates\base\home.html:107
 msgid "Coming soon"
 msgstr "In arrivo..."
 
@@ -485,11 +486,20 @@ msgstr "Tags"
 msgid "Want protection? Add rfid support to your bikes here"
 msgstr "Vuoi proteggere la tua bici? Prenota l'installazione dei sensori RFID"
 
+#: .\templates\base\home.html:90
+msgid "Prizes"
+msgstr "Premi"
+
 #: .\templates\base\home.html:92
+msgid " View all the prizes you can available in your city."
+msgstr ""
+"Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
+
+#: .\templates\base\home.html:103
 msgid "Badges"
 msgstr "Badges"
 
-#: .\templates\base\home.html:94
+#: .\templates\base\home.html:105
 msgid ""
 "View all your Badges, the ones you've unlocked and ones you need to get."
 msgstr ""
@@ -544,7 +554,6 @@ msgid "Mobility surveys"
 msgstr "Sondaggi sulla mobilità"
 
 #: .\templates\profiles\enduserprofile_update.html:44
-#: .\templates\profiles\mobilityhabitssurvey_detail.html:11
 msgid "Mobility survey"
 msgstr "Sondaggio sulla mobilità"
 
@@ -622,16 +631,24 @@ msgstr "Nuovo sondaggio"
 msgid "New mobility survey"
 msgstr "Nuovo sondagio sulla mobilità"
 
-#: .\templates\profiles\mobilityhabitssurvey_detail.html:19
-msgid "Answer new survey"
-msgstr "Nuovo sondaggio"
-
 #: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:6
 msgid "Bicycle usage"
 msgstr "Utilizzo della bicicletta"
 
+#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:7
+#, fuzzy, python-format
+#| msgid "bicycle usage"
+msgid "%(bicycle_usage)s"
+msgstr "Utilizzo della bicicletta"
+
 #: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:12
 msgid "Public transport usage"
+msgstr "Utilizzo dei trasporti pubblici"
+
+#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:13
+#, fuzzy, python-format
+#| msgid "public transport usage"
+msgid "%(public_transport_usage)s"
 msgstr "Utilizzo dei trasporti pubblici"
 
 #: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:18
@@ -645,10 +662,6 @@ msgstr "Utilizzo service di car sharing elettrico"
 #: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:30
 msgid "Uses fuel car sharing services"
 msgstr "Uso servizi di car sharing"
-
-#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:36
-msgid "Date answered"
-msgstr "Data della risposta"
 
 #: .\templates\profiles\privilegeduserprofile_create.html:9
 msgid "Complete profile - Privileged user"
@@ -1316,6 +1329,12 @@ msgstr "Le foto sono state eliminate!"
 #: .\vehicles\views.py:302
 msgid "Bike status updated!"
 msgstr "Lo stato è stato aggiornato!"
+
+#~ msgid "Answer new survey"
+#~ msgstr "Nuovo sondaggio"
+
+#~ msgid "Date answered"
+#~ msgstr "Data della risposta"
 
 #~ msgid ""
 #~ "I've read the <a href='{url}' target='_blank'>Privacy Policy</a> and I "
