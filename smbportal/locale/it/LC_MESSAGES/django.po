@@ -461,8 +461,7 @@ msgid ""
 " Register new Bikes, update information about your bikes and delete bikes "
 "from the system. "
 msgstr ""
-"Registra nuove biciclette, aggiorna le informazioni sulle tue bici ed "
-"elimina biciclette. "
+"Registra e gestisci le tue biciclette."
 
 #: .\templates\base\home.html:68
 msgid "Prizes"
@@ -484,7 +483,7 @@ msgstr "Tags"
 
 #: .\templates\base\home.html:81
 msgid "Want protection? Add rfid support to your bikes here"
-msgstr "Vuoi proteggere la tua bici? Aggiungi il supporto RFID"
+msgstr "Vuoi proteggere la tua bici? Prenota l'installazione dei sensori RFID"
 
 #: .\templates\base\home.html:92
 msgid "Badges"
@@ -865,11 +864,11 @@ msgstr "Queta bicicletta non ha associato nessun tag"
 
 #: .\templates\vehicles\bike_detail.html:142
 msgid "Print bike registry info"
-msgstr "Stampa le informazioni di registrazione della bicibletta"
+msgstr "Stampa codice registrazione"
 
 #: .\templates\vehicles\bike_detail.html:143
 msgid "View bike observations"
-msgstr "Visualizza le rilevazioni della bicicletta"
+msgstr "Visualizza posizioni rilevate"
 
 #: .\templates\vehicles\bike_detail.html:148
 msgid "Update bike"
@@ -878,18 +877,18 @@ msgstr "Aggiorna bicicletta"
 #: .\templates\vehicles\bike_detail.html:151
 #: .\templates\vehicles\bike_detail.html:154
 msgid "Edit bike details"
-msgstr "Modifica i dati della bicicletta"
+msgstr "Modifica"
 
 #: .\templates\vehicles\bike_detail.html:156
 msgid "Manage bike pictures"
-msgstr "Gestisci le foto della bicicletta"
+msgstr "Gestisci le foto"
 
 #: .\templates\vehicles\bike_detail.html:161
 #: .\templates\vehicles\bike_detail.html:164
 #: .\templates\vehicles\bike_detail.html:167
 #: .\templates\vehicles\bikestatus_create.html:30 .\vehicles\forms.py:178
 msgid "Update bike status"
-msgstr "Aggiorna lo stato della bicicletta"
+msgstr "Aggiorna lo stato"
 
 #: .\templates\vehicles\bike_list.html:7
 msgid "Your bikes"
@@ -1154,7 +1153,7 @@ msgstr "Identificatore breve"
 
 #: .\vehicles\models.py:44
 msgid "last position"
-msgstr "Ultima positione rilevata della bicicletta"
+msgstr "Ultima positione rilevata"
 
 #: .\vehicles\models.py:111
 msgid "owner"

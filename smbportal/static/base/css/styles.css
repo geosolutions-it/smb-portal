@@ -39,6 +39,10 @@ a:hover {
     font-size: 80px;
 }
 
+.card {
+    height: 100%;
+}
+
 .force-white {
     color: white !important
 }
@@ -54,6 +58,10 @@ a:hover {
 .fa-disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.bike-detail-menu {
+    margin-top: 65px;
 }
 
 .site-footer {
