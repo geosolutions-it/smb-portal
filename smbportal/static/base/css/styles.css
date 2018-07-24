@@ -80,4 +80,20 @@ a:hover {
     text-decoration: none;
 }
 
+#privacy p {
+    text-align: justify;
+}
+
+#privacy h2 {
+    margin-top:50px
+}
+
+#privacy ul {
+    margin-left:30px
+}
+
+#privacy .copyright {
+    color: #bcbcbc
+}
+
 
