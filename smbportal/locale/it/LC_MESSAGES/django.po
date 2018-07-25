@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 00:47+0200\n"
+"POT-Creation-Date: 2018-07-25 12:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\base\settings\base.py:195
+#: .\base\settings\base.py:196
 msgid "English"
 msgstr "English"
 
-#: .\base\settings\base.py:196
+#: .\base\settings\base.py:197
 msgid "Italian"
 msgstr "Italian"
 
@@ -385,8 +385,8 @@ msgstr ""
 msgid "Delete selected"
 msgstr "Elimina selezionati"
 
-#: .\templates\base\base.html:41 .\templates\base\home.html:57
-#: .\templates\base\home.html:61
+#: .\templates\base\base.html:41 .\templates\base\home.html:67
+#: .\templates\base\home.html:71
 msgid "Bikes"
 msgstr "Biciclette"
 
@@ -456,30 +456,44 @@ msgid "Request the RFID sensors to identify and localize them"
 msgstr ""
 "Richiedi i sensori RFID per poterle identificare e rilevarne la posizione"
 
-#: .\templates\base\home.html:59
+#: .\templates\base\home.html:57
+msgid "The GoodGo User Guide"
+msgstr "Guida Utente GoodGo"
+
+#: .\templates\base\home.html:58
+msgid ""
+"<a href=\"%(MEDIA_URL)sdocs/GoddGo_User_Guide.pdf\" target=\"_blank"
+"\"><b>Download</b></a> the document that will guide you through the "
+"registration process and first steps with the GoodGo Platform"
+msgstr ""
+"<a href=\"%(MEDIA_URL)sdocs/GoddGo_User_Guide.pdf\" target=\"_blank"
+"\"><b>Scarica</b></a> il documento che ti guiderà nella registrazione sulla "
+"piattaforma e all'utilizzo delle due funzionalità"
+
+#: .\templates\base\home.html:69
 msgid ""
 " Register new Bikes, update information about your bikes and delete bikes "
 "from the system. "
 msgstr "Registra e gestisci le tue biciclette."
 
-#: .\templates\base\home.html:68
+#: .\templates\base\home.html:78
 msgid "Sensors"
 msgstr "Sensori"
 
-#: .\templates\base\home.html:70
+#: .\templates\base\home.html:80
 msgid "Want protection? Add rfid support to your bikes here"
 msgstr "Vuoi proteggere la tua bici? Prenota l'installazione dei sensori RFID"
 
-#: .\templates\base\home.html:72 .\templates\base\home.html:85
-#: .\templates\base\home.html:96 .\templates\base\home.html:107
+#: .\templates\base\home.html:82 .\templates\base\home.html:95
+#: .\templates\base\home.html:106 .\templates\base\home.html:117
 msgid "Coming soon"
 msgstr "In arrivo..."
 
-#: .\templates\base\home.html:81
+#: .\templates\base\home.html:91
 msgid "Activity"
 msgstr "Attività"
 
-#: .\templates\base\home.html:83
+#: .\templates\base\home.html:93
 msgid ""
 "View your tracks, calculate your gas emissions credits and the health "
 "impacts of cycling"
@@ -487,22 +501,22 @@ msgstr ""
 "Visualizza i percorsi registrati, calcola quanti gas esausti hai risparmiato "
 "e i benefici alla tua salute"
 
-#: .\templates\base\home.html:92
+#: .\templates\base\home.html:102
 msgid "Badges"
 msgstr "Badges"
 
-#: .\templates\base\home.html:94
+#: .\templates\base\home.html:104
 msgid ""
 "View all your Badges, the ones you've unlocked and ones you need to get."
 msgstr ""
 "Visualizza tutti i tuoi badge, quelli che hai sbloccato e quelli che devi "
 "ottenere"
 
-#: .\templates\base\home.html:103
+#: .\templates\base\home.html:113
 msgid "Prizes"
 msgstr "Premi"
 
-#: .\templates\base\home.html:105
+#: .\templates\base\home.html:115
 msgid " View all the prizes you can available in your city."
 msgstr ""
 "Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
@@ -696,46 +710,6 @@ msgstr "Torna indietro"
 #: .\templates\profiles\privilegeduserprofile_create.html:47
 msgid "Register as privileged user"
 msgstr "Registrati per un altro ruolo utente"
-
-#: .\templates\registration\newuser.html:108
-msgid "No Account? Register"
-msgstr "Nessun account? Registrati"
-
-#: .\templates\registration\newuser.html:109
-msgid ""
-"Registration takes less than a minute but gives you full control over your "
-"account."
-msgstr ""
-"La registrazione richiede meno di un minuto ma ti dà il pieno controllo sul "
-"tuo account"
-
-#: .\templates\registration\newuser.html:114
-msgid "First Name"
-msgstr "Nome"
-
-#: .\templates\registration\newuser.html:120
-msgid "Last Name"
-msgstr "Cognome"
-
-#: .\templates\registration\newuser.html:126
-msgid "E-mail Address"
-msgstr "Indirizzo email"
-
-#: .\templates\registration\newuser.html:132
-msgid "Phone Number"
-msgstr "Numero di telefono"
-
-#: .\templates\registration\newuser.html:138
-msgid "Password"
-msgstr "Password"
-
-#: .\templates\registration\newuser.html:144
-msgid "Confirm Password"
-msgstr "Conferma password"
-
-#: .\templates\registration\newuser.html:150
-msgid "Register"
-msgstr "Registrati"
 
 #: .\templates\vehiclemonitor\base.html:8 .\templates\vehicles\base.html:9
 msgid "bikes"
@@ -1330,6 +1304,37 @@ msgstr "Le foto sono state eliminate!"
 #: .\vehicles\views.py:302
 msgid "Bike status updated!"
 msgstr "Lo stato è stato aggiornato!"
+
+#~ msgid "No Account? Register"
+#~ msgstr "Nessun account? Registrati"
+
+#~ msgid ""
+#~ "Registration takes less than a minute but gives you full control over "
+#~ "your account."
+#~ msgstr ""
+#~ "La registrazione richiede meno di un minuto ma ti dà il pieno controllo "
+#~ "sul tuo account"
+
+#~ msgid "First Name"
+#~ msgstr "Nome"
+
+#~ msgid "Last Name"
+#~ msgstr "Cognome"
+
+#~ msgid "E-mail Address"
+#~ msgstr "Indirizzo email"
+
+#~ msgid "Phone Number"
+#~ msgstr "Numero di telefono"
+
+#~ msgid "Password"
+#~ msgstr "Password"
+
+#~ msgid "Confirm Password"
+#~ msgstr "Conferma password"
+
+#~ msgid "Register"
+#~ msgstr "Registrati"
 
 #~ msgid "Tags"
 #~ msgstr "Tags"
