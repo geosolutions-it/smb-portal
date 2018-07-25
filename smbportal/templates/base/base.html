@@ -90,6 +90,7 @@
     {% endblock %}
 
     <div class="offcanvas-wrapper">
+        {% block page_header %}
         <div class="page-title m-b-0">
             <div class="container">
                 <div class="column">
@@ -100,6 +101,7 @@
                 </div>
             </div>
         </div>
+        {% endblock %}
         <div id="container" class="">
             {% block hero %}{% endblock %}
             <div class="container p-t-60">
@@ -128,7 +130,7 @@
                     <div class="col-lg-12 col-md-12">
                         <!-- About Us-->
                         <section class="footer-widgets widget widget-links widget-light-skin">
-                            <span><a href="https://www.savemybike.eu/" target="_blank">Save my Bike</a> // info@savemybike.eu // <a href="{% url 'privacy_policy' %}">Privacy Policy</a> // <a href="https://www.geo-solutions.it/" target="_blank">Credits</a></span>
+                            <span><a href="https://www.savemybike.eu/" target="_blank">SaveMyBike</a> // info@savemybike.eu // <a href="{% url 'privacy_policy' %}">{% blocktrans %}Privacy Policy{% endblocktrans %} </a> // <a href="https://www.geo-solutions.it/" target="_blank">Credits</a></span>
                              <a class="social-button shape-circle sb-facebook sb-light-skin" href="https://www.facebook.com/Savemybike-1505927189521211/" target="_blank">
                                 <i class="fa fa-facebook"></i>
                             </a>

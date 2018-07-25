@@ -13,7 +13,6 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse
-from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
 
@@ -38,7 +37,6 @@ class SmbUser(AbstractUser):
         default="it",
     )
     accepted_terms_of_service = models.BooleanField(
-        _("I accept the portal <a href='/privacy_policy' target='_blank'>Privacy Policy</a>"),
         default=False
     )
 

@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block main %}
-    <div class="col-lg-9 col-md-8 order-md-1">
+    <div class="col-lg-8 col-md-8 order-md-1">
         <h1>{{ bike.nickname }}</h1>
         <div class="gallery-wrapper order-md-4" data-pswp-uid="1">
             <div class="row">
@@ -53,19 +53,19 @@
             <li class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex justify-content-between">
                     <h6>{% trans "Bike type" %}</h6>
-                    <span>{% blocktrans with bike_type=bike.bike_type %}{{ bike_type }}{% endblocktrans %}</span>
+                    <span>{% blocktrans with bike_type=bike.get_bike_type_display %}{{ bike_type }}{% endblocktrans %}</span>
                 </div>
             </li>
             <li class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex justify-content-between">
                     <h6>{% trans "Gears" %}</h6>
-                    <span>{% blocktrans with gear=bike.gear %}{{ gear }}{% endblocktrans %}</span>
+                    <span>{% blocktrans with gear=bike.get_gear_display %}{{ gear }}{% endblocktrans %}</span>
                 </div>
             </li>
             <li class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex justify-content-between">
                     <h6>{% trans "Brakes" %}</h6>
-                    <span>{% blocktrans with brakes=bike.brake %}{{ brakes }}{% endblocktrans %}</span>
+                    <span>{% blocktrans with brakes=bike.get_brake_display %}{{ brakes }}{% endblocktrans %}</span>
                 </div>
             </li>
             <li class="list-group-item list-group-item-action flex-column align-items-start">
@@ -136,7 +136,7 @@
             </li>
         </ul>
     </div>
-    <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
+    <div class="col-lg-4 col-md-4 order-md-2 r5_m_t_20 bike-detail-menu">
         <nav class="list-group">
             <a href="{% url 'bikes:tag-registration' slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-bicycle fa-pink-marker"></i> {% trans "Print bike registry info" %}</a>
             <a href="{% url 'monitor:list' bike_slug=bike.short_uuid %}" class="list-group-item list-group-item-action"><i class="fa fa-map-o fa-pink-marker"></i> {% trans "View bike observations" %}</a>
