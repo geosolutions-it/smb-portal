@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 13:50+0200\n"
+"POT-Creation-Date: 2018-07-26 15:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -461,6 +461,7 @@ msgid "The SaveMyBike User Guide"
 msgstr "Guida utente"
 
 #: .\templates\base\home.html:58
+#, python-format
 msgid ""
 "<a href=\"%(MEDIA_URL)sdocs/GoddGo_User_Guide.pdf\" target=\"_blank"
 "\"><b>Download</b></a> the document that will guide you through the "
@@ -484,10 +485,9 @@ msgstr "Sensori"
 msgid "Want protection? Add rfid support to your bikes here"
 msgstr "Vuoi proteggere la tua bici? Prenota l'installazione dei sensori RFID"
 
-#: .\templates\base\home.html:82 .\templates\base\home.html:95
-#: .\templates\base\home.html:106 .\templates\base\home.html:117
-msgid "Coming soon"
-msgstr "In arrivo..."
+#: .\templates\base\home.html:82
+msgid "Book your sensor"
+msgstr "Prenotati"
 
 #: .\templates\base\home.html:91
 msgid "Activity"
@@ -500,6 +500,11 @@ msgid ""
 msgstr ""
 "Visualizza i percorsi registrati, calcola quanti gas esausti hai risparmiato "
 "e i benefici alla tua salute"
+
+#: .\templates\base\home.html:95 .\templates\base\home.html:106
+#: .\templates\base\home.html:117
+msgid "Coming soon"
+msgstr "In arrivo..."
 
 #: .\templates\base\home.html:102
 msgid "Badges"
