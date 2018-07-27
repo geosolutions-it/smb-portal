@@ -34,6 +34,16 @@ def get_current_bike(view_kwargs, pk_kwarg_name="pk",
     return bike
 
 
+def get_group_name(group_path):
+    for group_name, group_paths in settings.KEYCLOAK["group_mappings"].items():
+        if group_path in group_paths:
+            result = group_name
+            break
+    else:
+        result = None
+    return result
+
+
 def send_email_to_admins(subject_template, message_template, context=None):
     """Send email to admins
 
