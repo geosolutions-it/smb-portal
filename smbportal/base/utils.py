@@ -9,6 +9,7 @@
 #########################################################################
 
 import logging
+from smtplib import SMTPServerDisconnected
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -60,9 +61,18 @@ def send_email_to_admins(subject_template, message_template, context=None):
     unique_recipients = set(settings.ADMINS).union(destination_addresses)
     logger.debug("unique_recipients: {}".format(unique_recipients))
     ctx = dict(context) if context is not None else {}
-    mail.send_mail(
+    send_mail(
         subject=render_to_string(subject_template, context=ctx),
         message=render_to_string(message_template, context=ctx),
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=list(unique_recipients)
     )
+
+
+def send_mail(*args, **kwargs):
+    """Wrapper around django's ``send_mail`` that catches more errors"""
+    try:
+        mail.send_mail(*args, **kwargs)
+    except SMTPServerDisconnected:
+        logger.warning(
+            "Could not send profile creation notification email")
