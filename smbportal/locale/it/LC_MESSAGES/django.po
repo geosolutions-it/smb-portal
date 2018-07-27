@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-26 15:32+0200\n"
+"POT-Creation-Date: 2018-07-27 10:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -440,8 +440,8 @@ msgid "Got it!"
 msgstr "Capito!"
 
 #: .\templates\base\home.html:18
-msgid " Welcome on GoodGo! "
-msgstr "Benvenuto su GoodGo!"
+msgid " Welcome on Good_Go! "
+msgstr "Benvenuto su Good_Go!"
 
 #: .\templates\base\home.html:21
 msgid "The mobility game that rewards"
@@ -461,13 +461,12 @@ msgid "The SaveMyBike User Guide"
 msgstr "Guida utente"
 
 #: .\templates\base\home.html:58
-#, python-format
 msgid ""
-"<a href=\"%(MEDIA_URL)sdocs/GoddGo_User_Guide.pdf\" target=\"_blank"
+"<a href=\"%(MEDIA_URL)sdocs/Manuale_SaveMyBike_v2.pdf\" target=\"_blank"
 "\"><b>Download</b></a> the document that will guide you through the "
 "registration process and first steps on the SaveMyBike Platform"
 msgstr ""
-"<a href=\"%(MEDIA_URL)sdocs/GoddGo_User_Guide.pdf\" target=\"_blank"
+"<a href=\"%(MEDIA_URL)sdocs/Manuale_SaveMyBike_v2.pdf\" target=\"_blank"
 "\"><b>Scarica</b></a> il documento che ti guiderà nella registrazione sulla "
 "piattaforma e all'utilizzo delle sue funzionalità"
 
@@ -630,7 +629,7 @@ msgid ""
 "%(profile_url)s\n"
 "\n"
 msgstr ""
-"Benvenuto nella piattaforma GoodGo di SaveMyBike!\n"
+"Benvenuto nella piattaforma Good_Go di SaveMyBike!\n"
 "\n"
 "Sei stato registrato come %(profile_type)s. Il tuo username è %(username)s.\n"
 "\n"
@@ -1309,89 +1308,3 @@ msgstr "Le foto sono state eliminate!"
 #: .\vehicles\views.py:302
 msgid "Bike status updated!"
 msgstr "Lo stato è stato aggiornato!"
-
-#~ msgid "The GoodGo User Guide"
-#~ msgstr "Guida Utente GoodGo"
-
-#~ msgid "No Account? Register"
-#~ msgstr "Nessun account? Registrati"
-
-#~ msgid ""
-#~ "Registration takes less than a minute but gives you full control over "
-#~ "your account."
-#~ msgstr ""
-#~ "La registrazione richiede meno di un minuto ma ti dà il pieno controllo "
-#~ "sul tuo account"
-
-#~ msgid "First Name"
-#~ msgstr "Nome"
-
-#~ msgid "Last Name"
-#~ msgstr "Cognome"
-
-#~ msgid "E-mail Address"
-#~ msgstr "Indirizzo email"
-
-#~ msgid "Phone Number"
-#~ msgstr "Numero di telefono"
-
-#~ msgid "Password"
-#~ msgstr "Password"
-
-#~ msgid "Confirm Password"
-#~ msgstr "Conferma password"
-
-#~ msgid "Register"
-#~ msgstr "Registrati"
-
-#~ msgid "Tags"
-#~ msgstr "Tags"
-
-#~ msgid "Answer new survey"
-#~ msgstr "Nuovo sondaggio"
-
-#~ msgid "Date answered"
-#~ msgstr "Data della risposta"
-
-#~ msgid ""
-#~ "I've read the <a href='{url}' target='_blank'>Privacy Policy</a> and I "
-#~ "accept the processing of personal data"
-#~ msgstr ""
-#~ "Ho letto l'<a href='{url}' target='_blank'>informativa sulla privacy</a> "
-#~ "e acconsento al trattamento dei dati personali"
-
-#~ msgid "I accept the portal Terms of Service"
-#~ msgstr "Accetto i termini di servizio della piattaforma"
-
-#~ msgid "Terms of Service"
-#~ msgstr "Termini di servizio"
-
-#~ msgid " starting at "
-#~ msgstr "agente di commercio"
-
-#~ msgid "SaveMyBike sticker"
-#~ msgstr "Adesivo SaveMyBike"
-
-#~ msgid ""
-#~ "\n"
-#~ "            Current pictures for bike %(nickname)s\n"
-#~ "        "
-#~ msgstr ""
-#~ "\n"
-#~ "            Immagini delle bicicletta %(nickname)s\n"
-#~ "        "
-
-#~ msgid "Add pictures"
-#~ msgstr "Aggiungi foto"
-
-#~ msgid "Settings"
-#~ msgstr "Impostazioni"
-
-#~ msgid "Lock Screen"
-#~ msgstr "Blocca schermo"
-
-#~ msgid "Restricted Area"
-#~ msgstr "Area riservata"
-
-#~ msgid "Login"
-#~ msgstr "Accesso"
