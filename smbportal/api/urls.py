@@ -82,9 +82,9 @@ schema_view = get_schema_view(
     info=openapi.Info(
         title="",
         default_version="v1",
-        description="Test description",
+        description="SaveMyBike Platform API",
         terms_of_service="",
-        contact=openapi.Contact(email="fake@mail.com"),
+        contact=openapi.Contact(email="info@savemybike.eu"),
         license=openapi.License(name="BSD License"),
     ),
     url="{}/api".format(settings.KEYCLOAK["client_public_uri"]),

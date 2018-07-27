@@ -12,8 +12,10 @@ import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
 import photologue.models
+from rest_framework.decorators import action
 from rest_framework import mixins
 from rest_framework import viewsets
+from rest_framework.response import Response
 from rest_framework_gis.pagination import GeoJsonPagination
 
 import profiles.models
@@ -51,6 +53,7 @@ class MyBikeViewSet(viewsets.ModelViewSet):
         "vehicles.can_create_bike",
     )
     filter_class = filters.BikeFilterSet
+    lookup_field = "short_uuid"
 
     def get_queryset(self):
         return vehicles.models.Bike.objects.filter(owner=self.request.user)
@@ -110,29 +113,47 @@ class SmbUserViewSet(viewsets.ReadOnlyModelViewSet):
     required_permissions = (
         "profiles.can_list_users",
     )
+    lookup_field = "uuid"
 
     def get_object(self):
-        return self.get_queryset().get(keycloak__UID=self.kwargs["pk"])
+        obj = self.get_queryset().get(keycloak__UID=self.kwargs["uuid"])
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    @action(detail=True)
+    def single_dump(self, request, uuid=None):
+        user = self.get_object()
+        serializer = serializers.UserDumpSerializer(
+            instance=user,
+            context={"request": request}
+        )
+        return Response(serializer.data)
+
+    @action(detail=False)
+    def dump(self, request):
+        qs = self.filter_queryset(self.get_queryset())
+        paginated_qs = self.paginate_queryset(qs)
+        serializer = serializers.UserDumpSerializer(
+            instance=paginated_qs,
+            many=True,
+            context=self.get_serializer_context(),
+        )
+        return self.get_paginated_response(serializer.data)
 
 
 class BikeViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.BikeDetailSerializer
     queryset = vehicles.models.Bike.objects.all()
     required_permissions = (
         "vehicles.can_list_bikes",
     )
     filter_class = filters.BikeFilterSet
-
-    def get_serializer_class(self):
-        if self.action == "retrieve":
-            serializer_class = serializers.BikeDetailSerializer
-        else:
-            serializer_class = serializers.BikeListSerializer
-        return serializer_class
+    lookup_field = "short_uuid"
 
 
 # TODO: should external users be allowed to delete existing tags?
 class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                         mixins.CreateModelMixin,  # mixins.DestroyModelMixin,
+                         mixins.CreateModelMixin,  mixins.DestroyModelMixin,
                          viewsets.GenericViewSet):
     serializer_class = serializers.PhysicalTagSerializer
     queryset = vehicles.models.PhysicalTag.objects.all()
@@ -140,6 +161,7 @@ class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "vehicles.can_list_physical_tags",
         "vehicles.can_create_physical_tag",
     )
+    lookup_field = "epc"
 
 
 class BikeStatusViewSet(viewsets.ReadOnlyModelViewSet):
@@ -179,7 +201,8 @@ class PictureViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class BikeObservationViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                             mixins.CreateModelMixin, viewsets.GenericViewSet):
+                             mixins.CreateModelMixin, mixins.DestroyModelMixin,
+                             viewsets.GenericViewSet):
     serializer_class = serializers.BikeObservationSerializer
     required_permissions = (
         "vehiclemonitor.can_list_bike_observation",

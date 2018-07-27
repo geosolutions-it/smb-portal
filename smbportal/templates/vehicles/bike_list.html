@@ -7,11 +7,11 @@
 {% block page_title %}{% trans "Your bikes" %}{% endblock %}
 
 {% block main %}
-    <div class="col-lg-9 col-md-8 order-md-1">
+    <div class="col-lg-8 col-md-8 order-md-1">
         <div class="card-columns">
             {% for bike in bikes %}
                 <div class="card">
-                    <a href="{% url 'bikes:detail' pk=bike.pk %}">
+                    <a href="{% url 'bikes:detail' slug=bike.short_uuid %}">
                     {% if bike.picture_gallery.photo_count == 0 %}
                         <img class="card-img-top" src="{% static 'base/img/default-bike-display-size.png' %}" alt="{{ bike.nickname }}">
                     {% else %}
@@ -19,7 +19,7 @@
                     {% endif %}
                     </a>
                     <div class="card-body">
-                        <a href="{% url 'bikes:detail' pk=bike.pk %}">
+                        <a href="{% url 'bikes:detail' slug=bike.short_uuid %}">
                             <h5 class="card-title">{{ bike.nickname }} {% if bike.get_current_status.lost %}<i class="fa fa-ban fa-pull-right" title="{% trans "This bike is currently reported as lost" %}"></i>{% endif %}</h5>
                         </a>
                     </div>
@@ -29,7 +29,7 @@
             {% endfor %}
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 order-md-2 r5_m_t_20">
+    <div class="col-lg-4 col-md-4 order-md-2 r5_m_t_20">
         <nav class="list-group">
             <a
                     id="createBike"
@@ -45,7 +45,7 @@
                     data-denial-content="{% trans 'Bikes limit reached. Cannot add more bikes. Delete some existing bikes first.' %}"
                     data-threshold="{{ max_bikes }}"
                     data-current="{{ bikes.count }}"
-            ><i class="fa fa-plus-circle"></i> {% trans "Register a new bike" %}</a>
+            ><i class="fa fa-plus-circle fa-pink-marker"></i> {% trans "Register a new bike" %}</a>
         </nav>
     </div>
 {% endblock %}

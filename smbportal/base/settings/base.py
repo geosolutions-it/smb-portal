@@ -1,4 +1,4 @@
-#########################################################################
+########################################################################
 #
 # Copyright 2018, GeoSolutions Sas.
 # All rights reserved.
@@ -46,7 +46,7 @@ def get_list_env_value(environment_value, separator=":", default_value=None):
     return [item for item in raw_value.split(separator) if item != ""]
 
 
-BASE_DIR = str(pathlib.Path(__file__).parents[2])
+BASE_DIR = str(pathlib.Path(os.path.abspath(__file__)).parents[2])
 
 
 # Quick-start development settings - unsuitable for production
@@ -56,7 +56,7 @@ BASE_DIR = str(pathlib.Path(__file__).parents[2])
 SECRET_KEY = get_environment_variable("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = get_boolean_env_value("DJANGO_DEBUG", False)
+DEBUG = get_boolean_env_value("DJANGO_DEBUG", "false")
 
 ALLOWED_HOSTS = get_list_env_value(
     "DJANGO_ALLOWED_HOSTS", separator=" ", default_value="*")
@@ -103,6 +103,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "base.middleware.TimezoneMiddleware",
 ]
 
 ROOT_URLCONF = "base.urls"
@@ -121,6 +122,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.i18n",
+                "django.template.context_processors.media"
             ],
             # "loaders": [
             #     "django.template.loaders.filesystem.Loader",
@@ -181,6 +183,15 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
+GEOIP_PATH = get_environment_variable(
+    "DJANGO_GEOIP_PATH",
+    default_value=str(pathlib.Path(BASE_DIR).parent / "GeoLite2"),
+)
+
+IPWARE = {
+    "proxy_count": 1,
+}
+
 LANGUAGES = (
     ("en", _("English")),
     ("it", _("Italian")),
@@ -207,13 +218,13 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-EMAIL_HOST = "smtp.geo-solutions.it"
-EMAIL_PORT = 587
+EMAIL_HOST = get_environment_variable(
+    "DJANGO_EMAIL_HOST", "smtp.geo-solutions.it")
+EMAIL_USE_SSL = get_boolean_env_value("DJANGO_EMAIL_USE_SSL", "false")
+EMAIL_PORT = int(get_environment_variable("DJANGO_EMAIL_PORT", "587"))
 EMAIL_HOST_USER = get_environment_variable("DJANGO_EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = get_environment_variable("DJANGO_EMAIL_HOST_PASSWORD")
-
-MAIL_SENDER_ADDRESS = get_environment_variable(
-    "DJANGO_EMAIL_SENDER", default_value=EMAIL_HOST_USER)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
 
@@ -228,7 +239,10 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
-    )
+    ),
+    "DEFAULT_PAGINATION_CLASS": (
+        "rest_framework.pagination.PageNumberPagination"),
+    "PAGE_SIZE": 50,
 }
 
 AVATAR_AUTO_GENERATE_SIZES = (

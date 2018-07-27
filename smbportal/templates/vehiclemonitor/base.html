@@ -6,6 +6,6 @@
 {% block breadcrumbs %}
     {{ block.super }}
     {% breadcrumb _("bikes") 'bikes:list' %}
-    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
+    {% breadcrumb bike.nickname 'bikes:detail' slug=bike.short_uuid %}
     {% breadcrumb _("observations") 'observations:list' %}
 {% endblock %}

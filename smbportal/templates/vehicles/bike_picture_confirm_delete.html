@@ -6,9 +6,9 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
-    {% breadcrumb _("manage pictures") 'bikes:gallery' pk=bike.pk %}
-    {% breadcrumb _("delete") 'bikes:pictures-delete' pk=bike.pk %}
+    {% breadcrumb bike.nickname 'bikes:detail' slug=bike.short_uuid %}
+    {% breadcrumb _("manage pictures") 'bikes:gallery' slug=bike.short_uuid %}
+    {% breadcrumb _("delete") 'bikes:pictures-delete' slug=bike.short_uuid %}
 {% endblock %}
 
 {%  block page_title %}{% trans "Delete pictures" %}{% endblock %}
@@ -16,11 +16,11 @@
 {% block main %}
     <div class="col-lg">
         <p>{% trans "Please select the pictures that you would like to delete." %}</p>
-        <form method="POST" action="{% url 'bikes:pictures-delete' pk=bike.pk %}">
+        <form method="POST" action="{% url 'bikes:pictures-delete' slug=bike.short_uuid %}">
             {% csrf_token %}
-            <input type="hidden" name="next" value="{% url 'bikes:gallery' pk=bike.pk %}">
+            <input type="hidden" name="next" value="{% url 'bikes:gallery' slug=bike.short_uuid %}">
             {{ form|crispy }}
-            <a href="{% url 'bikes:gallery' pk=bike.pk %}" class="btn btn-secondary"><i class="fa fa-hand-o-left"></i> {% trans "Go back" %}</a>
+            <a href="{% url 'bikes:gallery' slug=bike.short_uuid %}" class="btn btn-secondary"><i class="fa fa-hand-o-left"></i> {% trans "Go back" %}</a>
             <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i> {% trans "Delete selected pictures" %}</button>
         </form>
     </div>

@@ -36,7 +36,7 @@ class SmbUserHyperlinkedIdentityField(serializers.HyperlinkedIdentityField):
         return reverse(
             view_name,
             kwargs={
-                "pk": obj.keycloak.UID
+                "uuid": obj.keycloak.UID
             },
             request=request,
             format=format
@@ -55,7 +55,7 @@ class SmbUserHyperlinkedRelatedField(serializers.HyperlinkedRelatedField):
         return reverse(
             view_name,
             kwargs={
-                "pk": obj.keycloak.UID
+                "uuid": obj.keycloak.UID
             },
             request=request,
             format=format
@@ -72,11 +72,11 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
     url = SmbUserHyperlinkedIdentityField(
         view_name="api:users-detail",
     )
-    id = serializers.SerializerMethodField()
+    uuid = serializers.SerializerMethodField()
     profile = serializers.SerializerMethodField()
     profile_type = serializers.SerializerMethodField()
 
-    def get_id(self, obj):
+    def get_uuid(self, obj):
         return obj.keycloak.UID
 
     def get_profile(self, obj):
@@ -87,12 +87,10 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
                 profiles.models.PrivilegedUserProfile: (
                     PrivilegedUserProfileSerializer),
             }.get(profile_class)
-            logger.debug("serializer_class: {}".format(serializer_class))
             serializer = serializer_class(
                 instance=obj.profile,
                 context=self.context
             )
-            logger.debug("serializer: {}".format(serializer))
             result = serializer.data
         else:
             result = None
@@ -105,14 +103,47 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
         model = profiles.models.SmbUser
         fields = (
             "url",
-            "id",
+            "uuid",
             "username",
             "email",
+            "date_joined",
+            "language_preference",
             "first_name",
             "last_name",
             "nickname",
             "profile",
             "profile_type",
+        )
+
+
+class UserDumpSerializer(SmbUserSerializer):
+    """Produce a User, its vehicles and Tags"""
+
+    vehicles = serializers.SerializerMethodField()
+
+    def get_vehicles(self, obj):
+        serializer = BikeDetailSerializer(
+            instance=obj.bikes.all(),
+            many=True,
+            context=self.context
+        )
+        return serializer.data
+
+    class Meta:
+        model = profiles.models.SmbUser
+        fields = (
+            "url",
+            "uuid",
+            "username",
+            "email",
+            "date_joined",
+            "language_preference",
+            "first_name",
+            "last_name",
+            "nickname",
+            "profile",
+            "profile_type",
+            "vehicles"
         )
 
 
@@ -126,6 +157,7 @@ class EndUserProfileSerializer(serializers.ModelSerializer):
             "phone_number",
             "bio",
             "date_updated",
+            "occupation",
         )
 
 
@@ -139,6 +171,7 @@ class PrivilegedUserProfileSerializer(serializers.ModelSerializer):
 class BikeListSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:bikes-detail",
+        lookup_field="short_uuid",
     )
     owner = SmbUserHyperlinkedRelatedField(
         view_name="api:users-detail",
@@ -147,7 +180,8 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
     tags = serializers.HyperlinkedRelatedField(
         view_name="api:tags-detail",
         many=True,
-        read_only=True
+        read_only=True,
+        lookup_field="epc"
     )
     current_status = serializers.SerializerMethodField()
 
@@ -168,7 +202,7 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
         model = vehicles.models.Bike
         fields = (
             "url",
-            "id",
+            "short_uuid",
             "nickname",
             "owner",
             "tags",
@@ -196,7 +230,7 @@ class BikeDetailSerializer(BikeListSerializer):
         model = vehicles.models.Bike
         fields = (
             "url",
-            "id",
+            "short_uuid",
             "owner",
             "picture_gallery",
             "pictures",
@@ -213,7 +247,6 @@ class BikeDetailSerializer(BikeListSerializer):
             "has_basket",
             "has_cargo_rack",
             "has_bags",
-            "has_smb_sticker",
             "other_details",
             "current_status",
         )
@@ -223,16 +256,26 @@ class PhysicalTagSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:tags-detail",
         lookup_field="epc",
-        lookup_url_kwarg="pk",
+        lookup_url_kwarg="epc",
+    )
+    bike = serializers.SlugRelatedField(
+        slug_field="short_uuid",
+        queryset=vehicles.models.Bike.objects.all()
+    )
+    bike_url = serializers.HyperlinkedRelatedField(
+        source="bike",
+        read_only=True,
+        view_name="api:bikes-detail",
+        lookup_field="short_uuid",
     )
 
     class Meta:
         model = vehicles.models.PhysicalTag
         fields = (
             "url",
-            "id",
             "epc",
             "bike",
+            "bike_url",
             "creation_date",
         )
 
@@ -243,6 +286,7 @@ class BikeStatusSerializer(GeoFeatureModelSerializer):
     )
     bike = serializers.HyperlinkedRelatedField(
         view_name="api:bikes-detail",
+        lookup_field="short_uuid",
         queryset=vehicles.models.Bike.objects.all()
     )
 
@@ -289,6 +333,7 @@ class GallerySerializer(serializers.HyperlinkedModelSerializer):
     )
     bike = serializers.HyperlinkedRelatedField(
         view_name="api:bikes-detail",
+        lookup_field="short_uuid",
         read_only=True
     )
     photos = serializers.HyperlinkedRelatedField(
@@ -332,13 +377,15 @@ class BikeObservationSerializer(GeoFeatureModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:bike-observations-detail",
     )
-    bike = serializers.HyperlinkedRelatedField(
-        view_name="api:bikes-detail",
+    bike = serializers.SlugRelatedField(
+        slug_field="short_uuid",
         queryset=vehicles.models.Bike.objects.all()
     )
-    reporter = SmbUserHyperlinkedRelatedField(
-        view_name="api:users-detail",
-        queryset=profiles.models.SmbUser.objects.all()
+    bike_url = serializers.HyperlinkedRelatedField(
+        source="bike",
+        read_only=True,
+        view_name="api:bikes-detail",
+        lookup_field="short_uuid",
     )
 
     class Meta:
@@ -348,7 +395,10 @@ class BikeObservationSerializer(GeoFeatureModelSerializer):
             "url",
             "id",
             "bike",
-            "reporter",
+            "bike_url",
+            "reporter_id",
+            "reporter_type",
+            "reporter_name",
             "address",
             "created_at",
             "observed_at",

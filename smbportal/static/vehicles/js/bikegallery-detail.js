@@ -1,3 +1,15 @@
 /* global setupModal */
+/* global toggleUploadButton */
 /* global validateAddition */
-setupModal('addPicture', !validateAddition('addPicture'))
+
+const toggleUpload = function () {
+  const fileInputElement = document.getElementById('id_image')
+  const submitBtn = document.querySelector('.btn-primary')
+  toggleUploadButton(submitBtn, fileInputElement)
+
+  fileInputElement.addEventListener('change', function (evt) {
+    toggleUploadButton(submitBtn, evt.target)
+  })
+}
+
+setupModal('addPicture', !validateAddition('addPicture'), toggleUpload)

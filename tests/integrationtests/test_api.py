@@ -79,7 +79,7 @@ def test_end_user_can_report_lost_bike(api_client, bike_owned_by_end_user):
     bike_url = reverse(
         "api:bikes-detail",
         kwargs={
-            "pk": bike_owned_by_end_user.pk
+            "short_uuid": bike_owned_by_end_user.short_uuid
         }
     )
     api_client.force_authenticate(user=bike_owned_by_end_user.owner)
@@ -106,7 +106,7 @@ def test_privileged_user_can_access_bike_details(api_client, privileged_user,
     response = api_client.get(
         reverse(
             "api:bikes-detail",
-            kwargs={"pk": bike_owned_by_end_user.pk}
+            kwargs={"short_uuid": bike_owned_by_end_user.short_uuid}
         )
     )
     assert response.status_code == 200
@@ -119,7 +119,7 @@ def test_privileged_user_can_register_new_tag(api_client, privileged_user,
     response = api_client.post(
         reverse("api:tags-list"),
         {
-            "bike": bike_owned_by_end_user.pk,
+            "bike": bike_owned_by_end_user.short_uuid,
             "epc": "some-fake-code"
         },
         format="json"
@@ -150,18 +150,6 @@ def test_privileged_can_filter_bikes_using_tag_epc(api_client,
 def test_privileged_user_can_add_new_bike_observation(api_client,
                                                       privileged_user,
                                                       bike_owned_by_end_user):
-    bike_url = reverse(
-        "api:bikes-detail",
-        kwargs={
-            "pk": bike_owned_by_end_user.pk
-        }
-    )
-    reporter_url = reverse(
-        "api:users-detail",
-        kwargs={
-            "pk": str(bike_owned_by_end_user.owner.keycloak.UID)
-        }
-    )
     api_client.force_authenticate(user=privileged_user)
     response = api_client.post(
         reverse("api:bike-observations-list"),
@@ -172,10 +160,12 @@ def test_privileged_user_can_add_new_bike_observation(api_client,
                 "coordinates": [0, 0]
             },
             "properties": {
-                "bike": bike_url,
-                "reporter": reporter_url,
+                "bike": bike_owned_by_end_user.short_uuid,
+                "reporter_id": "fake_id",
+                "reporter_type": "fake_type",
             }
         },
         format="json"
     )
+    print(response.json())
     assert response.status_code == 201

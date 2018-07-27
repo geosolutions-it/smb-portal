@@ -20,11 +20,17 @@ from vehicles import models
 logger = logging.getLogger(__name__)
 
 
-def get_current_bike(view_kwargs, pk_attr_name="pk"):
+def get_current_bike(view_kwargs, pk_kwarg_name="pk",
+                     slug_kwarg_name="slug",
+                     slug_attr_name="short_uuid"):
     try:
-        bike = models.Bike.objects.get(pk=view_kwargs.get(pk_attr_name))
+        bike = models.Bike.objects.get(pk=view_kwargs.get(pk_kwarg_name))
     except models.Bike.DoesNotExist:
-        bike = None
+        try:
+            bike = models.Bike.objects.get(
+                **{slug_attr_name: view_kwargs.get(slug_kwarg_name)})
+        except models.Bike.DoesNotExist:
+            bike = None
     return bike
 
 
@@ -47,6 +53,6 @@ def send_email_to_admins(subject_template, message_template, context=None):
     mail.send_mail(
         subject=render_to_string(subject_template, context=ctx),
         message=render_to_string(message_template, context=ctx),
-        from_email=settings.MAIL_SENDER_ADDRESS,
+        from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=list(unique_recipients)
     )

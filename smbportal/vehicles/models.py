@@ -20,6 +20,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from photologue.models import Gallery
 from photologue.models import Photo
+import shortuuid
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +31,13 @@ class Vehicle(models.Model):
         editable=False,
         default=uuid.uuid4,
     )
+    short_uuid = models.CharField(
+        _("short identifier"),
+        max_length=8,
+        editable=False,
+        unique=True,
+        null=False
+    )
     last_position = models.ForeignKey(
         "tracks.CollectedPoint",
         models.CASCADE,
@@ -37,6 +45,11 @@ class Vehicle(models.Model):
         blank=True,
         null=True
     )
+
+    def save(self, *args, **kwargs):
+        if not self.short_uuid:
+            self.short_uuid = shortuuid.encode(self.id)[:8]
+        return super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
@@ -142,7 +155,7 @@ class Bike(Vehicle):
         default=DISK_BRAKE,
     )
     nickname = models.CharField(
-        _("nickname"),
+        _("bikename"),
         max_length=100
     )
     brand = models.CharField(
@@ -181,10 +194,6 @@ class Bike(Vehicle):
         _("has bags"),
         default=False
     )
-    has_smb_sticker = models.BooleanField(
-        _("has SaveMyBike sticker"),
-        default=False
-    )
     other_details = models.TextField(
         _("other details"),
         blank=True
@@ -192,6 +201,9 @@ class Bike(Vehicle):
 
     class Meta:
         unique_together = ("owner", "nickname")
+        ordering = [
+            "id",
+        ]
 
     def __str__(self):
         return "{0.nickname}".format(self)
@@ -206,7 +218,7 @@ class Bike(Vehicle):
             )
 
     def get_absolute_url(self):
-        return reverse("bikes:detail", kwargs={"pk": self.id})
+        return reverse("bikes:detail", kwargs={"slug": self.short_uuid})
 
     def get_current_status(self):
         return self.status_history.order_by("-creation_date").first()
@@ -279,6 +291,11 @@ class PhysicalTag(models.Model):
         _("creation date"),
         auto_now_add=True
     )
+
+    class Meta:
+        ordering = [
+            "creation_date",
+        ]
 
 
 class BikePicture(Photo):

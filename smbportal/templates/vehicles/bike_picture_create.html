@@ -1,14 +1,15 @@
 {% extends 'vehicles/base.html' %}
 
+{% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
 {% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb bike.nickname 'bikes:detail' pk=bike.pk %}
-    {% breadcrumb _("manage pictures") 'bikes:gallery' pk=bike.pk %}
-    {% breadcrumb _("add picture") 'bikes:picture-upload' pk=bike.pk %}
+    {% breadcrumb bike.nickname 'bikes:detail' slug=bike.short_uuid %}
+    {% breadcrumb _("manage pictures") 'bikes:gallery' slug=bike.short_uuid %}
+    {% breadcrumb _("add picture") 'bikes:picture-upload' slug=bike.short_uuid %}
 {% endblock %}
 
 {% block page_title %}{% trans "Add picture" %}{% endblock %}
@@ -21,4 +22,5 @@
 
 {% block js %}
     {{ block.super }}
+    <script type="text/javascript" src="{% static 'vehicles/js/bikepicture-upload.js' %}"></script>
 {% endblock %}

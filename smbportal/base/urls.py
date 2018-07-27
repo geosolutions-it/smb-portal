@@ -17,6 +17,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
 
 from . import views
 
@@ -80,4 +81,9 @@ urlpatterns += i18n_patterns(
         view=include("vehiclemonitor.urls"),
         name="observations"
     ),
+    path(
+        route='privacy_policy/',
+        view=TemplateView.as_view(template_name="privacy/privacy_policy.html"),
+        name='privacy_policy'
+    )
 )

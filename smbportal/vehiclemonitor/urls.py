@@ -15,7 +15,7 @@ from . import views
 app_name = "monitor"
 urlpatterns = [
     path(
-        route="<bike_pk>",
+        route="<bike_slug>",
         view=views.BikeObservationListView.as_view(),
         name="list"
     ),

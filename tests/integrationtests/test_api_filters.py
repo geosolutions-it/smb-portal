@@ -23,10 +23,10 @@ pytestmark = pytest.mark.integration
     slice(0, 3)  # equivalent to [0:3]
 ])
 def test_bikefilterset_filter_with_id(bike_owned_by_end_user, uuid_slice):
-    filter_uuid = str(bike_owned_by_end_user.id)
+    filter_uuid = bike_owned_by_end_user.short_uuid
     filter_set = filters.BikeFilterSet(
         data={
-            "id": filter_uuid[uuid_slice]
+            "short_uuid": filter_uuid[uuid_slice]
         },
         queryset=vehicles.models.Bike.objects.all()
     )
@@ -59,12 +59,12 @@ def test_bikeobservationfilterset_with_id(bike_owned_by_end_user,
     for address in addresses:
         vehiclemonitor.models.BikeObservation.objects.create(
             bike=bike_owned_by_end_user,
-            reporter=privileged_user,
+            reporter_id=privileged_user.pk,
             address=address
         )
     filter_set = filters.BikeObservationFilterSet(
         data={
-            "bike": str(bike_owned_by_end_user.id)
+            "bike": str(bike_owned_by_end_user.short_uuid)
         },
         queryset=vehiclemonitor.models.BikeObservation.objects.all()
     )

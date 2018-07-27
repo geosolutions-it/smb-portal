@@ -23,7 +23,7 @@ def test_smbuserhyperlinkedidentityfield_returns_uuid(api_request_factory,
                                                       mocked_user):
     fake_uuid = "fake_uuid"
     fake_request = api_request_factory.get(
-        reverse("api:users-detail", kwargs={"pk": fake_uuid}))
+        reverse("api:users-detail", kwargs={"uuid": fake_uuid}))
     user_detail_view_name = "api:users-detail"
     field = serializers.SmbUserHyperlinkedIdentityField(
         view_name=user_detail_view_name,
@@ -44,7 +44,7 @@ def test_smbuserhyperlinkedrelatedfield_returns_uuid(api_request_factory,
                                                      mocked_user):
     fake_uuid = "fake_uuid"
     fake_request = api_request_factory.get(
-        reverse("api:bikes-detail", kwargs={"pk": "phony"}))
+        reverse("api:bikes-detail", kwargs={"short_uuid": "phony"}))
     user_detail_view_name = "api:users-detail"
     field = serializers.SmbUserHyperlinkedRelatedField(
         view_name=user_detail_view_name,
@@ -71,7 +71,7 @@ def test_smbuserserializer_returns_uuid(api_request_factory, mocked_user):
 
     fake_uuid = "fake uuid"
     fake_request = api_request_factory.get(
-        reverse("api:users-detail", kwargs={"pk": fake_uuid}))
+        reverse("api:users-detail", kwargs={"uuid": fake_uuid}))
     mocked_user.keycloak.return_value = mock.MagicMock(spec=Keycloak)
     mocked_user.keycloak.UID = fake_uuid
     mocked_user.profile = None
@@ -80,4 +80,4 @@ def test_smbuserserializer_returns_uuid(api_request_factory, mocked_user):
         context={"request": fake_request}
     )
     serializer_data = serializer.data
-    assert serializer_data["id"] == fake_uuid
+    assert serializer_data["uuid"] == fake_uuid

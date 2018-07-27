@@ -14,6 +14,7 @@
     <!-- Favicon and Apple Icons-->
     <link rel="icon" type="image/png" href="{% static 'base/img/favicon.png' %}">
     <link rel="icon" type="image/png" href="{% static 'base/img/favicon.png' %}">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
     <!-- Vendor Styles including: Bootstrap, Font Icons, Plugins, etc.-->
     <link rel="stylesheet" media="screen" href="{% static 'base/css/vendor.min.css' %}">
     <!-- Main Template Styles-->
@@ -38,7 +39,7 @@
         <nav class="site-menu">
             <ul>
                 <li id="bikes"><a href="{% url 'bikes:list' %}"><span>{% trans 'Bikes' %}</span></a></li>
-                <li id="reportLost"><a href="{% url 'bikes:report-status' %}"><span>{% trans 'Report a lost Bike' %}</span></a></li>
+                <li id="reportLost"><a href="{% url 'bikes:report-status-no-bike' %}"><span>{% trans 'Report a lost Bike' %}</span></a></li>
                 <li id="about"><a href="https://www.savemybike.eu" target="_blank"><span>{% trans 'About' %}</span></a></li>
             </ul>
         </nav>
@@ -89,6 +90,7 @@
     {% endblock %}
 
     <div class="offcanvas-wrapper">
+        {% block page_header %}
         <div class="page-title m-b-0">
             <div class="container">
                 <div class="column">
@@ -99,26 +101,28 @@
                 </div>
             </div>
         </div>
-
-        <div id="container" class="container p-t-60">
-           {% if messages %}
-               <div class="row">
-                   <div class="col-lg">
-                       {% for message in messages %}
-                           <div {% if message.tags %}class="alert alert-dismissible fade show text-center margin-bottom-1x {{ message.tags }}"{% endif %}>
-                               <span class="alert-close" data-dismiss="alert"></span>
-                               {{ message }}
-                           </div>
-                       {% endfor %}
+        {% endblock %}
+        <div id="container" class="">
+            {% block hero %}{% endblock %}
+            <div class="container p-t-60">
+               {% if messages %}
+                   <div class="row">
+                       <div class="col-lg">
+                           {% for message in messages %}
+                               <div {% if message.tags %}class="alert alert-dismissible fade show text-center margin-bottom-1x {{ message.tags }}"{% endif %}>
+                                   <span class="alert-close" data-dismiss="alert"></span>
+                                   {{ message }}
+                               </div>
+                           {% endfor %}
+                       </div>
                    </div>
-               </div>
-           {% endif %}
-           {%  block content  %}
-               <div class="row">
-                   {% block main %}{% endblock %}
-               </div>
-           {% endblock %}
-        </div>
+               {% endif %}
+               {%  block content  %}
+                   <div class="row">
+                       {% block main %}{% endblock %}
+                   </div>
+               {% endblock %}
+            </div>
         <!-- BEGIN SITE FOOTER-->
         <footer class="site-footer">
             <div class="container">
@@ -126,7 +130,7 @@
                     <div class="col-lg-12 col-md-12">
                         <!-- About Us-->
                         <section class="footer-widgets widget widget-links widget-light-skin">
-                            <span><a href="https://www.savemybike.eu/" target="_blank">Save my Bike</a> // info@savemybike.eu // Privacy Policy // <a href="https://www.geo-solutions.it/" target="_blank">Credits</a></span>
+                            <span><a href="https://www.savemybike.eu/" target="_blank">SaveMyBike</a> // info@savemybike.eu // <a href="{% url 'privacy_policy' %}">{% blocktrans %}Privacy Policy{% endblocktrans %} </a> // <a href="https://www.geo-solutions.it/" target="_blank">Credits</a></span>
                              <a class="social-button shape-circle sb-facebook sb-light-skin" href="https://www.facebook.com/Savemybike-1505927189521211/" target="_blank">
                                 <i class="fa fa-facebook"></i>
                             </a>
@@ -148,6 +152,7 @@
                 </div>
             </div>
         </footer>
+        </div>
         <!-- END SITE FOOTER-->
     </div>
     <!-- END MAIN CONTENT-->
@@ -216,6 +221,28 @@
         s1.setAttribute('crossorigin','*');
         s0.parentNode.insertBefore(s1,s0);
         })();
+    </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+    <script>
+    window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#3c404d",
+          "text": "#d6d6d6"
+        },
+        "button": {
+          "background": "#F51DAF"
+        }
+      },
+      "position": "top",
+      "content": {
+        "message": "{% blocktrans %}We use cookies to help make SaveMyBike better. By visiting this site, you agree to our cookie policy{% endblocktrans %}.",
+        "dismiss": "{% blocktrans %}Got it!{% endblocktrans %}",
+        "link": "{% blocktrans %}Privacy Policy{% endblocktrans %}",
+        "href": "{% url 'privacy_policy' %}"
+      }
+    })});
     </script>
 </body>
 </html>

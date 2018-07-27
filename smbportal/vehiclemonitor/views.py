@@ -28,11 +28,13 @@ class BikeObservationListView(LoginRequiredMixin, PermissionRequiredMixin,
 
     def get_context_data(self, *args, **kwargs):
         context_data = super().get_context_data(*args, **kwargs)
-        context_data["bike"] = get_current_bike(self.kwargs, "bike_pk")
+        context_data["bike"] = get_current_bike(
+            self.kwargs, slug_kwarg_name="bike_slug")
         return context_data
 
     def get_queryset(self):
-        current_bike = get_current_bike(self.kwargs, "bike_pk")
+        current_bike = get_current_bike(
+            self.kwargs, slug_kwarg_name="bike_slug")
         qs = models.BikeObservation.objects.filter(
             bike__owner=self.request.user)
         if current_bike is not None:

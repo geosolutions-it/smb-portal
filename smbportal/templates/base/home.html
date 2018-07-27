@@ -1,51 +1,118 @@
 {% extends 'base/base.html' %}
 
+{% load static %}
 {% load i18n %}
+
+{% block page_header %}{% endblock %}
+
+{% block hero %}
+<section class="hero-slider" style="background-image: url({% static 'base/img/sfondo-bus-sx.jpg' %});">
+                <div class="owl-carousel large-controls dots-inside"
+                     data-owl-carousel="{ 'nav': true, 'dots': true, 'loop': true, 'autoplay': true, 'autoplayTimeout': 7000 }">
+                    <div class="item">
+                        <div class="container padding-top-3x">
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-lg-10 col-md-6 padding-bottom-2x text-md-left text-center">
+                                    <div class="from-bottom">
+                                        <div class="h1 main-text force-white text-body text-normal mb-2 pt-1">
+                                            {% blocktrans %} Welcome on Good_Go! {% endblocktrans %}
+                                        </div>
+                                        <div class="h1 text-body force-white text-normal mb-4 pb-1">
+                                            {% blocktrans %}The mobility game that rewards{% endblocktrans %}.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="item">
+                        <div class="container padding-top-3x">
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-lg-10 col-md-6 padding-bottom-2x text-md-left text-center">
+                                    <div class="from-bottom">
+                                        <div class="h1 main-text force-white text-body text-normal mb-2 pt-1">
+                                            SaveMyBike
+                                        </div>
+                                        <div class="h1 text-body force-white text-normal mb-1">
+                                            {% blocktrans %}Protect your bikes{% endblocktrans %}.
+                                        </div>
+                                        <div class="h1 text-body force-white text-normal mb-4 pb-1">
+                                            {% blocktrans %}Request the RFID sensors to identify and localize them{% endblocktrans %}.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+{% endblock %}
 
 {% block main %}
 <div class="col-md-12 margin-bottom-2x">
     <div class="row">
-        <div class="col-lg-4 margin-bottom-2x">
-            <div class="card text-center">
+        <div class="col-lg-12 margin-bottom-2x">
+            <div class="card border-primary text-center mb-3">
                 <div class="card-body">
-                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Bikes' %}</h4>
-                    <p class="card-text align-items-center d-flex justify-content-center">
-                        {% blocktrans %} Register new Bikes, update information about your bikes and delete bikes from the system. {% endblocktrans %}
-                    </p>
-                    <a class="btn btn-block btn-primary" href="{% url 'bikes:list' %}">{% trans 'Bikes' %}</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 margin-bottom-2x">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Prizes' %}</h4>
-                    <p class="card-text align-items-center d-flex justify-content-center">
-                        {% blocktrans %} View all the prizes you can available in your city.{% endblocktrans %}
-                    </p>
-                    <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 margin-bottom-2x">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Tags' %}</h4>
-                    <p class="card-text align-items-center d-flex justify-content-center">
-                        {% blocktrans %}Want protection? Add rfid support to your bikes here{% endblocktrans %}
-                    </p>
-                    <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
+                    <h4 class="card-title">{% blocktrans %}The SaveMyBike User Guide{% endblocktrans %}</h4>
+                    <p class="card-text">{% blocktrans %}<a href="{{ MEDIA_URL }}docs/Manuale_SaveMyBike_v2.pdf" target="_blank"><b>Download</b></a> the document that will guide you through the registration process and first steps on the SaveMyBike Platform{% endblocktrans %}.</p>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4 margin-bottom-4x">
-            <div class="card text-center">
+        <div class="col-lg-8 margin-bottom-2x">
+            <div class="card text-center bg_svg_green text-white">
+                <div class="card-body">
+                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Bikes' %}</h4>
+                    <p class="card-text align-items-center d-flex justify-content-center">
+                        {% blocktrans %} Register new Bikes, update information about your bikes and delete bikes from the system. {% endblocktrans %}
+                    </p>
+                    <a class="btn btn-block btn-primary" href="{% url 'bikes:list' %}" style="display:inline-block; width:200px">{% trans 'Bikes' %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 margin-bottom-2x">
+            <div class="card text-center bg_svg_green text-white">
+                <div class="card-body">
+                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Sensors' %}</h4>
+                    <p class="card-text align-items-center d-flex justify-content-center">
+                        {% blocktrans %}Want protection? Add rfid support to your bikes here{% endblocktrans %}
+                    </p>
+                    <a class="btn btn-block btn-primary" href="https://www.savemybike.eu/prenota-installazione-sensori/" target="_blank">{% trans 'Book your sensor' %}!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 margin-bottom-2x">
+            <div class="card text-center bg_svg_grey">
+                <div class="card-body">
+                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Activity' %}</h4>
+                    <p class="card-text align-items-center d-flex justify-content-center">
+                        {% blocktrans %}View your tracks, calculate your gas emissions credits and the health impacts of cycling{% endblocktrans %}.
+                    </p>
+                    <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 margin-bottom-2x">
+            <div class="card text-center bg_svg_grey">
                 <div class="card-body">
                     <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Badges' %}</h4>
                     <p class="card-text align-items-center d-flex justify-content-center">
                         {% blocktrans %}View all your Badges, the ones you've unlocked and ones you need to get.{% endblocktrans %}
+                    </p>
+                    <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 margin-bottom-2x">
+            <div class="card text-center bg_svg_grey">
+                <div class="card-body">
+                    <h4 class="card-title align-items-center d-flex justify-content-center">{% trans 'Prizes' %}</h4>
+                    <p class="card-text align-items-center d-flex justify-content-center">
+                        {% blocktrans %} View all the prizes you can available in your city.{% endblocktrans %}
                     </p>
                     <a class="btn btn-block btn-secondary" disabled href="javascript:void(0)">{% trans 'Coming soon' %}</a>
                 </div>
