@@ -10,14 +10,19 @@
 
 import logging
 
+from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
 import photologue.models
 from rest_framework.decorators import action
 from rest_framework import mixins
 from rest_framework import viewsets
+from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
 from rest_framework_gis.pagination import GeoJsonPagination
 
+from keycloakauth import utils
+from keycloakauth.keycloakadmin import get_manager
 import profiles.models
 import vehicles.models
 import vehiclemonitor.models
@@ -107,11 +112,13 @@ class MyBikeStatusViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
         return serializer_class(context=context, *args, **kwargs)
 
 
-class SmbUserViewSet(viewsets.ReadOnlyModelViewSet):
+class SmbUserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                     mixins.DestroyModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.SmbUserSerializer
     queryset = profiles.models.SmbUser.objects.all()
     required_permissions = (
         "profiles.can_list_users",
+        "profiles.can_delete_user",
     )
     lookup_field = "uuid"
 
@@ -139,6 +146,66 @@ class SmbUserViewSet(viewsets.ReadOnlyModelViewSet):
             context=self.get_serializer_context(),
         )
         return self.get_paginated_response(serializer.data)
+
+    def perform_destroy(self, instance):
+        manager = get_manager(
+            settings.KEYCLOAK["base_url"],
+            settings.KEYCLOAK["realm"],
+            settings.KEYCLOAK["client_id"],
+            settings.KEYCLOAK["admin_username"],
+            settings.KEYCLOAK["admin_password"],
+        )
+        utils.delete_user(
+            instance.username,
+            manager
+        )
+
+    @action(methods=["POST"], detail=False)
+    def create_end_user(self, request):
+        """Create a new user with the `end user` profile.
+
+        The user is created both on the portal and on keycloak
+
+        """
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.perform_create_end_user(serializer)
+        output_serializer = self.get_serializer_class()(
+            instance=user,
+            context={"request": request}
+        )
+        return Response(
+            output_serializer.data,
+            status=status.HTTP_201_CREATED,
+            headers=self.get_success_headers(output_serializer.data)
+        )
+
+    def perform_create_end_user(self, serializer):
+        group_path = settings.KEYCLOAK[
+            "group_mappings"][settings.END_USER_PROFILE][0]
+        manager = get_manager(
+            settings.KEYCLOAK["base_url"],
+            settings.KEYCLOAK["realm"],
+            settings.KEYCLOAK["client_id"],
+            settings.KEYCLOAK["admin_username"],
+            settings.KEYCLOAK["admin_password"],
+        )
+        user = utils.create_user(
+            username=serializer.validated_data.get("username"),
+            email=serializer.validated_data.get("email"),
+            password=serializer.validated_data.get("password"),
+            group_path=group_path,
+            keycloak_manager=manager,
+            profile_model=profiles.models.EndUserProfile
+        )
+        return user
+
+    def get_success_headers(self, data):
+        try:
+            return {"Location": str(data[api_settings.URL_FIELD_NAME])}
+        except (TypeError, KeyError):
+            return {}
 
 
 class BikeViewSet(viewsets.ReadOnlyModelViewSet):

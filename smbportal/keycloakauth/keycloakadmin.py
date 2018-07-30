@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 _REQUEST_HANDLERS = {
     "get": requests.get,
     "post": requests.post,
-    "put": requests.put
+    "put": requests.put,
+    "delete": requests.delete,
 }
 
 
@@ -229,6 +230,13 @@ class KeycloakManager(object):
                 "Content-Type": "application/json"
             }
         )
+
+    def delete_user(self, user_id):
+        self.keycloak_client.make_request(
+            "/users/{id}".format(id=user_id),
+            http_method="delete"
+        )
+
 
     def get_groups(self):
         """Get representation of groups associated with the keycloak realm"""

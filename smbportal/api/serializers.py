@@ -75,6 +75,7 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
     uuid = serializers.SerializerMethodField()
     profile = serializers.SerializerMethodField()
     profile_type = serializers.SerializerMethodField()
+    password = serializers.CharField(write_only=True)
 
     def get_uuid(self, obj):
         return obj.keycloak.UID
@@ -105,6 +106,7 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
             "url",
             "uuid",
             "username",
+            "password",
             "email",
             "date_joined",
             "language_preference",
