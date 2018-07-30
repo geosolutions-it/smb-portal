@@ -225,6 +225,7 @@ EMAIL_PORT = int(get_environment_variable("DJANGO_EMAIL_PORT", "587"))
 EMAIL_HOST_USER = get_environment_variable("DJANGO_EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = get_environment_variable("DJANGO_EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_TIMEOUT = 30  # seconds
 
 BREADCRUMBS_TEMPLATE = "base/breadcrumbs.html"
 
