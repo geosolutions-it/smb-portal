@@ -222,7 +222,7 @@ class KeycloakManager(object):
             }]
         payload.update(kwargs)
         cleaned_payload = {k: v for k, v in payload.items() if v is not None}
-        response = self.keycloak_client.make_request(
+        self.keycloak_client.make_request(
             "/users",
             "post",
             data=json.dumps(cleaned_payload),
@@ -236,7 +236,6 @@ class KeycloakManager(object):
             "/users/{id}".format(id=user_id),
             http_method="delete"
         )
-
 
     def get_groups(self):
         """Get representation of groups associated with the keycloak realm"""

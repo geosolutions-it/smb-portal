@@ -42,8 +42,36 @@ Then run tests with
 
 ```bash
 DJANGO_DATABASE_URL="postgis://test_user:some-password@host:port/db" \
-    py.test --flake8
+    py.test --flake8 -m 'not acceptance'
 ```
 
 The `setup.cfg` file has some relevant settings for running tests. Be sure to 
 check it out too
+
+
+## Acceptance tests
+
+Acceptance tests ensure the code meets the expectations. These use extra 
+dependencies and do not require the portal code to be installed. Install 
+dependencies by running:
+
+```bash
+pip install -r requirements/acceptance.txt
+```
+
+These tests perform browser automation. As such they also require a previous 
+install of firefox and the [gecko driver](https://github.com/mozilla/geckodriver)
+
+Run tests with (replace with meaningful values)
+
+```bash
+pytest \
+    -x \
+    --url=http://10.0.1.164:8000 \
+    --keycloak-base-url=http://10.0.1.164:8180 \
+    --keycloak-realm=demo \
+    --keycloak-client-id=demoapp \
+    --keycloak-admin=admin \
+    --keycloak-password=123456 \
+    tests/acceptancetests/
+```
