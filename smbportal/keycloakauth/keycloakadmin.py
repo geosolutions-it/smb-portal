@@ -11,6 +11,7 @@
 """Utilities to communicate with a KeyCloak server using its REST API"""
 
 import datetime as dt
+import json
 import logging
 
 import requests
@@ -203,6 +204,31 @@ class KeycloakManager(object):
     @property
     def unpacked_access_token(self):
         return self.keycloak_client.unpacked_access_token
+
+    def create_user(self, username, email=None, password=None, first_name=None,
+                    last_name=None, enabled=True, **kwargs):
+        payload = {
+            "username": username,
+            "email": email,
+            "firstName": first_name,
+            "lastName": last_name,
+            "enabled": enabled,
+        }
+        if password is not None:
+            payload["credentials"] = [{
+                "type": "password",
+                "value": password
+            }]
+        payload.update(kwargs)
+        cleaned_payload = {k: v for k, v in payload.items() if v is not None}
+        response = self.keycloak_client.make_request(
+            "/users",
+            "post",
+            data=json.dumps(cleaned_payload),
+            headers={
+                "Content-Type": "application/json"
+            }
+        )
 
     def get_groups(self):
         """Get representation of groups associated with the keycloak realm"""
