@@ -11,18 +11,16 @@
 import datetime as dt
 import pathlib
 
-from bossoidc.models import Keycloak
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
 from django.contrib.gis.geos import Point
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from lxml import etree
 import pytz
 
-from base.utils import get_group_name
 from keycloakauth.keycloakadmin import get_manager
+from keycloakauth.utils import create_user
 from vehicles.models import Bike
 import profiles.models
 from tracks import models
@@ -88,7 +86,8 @@ def create_test_users(usernames, keycloak_manager):
             email="{}@fake.com".format(username),
             password="123456",
             group_path="/end_users",
-            keycloak_manager=keycloak_manager
+            keycloak_manager=keycloak_manager,
+            profile_model=profiles.models.EndUserProfile
         )
         for bike_index in range(2):
             nickname = "bike_{}_{}".format(index, bike_index)
@@ -100,15 +99,6 @@ def create_test_users(usernames, keycloak_manager):
 def users_exist(usernames):
     return profiles.models.SmbUser.objects.filter(
         username__in=usernames).count() != 0
-
-
-def create_user(username, email, password, group_path, keycloak_manager):
-    """Create a new user on keycloak and on django DB"""
-    user_id = _create_keycloak_user(keycloak_manager, username, email,
-                                    password, group_path)
-    django_user = _create_django_user(
-        username, email, user_id, get_group_name(group_path))
-    return django_user
 
 
 @transaction.atomic
@@ -176,27 +166,6 @@ def get_tracks_from_gpx(gpx_path: pathlib.Path):
             segment.append(collected_point)
         tracks.append(segment)
     return tracks
-
-
-def _create_keycloak_user(keycloak_manager, username, email,
-                          password, group_path):
-    keycloak_manager.create_user(username, email=email, password=password)
-    user_id = keycloak_manager.get_user_details(username)["id"]
-    keycloak_manager.add_user_to_group(user_id, group_path)
-    return user_id
-
-
-def _create_django_user(username, email, keycloak_id, group_name):
-    user = profiles.models.SmbUser.objects.create(
-        username=username, email=email)
-    group = Group.objects.get_or_create(name=group_name)[0]
-    group.user_set.add(user)
-    group.save()
-    profiles.models.EndUserProfile.objects.create(
-        user=user
-    )
-    Keycloak.objects.create(user=user, UID=keycloak_id)
-    return user
 
 
 def _unfold_users(users):
