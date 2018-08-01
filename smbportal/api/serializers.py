@@ -118,6 +118,30 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+class MyUserSerializer(SmbUserSerializer):
+    url = serializers.SerializerMethodField()
+
+    def get_url(self, obj):
+        return reverse("api:my-user", request=self.context.get("request"))
+
+    class Meta:
+        model = profiles.models.SmbUser
+        fields = (
+            "url",
+            "uuid",
+            "username",
+            "password",
+            "email",
+            "date_joined",
+            "language_preference",
+            "first_name",
+            "last_name",
+            "nickname",
+            "profile",
+            "profile_type",
+        )
+
+
 class UserDumpSerializer(SmbUserSerializer):
     """Produce a User, its vehicles and Tags"""
 
@@ -227,6 +251,61 @@ class BikeDetailSerializer(BikeListSerializer):
             many=True
         )
         return [item["image"] for item in serializer.data]
+
+    class Meta:
+        model = vehicles.models.Bike
+        fields = (
+            "url",
+            "short_uuid",
+            "owner",
+            "picture_gallery",
+            "pictures",
+            "tags",
+            "last_update",
+            "bike_type",
+            "gear",
+            "brake",
+            "nickname",
+            "brand",
+            "model",
+            "color",
+            "saddle",
+            "has_basket",
+            "has_cargo_rack",
+            "has_bags",
+            "other_details",
+            "current_status",
+        )
+
+
+class MyBikeDetailSerializer(BikeDetailSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:my-bikes-detail",
+        lookup_field="short_uuid",
+    )
+    owner = serializers.SerializerMethodField()
+    tags = serializers.HyperlinkedRelatedField(
+        view_name="api:my-tags-detail",
+        many=True,
+        read_only=True,
+        lookup_field="epc"
+    )
+
+    def get_owner(self, obj):
+        return reverse("api:my-user", request=self.context.get("request"))
+
+    def get_current_status(self, obj):
+        current_status = obj.get_current_status()
+        return {
+            "lost": current_status.lost,
+            "url": reverse(
+                "api:my-bike-statuses-detail",
+                kwargs={
+                    "pk": current_status.pk
+                },
+                request=self.context.get("request")
+            )
+        }
 
     class Meta:
         model = vehicles.models.Bike

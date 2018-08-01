@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 class MyUserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
                     viewsets.GenericViewSet):
-    serializer_class = serializers.SmbUserSerializer
+    serializer_class = serializers.MyUserSerializer
     required_permissions = (
         "profiles.can_view_profile",
     )
@@ -52,7 +52,7 @@ class MyUserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
 
 
 class MyBikeViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.BikeDetailSerializer
+    serializer_class = serializers.MyBikeDetailSerializer
     required_permissions = (
         "vehicles.can_list_own_bikes",
         "vehicles.can_create_bike",
