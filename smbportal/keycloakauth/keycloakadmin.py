@@ -115,16 +115,14 @@ class KeycloakApiClient(object):
 
     @property
     def user_info(self):
-        if self.access_token is None:
-            result = None
-        elif self._user_info is None:
-            self._user_info = get_user_info(
-                self.well_known_config["userinfo_endpoint"],
-                self.access_token
-            )
+        result = None
+        if self.access_token is not None:
+            if self._user_info is None:
+                self._user_info = get_user_info(
+                    self.well_known_config["userinfo_endpoint"],
+                    self.access_token
+                )
             result = self._user_info
-        else:
-            result = None
         return result
 
     @property
