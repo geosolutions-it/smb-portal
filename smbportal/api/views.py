@@ -124,6 +124,7 @@ class SmbUserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         DjangoFilterBackend,
     )
     filter_fields = (
+        "email",
         "username",
     )
     lookup_field = "uuid"
