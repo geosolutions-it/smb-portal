@@ -12,10 +12,6 @@
 
 from .base import *
 
-INSTALLED_APPS.extend([
-    "sslserver",
-])
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
