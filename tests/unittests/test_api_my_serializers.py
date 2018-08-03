@@ -8,17 +8,14 @@
 #
 #########################################################################
 
-from unittest import mock
-
 import pytest
 
 from api import serializers
-import vehicles.models
 
 pytestmark = pytest.mark.unit
 
 
-def test_myuserserializer_returns_my_url(api_request_factory, mocked_end_user):
+def test_myuserserializer_returns_my_url(mocked_end_user):
     serializer = serializers.MyUserSerializer(
         instance=mocked_end_user,
         context={
@@ -26,15 +23,6 @@ def test_myuserserializer_returns_my_url(api_request_factory, mocked_end_user):
         }
     )
     assert serializer.data["url"] == "/api/my-user"
-
-
-def test_mybikesserializer_returns_my_urls(mocked_bike):
-    serializer = serializers.MyBikeDetailSerializer(
-        instance=mocked_bike,
-        context={"request": None}
-    )
-    print("serializer.data: {}".format(serializer.data))
-    assert serializer.data["owner"] == "/api/my-user"
 
 
 def test_myphysicaltagserializer_returns_my_urls(mocked_tag):

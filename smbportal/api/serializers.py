@@ -240,10 +240,6 @@ class BikeListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class BikeDetailSerializer(BikeListSerializer):
-    picture_gallery = serializers.HyperlinkedRelatedField(
-        view_name="api:picture-galleries-detail",
-        read_only=True
-    )
     pictures = serializers.SerializerMethodField()
 
     def get_pictures(self, bike):
@@ -260,7 +256,6 @@ class BikeDetailSerializer(BikeListSerializer):
             "url",
             "short_uuid",
             "owner",
-            "picture_gallery",
             "pictures",
             "tags",
             "last_update",
@@ -315,7 +310,6 @@ class MyBikeDetailSerializer(BikeDetailSerializer):
             "url",
             "short_uuid",
             "owner",
-            "picture_gallery",
             "pictures",
             "tags",
             "last_update",
@@ -462,22 +456,12 @@ class GallerySerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PictureSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name="api:pictures-detail",
-    )
-    galleries = serializers.HyperlinkedRelatedField(
-        view_name="api:picture-galleries-detail",
-        many=True,
-        read_only=True
-    )
 
     class Meta:
         model = photologue.models.Photo
         fields = (
-            "url",
             "id",
             "image",
-            "galleries",
         )
 
 

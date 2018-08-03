@@ -12,7 +12,6 @@ import logging
 
 from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
-import photologue.models
 from rest_framework.decorators import action
 from rest_framework import mixins
 from rest_framework import viewsets
@@ -226,7 +225,6 @@ class BikeViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = "short_uuid"
 
 
-# TODO: should external users be allowed to delete existing tags?
 class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                          mixins.CreateModelMixin,  mixins.DestroyModelMixin,
                          viewsets.GenericViewSet):
@@ -247,32 +245,6 @@ class BikeStatusViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return vehicles.models.BikeStatus.objects.all()
-
-
-class GalleryViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.GallerySerializer
-    required_permissions = (
-        "vehicles.can_list_bikes",
-    )
-    required_object_permissions = (
-        "vehicles.can_edit_bike",
-    )
-
-    def get_queryset(self):
-        return photologue.models.Gallery.objects.all()
-
-
-class PictureViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.PictureSerializer
-    required_permissions = (
-        "vehicles.can_list_bikes",
-    )
-    required_object_permissions = (
-        "vehicles.can_edit_bike",
-    )
-
-    def get_queryset(self):
-        return photologue.models.Photo.objects.all()
 
 
 class BikeObservationViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,

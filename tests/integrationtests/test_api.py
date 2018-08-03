@@ -35,8 +35,6 @@ def test_end_user_can_access_list_endpoint(endpoint, api_client, end_user):
     "api:bike-statuses-list",
     "api:tags-list",
     "api:users-list",
-    "api:picture-galleries-list",
-    "api:pictures-list",
 ])
 @pytest.mark.django_db
 def test_end_user_cannot_access_list_endpoint(endpoint, api_client, end_user):
@@ -51,8 +49,6 @@ def test_end_user_cannot_access_list_endpoint(endpoint, api_client, end_user):
     "api:bike-statuses-list",
     "api:tags-list",
     "api:users-list",
-    "api:picture-galleries-list",
-    "api:pictures-list",
 ])
 def test_privileged_user_can_access_list_endpoint(endpoint, privileged_user,
                                                   api_client):

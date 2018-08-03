@@ -62,7 +62,6 @@ def test_smbuserhyperlinkedrelatedfield_returns_uuid(api_request_factory,
 
 
 def test_smbuserserializer_returns_uuid(api_request_factory, mocked_end_user):
-# def test_smbuserserializer_returns_uuid(api_request_factory, mocked_user):
     """verify that SmbUserSerializer returns the correct id data
 
     SmbUserSerializer should show ``id`` as being the keycloak UUID. Django

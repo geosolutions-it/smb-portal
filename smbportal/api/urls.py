@@ -63,16 +63,6 @@ router.register(
     base_name="bike-statuses"
 )
 router.register(
-    prefix="picture-galleries",
-    viewset=views.GalleryViewSet,
-    base_name="picture-galleries"
-)
-router.register(
-    prefix="pictures",
-    viewset=views.PictureViewSet,
-    base_name="pictures"
-)
-router.register(
     prefix="bike-observations",
     viewset=views.BikeObservationViewSet,
     base_name="bike-observations"
