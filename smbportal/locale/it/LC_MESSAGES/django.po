@@ -91,7 +91,7 @@ msgstr "Breve biografia"
 
 #: .\profiles\models.py:160
 msgid "occupation"
-msgstr "Occupazionte"
+msgstr "Occupazione"
 
 #: .\profiles\models.py:163
 msgid "insurance agent"
@@ -247,7 +247,7 @@ msgstr "Sporadico (un viaggio al mese)"
 
 #: .\profiles\models.py:253
 msgid "Rare (less than 10 travels per year)"
-msgstr "Raro (meno di 10 viaggi l'anno"
+msgstr "Raro (meno di 10 viaggi l'anno)"
 
 #: .\profiles\models.py:257
 msgid "Never"
@@ -1022,7 +1022,7 @@ msgid ""
 "%(bike_list_url)s\n"
 "\n"
 msgstr ""
-"La biclcetta %(nickname)s è stata rimossa.\n"
+"La bicicletta %(nickname)s è stata rimossa.\n"
 "\n"
 "Puoi aggiungere nuove biciclette visitando:\n"
 "\n"

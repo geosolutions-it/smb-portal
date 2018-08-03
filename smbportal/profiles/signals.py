@@ -12,9 +12,9 @@ import logging
 
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
+from base.utils import send_mail
 from . import models
 
 logger = logging.getLogger(__name__)
@@ -26,7 +26,6 @@ def notify_profile_created(sender, **kwargs):
         models.PrivilegedUserProfile,
     )
     if sender in sender_classes and kwargs.get("created"):
-        logger.debug("profile created")
         profile = kwargs.get("instance")
         user = profile.user
         current_site = Site.objects.get_current()
