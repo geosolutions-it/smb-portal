@@ -120,6 +120,13 @@ class SmbUserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "profiles.can_list_users",
         "profiles.can_delete_user",
     )
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_fields = (
+        "email",
+        "username",
+    )
     lookup_field = "uuid"
 
     def get_object(self):

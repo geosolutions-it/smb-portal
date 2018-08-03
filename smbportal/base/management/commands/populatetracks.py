@@ -27,12 +27,12 @@ from tracks import models
 
 
 class Command(BaseCommand):
-    help = """Add test data for tracks
-    
-    This command adds users, bikes, tracks and collected points to the 
-    database. The users are created also on keycloak. Usernames of the new 
-    users: `track_tester1`, `track_tester2` and `track_tester3`
-    """
+    help = (
+        "Add test data for tracks. This command adds users, bikes, tracks and "
+        "collected points to the database. The users are created also on "
+        "keycloak. Usernames of the new users: `track_tester1`, "
+        "`track_tester2` and `track_tester3`"
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
