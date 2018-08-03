@@ -82,12 +82,14 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_profile(self, obj):
         if obj.profile is not None:
-            profile_class = type(obj.profile)
             serializer_class = {
-                profiles.models.EndUserProfile: EndUserProfileSerializer,
-                profiles.models.PrivilegedUserProfile: (
+                "enduserprofile": EndUserProfileSerializer,
+                "privilegeduserprofile": (
                     PrivilegedUserProfileSerializer),
-            }.get(profile_class)
+            }.get(obj.profile.__class__.__name__.lower())
+            print("class: {}".format(obj.profile.__class__))
+            print("class_name: {}".format(obj.profile.__class__.__name__))
+            print("serializer class: {}".format(serializer_class))
             serializer = serializer_class(
                 instance=obj.profile,
                 context=self.context
@@ -361,6 +363,31 @@ class PhysicalTagSerializer(serializers.ModelSerializer):
         )
 
 
+class MyPhysicalTagSerializer(PhysicalTagSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:my-tags-detail",
+        lookup_field="epc",
+        lookup_url_kwarg="epc",
+    )
+
+    bike_url = serializers.HyperlinkedRelatedField(
+        source="bike",
+        read_only=True,
+        view_name="api:my-bikes-detail",
+        lookup_field="short_uuid",
+    )
+
+    class Meta:
+        model = vehicles.models.PhysicalTag
+        fields = (
+            "url",
+            "epc",
+            "bike",
+            "bike_url",
+            "creation_date",
+        )
+
+
 class BikeStatusSerializer(GeoFeatureModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:bike-statuses-detail",
@@ -474,6 +501,35 @@ class BikeObservationSerializer(GeoFeatureModelSerializer):
         geo_field = "position"
         fields = (
             "url",
+            "id",
+            "bike",
+            "bike_url",
+            "reporter_id",
+            "reporter_type",
+            "reporter_name",
+            "address",
+            "created_at",
+            "observed_at",
+            "details",
+        )
+
+
+class MyBikeObservationSerializer(BikeObservationSerializer):
+    bike = serializers.SlugRelatedField(
+        slug_field="short_uuid",
+        queryset=vehicles.models.Bike.objects.all()
+    )
+    bike_url = serializers.HyperlinkedRelatedField(
+        source="bike",
+        read_only=True,
+        view_name="api:my-bikes-detail",
+        lookup_field="short_uuid",
+    )
+
+    class Meta:
+        model = vehiclemonitor.models.BikeObservation
+        geo_field = "position"
+        fields = (
             "id",
             "bike",
             "bike_url",

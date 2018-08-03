@@ -65,7 +65,7 @@ class MyBikeViewSet(viewsets.ModelViewSet):
 
 
 class MyBikeObservationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    serializer_class = serializers.BikeObservationSerializer
+    serializer_class = serializers.MyBikeObservationSerializer
     required_permissions = (
         "vehiclemonitor.can_list_own_bike_observation",
     )
@@ -81,10 +81,11 @@ class MyBikeObservationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class MyPhysicalTagViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.PhysicalTagSerializer
+    serializer_class = serializers.MyPhysicalTagSerializer
     required_permissions = (
         "vehicles.can_list_own_physical_tags",
     )
+    lookup_field = "epc"
 
     def get_queryset(self):
         return vehicles.models.PhysicalTag.objects.filter(
