@@ -39,6 +39,7 @@ def test_cookie_warning_contains_link_to_privacy_policy(browser, url):
 def test_cookie_warning_disappears_after_acceptance(browser, url):
     browser.visit(url)
     consent_div_selector = "[aria-label=cookieconsent]"
+    browser.is_element_present_by_css(consent_div_selector, wait_time=10)
     cookie_consent_div = browser.find_by_css(consent_div_selector)
     cookie_consent_accept_button = cookie_consent_div.find_by_css(
         ".cc-compliance > a")
