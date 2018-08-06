@@ -429,6 +429,29 @@ class BikeStatusSerializer(GeoFeatureModelSerializer):
                 self.fields.pop(field_name)
 
 
+class MyBikeStatusSerializer(BikeStatusSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:my-bike-statuses-detail",
+    )
+    bike = serializers.HyperlinkedRelatedField(
+        view_name="api:my-bikes-detail",
+        lookup_field="short_uuid",
+        queryset=vehicles.models.Bike.objects.all()
+    )
+
+    class Meta:
+        model = vehicles.models.BikeStatus
+        geo_field = "position"
+        fields = (
+            "url",
+            "id",
+            "bike",
+            "lost",
+            "creation_date",
+            "details",
+        )
+
+
 class GallerySerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:picture-galleries-detail",

@@ -93,7 +93,7 @@ class MyPhysicalTagViewSet(viewsets.ReadOnlyModelViewSet):
 
 class MyBikeStatusViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
                           mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    serializer_class = serializers.BikeStatusSerializer
+    serializer_class = serializers.MyBikeStatusSerializer
     required_permissions = (
         "vehicles.can_list_own_bike_status",
         "vehicles.can_create_own_bike_status",

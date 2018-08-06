@@ -46,12 +46,3 @@ def mocked_end_user(mocked_user, settings):
     mocked_user.email = "fake.mail@mail.com"
     mocked_user.usename = "fake"
     return mocked_user
-
-
-@pytest.fixture
-def mocked_tag(mocked_bike):
-    mocked_tag_class = mock.MagicMock(spec="vehicles.models.PhysicalTag")
-    mocked_tag = mocked_tag_class()
-    mocked_tag.bike = mocked_bike
-    mocked_tag.epc = "mocked-epc-123"
-    return mocked_tag

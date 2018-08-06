@@ -73,7 +73,7 @@ def test_privileged_user_cannot_access_list_endpoint(endpoint, privileged_user,
 @pytest.mark.django_db
 def test_end_user_can_report_lost_bike(api_client, bike_owned_by_end_user):
     bike_url = reverse(
-        "api:bikes-detail",
+        "api:my-bikes-detail",
         kwargs={
             "short_uuid": bike_owned_by_end_user.short_uuid
         }
