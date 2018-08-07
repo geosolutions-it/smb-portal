@@ -118,10 +118,10 @@ def save_track(user, bike, track_points):
     for pt_index, point in enumerate(track_points):
         if pt_index < len(track_points) * 0.9:
             vehicle_id = bike.id
-            vehicle_type = models.CollectedPoint.BIKE
+            vehicle_type = models.BIKE
         else:
             vehicle_id = None
-            vehicle_type = models.CollectedPoint.BUS
+            vehicle_type = models.BUS
         models.CollectedPoint.objects.create(
             vehicle_id=vehicle_id,
             vehicle_type=vehicle_type,

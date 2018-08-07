@@ -71,6 +71,11 @@ class CollectedPoint(gismodels.Model):
     sessionid = models.BigIntegerField(blank=True, null=True)
     timestamp = models.DateTimeField(blank=True, null=True)
 
+    class Meta:
+        ordering = [
+            "timestamp"
+        ]
+
 
 class Segment(gismodels.Model):
     """Stores a computed segment from a track.
