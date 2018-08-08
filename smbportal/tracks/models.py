@@ -11,12 +11,24 @@
 from django.conf import settings
 from django.db import models
 from django.contrib.gis.db import models as gismodels
+from django.contrib.gis.db.models.functions import Length
 from django.utils.translation import gettext_lazy as _
 
 BIKE = "bike"
 BUS = "bus"
 CAR = "car"
 FOOT = "foot"
+MOTORBIKE = "motorbike"
+SCOOTER = "scooter"
+
+VEHICLE_CHOICES = (
+    (BIKE, _("bike")),
+    (BUS, _("bus")),
+    (CAR, _("car")),
+    (FOOT, _("foot")),
+    (MOTORBIKE, _("motorbike")),
+    (SCOOTER, _("scooter")),
+)
 
 
 class Track(models.Model):
@@ -37,10 +49,7 @@ class CollectedPoint(gismodels.Model):
     )
     vehicle_type = models.CharField(
         max_length=50,
-        choices=(
-            (BIKE, BIKE),
-            (BUS, BUS),
-        ),
+        choices=VEHICLE_CHOICES,
         default=BIKE,
         null=True,
         blank=True
@@ -99,12 +108,7 @@ class Segment(gismodels.Model):
     vehicle_type = models.CharField(
         _("vehicle type"),
         max_length=20,
-        choices=(
-            (BIKE, _("bike")),
-            (BUS, _("bus")),
-            (CAR, _("car")),
-            (FOOT, _("foot")),
-        )
+        choices=VEHICLE_CHOICES,
     )
     the_geom = gismodels.MultiLineStringField(
         _("geometry")
@@ -118,8 +122,24 @@ class Segment(gismodels.Model):
         help_text=_("timestamp of last collected point of the segment")
     )
 
+    @property
+    def duration(self):
+        """Duration of a segment"""
+        return self.end_date - self.start_date
+
     def __str__(self):
         return "{0.track} - {0.vehicle_type} - {0.start_date}".format(self)
+
+    def get_length(self):
+        annotated_qs = Segment.objects.filter(id=self.id).annotate(
+            length=Length("the_geom", spheroid=True))
+        return annotated_qs.first().length
+
+    def get_average_speed(self):
+        """Return average speed in km/h"""
+        length_km = self.get_length().km
+        duration_hour = self.duration.seconds / 3600
+        return length_km / duration_hour
 
 
 class Emission(models.Model):
