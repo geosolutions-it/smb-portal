@@ -22,7 +22,7 @@ import pytz
 from keycloakauth.keycloakadmin import get_manager
 from keycloakauth.utils import create_user
 from vehicles.models import Bike
-import profiles.models
+import profiles.models as pm
 from tracks import models
 
 
@@ -58,11 +58,20 @@ class Command(BaseCommand):
         gpx_path = pathlib.Path(
             options["gpx_file_path"],
         )
-        owners = [
-            "track_tester1",
-            "track_tester2",
-            "track_tester3",
-        ]
+        owners = {
+            "track_tester1": {
+                "age": pm.EndUserProfile.AGE_BETWEEN_NINETEEN_AND_THIRTY,
+                "occupation": pm.EndUserProfile.OCCUPATION_ARCHITECT,
+            },
+            "track_tester2": {
+                "age": pm.EndUserProfile.AGE_BETWEEN_THIRTY_AND_SIXTY_FIVE,
+                "occupation": pm.EndUserProfile.OCCUPATION_FREELANCER,
+            },
+            "track_tester3": {
+                "age": pm.EndUserProfile.AGE_BETWEEN_THIRTY_AND_SIXTY_FIVE,
+                "occupation": pm.EndUserProfile.OCCUPATION_UNEMPLOYED,
+            },
+        }
         self.stdout.write("Creating test users and bikes...")
         try:
             users = create_test_users(owners, self.keycloak_manager)
@@ -76,18 +85,20 @@ class Command(BaseCommand):
         self.stdout.write("Done!")
 
 
-def create_test_users(usernames, keycloak_manager):
-    if users_exist(usernames):
+def create_test_users(users_info, keycloak_manager):
+    if users_exist(users_info.keys()):
         raise RuntimeError("Users already exist")
     users = []
-    for index, username in enumerate(usernames):
+    for index, user_info in enumerate(users_info.items()):
+        username, profile_kwargs = user_info
         user = create_user(
             username,
             email="{}@fake.com".format(username),
             password="123456",
             group_path="/end_users",
             keycloak_manager=keycloak_manager,
-            profile_model=profiles.models.EndUserProfile
+            profile_model=pm.EndUserProfile,
+            profile_kwargs=profile_kwargs
         )
         for bike_index in range(2):
             nickname = "bike_{}_{}".format(index, bike_index)
@@ -96,8 +107,8 @@ def create_test_users(usernames, keycloak_manager):
     return users
 
 
-def users_exist(usernames):
-    return profiles.models.SmbUser.objects.filter(
+def users_exist(usernames: list) -> bool:
+    return pm.SmbUser.objects.filter(
         username__in=usernames).count() != 0
 
 
