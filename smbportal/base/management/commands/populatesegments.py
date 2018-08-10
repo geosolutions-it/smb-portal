@@ -39,7 +39,6 @@ class Command(BaseCommand):
             models.CAR,
         ]
         for track in models.Track.objects.all():
-        # for track in models.Track.objects.filter(id=26):
             self.stdout.write("Processing track {}...".format(track.id))
             for vehicle_type in vehicle_types:
                 self.stdout.write(

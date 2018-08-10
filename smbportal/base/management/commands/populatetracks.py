@@ -21,6 +21,7 @@ import pytz
 
 from keycloakauth.keycloakadmin import get_manager
 from keycloakauth.utils import create_user
+from keycloakauth.utils import delete_user
 from vehicles.models import Bike
 import profiles.models as pm
 from tracks import models
@@ -48,6 +49,12 @@ class Command(BaseCommand):
         default_gpx_path = pathlib.Path(
             settings.BASE_DIR).parent / "tests" / "data" / "tracks.gpx"
         parser.add_argument(
+            "--recreate-data",
+            action="store_true",
+            help="Whether to drop existing test users (and all data owned by "
+                 "them)",
+        )
+        parser.add_argument(
             "--gpx-file-path",
             help="Path to a gpx file with tracks to add. Defaults to "
                  "%(default)r",
@@ -72,9 +79,9 @@ class Command(BaseCommand):
                 "occupation": pm.EndUserProfile.OCCUPATION_UNEMPLOYED,
             },
         }
-        self.stdout.write("Creating test users and bikes...")
         try:
-            users = create_test_users(owners, self.keycloak_manager)
+            users = create_test_users(owners, self.keycloak_manager,
+                                      options["recreate_data"])
         except RuntimeError as exc:
             self.stderr.write("{} - Aborting".format(str(exc)))
         else:
@@ -85,9 +92,13 @@ class Command(BaseCommand):
         self.stdout.write("Done!")
 
 
-def create_test_users(users_info, keycloak_manager):
+def create_test_users(users_info, keycloak_manager, recreate_users):
     if users_exist(users_info.keys()):
-        raise RuntimeError("Users already exist")
+        if recreate_users:
+            for username in users_info.keys():
+                delete_user(username, keycloak_manager)
+        else:
+            raise RuntimeError("Users already exist")
     users = []
     for index, user_info in enumerate(users_info.items()):
         username, profile_kwargs = user_info
@@ -170,12 +181,13 @@ def get_tracks_from_gpx(gpx_path: pathlib.Path):
                 point_date = _get_time(
                     point.xpath("gpx:time/text()", namespaces=nsmap)[0]
                 )
-            except IndexError:
+            except IndexError:  # discard points that don't have a timestamp
                 pass
             else:
                 collected_point["timestamp"] = point_date
-            segment.append(collected_point)
-        tracks.append(segment)
+                segment.append(collected_point)
+        if len(segment) > 1:  # discard segments with only one point
+            tracks.append(segment)
     return tracks
 
 
