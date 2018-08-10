@@ -38,6 +38,16 @@ class Track(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_duration(self):
+        try:
+            start_date = self.segments.first().start_date
+            end_date = self.segments.last().end_date
+        except AttributeError:  # this track has no segments
+            result = None
+        else:
+            result = end_date - start_date
+        return result
+
 
 class CollectedPoint(gismodels.Model):
 
@@ -97,7 +107,8 @@ class Segment(gismodels.Model):
     track = models.ForeignKey(
         "Track",
         on_delete=models.CASCADE,
-        verbose_name=_("track")
+        verbose_name=_("track"),
+        related_name="segments",
     )
     user_uuid = models.ForeignKey(
         "bossoidc.Keycloak",
@@ -109,6 +120,12 @@ class Segment(gismodels.Model):
         _("vehicle type"),
         max_length=20,
         choices=VEHICLE_CHOICES,
+    )
+    vehicle_id = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="Identifier of the vehicle used, if any"
     )
     the_geom = gismodels.MultiLineStringField(
         _("geometry")

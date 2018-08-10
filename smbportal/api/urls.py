@@ -67,6 +67,16 @@ router.register(
     viewset=views.BikeObservationViewSet,
     base_name="bike-observations"
 )
+router.register(
+    prefix="tracks",
+    viewset=views.TrackViewSet,
+    base_name="tracks"
+)
+router.register(
+    prefix="segments",
+    viewset=views.SegmentViewSet,
+    base_name="segments"
+)
 
 schema_view = get_schema_view(
     info=openapi.Info(

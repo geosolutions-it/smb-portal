@@ -18,6 +18,8 @@ from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 import profiles.models
+import tracks.models
+import tracks.utils
 import vehicles.models
 import vehiclemonitor.models
 
@@ -547,4 +549,179 @@ class MyBikeObservationSerializer(BikeObservationSerializer):
             "created_at",
             "observed_at",
             "details",
+        )
+
+
+class BriefBikeSerializer(serializers.HyperlinkedModelSerializer):
+
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:bikes-detail",
+        lookup_field="short_uuid",
+    )
+
+    class Meta:
+        model = vehicles.models.Bike
+        fields = (
+            "short_uuid",
+            "url"
+        )
+
+
+class TrackSerializer(serializers.ModelSerializer):
+    owner = SmbUserHyperlinkedRelatedField(
+        view_name="api:users-detail",
+        read_only=True
+    )
+    segments = serializers.SerializerMethodField()
+    vehicle_types = serializers.SerializerMethodField()
+    bikes = serializers.SerializerMethodField()
+    emissions = serializers.SerializerMethodField()
+    costs = serializers.SerializerMethodField()
+    health = serializers.SerializerMethodField()
+    duration = serializers.SerializerMethodField()
+
+    def get_vehicle_types(self, obj):
+        qs = obj.segments.values_list("vehicle_type", flat=True).distinct()
+        return list(qs)
+
+    def get_segments(self, obj):
+        serializer = BriefSegmentSerializer(
+            instance=obj.segments, many=True, context=self.context)
+        return serializer.data
+
+    def get_bikes(self, obj):
+        bike_ids_qs = obj.segments.values_list("vehicle_id", flat=True).filter(
+            vehicle_id__isnull=False).distinct()
+        # forcing qs execution here because django ORM barfs if we use a UUID
+        # in an IN clause - it does not add the correct type casts
+        bikes = vehicles.models.Bike.objects.filter(id__in=list(bike_ids_qs))
+        serializer = BriefBikeSerializer(
+            instance=bikes, many=True, context=self.context)
+        return serializer.data
+
+    def get_emissions(self, obj):
+        logger.debug("obj: {}".format(obj))
+        emissions = tracks.utils.get_annotated_emissions(
+            annotate_by=["track"]).get(track=obj)
+        del emissions["track"]
+        return emissions
+
+    def get_costs(self, obj):
+        costs = tracks.utils.get_annotated_costs(annotate_by=["track"]).get(
+            track=obj)
+        del costs["track"]
+        return costs
+
+    def get_health(self, obj):
+        health = tracks.utils.get_annotated_health(annotate_by=["track"]).get(
+            track=obj)
+        del health["track"]
+        return health
+
+    def get_duration(self, obj):
+        """Return the track duration, in minutes"""
+        delta = obj.get_duration()
+        return delta.seconds / 60 if delta is not None else None
+
+    class Meta:
+        model = tracks.models.Track
+        fields = (
+            "id",
+            "owner",
+            "duration",
+            "segments",
+            "created_at",
+            "vehicle_types",
+            "bikes",
+            "emissions",
+            "costs",
+            "health",
+        )
+
+
+class BriefSegmentSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:segments-detail")
+
+    class Meta:
+        model = tracks.models.Segment
+        fields = (
+            "id",
+            "url",
+        )
+
+
+class SegmentSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:segments-detail")
+    emissions = serializers.SerializerMethodField()
+    costs = serializers.SerializerMethodField()
+    health = serializers.SerializerMethodField()
+
+    def get_emissions(self, obj):
+        serializer = EmissionSerializer(
+            instance=obj.emission, context=self.context)
+        return serializer.data
+
+    def get_costs(self, obj):
+        serializer = CostSerializer(
+            instance=obj.cost, context=self.context)
+        return serializer.data
+
+    def get_health(self, obj):
+        serializer = HealthSerializer(
+            instance=obj.health, context=self.context)
+        return serializer.data
+
+    class Meta:
+        model = tracks.models.Segment
+        fields = (
+            "id",
+            "url",
+            "track",
+            "start_date",
+            "end_date",
+            "vehicle_type",
+            "vehicle_id",
+            "emissions",
+            "costs",
+            "health",
+        )
+
+
+class EmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = tracks.models.Emission
+        fields = (
+            "so2",
+            "so2_saved",
+            "nox",
+            "nox_saved",
+            "co2",
+            "co2_saved",
+            "co",
+            "co_saved",
+            "pm10",
+            "pm10_saved",
+        )
+
+
+class CostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = tracks.models.Cost
+        fields = (
+            "fuel_cost",
+            "time_cost",
+            "depreciation_cost",
+            "operation_cost",
+            "total_cost",
+        )
+
+
+class HealthSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = tracks.models.Health
+        fields = (
+            "calories_consumed",
+            "benefit_index",
         )

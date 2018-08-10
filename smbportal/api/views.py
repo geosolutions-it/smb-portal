@@ -23,6 +23,7 @@ from rest_framework_gis.pagination import GeoJsonPagination
 from keycloakauth import utils
 from keycloakauth.keycloakadmin import get_manager
 import profiles.models
+import tracks.models
 import vehicles.models
 import vehiclemonitor.models
 from . import serializers
@@ -255,3 +256,21 @@ class BikeObservationViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "vehiclemonitor.can_list_bike_observation",
     )
     queryset = vehiclemonitor.models.BikeObservation.objects.all()
+
+
+class TrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                   viewsets.GenericViewSet):
+    serializer_class = serializers.TrackSerializer
+    required_permissions = (
+        "tracks.can_list_tracks",
+    )
+    queryset = tracks.models.Track.objects.all()
+
+
+class SegmentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                     viewsets.GenericViewSet):
+    serializer_class = serializers.SegmentSerializer
+    required_permissions = (
+        "tracks.can_list_segments",
+    )
+    queryset = tracks.models.Segment.objects.all()
