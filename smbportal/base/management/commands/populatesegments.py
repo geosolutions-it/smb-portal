@@ -55,6 +55,17 @@ class Command(BaseCommand):
 
 
 def create_segments(track, vehicle_type, points_per_segment=50):
+    """Create segments
+
+    This function creates segments from collected points. It employs a
+    simplistic model, assuming that:
+
+    - in the same track, each vehicle type always uses the same vehicle
+    - in the same track vehicle types are used continuously, e.g. a user will
+    not do bike -> bus -> bike in the same track.
+
+    """
+
     qs = models.CollectedPoint.objects.filter(
         track=track,
         vehicle_type=vehicle_type,
@@ -78,6 +89,7 @@ def create_segments(track, vehicle_type, points_per_segment=50):
                 track=track,
                 user_uuid=track.owner.keycloak,
                 vehicle_type=vehicle_type,
+                vehicle_id=pts[-1].vehicle_id,
                 the_geom=MultiLineString(linestring),
                 start_date=start,
                 end_date=end,

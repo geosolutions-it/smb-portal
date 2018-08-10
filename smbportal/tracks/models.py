@@ -110,6 +110,12 @@ class Segment(gismodels.Model):
         max_length=20,
         choices=VEHICLE_CHOICES,
     )
+    vehicle_id = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="Identifier of the vehicle used, if any"
+    )
     the_geom = gismodels.MultiLineStringField(
         _("geometry")
     )
