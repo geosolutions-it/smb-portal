@@ -143,7 +143,7 @@ class Segment(gismodels.Model):
 
 
 class Emission(models.Model):
-    segment = models.ForeignKey(
+    segment = models.OneToOneField(
         "Segment",
         on_delete=models.CASCADE,
         verbose_name=_("segment")
@@ -212,7 +212,7 @@ class Emission(models.Model):
 
 
 class Cost(models.Model):
-    segment = models.ForeignKey(
+    segment = models.OneToOneField(
         "Segment",
         on_delete=models.CASCADE,
         verbose_name=_("segment")
@@ -253,7 +253,7 @@ class Cost(models.Model):
 
 
 class Health(models.Model):
-    segment = models.ForeignKey(
+    segment = models.OneToOneField(
         "Segment",
         on_delete=models.CASCADE,
         verbose_name=_("segment")
