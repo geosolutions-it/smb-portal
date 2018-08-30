@@ -10,6 +10,7 @@
 
 import logging
 from smtplib import SMTPServerDisconnected
+from smtplib import SMTPSenderRefused
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -73,6 +74,6 @@ def send_mail(*args, **kwargs):
     """Wrapper around django's ``send_mail`` that catches more errors"""
     try:
         mail.send_mail(*args, **kwargs)
-    except SMTPServerDisconnected:
+    except (SMTPSenderRefused, SMTPServerDisconnected) as exc:
         logger.warning(
-            "Could not send profile creation notification email")
+            "Could not send notification email: {}".format(str(exc)))

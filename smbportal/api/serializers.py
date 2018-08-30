@@ -567,7 +567,7 @@ class BriefBikeSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class TrackSerializer(serializers.ModelSerializer):
+class TrackListSerializer(serializers.ModelSerializer):
     owner = SmbUserHyperlinkedRelatedField(
         view_name="api:users-detail",
         read_only=True
@@ -575,9 +575,9 @@ class TrackSerializer(serializers.ModelSerializer):
     segments = serializers.SerializerMethodField()
     vehicle_types = serializers.SerializerMethodField()
     bikes = serializers.SerializerMethodField()
-    emissions = serializers.SerializerMethodField()
-    costs = serializers.SerializerMethodField()
-    health = serializers.SerializerMethodField()
+    emissions = serializers.DictField(source="aggregated_emissions.totals")
+    costs = serializers.DictField(source="aggregated_costs.totals")
+    health = serializers.DictField(source="aggregated_health.totals")
     duration = serializers.SerializerMethodField()
 
     def get_vehicle_types(self, obj):
@@ -598,25 +598,6 @@ class TrackSerializer(serializers.ModelSerializer):
         serializer = BriefBikeSerializer(
             instance=bikes, many=True, context=self.context)
         return serializer.data
-
-    def get_emissions(self, obj):
-        logger.debug("obj: {}".format(obj))
-        emissions = tracks.utils.get_annotated_emissions(
-            annotate_by=["track"]).get(track=obj)
-        del emissions["track"]
-        return emissions
-
-    def get_costs(self, obj):
-        costs = tracks.utils.get_annotated_costs(annotate_by=["track"]).get(
-            track=obj)
-        del costs["track"]
-        return costs
-
-    def get_health(self, obj):
-        health = tracks.utils.get_annotated_health(annotate_by=["track"]).get(
-            track=obj)
-        del health["track"]
-        return health
 
     def get_duration(self, obj):
         """Return the track duration, in minutes"""
@@ -639,24 +620,52 @@ class TrackSerializer(serializers.ModelSerializer):
         )
 
 
-class BriefSegmentSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name="api:segments-detail")
+class TrackDetailSerializer(TrackListSerializer):
+    """Serializer for a Track's detail endpoint
+
+    Similar to TrackListSerializer, with the following enhancements:
+
+    - `emissions`, `costs` and `health` fields retun both **total values**
+      and also **segmented by vehicle type**
+    - `segments` field returns the full representation for each segment
+
+    """
+
+    emissions = serializers.DictField(source="aggregated_emissions")
+    costs = serializers.DictField(source="aggregated_costs")
+    health = serializers.DictField(source="aggregated_health")
+
+    def get_segments(self, obj):
+        serializer = SegmentSerializer(
+            instance=obj.segments, many=True, context=self.context)
+        return serializer.data
 
     class Meta:
-        model = tracks.models.Segment
+        model = tracks.models.Track
         fields = (
             "id",
-            "url",
+            "owner",
+            "duration",
+            "segments",
+            "created_at",
+            "vehicle_types",
+            "bikes",
+            "emissions",
+            "costs",
+            "health",
         )
 
 
 class SegmentSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:segments-detail")
+    geom = serializers.SerializerMethodField()
     emissions = serializers.SerializerMethodField()
     costs = serializers.SerializerMethodField()
     health = serializers.SerializerMethodField()
+
+    def get_geom(self, obj):
+        return obj.geom.wkt
 
     def get_emissions(self, obj):
         serializer = EmissionSerializer(
@@ -679,6 +688,7 @@ class SegmentSerializer(serializers.ModelSerializer):
             "id",
             "url",
             "track",
+            "geom",
             "start_date",
             "end_date",
             "vehicle_type",
@@ -686,6 +696,16 @@ class SegmentSerializer(serializers.ModelSerializer):
             "emissions",
             "costs",
             "health",
+        )
+
+
+class BriefSegmentSerializer(SegmentSerializer):
+    class Meta:
+        model = tracks.models.Segment
+        fields = (
+            "id",
+            "url",
+            "geom"
         )
 
 

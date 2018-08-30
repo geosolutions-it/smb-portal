@@ -260,11 +260,17 @@ class BikeObservationViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
 
 class TrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                    viewsets.GenericViewSet):
-    serializer_class = serializers.TrackSerializer
     required_permissions = (
         "tracks.can_list_tracks",
     )
     queryset = tracks.models.Track.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.TrackListSerializer
+        else:
+            result = serializers.TrackDetailSerializer
+        return result
 
 
 class SegmentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,

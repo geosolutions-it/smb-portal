@@ -12,6 +12,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.gis.db import models as gismodels
 from django.contrib.gis.db.models.functions import Length
+from django.contrib.postgres.fields import JSONField
 from django.utils.translation import gettext_lazy as _
 
 BIKE = "bike"
@@ -37,6 +38,30 @@ class Track(models.Model):
         on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    aggregated_emissions = JSONField(
+        _("aggregated emissions"),
+        null=True,
+        blank=True,
+        help_text=_("Aggregated emissions for the track's segments, for each "
+                    "vehicle type. These are pre-computed from segment data "
+                    "in order to improve runtime performance.")
+    )
+    aggregated_costs = JSONField(
+        _("aggregated costs"),
+        null=True,
+        blank=True,
+        help_text=_("Aggregated costs for the track's segments, for each "
+                    "vehicle type. These are pre-computed from segment data "
+                    "in order to improve runtime performance.")
+    )
+    aggregated_health = JSONField(
+        _("aggregated health"),
+        null=True,
+        blank=True,
+        help_text=_("Aggregated health data for the track's segments, for "
+                    "each vehicle type. These are pre-computed from segment "
+                    "data in order to improve runtime performance.")
+    )
 
     def get_duration(self):
         try:
@@ -127,8 +152,8 @@ class Segment(gismodels.Model):
         blank=True,
         help_text="Identifier of the vehicle used, if any"
     )
-    the_geom = gismodels.MultiLineStringField(
-        _("geometry")
+    geom = gismodels.LineStringField(
+        _("geometry"),
     )
     start_date = models.DateTimeField(
         _("start date"),
@@ -149,7 +174,7 @@ class Segment(gismodels.Model):
 
     def get_length(self):
         annotated_qs = Segment.objects.filter(id=self.id).annotate(
-            length=Length("the_geom", spheroid=True))
+            length=Length("geom", spheroid=True))
         return annotated_qs.first().length
 
     def get_average_speed(self):
