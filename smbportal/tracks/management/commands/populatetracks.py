@@ -28,6 +28,7 @@ from keycloakauth.utils import delete_user
 from vehicles.models import Bike
 import profiles.models as pm
 from tracks import models
+from tracks import utils
 
 from . import _constants
 
@@ -168,7 +169,38 @@ def save_track(user, bike, track_points: ImportedTrack):
         calculate_segment_emissions(segment, length)
         calculate_segment_cost(segment, length)
         calculate_segment_health(segment, speed)
+    track.aggregated_emissions = _get_aggregated_track_data(
+        track.id,
+        annotation_function=utils.get_annotated_emissions
+    )
+    track.aggregated_costs = _get_aggregated_track_data(
+        track.id,
+        annotation_function=utils.get_annotated_costs
+    )
+    track.aggregated_health = _get_aggregated_track_data(
+        track.id,
+        annotation_function=utils.get_annotated_health
+    )
+    track.save()
     return track
+
+
+def _get_aggregated_track_data(track_id, annotation_function):
+    by_vehicle_type = annotation_function(
+        annotate_by=["vehicle_type"],
+        segment_filters={"track__id": track_id},
+    )
+    totals = annotation_function(
+        annotate_by=["track"],
+        segment_filters={"track__id": track_id},
+    ).get()
+    result = {}
+    for aggregate in by_vehicle_type:
+        result[aggregate["vehicle_type"]] = aggregate.copy()
+        del result[aggregate["vehicle_type"]]["vehicle_type"]
+    result["totals"] = totals.copy()
+    del result["totals"]["track"]
+    return result
 
 
 def get_tracks_from_gpx(gpx_path: pathlib.Path) -> List[ImportedTrack]:
@@ -380,5 +412,3 @@ def _get_time(raw_time: str):
 
 def _map_track_to_user(num_users, num_tracks, current_track):
     return int(current_track / num_tracks * num_users)
-
-
