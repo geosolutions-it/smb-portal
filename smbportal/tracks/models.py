@@ -127,8 +127,8 @@ class Segment(gismodels.Model):
         blank=True,
         help_text="Identifier of the vehicle used, if any"
     )
-    the_geom = gismodels.MultiLineStringField(
-        _("geometry")
+    geom = gismodels.LineStringField(
+        _("geometry"),
     )
     start_date = models.DateTimeField(
         _("start date"),
@@ -149,7 +149,7 @@ class Segment(gismodels.Model):
 
     def get_length(self):
         annotated_qs = Segment.objects.filter(id=self.id).annotate(
-            length=Length("the_geom", spheroid=True))
+            length=Length("geom", spheroid=True))
         return annotated_qs.first().length
 
     def get_average_speed(self):

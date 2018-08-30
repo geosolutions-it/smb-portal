@@ -8,19 +8,12 @@
 #
 #########################################################################
 
-import random
-
-from django.contrib.gis.db.models.functions import Length
-from django.contrib.gis import geos
-from django.contrib.gis.geos import MultiLineString
+from django.contrib.gis.geos import LineString
 from django.core.management.base import BaseCommand
 
 from tracks import models
 
 from . import _constants
-
-
-random.seed(3)
 
 
 class Command(BaseCommand):
@@ -81,7 +74,6 @@ def create_segments(track, vehicle_type, points_per_segment=50):
             else:
                 end_index = start_index + points_per_segment
             pts = list(qs)[start_index:end_index]
-            linestring = geos.LineString([pt.the_geom.coords for pt in pts])
             start = min([pt.timestamp for pt in pts])
             end = max([pt.timestamp for pt in pts])
             segment, created = models.Segment.objects.get_or_create(
@@ -89,20 +81,12 @@ def create_segments(track, vehicle_type, points_per_segment=50):
                 user_uuid=track.owner.keycloak,
                 vehicle_type=vehicle_type,
                 vehicle_id=pts[-1].vehicle_id,
-                the_geom=MultiLineString(linestring),
+                geom=LineString([pt.the_geom.coords for pt in pts]),
                 start_date=start,
                 end_date=end,
             )
             segments.append(segment)
     return segments
-
-
-def get_segment_length(segment_id):
-    """Return length of segment, in km."""
-    annotated_qs = models.Segment.objects.filter(id=segment_id).annotate(
-        length=Length("the_geom", spheroid=True))
-    segment_length = annotated_qs.first().length.km
-    return segment_length
 
 
 def calculate_segment_emissions(segment, length):
