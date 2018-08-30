@@ -654,9 +654,13 @@ class BriefSegmentSerializer(serializers.HyperlinkedModelSerializer):
 class SegmentSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:segments-detail")
+    geom = serializers.SerializerMethodField()
     emissions = serializers.SerializerMethodField()
     costs = serializers.SerializerMethodField()
     health = serializers.SerializerMethodField()
+
+    def get_geom(self, obj):
+        return obj.geom.wkt
 
     def get_emissions(self, obj):
         serializer = EmissionSerializer(
@@ -679,6 +683,7 @@ class SegmentSerializer(serializers.ModelSerializer):
             "id",
             "url",
             "track",
+            "geom",
             "start_date",
             "end_date",
             "vehicle_type",
