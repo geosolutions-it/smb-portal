@@ -63,6 +63,9 @@ class Track(models.Model):
                     "data in order to improve runtime performance.")
     )
 
+    class Meta:
+        ordering = ["created_at"]
+
     def get_duration(self):
         try:
             start_date = self.segments.first().start_date
@@ -116,9 +119,7 @@ class CollectedPoint(gismodels.Model):
     timestamp = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        ordering = [
-            "timestamp"
-        ]
+        ordering = ["timestamp"]
 
 
 class Segment(gismodels.Model):
@@ -163,6 +164,9 @@ class Segment(gismodels.Model):
         _("end date"),
         help_text=_("timestamp of last collected point of the segment")
     )
+
+    class Meta:
+        ordering = ["start_date"]
 
     @property
     def duration(self):

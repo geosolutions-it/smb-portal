@@ -567,11 +567,27 @@ class BriefBikeSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+class MyBriefBikeSerializer(serializers.HyperlinkedModelSerializer):
+
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:my-bikes-detail",
+        lookup_field="short_uuid",
+    )
+
+    class Meta:
+        model = vehicles.models.Bike
+        fields = (
+            "short_uuid",
+            "url"
+        )
+
+
 class TrackListSerializer(serializers.ModelSerializer):
     owner = SmbUserHyperlinkedRelatedField(
         view_name="api:users-detail",
         read_only=True
     )
+    url = serializers.HyperlinkedIdentityField(view_name="api:tracks-detail")
     segments = serializers.SerializerMethodField()
     vehicle_types = serializers.SerializerMethodField()
     bikes = serializers.SerializerMethodField()
@@ -608,6 +624,47 @@ class TrackListSerializer(serializers.ModelSerializer):
         model = tracks.models.Track
         fields = (
             "id",
+            "url",
+            "owner",
+            "duration",
+            "segments",
+            "created_at",
+            "vehicle_types",
+            "bikes",
+            "emissions",
+            "costs",
+            "health",
+        )
+
+
+class MyTrackListSerializer(TrackListSerializer):
+    owner = serializers.SerializerMethodField()
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:my-tracks-detail")
+
+    def get_owner(self, obj):
+        return reverse("api:my-user", request=self.context.get("request"))
+
+    def get_segments(self, obj):
+        serializer = MyBriefSegmentSerializer(
+            instance=obj.segments, many=True, context=self.context)
+        return serializer.data
+
+    def get_bikes(self, obj):
+        bike_ids_qs = obj.segments.values_list("vehicle_id", flat=True).filter(
+            vehicle_id__isnull=False).distinct()
+        # forcing qs execution here because django ORM barfs if we use a UUID
+        # in an IN clause - it does not add the correct type casts
+        bikes = vehicles.models.Bike.objects.filter(id__in=list(bike_ids_qs))
+        serializer = MyBriefBikeSerializer(
+            instance=bikes, many=True, context=self.context)
+        return serializer.data
+
+    class Meta:
+        model = tracks.models.Track
+        fields = (
+            "id",
+            "url",
             "owner",
             "duration",
             "segments",
@@ -644,6 +701,47 @@ class TrackDetailSerializer(TrackListSerializer):
         model = tracks.models.Track
         fields = (
             "id",
+            "url",
+            "owner",
+            "duration",
+            "segments",
+            "created_at",
+            "vehicle_types",
+            "bikes",
+            "emissions",
+            "costs",
+            "health",
+        )
+
+
+class MyTrackDetailSerializer(TrackDetailSerializer):
+    owner = serializers.SerializerMethodField()
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:my-tracks-detail")
+
+    def get_owner(self, obj):
+        return reverse("api:my-user", request=self.context.get("request"))
+
+    def get_bikes(self, obj):
+        bike_ids_qs = obj.segments.values_list("vehicle_id", flat=True).filter(
+            vehicle_id__isnull=False).distinct()
+        # forcing qs execution here because django ORM barfs if we use a UUID
+        # in an IN clause - it does not add the correct type casts
+        bikes = vehicles.models.Bike.objects.filter(id__in=list(bike_ids_qs))
+        serializer = MyBriefBikeSerializer(
+            instance=bikes, many=True, context=self.context)
+        return serializer.data
+
+    def get_segments(self, obj):
+        serializer = MySegmentSerializer(
+            instance=obj.segments, many=True, context=self.context)
+        return serializer.data
+
+    class Meta:
+        model = tracks.models.Track
+        fields = (
+            "id",
+            "url",
             "owner",
             "duration",
             "segments",
@@ -663,6 +761,10 @@ class SegmentSerializer(serializers.ModelSerializer):
     emissions = serializers.SerializerMethodField()
     costs = serializers.SerializerMethodField()
     health = serializers.SerializerMethodField()
+    track = serializers.HyperlinkedRelatedField(
+        view_name="api:tracks-detail",
+        read_only=True
+    )
 
     def get_geom(self, obj):
         return obj.geom.wkt
@@ -699,7 +801,43 @@ class SegmentSerializer(serializers.ModelSerializer):
         )
 
 
+class MySegmentSerializer(SegmentSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:my-segments-detail"
+    )
+    track = serializers.HyperlinkedRelatedField(
+        view_name="api:my-tracks-detail",
+        read_only=True
+    )
+
+    class Meta:
+        model = tracks.models.Segment
+        fields = (
+            "id",
+            "url",
+            "track",
+            "geom",
+            "start_date",
+            "end_date",
+            "vehicle_type",
+            "vehicle_id",
+            "emissions",
+            "costs",
+            "health",
+        )
+
+
 class BriefSegmentSerializer(SegmentSerializer):
+    class Meta:
+        model = tracks.models.Segment
+        fields = (
+            "id",
+            "url",
+            "geom"
+        )
+
+
+class MyBriefSegmentSerializer(MySegmentSerializer):
     class Meta:
         model = tracks.models.Segment
         fields = (

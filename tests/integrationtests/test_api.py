@@ -21,6 +21,8 @@ pytestmark = pytest.mark.integration
     "api:my-bike-observations-list",
     "api:my-bike-statuses-list",
     "api:my-tags-list",
+    "api:my-tracks-list",
+    "api:my-segments-list",
 ])
 @pytest.mark.django_db
 def test_end_user_can_access_list_endpoint(endpoint, api_client, end_user):
@@ -35,6 +37,8 @@ def test_end_user_can_access_list_endpoint(endpoint, api_client, end_user):
     "api:bike-statuses-list",
     "api:tags-list",
     "api:users-list",
+    "api:segments-list",
+    "api:tracks-list",
 ])
 @pytest.mark.django_db
 def test_end_user_cannot_access_list_endpoint(endpoint, api_client, end_user):
@@ -49,6 +53,8 @@ def test_end_user_cannot_access_list_endpoint(endpoint, api_client, end_user):
     "api:bike-statuses-list",
     "api:tags-list",
     "api:users-list",
+    "api:segments-list",
+    "api:tracks-list",
 ])
 def test_privileged_user_can_access_list_endpoint(endpoint, privileged_user,
                                                   api_client):
@@ -62,6 +68,8 @@ def test_privileged_user_can_access_list_endpoint(endpoint, privileged_user,
     "api:my-bike-observations-list",
     "api:my-bike-statuses-list",
     "api:my-tags-list",
+    "api:my-segments-list",
+    "api:my-tracks-list",
 ])
 def test_privileged_user_cannot_access_list_endpoint(endpoint, privileged_user,
                                                      api_client):
