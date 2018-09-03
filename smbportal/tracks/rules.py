@@ -26,6 +26,8 @@ for perm, predicate in {
     "can_list_segments": profiles.rules.is_privileged_user,
     "can_list_tracks": profiles.rules.is_privileged_user,
     "can_list_own_segments": profiles.rules.is_end_user,
+    "can_delete_own_segments": profiles.rules.is_end_user,
     "can_list_own_tracks": profiles.rules.is_end_user,
+    "can_delete_own_tracks": profiles.rules.is_end_user,
 }.items():
     rules.add_perm("tracks.{}".format(perm), predicate)

@@ -113,6 +113,43 @@ class MyBikeStatusViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
         return serializer_class(context=context, *args, **kwargs)
 
 
+class MySegmentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                       mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    required_permissions = (
+        "tracks.can_list_own_segments",
+        "tracks.can_delete_own_segments",
+    )
+
+    def get_queryset(self):
+        return tracks.models.Segment.objects.filter(
+            track__owner=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.MyBriefSegmentSerializer
+        else:
+            result = serializers.MySegmentSerializer
+        return result
+
+
+class MyTrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                     mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    required_permissions = (
+        "tracks.can_list_own_tracks",
+        "tracks.can_delete_own_tracks",
+    )
+
+    def get_queryset(self):
+        return tracks.models.Track.objects.filter(owner=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.MyTrackListSerializer
+        else:
+            result = serializers.MyTrackDetailSerializer
+        return result
+
+
 class SmbUserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                      mixins.DestroyModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.SmbUserSerializer

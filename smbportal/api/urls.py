@@ -43,6 +43,16 @@ router.register(
     base_name="my-bike-observations"
 )
 router.register(
+    prefix="my-segments",
+    viewset=views.MySegmentViewSet,
+    base_name="my-segments"
+)
+router.register(
+    prefix="my-tracks",
+    viewset=views.MyTrackViewSet,
+    base_name="my-tracks"
+)
+router.register(
     prefix="users",
     viewset=views.SmbUserViewSet,
     base_name="users"
