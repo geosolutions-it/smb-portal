@@ -38,6 +38,10 @@ class Track(models.Model):
         on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    session_id = models.BigIntegerField(
+        _("session id"),
+        unique=True
+    )
     aggregated_emissions = JSONField(
         _("aggregated emissions"),
         null=True,

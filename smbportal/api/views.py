@@ -138,6 +138,12 @@ class MyTrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "tracks.can_list_own_tracks",
         "tracks.can_delete_own_tracks",
     )
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_fields = (
+        "session_id",
+    )
 
     def get_queryset(self):
         return tracks.models.Track.objects.filter(owner=self.request.user)
@@ -301,6 +307,12 @@ class TrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "tracks.can_list_tracks",
     )
     queryset = tracks.models.Track.objects.all()
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_fields = (
+        "session_id",
+    )
 
     def get_serializer_class(self):
         if self.action == "list":
