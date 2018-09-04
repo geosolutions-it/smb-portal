@@ -99,13 +99,15 @@ def insert_segments(track_id: str, db_cursor):
         insert_vehicle_type_segments(track_id, vehicle_type, db_cursor)
 
 
-def insert_vehicle_type_segments(track_id, vehicle_type, db_cursor):
+def insert_vehicle_type_segments(track_id, owner_keycloak_uuid, vehicle_type,
+                                 db_cursor):
     query = _get_query("create-track-segment.sql")
     db_cursor.execute(
         query,
         {
+            "user_uuid": owner_keycloak_uuid,
+            "vehicle_type": vehicle_type,
             "track_id": track_id,
-            "vehicle_type": vehicle_type
         }
     )
 
