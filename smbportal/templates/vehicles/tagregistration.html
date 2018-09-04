@@ -20,7 +20,6 @@
                     <i class="fa fa-bicycle f-s-200"></i>
                 </div>
                 <h4 class="text-white">{% blocktrans with email=user.email %}User: {{ email }}{%endblocktrans%}</h4>
-                <p class="card-text text-sm">{% blocktrans with uid=user.keycloak.UID %}User ID: {{ uid }}{%endblocktrans%}</p>
                 <p class="card-text text-lg">{% blocktrans %}Use your bike's registration code to obtain RFID tags. Apply these tags to your bike and enable additional functionality on the portal, such as tracking your bike
                 {% endblocktrans %}</p>
             </div>
