@@ -625,6 +625,7 @@ class TrackListSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "url",
+            "session_id",
             "owner",
             "duration",
             "segments",
@@ -665,6 +666,7 @@ class MyTrackListSerializer(TrackListSerializer):
         fields = (
             "id",
             "url",
+            "session_id",
             "owner",
             "duration",
             "segments",
@@ -702,6 +704,7 @@ class TrackDetailSerializer(TrackListSerializer):
         fields = (
             "id",
             "url",
+            "session_id",
             "owner",
             "duration",
             "segments",
@@ -742,6 +745,7 @@ class MyTrackDetailSerializer(TrackDetailSerializer):
         fields = (
             "id",
             "url",
+            "session_id",
             "owner",
             "duration",
             "segments",

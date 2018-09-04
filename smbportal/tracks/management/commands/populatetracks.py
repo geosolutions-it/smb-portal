@@ -142,11 +142,14 @@ def save_tracks(imported_tracks: List[ImportedTrack], users, logger=print):
         username, bike_nickname = owner_info[owner_index]
         user = get_user_model().objects.get(username=username)
         bike = Bike.objects.get(owner=user, nickname=bike_nickname)
-        save_track(user, bike, imported_track)
+        save_track(user, bike, imported_track, session_id=track_index)
 
 
-def save_track(user, bike, track_points: ImportedTrack):
-    track = models.Track.objects.create(owner=user)
+def save_track(user, bike, track_points: ImportedTrack, session_id: int):
+    track = models.Track.objects.create(
+        owner=user,
+        session_id=session_id
+    )
     for pt_index, point in enumerate(track_points):
         if pt_index < len(track_points) * 0.9:
             vehicle_id = bike.id
@@ -160,6 +163,7 @@ def save_track(user, bike, track_points: ImportedTrack):
             track=track,
             the_geom=Point(point["lon"], point["lat"]),
             timestamp=point.get("timestamp"),
+            sessionid=session_id,
         )
     bike_segments = create_segments(track, models.BIKE)
     bus_segments = create_segments(track, models.BUS)
