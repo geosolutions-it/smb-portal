@@ -26,6 +26,7 @@ import profiles.models
 import tracks.models
 import vehicles.models
 import vehiclemonitor.models
+from . import pagination
 from . import serializers
 from . import filters
 
@@ -172,6 +173,7 @@ class SmbUserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "username",
     )
     lookup_field = "uuid"
+    pagination_class = pagination.SmbUserDumpPageNumberPagination
 
     def get_object(self):
         obj = self.get_queryset().get(keycloak__UID=self.kwargs["uuid"])
