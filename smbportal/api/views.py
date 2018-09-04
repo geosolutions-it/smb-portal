@@ -12,7 +12,6 @@ import logging
 
 from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
-import photologue.models
 from rest_framework.decorators import action
 from rest_framework import mixins
 from rest_framework import viewsets
@@ -24,8 +23,10 @@ from rest_framework_gis.pagination import GeoJsonPagination
 from keycloakauth import utils
 from keycloakauth.keycloakadmin import get_manager
 import profiles.models
+import tracks.models
 import vehicles.models
 import vehiclemonitor.models
+from . import pagination
 from . import serializers
 from . import filters
 
@@ -37,7 +38,7 @@ logger = logging.getLogger(__name__)
 
 class MyUserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
                     viewsets.GenericViewSet):
-    serializer_class = serializers.SmbUserSerializer
+    serializer_class = serializers.MyUserSerializer
     required_permissions = (
         "profiles.can_view_profile",
     )
@@ -52,7 +53,7 @@ class MyUserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
 
 
 class MyBikeViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.BikeDetailSerializer
+    serializer_class = serializers.MyBikeDetailSerializer
     required_permissions = (
         "vehicles.can_list_own_bikes",
         "vehicles.can_create_bike",
@@ -65,7 +66,7 @@ class MyBikeViewSet(viewsets.ModelViewSet):
 
 
 class MyBikeObservationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    serializer_class = serializers.BikeObservationSerializer
+    serializer_class = serializers.MyBikeObservationSerializer
     required_permissions = (
         "vehiclemonitor.can_list_own_bike_observation",
     )
@@ -81,10 +82,11 @@ class MyBikeObservationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class MyPhysicalTagViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.PhysicalTagSerializer
+    serializer_class = serializers.MyPhysicalTagSerializer
     required_permissions = (
         "vehicles.can_list_own_physical_tags",
     )
+    lookup_field = "epc"
 
     def get_queryset(self):
         return vehicles.models.PhysicalTag.objects.filter(
@@ -93,7 +95,7 @@ class MyPhysicalTagViewSet(viewsets.ReadOnlyModelViewSet):
 
 class MyBikeStatusViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
                           mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    serializer_class = serializers.BikeStatusSerializer
+    serializer_class = serializers.MyBikeStatusSerializer
     required_permissions = (
         "vehicles.can_list_own_bike_status",
         "vehicles.can_create_own_bike_status",
@@ -112,6 +114,49 @@ class MyBikeStatusViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
         return serializer_class(context=context, *args, **kwargs)
 
 
+class MySegmentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                       mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    required_permissions = (
+        "tracks.can_list_own_segments",
+        "tracks.can_delete_own_segments",
+    )
+
+    def get_queryset(self):
+        return tracks.models.Segment.objects.filter(
+            track__owner=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.MyBriefSegmentSerializer
+        else:
+            result = serializers.MySegmentSerializer
+        return result
+
+
+class MyTrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                     mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    required_permissions = (
+        "tracks.can_list_own_tracks",
+        "tracks.can_delete_own_tracks",
+    )
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_fields = (
+        "session_id",
+    )
+
+    def get_queryset(self):
+        return tracks.models.Track.objects.filter(owner=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.MyTrackListSerializer
+        else:
+            result = serializers.MyTrackDetailSerializer
+        return result
+
+
 class SmbUserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                      mixins.DestroyModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.SmbUserSerializer
@@ -120,7 +165,15 @@ class SmbUserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "profiles.can_list_users",
         "profiles.can_delete_user",
     )
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_fields = (
+        "email",
+        "username",
+    )
     lookup_field = "uuid"
+    pagination_class = pagination.SmbUserDumpPageNumberPagination
 
     def get_object(self):
         obj = self.get_queryset().get(keycloak__UID=self.kwargs["uuid"])
@@ -218,7 +271,6 @@ class BikeViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = "short_uuid"
 
 
-# TODO: should external users be allowed to delete existing tags?
 class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                          mixins.CreateModelMixin,  mixins.DestroyModelMixin,
                          viewsets.GenericViewSet):
@@ -241,32 +293,6 @@ class BikeStatusViewSet(viewsets.ReadOnlyModelViewSet):
         return vehicles.models.BikeStatus.objects.all()
 
 
-class GalleryViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.GallerySerializer
-    required_permissions = (
-        "vehicles.can_list_bikes",
-    )
-    required_object_permissions = (
-        "vehicles.can_edit_bike",
-    )
-
-    def get_queryset(self):
-        return photologue.models.Gallery.objects.all()
-
-
-class PictureViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.PictureSerializer
-    required_permissions = (
-        "vehicles.can_list_bikes",
-    )
-    required_object_permissions = (
-        "vehicles.can_edit_bike",
-    )
-
-    def get_queryset(self):
-        return photologue.models.Photo.objects.all()
-
-
 class BikeObservationViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                              mixins.CreateModelMixin, mixins.DestroyModelMixin,
                              viewsets.GenericViewSet):
@@ -275,3 +301,33 @@ class BikeObservationViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "vehiclemonitor.can_list_bike_observation",
     )
     queryset = vehiclemonitor.models.BikeObservation.objects.all()
+
+
+class TrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                   viewsets.GenericViewSet):
+    required_permissions = (
+        "tracks.can_list_tracks",
+    )
+    queryset = tracks.models.Track.objects.all()
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_fields = (
+        "session_id",
+    )
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.TrackListSerializer
+        else:
+            result = serializers.TrackDetailSerializer
+        return result
+
+
+class SegmentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                     viewsets.GenericViewSet):
+    serializer_class = serializers.SegmentSerializer
+    required_permissions = (
+        "tracks.can_list_segments",
+    )
+    queryset = tracks.models.Segment.objects.all()

@@ -45,7 +45,9 @@ def update_user_data(user, token):
 
 
 def update_user_details(user, token):
-    user.email = token["email"]
+    email = token.get("email")
+    if email is not None:
+        user.email = email
     user.save()
 
 

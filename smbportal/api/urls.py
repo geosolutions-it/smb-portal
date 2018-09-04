@@ -43,6 +43,16 @@ router.register(
     base_name="my-bike-observations"
 )
 router.register(
+    prefix="my-segments",
+    viewset=views.MySegmentViewSet,
+    base_name="my-segments"
+)
+router.register(
+    prefix="my-tracks",
+    viewset=views.MyTrackViewSet,
+    base_name="my-tracks"
+)
+router.register(
     prefix="users",
     viewset=views.SmbUserViewSet,
     base_name="users"
@@ -63,19 +73,19 @@ router.register(
     base_name="bike-statuses"
 )
 router.register(
-    prefix="picture-galleries",
-    viewset=views.GalleryViewSet,
-    base_name="picture-galleries"
-)
-router.register(
-    prefix="pictures",
-    viewset=views.PictureViewSet,
-    base_name="pictures"
-)
-router.register(
     prefix="bike-observations",
     viewset=views.BikeObservationViewSet,
     base_name="bike-observations"
+)
+router.register(
+    prefix="tracks",
+    viewset=views.TrackViewSet,
+    base_name="tracks"
+)
+router.register(
+    prefix="segments",
+    viewset=views.SegmentViewSet,
+    base_name="segments"
 )
 
 schema_view = get_schema_view(

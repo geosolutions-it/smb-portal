@@ -61,7 +61,7 @@ def test_smbuserhyperlinkedrelatedfield_returns_uuid(api_request_factory,
     assert result.endswith("{}/".format(fake_uuid))
 
 
-def test_smbuserserializer_returns_uuid(api_request_factory, mocked_user):
+def test_smbuserserializer_returns_uuid(api_request_factory, mocked_end_user):
     """verify that SmbUserSerializer returns the correct id data
 
     SmbUserSerializer should show ``id`` as being the keycloak UUID. Django
@@ -72,12 +72,9 @@ def test_smbuserserializer_returns_uuid(api_request_factory, mocked_user):
     fake_uuid = "fake uuid"
     fake_request = api_request_factory.get(
         reverse("api:users-detail", kwargs={"uuid": fake_uuid}))
-    mocked_user.keycloak.return_value = mock.MagicMock(spec=Keycloak)
-    mocked_user.keycloak.UID = fake_uuid
-    mocked_user.profile = None
     serializer = serializers.SmbUserSerializer(
-        instance=mocked_user,
+        instance=mocked_end_user,
         context={"request": fake_request}
     )
     serializer_data = serializer.data
-    assert serializer_data["uuid"] == fake_uuid
+    assert serializer_data["uuid"] == mocked_end_user.keycloak.UID

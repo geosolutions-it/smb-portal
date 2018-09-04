@@ -53,6 +53,9 @@ coverage.xml
 .hypothesis/
 .pytest_cache
 
+# acceptance tests
+test_portal_acceptance/
+
 # Translations
 *.mo
 *.pot
