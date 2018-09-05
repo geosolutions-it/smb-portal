@@ -20,12 +20,11 @@ INSERT INTO tracks_collectedpoint (
     speed,
     temperature,
     sessionid,
-    timestamp,
-
+    timestamp
 ) VALUES (
     %(vehicle_type)s,
     %(track_id)s,
-    ST_MakePoint(%(longitude)s, %(latitude)s),
+    ST_SetSRID(ST_MakePoint(%(longitude)s, %(latitude)s), 4326),
     %(accelerationx)s,
     %(accelerationy)s,
     %(accelerationz)s,
