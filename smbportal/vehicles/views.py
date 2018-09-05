@@ -91,7 +91,7 @@ class BikeCreateView(LoginRequiredMixin, mixins.FormUpdatedMessageMixin,
         form_kwargs.update({
             "user": self.request.user,
             "is_ajax": self.request.is_ajax(),
-            "submit_value": "Create bike",
+            "submit_value": _("Create bike"),
             "action": reverse("bikes:create")
         })
         return form_kwargs
