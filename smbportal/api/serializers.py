@@ -771,7 +771,7 @@ class SegmentSerializer(serializers.ModelSerializer):
     )
 
     def get_geom(self, obj):
-        return obj.geom.wkt
+        return obj.geom.geojson
 
     def get_emissions(self, obj):
         serializer = EmissionSerializer(
