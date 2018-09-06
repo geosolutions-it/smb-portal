@@ -21,62 +21,96 @@ class VehicleType(Enum):
     scooter = 5
     motorbike = 6
     average_motorbike = 7
-    unknown = 8
+    train = 8
+    unknown = 9
+
+
+class Pollutant(Enum):
+    so2 = 1
+    nox = 2
+    co = 3
+    co2 = 4
+    pm10 = 5
+
+
+AVERAGE_PASSENGER_COUNT = {
+    VehicleType.foot: 1,
+    VehicleType.bike: 1,
+    VehicleType.scooter: 1,
+    VehicleType.motorbike: 1,
+    VehicleType.average_motorbike: 1,
+    VehicleType.bus: 40,
+    VehicleType.car: 1.5,
+    VehicleType.train: 50,
+}
 
 
 def _get_average(*args):
     return sum(args) / len(args)
 
 
-SO2 = {
-    "unit": "mg/km",
-    VehicleType.car: 1.1,
-    VehicleType.bus: 4.4,
-    VehicleType.scooter: 0.3,
-    VehicleType.motorbike: 0.6,
+EMISSIONS = {
+    Pollutant.so2: {
+        "unit": "mg/km",
+        VehicleType.car: 1.1,
+        VehicleType.bus: 4.4,
+        VehicleType.scooter: 0.3,
+        VehicleType.motorbike: 0.6,
+        VehicleType.train: 0,
+    },
+    Pollutant.nox: {
+        "unit": "mg/km",
+        VehicleType.car: 460,
+        VehicleType.bus: 6441,
+        VehicleType.scooter: 158,
+        VehicleType.motorbike: 165,
+        VehicleType.train: 0,
+    },
+    Pollutant.co: {
+        "unit": "mg/km",
+        VehicleType.car: 617,
+        VehicleType.bus: 1451,
+        VehicleType.scooter: 5282,
+        VehicleType.motorbike: 6505,
+        VehicleType.train: 0,
+    },
+    Pollutant.co2: {
+        "unit": "g/km",
+        VehicleType.car: 177,
+        VehicleType.bus: 668,
+        VehicleType.scooter: 49,
+        VehicleType.motorbike: 100,
+        VehicleType.train: 65,
+    },
+    Pollutant.pm10: {
+        "unit": "mg/km",
+        VehicleType.car: 46,
+        VehicleType.bus: 273,
+        VehicleType.scooter: 96,
+        VehicleType.motorbike: 34,
+        VehicleType.train: 0,
+    },
 }
-SO2[VehicleType.average_motorbike] = _get_average(
-    SO2[VehicleType.scooter], SO2[VehicleType.motorbike])
-
-NOX = {
-    "unit": "mg/km",
-    VehicleType.car: 460,
-    VehicleType.bus: 6441,
-    VehicleType.scooter: 158,
-    VehicleType.motorbike: 165,
-}
-NOX[VehicleType.average_motorbike] = _get_average(
-    NOX[VehicleType.scooter], NOX[VehicleType.motorbike])
-
-CO = {
-    "unit": "mg/km",
-    VehicleType.car: 617,
-    VehicleType.bus: 1451,
-    VehicleType.scooter: 5282,
-    VehicleType.motorbike: 6505,
-}
-CO[VehicleType.average_motorbike] = _get_average(
-    CO[VehicleType.scooter], CO[VehicleType.motorbike])
-
-CO2 = {
-    "unit": "g/km",
-    VehicleType.car: 177,
-    VehicleType.bus: 668,
-    VehicleType.scooter: 49,
-    VehicleType.motorbike: 100,
-}
-CO2[VehicleType.average_motorbike] = _get_average(
-    CO2[VehicleType.scooter], CO2[VehicleType.motorbike])
-
-PM10 = {
-    "unit": "mg/km",
-    VehicleType.car: 46,
-    VehicleType.bus: 273,
-    VehicleType.scooter: 96,
-    VehicleType.motorbike: 34,
-}
-PM10[VehicleType.average_motorbike] = _get_average(
-    PM10[VehicleType.scooter], PM10[VehicleType.motorbike])
+EMISSIONS[Pollutant.so2][VehicleType.average_motorbike] = _get_average(
+    EMISSIONS[Pollutant.so2][VehicleType.scooter],
+    EMISSIONS[Pollutant.so2][VehicleType.motorbike]
+)
+EMISSIONS[Pollutant.nox][VehicleType.average_motorbike] = _get_average(
+    EMISSIONS[Pollutant.nox][VehicleType.scooter],
+    EMISSIONS[Pollutant.nox][VehicleType.motorbike]
+)
+EMISSIONS[Pollutant.co][VehicleType.average_motorbike] = _get_average(
+    EMISSIONS[Pollutant.co][VehicleType.scooter],
+    EMISSIONS[Pollutant.co][VehicleType.motorbike]
+)
+EMISSIONS[Pollutant.co2][VehicleType.average_motorbike] = _get_average(
+    EMISSIONS[Pollutant.co2][VehicleType.scooter],
+    EMISSIONS[Pollutant.co2][VehicleType.motorbike]
+)
+EMISSIONS[Pollutant.pm10][VehicleType.average_motorbike] = _get_average(
+    EMISSIONS[Pollutant.pm10][VehicleType.scooter],
+    EMISSIONS[Pollutant.pm10][VehicleType.motorbike]
+)
 
 FUEL_PRICE = {
     "unit": "eur/l",
@@ -84,6 +118,7 @@ FUEL_PRICE = {
     VehicleType.car: 1,
     VehicleType.motorbike: 0.8,
     VehicleType.scooter: 0.8,
+    VehicleType.train: 0,
 }
 FUEL_PRICE[VehicleType.average_motorbike] = _get_average(
     FUEL_PRICE[VehicleType.scooter], FUEL_PRICE[VehicleType.motorbike])
@@ -94,6 +129,7 @@ FUEL_CONSUMPTION = {
     VehicleType.car: 11.5,
     VehicleType.motorbike: 20,
     VehicleType.scooter: 30,
+    VehicleType.train: 0,
 }
 FUEL_CONSUMPTION[VehicleType.average_motorbike] = _get_average(
     FUEL_CONSUMPTION[VehicleType.scooter],
@@ -108,6 +144,7 @@ DEPRECIATION_COST = {
     VehicleType.car: 0.106,
     VehicleType.motorbike: 0.111,
     VehicleType.scooter: 0.089,
+    VehicleType.train: 0,
 }
 DEPRECIATION_COST[VehicleType.average_motorbike] = _get_average(
     DEPRECIATION_COST[VehicleType.scooter],
@@ -120,11 +157,16 @@ OPERATION_COST = {
     VehicleType.car: 0.072,
     VehicleType.motorbike: 0.058,
     VehicleType.scooter: 0.162,
+    VehicleType.train: 0,
 }
 OPERATION_COST[VehicleType.average_motorbike] = _get_average(
     OPERATION_COST[VehicleType.scooter],
     OPERATION_COST[VehicleType.motorbike]
 )
+
+TOTAL_COST_OVERHEAD = {
+    VehicleType.car: 0.2,
+}
 
 CALORY_CONSUMPTION = {
     "unit": "cal/minute",

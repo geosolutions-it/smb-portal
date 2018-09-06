@@ -8,13 +8,23 @@
 #
 #########################################################################
 
-"""Data receiver utilities"""
+"""Data receiver utilities
 
-# -  whenever data is stored in AWS S3, a new message is pushed to SNS, which
-#    asynchronously delivers it to subscribed consumers
-# -  some web app exposes an endpoint that is subscribed to the AWS SNS
-# -  SNS issues a POST request to the web app's endpoint, sending a message
-#    that informs of new data present in S3
+This module performs ingestion of the location points collected by the smb-app.
+
+-  The mobile app collects data and sends it to an AWS S3 bucket.
+-  whenever data is stored in S3, a new message is pushed to AWS SNS, which
+   asynchronously delivers it to subscribed consumers
+-  some web app (such as the AWS gateway, or the smb-portal) exposes an
+   endpoint that is subscribed to the AWS SNS
+-  SNS issues a POST request to the web app's endpoint, sending a message
+   that informs of new data present in S3
+-  At that point, the web app can call into this module's
+   ``handle_track_upload`` function. This will take care of fetching the data
+   and update the database
+
+"""
+
 
 from collections import namedtuple
 import datetime as dt
@@ -23,7 +33,6 @@ import logging
 import os
 import pathlib
 import re
-from typing import Dict
 from typing import List
 import zipfile
 
@@ -67,9 +76,9 @@ PointData = namedtuple("PointData", _DATA_FIELDS)
 SegmentInfo = namedtuple("SegmentInfo", [
     "id",
     "vehicle_type",
-    "length",
-    "duration",
-    "speed"
+    "length_km",
+    "duration_hours",
+    "speed_km_h"
 ])
 
 
@@ -90,8 +99,11 @@ def handle_track_upload(s3_bucket_name: str, object_key: str, db_connection):
     except AttributeError:
         raise RuntimeError(
             "Could not determine track owner for object {}".format(object_key))
+    logger.debug("Retrieving data from S3 bucket...")
     raw_data = retrieve_track_data(s3_bucket_name, object_key)
+    logger.debug("Parsing retrieved track data...")
     parsed_data = parse_track_data(raw_data)
+    logger.debug("Performing calculations and creating database records...")
     with db_connection:  # changes are committed when `with` block exits
         with db_connection.cursor() as cursor:
             user_id = get_track_owner_internal_id(track_owner, cursor)
@@ -99,18 +111,28 @@ def handle_track_upload(s3_bucket_name: str, object_key: str, db_connection):
             insert_collected_points(track_id, parsed_data, cursor)
             insert_segments(track_id, track_owner, cursor)
             segments_info = get_segments_info(track_id, cursor)
-            for info in segments_info:
+            for index, info in enumerate(segments_info):
                 emissions = calculate_emissions(
-                    info.vehicle_type, info.length)
+                    info.vehicle_type, info.length_km)
                 costs = calculate_costs(
-                    info.vehicle_type, info.length, info.duration)
+                    info.vehicle_type, info.length_km, info.duration_hours)
+                duration_minutes = info.duration_hours * 60
                 health = calculate_health(
-                    info.vehicle_type, info.duration, info.speed)
+                    info.vehicle_type, duration_minutes, info.speed_km_h)
                 insert_segment_data(info.id, emissions, costs, health, cursor)
+            update_track_aggregated_data(track_id, cursor)
+    return track_id
 
 
-def get_aggregated_emissions(track_id):
-    pass
+def update_track_aggregated_data(track_id, db_cursor):
+    query_kwargs = {"track_id": track_id}
+    queries = [
+        "update-track-aggregated-emissions.sql",
+        "update-track-aggregated-costs.sql",
+        "update-track-aggregated-health.sql",
+    ]
+    for query_file in queries:
+        db_cursor.execute(_get_query(query_file), query_kwargs)
 
 
 def insert_segment_data(segment_id, emissions, costs, health, db_cursor):
@@ -131,15 +153,15 @@ def get_segments_info(track_id, db_cursor):
     for row in db_cursor.fetchall():
         segment_id, vehicle_type, length_meters, duration = row
         length_km = length_meters / 1000
-        duration_hours = duration.seconds / (60 * 60)
+        duration_hours = duration.days * 24 + duration.seconds / (60 * 60)
         avg_speed = length_km / duration_hours  # km/h
         result.append(
             SegmentInfo(
                 id=segment_id,
-                vehicle_type=_constants.VehicleType[vehicle_type],
-                length=length_meters,
-                duration=duration,
-                speed=avg_speed
+                vehicle_type=VehicleType[vehicle_type],
+                length_km=length_km,
+                duration_hours=duration_hours,
+                speed_km_h=avg_speed
             )
         )
     return result
@@ -155,66 +177,85 @@ def _perform_segment_insert(query_filename, segment_id, query_params: dict,
     )
 
 
-# FIXME - Account for emission savings on vehicles other than car
-def calculate_emissions(vehicle_type: _constants.VehicleType,
-                        segment_length: float) -> dict:
-    calculated = {
-        "so2": _constants.SO2[vehicle_type] * segment_length,
-        "nox": _constants.NOX[vehicle_type] * segment_length,
-        "co2": _constants.CO2[vehicle_type] * segment_length,
-        "co": _constants.CO[vehicle_type] * segment_length,
-        "pm10": _constants.PM10[vehicle_type] * segment_length,
-    }
-    reference_emissions = {
-        "so2": _constants.SO2[VehicleType.car] * segment_length,
-        "nox": _constants.NOX[VehicleType.car] * segment_length,
-        "co2": _constants.CO2[VehicleType.car] * segment_length,
-        "co": _constants.CO[VehicleType.car] * segment_length,
-        "pm10": _constants.PM10[VehicleType.car] * segment_length,
-    }
-    emissions = {
-        "so2": 0,
-        "so2_saved": 0,
-        "nox": 0,
-        "nox_saved": 0,
-        "co2": 0,
-        "co2_saved": 0,
-        "co": 0,
-        "co_saved": 0,
-        "pm10": 0,
-        "pm10_saved": 0,
-    }
-    if vehicle_type in ("foot", "bike"):
-        emissions.update({
-            "so2_saved": calculated["so2"],
-            "nox_saved": calculated["nox"],
-            "co2_saved": calculated["co2"],
-            "co_saved": calculated["co"],
-            "pm10_saved": calculated["pm10"],
+def calculate_emissions(vehicle_type: VehicleType,
+                        segment_length:float) -> dict:
+    result = {}
+    for pollutant, coeffs in _constants.EMISSIONS.items():
+        emitted = (
+            (coeffs.get(vehicle_type, 0) * segment_length) /
+            _constants.AVERAGE_PASSENGER_COUNT.get(vehicle_type, 1)
+        )
+        reference = (
+            (coeffs[VehicleType.car] * segment_length) /
+            _constants.AVERAGE_PASSENGER_COUNT[VehicleType.car]
+        )
+        saved = reference - emitted if vehicle_type != VehicleType.car else 0
+        result.update({
+            pollutant.name: emitted,
+            "{}_saved".format(pollutant.name): saved
         })
+    return result
+
+
+def calculate_costs(vehicle_type: VehicleType, length_km: float,
+                    duration_hours: float):
+    public_transports = [
+        vehicle_type.bus,
+        vehicle_type.train,
+    ]
+    if vehicle_type in public_transports:
+        costs = _calculate_costs_public_transportation(
+            vehicle_type, length_km, duration_hours)
     else:
-        emissions.update({
-            "so2": calculated["so2"],
-            "nox": calculated["nox"],
-            "co2": calculated["co2"],
-            "co": calculated["co"],
-            "pm10": calculated["pm10"],
-        })
-    return emissions
-
-
-def calculate_costs(vehicle_type, length, duration):
-    fuel_cost = _get_fuel_cost(length, vehicle_type)
-    time_cost = _get_time_cost(duration)
-    depreciation_cost = _get_depreciation_cost(length, vehicle_type)
-    operation_cost = _get_operation_cost(length, vehicle_type)
-    return {
-        "fuel": fuel_cost,
-        "time": time_cost,
-        "depreciation": depreciation_cost,
-        "operation": operation_cost,
-        "total": fuel_cost + time_cost + depreciation_cost + operation_cost,
+        costs = _calculate_costs_private_vehicle(
+            vehicle_type, length_km, duration_hours)
+    result = {
+        "fuel_cost": costs[0],
+        "time_cost": costs[1],
+        "depreciation_cost": costs[2],
+        "operation_cost": costs[3],
+        "total_cost": costs[4],
     }
+    return result
+
+
+def _calculate_costs_private_vehicle(vehicle_type: VehicleType,
+                                     length_km: float, duration_hours: float):
+    """Calculate monetary costs associated with using a private vehicle
+
+    - Fuel, depreciation and operation costs do not take into account the
+      passenger count as these costs are usually supported solely by the
+      vehicle's owner, even if there are other passengers aboard
+    - The total cost may be enlarged according to the vehicle type, in order
+      to provide an account of other costs
+
+    """
+
+    fuel_cost = _get_fuel_cost(length_km, vehicle_type)
+    time_cost = duration_hours * _constants.TIME_COST_PER_HOUR_EURO
+    depreciation_cost = (
+            length_km * _constants.DEPRECIATION_COST.get(vehicle_type, 0))
+    operation_cost = length_km * _constants.OPERATION_COST.get(vehicle_type, 0)
+    total_cost = (
+            sum((fuel_cost, time_cost, depreciation_cost, operation_cost)) *
+            (1 + _constants.TOTAL_COST_OVERHEAD.get(vehicle_type, 0))
+    )
+
+    return fuel_cost, time_cost, depreciation_cost, operation_cost, total_cost
+
+
+def _calculate_costs_public_transportation(vehicle_type: VehicleType,
+                                           length_km:float,
+                                           duration_hours: float):
+    fuel_cost = 0
+    time_cost = duration_hours * _constants.TIME_COST_PER_HOUR_EURO
+    depreciation_cost = 0
+    operation_cost = 0
+    total_cost = (
+            sum((fuel_cost, time_cost, depreciation_cost, operation_cost)) *
+            (1 + _constants.TOTAL_COST_OVERHEAD.get(vehicle_type, 0))
+    )
+    return fuel_cost, time_cost, depreciation_cost, operation_cost, total_cost
 
 
 def _get_fuel_cost(length, vehicle_type):
@@ -226,42 +267,22 @@ def _get_fuel_cost(length, vehicle_type):
     return monetary_cost
 
 
-def _get_time_cost(duration):
-    duration_hours = duration.seconds / (60 * 60)
-    return duration_hours * _constants.TIME_COST_PER_HOUR_EURO
-
-
-def _get_depreciation_cost(length, vehicle_type):
-    try:
-        return length * _constants.DEPRECIATION_COST[vehicle_type]
-    except KeyError:
-        return 0
-
-
-def _get_operation_cost(length, vehicle_type):
-    try:
-        return length * _constants.OPERATION_COST[vehicle_type]
-    except KeyError:
-        return 0
-
-
-def calculate_health(vehicle_type, duration, speed):
+def calculate_health(vehicle_type, duration_minutes, speed_km_h):
     return {
-        "consumed_calories": _get_consumed_calories(
-            speed, duration, vehicle_type),
+        "calories_consumed": _get_consumed_calories(
+            speed_km_h, duration_minutes, vehicle_type),
         # "benefit_index": None  # TODO
     }
 
 
-def _get_consumed_calories(speed, duration, vehicle_type):
-    duration_minutes = duration.seconds / 60
+def _get_consumed_calories(speed_km_h, duration_minutes, vehicle_type):
     try:
         steps = _constants.CALORY_CONSUMPTION[vehicle_type]["steps"]
     except KeyError:
         result = 0
     else:
         for step in steps:
-            if speed < step["speed"]:
+            if speed_km_h < step["speed"]:
                 consumption_per_minute = step["calories"]
                 break
         else:
@@ -379,7 +400,10 @@ def get_track_owner_internal_id(keycloak_uuid: str, db_cursor):
         "SELECT user_id FROM bossoidc_keycloak WHERE \"UID\" = %s",
         (keycloak_uuid,)
     )
-    return db_cursor.fetchone()[0]
+    try:
+        return db_cursor.fetchone()[0]
+    except TypeError:
+        raise RuntimeError("Could not determine track owner internal ID")
 
 
 def _get_query(filename) -> str:
