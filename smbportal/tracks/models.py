@@ -66,19 +66,36 @@ class Track(models.Model):
                     "each vehicle type. These are pre-computed from segment "
                     "data in order to improve runtime performance.")
     )
+    start_date = models.DateTimeField(
+        _("start date"),
+        blank=True,
+        null=True
+    )
+    end_date = models.DateTimeField(
+        _("end date"),
+        blank=True,
+        null=True
+    )
+    duration = models.FloatField(
+        _("duration"),
+        blank=True,
+        null=True,
+        help_text=_("Track duration, measured in minutes")
+    )
+    geom = gismodels.LineStringField(
+        _("geometry"),
+        null=True,
+        blank=True,
+    )
+    length = models.FloatField(
+        _("length"),
+        blank=True,
+        null=True,
+        help_text=_("Track length, measured in meters")
+    )
 
     class Meta:
-        ordering = ["created_at"]
-
-    def get_duration(self):
-        try:
-            start_date = self.segments.first().start_date
-            end_date = self.segments.last().end_date
-        except AttributeError:  # this track has no segments
-            result = None
-        else:
-            result = end_date - start_date
-        return result
+        ordering = ["start_date"]
 
 
 class CollectedPoint(gismodels.Model):
