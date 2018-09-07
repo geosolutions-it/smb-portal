@@ -12,19 +12,21 @@
 
 This module performs ingestion of the location points collected by the smb-app.
 
--  The mobile app collects data and sends it to an AWS S3 bucket.
+Workflow is something like:
+
+-  Mobile app collects data and sends it to an AWS S3 bucket;
 -  whenever data is stored in S3, a new message is pushed to AWS SNS, which
-   asynchronously delivers it to subscribed consumers
--  some web app (such as the AWS gateway, or the smb-portal) exposes an
-   endpoint that is subscribed to the AWS SNS
+   asynchronously delivers it to subscribed consumers;
+-  Some web app (such as the AWS gateway, or the smb-portal) exposes an
+   endpoint that is subscribed to the AWS SNS' topic used by the mibile app to
+   push the notification;
 -  SNS issues a POST request to the web app's endpoint, sending a message
-   that informs of new data present in S3
+   that informs of new data present in S3;
 -  At that point, the web app can call into this module's
    ``handle_track_upload`` function. This will take care of fetching the data
    and update the database
 
 """
-
 
 from collections import namedtuple
 import datetime as dt
@@ -69,7 +71,6 @@ _DATA_FIELDS = [
     "timeStamp",
     "vehicleMode",
     "serialVersionUID",
-
 ]
 
 PointData = namedtuple("PointData", _DATA_FIELDS)
@@ -92,7 +93,8 @@ def get_db_connection(dbname, user, password, host="localhost", port="5432"):
     )
 
 
-def handle_track_upload(s3_bucket_name: str, object_key: str, db_connection):
+def handle_track_upload(s3_bucket_name: str, object_key: str,
+                        db_connection) -> int:
     """Ingest track data into smb database"""
     try:
         track_owner = get_track_owner_uuid(object_key)
@@ -130,6 +132,7 @@ def update_track_aggregated_data(track_id, db_cursor):
         "update-track-aggregated-emissions.sql",
         "update-track-aggregated-costs.sql",
         "update-track-aggregated-health.sql",
+        "update-track-info.sql",
     ]
     for query_file in queries:
         db_cursor.execute(_get_query(query_file), query_kwargs)
@@ -303,7 +306,7 @@ def insert_segments(track_id: str, owner_uuid: str, db_cursor):
     return [item[0] for item in segment_ids]
 
 
-def insert_track(track_data: List[PointData], owner: str, db_cursor) -> str:
+def insert_track(track_data: List[PointData], owner: str, db_cursor) -> int:
     """Insert track data into the main database"""
     session_id = list(set([pt.sessionId for pt in track_data]))[0]
     query = _get_query("insert-track.sql")
@@ -351,16 +354,6 @@ def insert_collected_points(track_id: str, track_data: List[PointData],
                 ),
             }
         )
-
-
-def _get_vehicle_type(raw_vehicle_type):
-    return {
-        "foot": _constants.VehicleType.foot,
-        "bike": _constants.VehicleType.bike,
-        "bus": _constants.VehicleType.bus,
-        "car": _constants.VehicleType.car,
-        "moped": _constants.VehicleType.average_motorbike,
-    }.get(raw_vehicle_type, _constants.VehicleType.unknown)
 
 
 def retrieve_track_data(s3_bucket: str, object_key: str) -> str:
@@ -412,3 +405,27 @@ def _get_query(filename) -> str:
     with query_path.open(encoding="utf-8") as fh:
         query = fh.read()
     return query
+
+
+def _get_vehicle_type(raw_vehicle_type: str) -> VehicleType:
+    """Return the vehicle type as used in the portal DB
+
+    The mapping between vehicle types is based on the structure of the java
+    enum used in the app's source code:
+
+    https://github.com/geosolutions-it/smb-app/blob/72b3a336f97c600fee9b63d63af46a955076f6e9/app/src/main/java/it/geosolutions/savemybike/model/Vehicle.java#L14
+
+    >>> _get_vehicle_type("1")
+    'foot'
+    >>> _get_vehicle_type("2")
+    'bike'
+
+    """
+    return {
+        "1": VehicleType.foot,
+        "2": VehicleType.bike,
+        "3": VehicleType.bus,
+        "4": VehicleType.car,
+        "5": VehicleType.average_motorbike,  # moped
+        "6": VehicleType.train,
+    }.get(raw_vehicle_type, VehicleType.unknown)

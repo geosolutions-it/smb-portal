@@ -10,7 +10,7 @@ SELECT
   track_id AS track_id,
   %(user_uuid)s AS user_uuid,
   vehicle_type AS vehicle_type,
-  ST_SetSRID(ST_MakeLine(the_geom), 4326) AS geom,
+  ST_MakeLine(the_geom) AS geom,
   MIN(timestamp) AS start,
   MAX(timestamp) AS end
 FROM (
@@ -32,7 +32,7 @@ FROM (
     ) AS sq
   ) as sq2
 GROUP BY
-  track_id,
+  clustr,
   vehicle_type,
-  clustr
+  track_id
 RETURNING id, vehicle_type

@@ -114,10 +114,10 @@ EMISSIONS[Pollutant.pm10][VehicleType.average_motorbike] = _get_average(
 
 FUEL_PRICE = {
     "unit": "eur/l",
-    VehicleType.bus: 1,
-    VehicleType.car: 1,
-    VehicleType.motorbike: 0.8,
-    VehicleType.scooter: 0.8,
+    VehicleType.bus: 1.432,
+    VehicleType.car: 1.417,
+    VehicleType.motorbike: 1.545,
+    VehicleType.scooter: 1.545,
     VehicleType.train: 0,
 }
 FUEL_PRICE[VehicleType.average_motorbike] = _get_average(
