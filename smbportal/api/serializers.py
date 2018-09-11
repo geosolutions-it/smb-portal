@@ -552,36 +552,6 @@ class MyBikeObservationSerializer(BikeObservationSerializer):
         )
 
 
-class BriefBikeSerializer(serializers.HyperlinkedModelSerializer):
-
-    url = serializers.HyperlinkedIdentityField(
-        view_name="api:bikes-detail",
-        lookup_field="short_uuid",
-    )
-
-    class Meta:
-        model = vehicles.models.Bike
-        fields = (
-            "short_uuid",
-            "url"
-        )
-
-
-class MyBriefBikeSerializer(serializers.HyperlinkedModelSerializer):
-
-    url = serializers.HyperlinkedIdentityField(
-        view_name="api:my-bikes-detail",
-        lookup_field="short_uuid",
-    )
-
-    class Meta:
-        model = vehicles.models.Bike
-        fields = (
-            "short_uuid",
-            "url"
-        )
-
-
 class TrackListSerializer(serializers.ModelSerializer):
     owner = SmbUserHyperlinkedRelatedField(
         view_name="api:users-detail",
@@ -590,35 +560,20 @@ class TrackListSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name="api:tracks-detail")
     segments = serializers.SerializerMethodField()
     vehicle_types = serializers.SerializerMethodField()
-    bikes = serializers.SerializerMethodField()
-    emissions = serializers.DictField(source="aggregated_emissions.totals")
-    costs = serializers.DictField(source="aggregated_costs.totals")
-    health = serializers.DictField(source="aggregated_health.totals")
-    duration = serializers.SerializerMethodField()
+    emissions = serializers.DictField(source="aggregated_emissions")
+    costs = serializers.DictField(source="aggregated_costs")
+    health = serializers.DictField(source="aggregated_health")
+    duration_minutes = serializers.FloatField(source="duration")
+    length_meters = serializers.FloatField(source="length")
 
     def get_vehicle_types(self, obj):
-        qs = obj.segments.values_list("vehicle_type", flat=True).distinct()
-        return list(qs)
+        unique_types = set(obj.segments.values_list("vehicle_type", flat=True))
+        return list(unique_types)
 
     def get_segments(self, obj):
         serializer = BriefSegmentSerializer(
             instance=obj.segments, many=True, context=self.context)
         return serializer.data
-
-    def get_bikes(self, obj):
-        bike_ids_qs = obj.segments.values_list("vehicle_id", flat=True).filter(
-            vehicle_id__isnull=False).distinct()
-        # forcing qs execution here because django ORM barfs if we use a UUID
-        # in an IN clause - it does not add the correct type casts
-        bikes = vehicles.models.Bike.objects.filter(id__in=list(bike_ids_qs))
-        serializer = BriefBikeSerializer(
-            instance=bikes, many=True, context=self.context)
-        return serializer.data
-
-    def get_duration(self, obj):
-        """Return the track duration, in minutes"""
-        delta = obj.get_duration()
-        return delta.seconds / 60 if delta is not None else None
 
     class Meta:
         model = tracks.models.Track
@@ -627,11 +582,12 @@ class TrackListSerializer(serializers.ModelSerializer):
             "url",
             "session_id",
             "owner",
-            "duration",
             "segments",
-            "created_at",
+            "start_date",
+            "end_date",
+            "duration_minutes",
+            "length_meters",
             "vehicle_types",
-            "bikes",
             "emissions",
             "costs",
             "health",
@@ -651,16 +607,6 @@ class MyTrackListSerializer(TrackListSerializer):
             instance=obj.segments, many=True, context=self.context)
         return serializer.data
 
-    def get_bikes(self, obj):
-        bike_ids_qs = obj.segments.values_list("vehicle_id", flat=True).filter(
-            vehicle_id__isnull=False).distinct()
-        # forcing qs execution here because django ORM barfs if we use a UUID
-        # in an IN clause - it does not add the correct type casts
-        bikes = vehicles.models.Bike.objects.filter(id__in=list(bike_ids_qs))
-        serializer = MyBriefBikeSerializer(
-            instance=bikes, many=True, context=self.context)
-        return serializer.data
-
     class Meta:
         model = tracks.models.Track
         fields = (
@@ -668,11 +614,12 @@ class MyTrackListSerializer(TrackListSerializer):
             "url",
             "session_id",
             "owner",
-            "duration",
             "segments",
-            "created_at",
+            "start_date",
+            "end_date",
+            "duration_minutes",
+            "length_meters",
             "vehicle_types",
-            "bikes",
             "emissions",
             "costs",
             "health",
@@ -684,8 +631,7 @@ class TrackDetailSerializer(TrackListSerializer):
 
     Similar to TrackListSerializer, with the following enhancements:
 
-    - `emissions`, `costs` and `health` fields retun both **total values**
-      and also **segmented by vehicle type**
+    - `emissions`, `costs` and `health` fields **total values**
     - `segments` field returns the full representation for each segment
 
     """
@@ -706,11 +652,12 @@ class TrackDetailSerializer(TrackListSerializer):
             "url",
             "session_id",
             "owner",
-            "duration",
             "segments",
-            "created_at",
+            "start_date",
+            "end_date",
+            "duration_minutes",
+            "length_meters",
             "vehicle_types",
-            "bikes",
             "emissions",
             "costs",
             "health",
@@ -725,16 +672,6 @@ class MyTrackDetailSerializer(TrackDetailSerializer):
     def get_owner(self, obj):
         return reverse("api:my-user", request=self.context.get("request"))
 
-    def get_bikes(self, obj):
-        bike_ids_qs = obj.segments.values_list("vehicle_id", flat=True).filter(
-            vehicle_id__isnull=False).distinct()
-        # forcing qs execution here because django ORM barfs if we use a UUID
-        # in an IN clause - it does not add the correct type casts
-        bikes = vehicles.models.Bike.objects.filter(id__in=list(bike_ids_qs))
-        serializer = MyBriefBikeSerializer(
-            instance=bikes, many=True, context=self.context)
-        return serializer.data
-
     def get_segments(self, obj):
         serializer = MySegmentSerializer(
             instance=obj.segments, many=True, context=self.context)
@@ -747,11 +684,12 @@ class MyTrackDetailSerializer(TrackDetailSerializer):
             "url",
             "session_id",
             "owner",
-            "duration",
             "segments",
-            "created_at",
+            "start_date",
+            "end_date",
+            "duration_minutes",
+            "length_meters",
             "vehicle_types",
-            "bikes",
             "emissions",
             "costs",
             "health",

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-05 11:11+0200\n"
+"POT-Creation-Date: 2018-09-07 13:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -445,7 +445,7 @@ msgstr "Benvenuto su Good_Go!"
 
 #: .\templates\base\home.html:21
 msgid "The mobility game that rewards"
-msgstr "Il gioco della mobilità che ripaga"
+msgstr "Il gioco della mobilità che ripaga!"
 
 #: .\templates\base\home.html:37
 msgid "Protect your bikes"
@@ -655,7 +655,7 @@ msgstr "Nuovo sondagio sulla mobilità"
 msgid "Bicycle usage"
 msgstr "Utilizzo della bicicletta"
 
-#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:7
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:7
 #, fuzzy, python-format
 #| msgid "%(bicycle_usage)s"
 msgid "%(bicycle_usage)s"
@@ -665,7 +665,7 @@ msgstr "Utilizzo della bicicletta"
 msgid "Public transport usage"
 msgstr "Utilizzo dei trasporti pubblici"
 
-#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:13
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:13
 #, fuzzy, python-format
 #| msgid "%(public_transport_usage)s"
 msgid "%(public_transport_usage)s"
@@ -1089,210 +1089,226 @@ msgstr ""
 msgid "scooter"
 msgstr ""
 
-#: .\tracks\models.py:42
+#: tracks/models.py:42
 msgid "session id"
 msgstr ""
 
-#: .\tracks\models.py:46
+#: tracks/models.py:46
 msgid "aggregated emissions"
 msgstr ""
 
-#: .\tracks\models.py:49
+#: tracks/models.py:49
 msgid ""
 "Aggregated emissions for the track's segments, for each vehicle type. These "
 "are pre-computed from segment data in order to improve runtime performance."
 msgstr ""
 
-#: .\tracks\models.py:54
+#: tracks/models.py:54
 msgid "aggregated costs"
 msgstr ""
 
-#: .\tracks\models.py:57
+#: tracks/models.py:57
 msgid ""
 "Aggregated costs for the track's segments, for each vehicle type. These are "
 "pre-computed from segment data in order to improve runtime performance."
 msgstr ""
 
-#: .\tracks\models.py:62
+#: tracks/models.py:62
 msgid "aggregated health"
 msgstr ""
 
-#: .\tracks\models.py:65
+#: tracks/models.py:65
 msgid ""
 "Aggregated health data for the track's segments, for each vehicle type. "
 "These are pre-computed from segment data in order to improve runtime "
 "performance."
 msgstr ""
 
-#: .\tracks\models.py:140
-msgid "track"
-msgstr ""
-
-#: .\tracks\models.py:147
-msgid "user uuid"
-msgstr ""
-
-#: .\tracks\models.py:150
-msgid "vehicle type"
-msgstr ""
-
-#: .\tracks\models.py:161
-msgid "geometry"
-msgstr ""
-
-#: .\tracks\models.py:164
+#: tracks/models.py:70 tracks/models.py:191
 msgid "start date"
 msgstr ""
 
-#: .\tracks\models.py:165
-msgid "timestamp of first collected point of the segment"
-msgstr ""
-
-#: .\tracks\models.py:168
+#: tracks/models.py:75 tracks/models.py:195
 msgid "end date"
 msgstr ""
 
-#: .\tracks\models.py:169
+#: tracks/models.py:80
+msgid "duration"
+msgstr ""
+
+#: tracks/models.py:83
+msgid "Track duration, measured in minutes"
+msgstr ""
+
+#: tracks/models.py:86 tracks/models.py:188
+msgid "geometry"
+msgstr ""
+
+#: tracks/models.py:91
+msgid "length"
+msgstr ""
+
+#: tracks/models.py:94
+msgid "Track length, measured in meters"
+msgstr ""
+
+#: tracks/models.py:167
+msgid "track"
+msgstr ""
+
+#: tracks/models.py:174
+msgid "user uuid"
+msgstr ""
+
+#: tracks/models.py:177
+msgid "vehicle type"
+msgstr ""
+
+#: tracks/models.py:192
+msgid "timestamp of first collected point of the segment"
+msgstr ""
+
+#: tracks/models.py:196
 msgid "timestamp of last collected point of the segment"
 msgstr ""
 
-#: .\tracks\models.py:199 .\tracks\models.py:268 .\tracks\models.py:309
+#: tracks/models.py:226 tracks/models.py:295 tracks/models.py:336
 msgid "segment"
 msgstr ""
 
-#: .\tracks\models.py:202
+#: tracks/models.py:229
 msgid "SO2"
 msgstr ""
 
-#: .\tracks\models.py:205
+#: tracks/models.py:232
 msgid "Sulphur Dioxide emissions (mg)"
 msgstr ""
 
-#: .\tracks\models.py:208
+#: tracks/models.py:235
 msgid "SO2 saved"
 msgstr ""
 
-#: .\tracks\models.py:211
+#: tracks/models.py:238
 msgid "Dulphur Dioxide emissions that were prevented (mg)"
 msgstr ""
 
-#: .\tracks\models.py:214
+#: tracks/models.py:241
 msgid "NOx"
 msgstr ""
 
-#: .\tracks\models.py:217
+#: tracks/models.py:244
 msgid "Nitrogen Oxides emissions (mg)"
 msgstr ""
 
-#: .\tracks\models.py:220
+#: tracks/models.py:247
 msgid "NOx saved"
 msgstr ""
 
-#: .\tracks\models.py:223
+#: tracks/models.py:250
 msgid "Nitrogen Oxides emissions that were prevented (mg)"
 msgstr ""
 
-#: .\tracks\models.py:226
+#: tracks/models.py:253
 msgid "CO2"
 msgstr ""
 
-#: .\tracks\models.py:229
+#: tracks/models.py:256
 msgid "Carbon dioxide emissions (g)"
 msgstr ""
 
-#: .\tracks\models.py:232
+#: tracks/models.py:259
 msgid "CO2 saved"
 msgstr ""
 
-#: .\tracks\models.py:235
+#: tracks/models.py:262
 msgid "Carbon dioxide emissions that were prevented (g)"
 msgstr ""
 
-#: .\tracks\models.py:238
+#: tracks/models.py:265
 msgid "CO"
 msgstr ""
 
-#: .\tracks\models.py:241
+#: tracks/models.py:268
 msgid "Carbon monoxide emissions (mg)"
 msgstr ""
 
-#: .\tracks\models.py:244
+#: tracks/models.py:271
 msgid "CO saved"
 msgstr ""
 
-#: .\tracks\models.py:247
+#: tracks/models.py:274
 msgid "Carbon monoxide emissions that were prevented (mg)"
 msgstr ""
 
-#: .\tracks\models.py:250
+#: tracks/models.py:277
 msgid "PM10"
 msgstr ""
 
-#: .\tracks\models.py:253
+#: tracks/models.py:280
 msgid "Particulate Matter up to 10um emissions (mg)"
 msgstr ""
 
-#: .\tracks\models.py:256
+#: tracks/models.py:283
 msgid "PM10 saved"
 msgstr ""
 
-#: .\tracks\models.py:259
+#: tracks/models.py:286
 msgid "Particulate Matter up to 10um emissions that were prevented (mg)"
 msgstr ""
 
-#: .\tracks\models.py:271
+#: tracks/models.py:298
 msgid "fuel cost"
 msgstr ""
 
-#: .\tracks\models.py:274
+#: tracks/models.py:301
 msgid "Fuel consumption cost (eur)"
 msgstr ""
 
-#: .\tracks\models.py:277
+#: tracks/models.py:304
 msgid "time cost"
 msgstr ""
 
-#: .\tracks\models.py:280
+#: tracks/models.py:307
 msgid "Time spent cost (eur)"
 msgstr ""
 
-#: .\tracks\models.py:283
+#: tracks/models.py:310
 msgid "depreciation cost"
 msgstr ""
 
-#: .\tracks\models.py:286
+#: tracks/models.py:313
 msgid "Vehicle depreciation cost (eur)"
 msgstr ""
 
-#: .\tracks\models.py:289
+#: tracks/models.py:316
 msgid "operational cost"
 msgstr ""
 
-#: .\tracks\models.py:292
+#: tracks/models.py:319
 msgid "Vehicle operation cost (eur)"
 msgstr ""
 
-#: .\tracks\models.py:295
+#: tracks/models.py:322
 msgid "total cost"
 msgstr ""
 
-#: .\tracks\models.py:298
+#: tracks/models.py:325
 msgid "Total cost (eur)"
 msgstr ""
 
-#: .\tracks\models.py:312
+#: tracks/models.py:339
 msgid "calories consumed"
 msgstr ""
 
-#: .\tracks\models.py:315
+#: tracks/models.py:342
 msgid "Calories consumed (cal)"
 msgstr ""
 
-#: .\tracks\models.py:318
+#: tracks/models.py:345
 msgid "benefit index"
 msgstr ""
 
-#: .\tracks\models.py:321
+#: tracks/models.py:348
 msgid ""
 "Benefit Index, adapted from World Health Organization's 'Health economic "
 "assessment tools (HEAT) for walking and for cycling - Methods and user guide "
