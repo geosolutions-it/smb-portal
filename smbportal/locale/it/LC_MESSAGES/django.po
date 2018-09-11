@@ -1462,7 +1462,7 @@ msgstr "contropedale"
 
 #: .\vehicles\models.py:158
 msgid "bikename"
-msgstr "Nome identificativo"
+msgstr "Nome identificativo della bicicletta"
 
 #: .\vehicles\models.py:162
 msgid "brand"
