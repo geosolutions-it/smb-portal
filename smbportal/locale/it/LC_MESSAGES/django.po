@@ -445,7 +445,7 @@ msgstr "Benvenuto su Good_Go!"
 
 #: .\templates\base\home.html:21
 msgid "The mobility game that rewards"
-msgstr "Il gioco della mobilità che ripaga"
+msgstr "Il gioco della mobilità che ripaga!"
 
 #: .\templates\base\home.html:37
 msgid "Protect your bikes"
