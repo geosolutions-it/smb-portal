@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 13:35+0000\n"
+"POT-Creation-Date: 2018-09-11 17:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -385,8 +385,8 @@ msgstr ""
 msgid "Delete selected"
 msgstr "Elimina selezionati"
 
-#: .\templates\base\base.html:41 .\templates\base\home.html:67
-#: .\templates\base\home.html:71
+#: .\templates\base\base.html:41 .\templates\base\home.html:70
+#: .\templates\base\home.html:74
 msgid "Bikes"
 msgstr "Biciclette"
 
@@ -447,20 +447,20 @@ msgstr "Benvenuto su Good_Go!"
 msgid "The mobility game that rewards"
 msgstr "Il gioco della mobilità che ripaga!"
 
-#: .\templates\base\home.html:37
+#: .\templates\base\home.html:40
 msgid "Protect your bikes"
 msgstr "Proteggi le tue bici"
 
-#: .\templates\base\home.html:40
+#: .\templates\base\home.html:43
 msgid "Request the RFID sensors to identify and localize them"
 msgstr ""
 "Richiedi i sensori RFID per poterle identificare e rilevarne la posizione"
 
-#: .\templates\base\home.html:57
+#: .\templates\base\home.html:60
 msgid "The SaveMyBike User Guide"
 msgstr "Guida utente"
 
-#: .\templates\base\home.html:58
+#: .\templates\base\home.html:61
 #, python-format
 msgid ""
 "<a href=\"%(MEDIA_URL)sdocs/Manuale_SaveMyBike_v2.pdf\" target=\"_blank"
@@ -471,29 +471,29 @@ msgstr ""
 "\"><b>Scarica</b></a> il documento che ti guiderà nella registrazione sulla "
 "piattaforma e all'utilizzo delle sue funzionalità"
 
-#: .\templates\base\home.html:69
+#: .\templates\base\home.html:72
 msgid ""
 " Register new Bikes, update information about your bikes and delete bikes "
 "from the system. "
 msgstr "Registra e gestisci le tue biciclette."
 
-#: .\templates\base\home.html:78
+#: .\templates\base\home.html:81
 msgid "Sensors"
 msgstr "Sensori"
 
-#: .\templates\base\home.html:80
+#: .\templates\base\home.html:83
 msgid "Want protection? Add rfid support to your bikes here"
 msgstr "Vuoi proteggere la tua bici? Prenota l'installazione dei sensori RFID"
 
-#: .\templates\base\home.html:82
+#: .\templates\base\home.html:85
 msgid "Book your sensor"
 msgstr "Prenotati"
 
-#: .\templates\base\home.html:91
+#: .\templates\base\home.html:94
 msgid "Activity"
 msgstr "Attività"
 
-#: .\templates\base\home.html:93
+#: .\templates\base\home.html:96
 msgid ""
 "View your tracks, calculate your gas emissions credits and the health "
 "impacts of cycling"
@@ -501,27 +501,27 @@ msgstr ""
 "Visualizza i percorsi registrati, calcola quanti gas esausti hai risparmiato "
 "e i benefici alla tua salute"
 
-#: .\templates\base\home.html:95 .\templates\base\home.html:106
-#: .\templates\base\home.html:117
+#: .\templates\base\home.html:98 .\templates\base\home.html:109
+#: .\templates\base\home.html:120
 msgid "Coming soon"
 msgstr "In arrivo..."
 
-#: .\templates\base\home.html:102
+#: .\templates\base\home.html:105
 msgid "Badges"
 msgstr "Badges"
 
-#: .\templates\base\home.html:104
+#: .\templates\base\home.html:107
 msgid ""
 "View all your Badges, the ones you've unlocked and ones you need to get."
 msgstr ""
 "Visualizza tutti i tuoi badge, quelli che hai sbloccato e quelli che devi "
 "ottenere"
 
-#: .\templates\base\home.html:113
+#: .\templates\base\home.html:116
 msgid "Prizes"
 msgstr "Premi"
 
-#: .\templates\base\home.html:115
+#: .\templates\base\home.html:118
 msgid " View all the prizes you can available in your city."
 msgstr ""
 "Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
@@ -655,7 +655,7 @@ msgstr "Nuovo sondagio sulla mobilità"
 msgid "Bicycle usage"
 msgstr "Utilizzo della bicicletta"
 
-#: templates/profiles/mobilityhabitssurvey_detail_inner.html:7
+#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:7
 #, fuzzy, python-format
 #| msgid "%(bicycle_usage)s"
 msgid "%(bicycle_usage)s"
@@ -665,7 +665,7 @@ msgstr "Utilizzo della bicicletta"
 msgid "Public transport usage"
 msgstr "Utilizzo dei trasporti pubblici"
 
-#: templates/profiles/mobilityhabitssurvey_detail_inner.html:13
+#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:13
 #, fuzzy, python-format
 #| msgid "%(public_transport_usage)s"
 msgid "%(public_transport_usage)s"
@@ -745,9 +745,9 @@ msgstr ""
 "circolazione per le strade"
 
 #: .\templates\vehicles\bike_confirm_delete.html:6
-#: .\templates\vehicles\bike_detail.html:172
-#: .\templates\vehicles\bike_detail.html:175
-#: .\templates\vehicles\bike_detail.html:178
+#: .\templates\vehicles\bike_detail.html:173
+#: .\templates\vehicles\bike_detail.html:176
+#: .\templates\vehicles\bike_detail.html:179
 msgid "Delete bike"
 msgstr "Elimina la bicicletta"
 
@@ -856,29 +856,33 @@ msgid "This bike does not have any tags"
 msgstr "Queta bicicletta non ha associato nessun tag"
 
 #: .\templates\vehicles\bike_detail.html:142
+msgid "Book the RFID installation"
+msgstr "Prenota l'installazione dei sensori RFID"
+
+#: .\templates\vehicles\bike_detail.html:143
 msgid "Print bike registry info"
 msgstr "Stampa codice registrazione"
 
-#: .\templates\vehicles\bike_detail.html:143
+#: .\templates\vehicles\bike_detail.html:144
 msgid "View bike observations"
 msgstr "Visualizza posizioni rilevate"
 
-#: .\templates\vehicles\bike_detail.html:148
+#: .\templates\vehicles\bike_detail.html:149
 msgid "Update bike"
 msgstr "Aggiorna bicicletta"
 
-#: .\templates\vehicles\bike_detail.html:151
-#: .\templates\vehicles\bike_detail.html:154
+#: .\templates\vehicles\bike_detail.html:152
+#: .\templates\vehicles\bike_detail.html:155
 msgid "Edit bike details"
 msgstr "Modifica"
 
-#: .\templates\vehicles\bike_detail.html:156
+#: .\templates\vehicles\bike_detail.html:157
 msgid "Manage bike pictures"
 msgstr "Gestisci le foto"
 
-#: .\templates\vehicles\bike_detail.html:161
-#: .\templates\vehicles\bike_detail.html:164
-#: .\templates\vehicles\bike_detail.html:167
+#: .\templates\vehicles\bike_detail.html:162
+#: .\templates\vehicles\bike_detail.html:165
+#: .\templates\vehicles\bike_detail.html:168
 #: .\templates\vehicles\bikestatus_create.html:30 .\vehicles\forms.py:178
 msgid "Update bike status"
 msgstr "Aggiorna lo stato"
@@ -1089,226 +1093,226 @@ msgstr ""
 msgid "scooter"
 msgstr ""
 
-#: tracks/models.py:42
+#: .\tracks\models.py:42
 msgid "session id"
 msgstr ""
 
-#: tracks/models.py:46
+#: .\tracks\models.py:46
 msgid "aggregated emissions"
 msgstr ""
 
-#: tracks/models.py:49
+#: .\tracks\models.py:49
 msgid ""
 "Aggregated emissions for the track's segments, for each vehicle type. These "
 "are pre-computed from segment data in order to improve runtime performance."
 msgstr ""
 
-#: tracks/models.py:54
+#: .\tracks\models.py:54
 msgid "aggregated costs"
 msgstr ""
 
-#: tracks/models.py:57
+#: .\tracks\models.py:57
 msgid ""
 "Aggregated costs for the track's segments, for each vehicle type. These are "
 "pre-computed from segment data in order to improve runtime performance."
 msgstr ""
 
-#: tracks/models.py:62
+#: .\tracks\models.py:62
 msgid "aggregated health"
 msgstr ""
 
-#: tracks/models.py:65
+#: .\tracks\models.py:65
 msgid ""
 "Aggregated health data for the track's segments, for each vehicle type. "
 "These are pre-computed from segment data in order to improve runtime "
 "performance."
 msgstr ""
 
-#: tracks/models.py:70 tracks/models.py:191
+#: .\tracks\models.py:70 .\tracks\models.py:181
 msgid "start date"
 msgstr ""
 
-#: tracks/models.py:75 tracks/models.py:195
+#: .\tracks\models.py:75 .\tracks\models.py:185
 msgid "end date"
 msgstr ""
 
-#: tracks/models.py:80
+#: .\tracks\models.py:80
 msgid "duration"
 msgstr ""
 
-#: tracks/models.py:83
+#: .\tracks\models.py:83
 msgid "Track duration, measured in minutes"
 msgstr ""
 
-#: tracks/models.py:86 tracks/models.py:188
+#: .\tracks\models.py:86 .\tracks\models.py:178
 msgid "geometry"
 msgstr ""
 
-#: tracks/models.py:91
+#: .\tracks\models.py:91
 msgid "length"
 msgstr ""
 
-#: tracks/models.py:94
+#: .\tracks\models.py:94
 msgid "Track length, measured in meters"
 msgstr ""
 
-#: tracks/models.py:167
+#: .\tracks\models.py:157
 msgid "track"
 msgstr ""
 
-#: tracks/models.py:174
+#: .\tracks\models.py:164
 msgid "user uuid"
 msgstr ""
 
-#: tracks/models.py:177
+#: .\tracks\models.py:167
 msgid "vehicle type"
 msgstr ""
 
-#: tracks/models.py:192
+#: .\tracks\models.py:182
 msgid "timestamp of first collected point of the segment"
 msgstr ""
 
-#: tracks/models.py:196
+#: .\tracks\models.py:186
 msgid "timestamp of last collected point of the segment"
 msgstr ""
 
-#: tracks/models.py:226 tracks/models.py:295 tracks/models.py:336
+#: .\tracks\models.py:216 .\tracks\models.py:285 .\tracks\models.py:326
 msgid "segment"
 msgstr ""
 
-#: tracks/models.py:229
+#: .\tracks\models.py:219
 msgid "SO2"
 msgstr ""
 
-#: tracks/models.py:232
+#: .\tracks\models.py:222
 msgid "Sulphur Dioxide emissions (mg)"
 msgstr ""
 
-#: tracks/models.py:235
+#: .\tracks\models.py:225
 msgid "SO2 saved"
 msgstr ""
 
-#: tracks/models.py:238
+#: .\tracks\models.py:228
 msgid "Dulphur Dioxide emissions that were prevented (mg)"
 msgstr ""
 
-#: tracks/models.py:241
+#: .\tracks\models.py:231
 msgid "NOx"
 msgstr ""
 
-#: tracks/models.py:244
+#: .\tracks\models.py:234
 msgid "Nitrogen Oxides emissions (mg)"
 msgstr ""
 
-#: tracks/models.py:247
+#: .\tracks\models.py:237
 msgid "NOx saved"
 msgstr ""
 
-#: tracks/models.py:250
+#: .\tracks\models.py:240
 msgid "Nitrogen Oxides emissions that were prevented (mg)"
 msgstr ""
 
-#: tracks/models.py:253
+#: .\tracks\models.py:243
 msgid "CO2"
 msgstr ""
 
-#: tracks/models.py:256
+#: .\tracks\models.py:246
 msgid "Carbon dioxide emissions (g)"
 msgstr ""
 
-#: tracks/models.py:259
+#: .\tracks\models.py:249
 msgid "CO2 saved"
 msgstr ""
 
-#: tracks/models.py:262
+#: .\tracks\models.py:252
 msgid "Carbon dioxide emissions that were prevented (g)"
 msgstr ""
 
-#: tracks/models.py:265
+#: .\tracks\models.py:255
 msgid "CO"
 msgstr ""
 
-#: tracks/models.py:268
+#: .\tracks\models.py:258
 msgid "Carbon monoxide emissions (mg)"
 msgstr ""
 
-#: tracks/models.py:271
+#: .\tracks\models.py:261
 msgid "CO saved"
 msgstr ""
 
-#: tracks/models.py:274
+#: .\tracks\models.py:264
 msgid "Carbon monoxide emissions that were prevented (mg)"
 msgstr ""
 
-#: tracks/models.py:277
+#: .\tracks\models.py:267
 msgid "PM10"
 msgstr ""
 
-#: tracks/models.py:280
+#: .\tracks\models.py:270
 msgid "Particulate Matter up to 10um emissions (mg)"
 msgstr ""
 
-#: tracks/models.py:283
+#: .\tracks\models.py:273
 msgid "PM10 saved"
 msgstr ""
 
-#: tracks/models.py:286
+#: .\tracks\models.py:276
 msgid "Particulate Matter up to 10um emissions that were prevented (mg)"
 msgstr ""
 
-#: tracks/models.py:298
+#: .\tracks\models.py:288
 msgid "fuel cost"
 msgstr ""
 
-#: tracks/models.py:301
+#: .\tracks\models.py:291
 msgid "Fuel consumption cost (eur)"
 msgstr ""
 
-#: tracks/models.py:304
+#: .\tracks\models.py:294
 msgid "time cost"
 msgstr ""
 
-#: tracks/models.py:307
+#: .\tracks\models.py:297
 msgid "Time spent cost (eur)"
 msgstr ""
 
-#: tracks/models.py:310
+#: .\tracks\models.py:300
 msgid "depreciation cost"
 msgstr ""
 
-#: tracks/models.py:313
+#: .\tracks\models.py:303
 msgid "Vehicle depreciation cost (eur)"
 msgstr ""
 
-#: tracks/models.py:316
+#: .\tracks\models.py:306
 msgid "operational cost"
 msgstr ""
 
-#: tracks/models.py:319
+#: .\tracks\models.py:309
 msgid "Vehicle operation cost (eur)"
 msgstr ""
 
-#: tracks/models.py:322
+#: .\tracks\models.py:312
 msgid "total cost"
 msgstr ""
 
-#: tracks/models.py:325
+#: .\tracks\models.py:315
 msgid "Total cost (eur)"
 msgstr ""
 
-#: tracks/models.py:339
+#: .\tracks\models.py:329
 msgid "calories consumed"
 msgstr ""
 
-#: tracks/models.py:342
+#: .\tracks\models.py:332
 msgid "Calories consumed (cal)"
 msgstr ""
 
-#: tracks/models.py:345
+#: .\tracks\models.py:335
 msgid "benefit index"
 msgstr ""
 
-#: tracks/models.py:348
+#: .\tracks\models.py:338
 msgid ""
 "Benefit Index, adapted from World Health Organization's 'Health economic "
 "assessment tools (HEAT) for walking and for cycling - Methods and user guide "
@@ -1462,7 +1466,7 @@ msgstr "contropedale"
 
 #: .\vehicles\models.py:158
 msgid "bikename"
-msgstr "Nome identificativo"
+msgstr "Nome identificativo della bicicletta"
 
 #: .\vehicles\models.py:162
 msgid "brand"
