@@ -19,16 +19,16 @@ BIKE = "bike"
 BUS = "bus"
 CAR = "car"
 FOOT = "foot"
-MOTORBIKE = "motorbike"
-SCOOTER = "scooter"
+MOTORCYCLE = "motorcycle"
+TRAIN = "train"
 
 VEHICLE_CHOICES = (
     (BIKE, _("bike")),
     (BUS, _("bus")),
     (CAR, _("car")),
     (FOOT, _("foot")),
-    (MOTORBIKE, _("motorbike")),
-    (SCOOTER, _("scooter")),
+    (MOTORCYCLE, _("motorcycle")),
+    (TRAIN, _("train")),
 )
 
 
