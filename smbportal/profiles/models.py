@@ -15,8 +15,9 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from django_gamification.models import GamificationInterface
 
-# TODO: do we need to add the `status` attribute?
+
 class SmbUser(AbstractUser):
     """Default user model for smb-portal.
 
@@ -38,6 +39,13 @@ class SmbUser(AbstractUser):
     )
     accepted_terms_of_service = models.BooleanField(
         default=False
+    )
+    gamification_interface = models.ForeignKey(
+        GamificationInterface,
+        on_delete=models.SET_NULL,
+        verbose_name=_("gamification interface"),
+        null=True,
+        blank=True
     )
 
     class Meta:
