@@ -23,6 +23,10 @@ a:hover {
     color: #F51DAF;
 }
 
+.alert-success {
+    color: #268462
+}
+
 #container {
     padding-bottom: 160px;
 }
