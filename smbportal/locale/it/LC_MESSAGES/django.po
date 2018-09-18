@@ -7,372 +7,372 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-11 17:59+0200\n"
+"POT-Creation-Date: 2018-09-17 16:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\base\settings\base.py:196
+#: base/settings/base.py:196
 msgid "English"
 msgstr "English"
 
-#: .\base\settings\base.py:197
+#: base/settings/base.py:197
 msgid "Italian"
 msgstr "Italian"
 
-#: .\profiles\forms.py:38
+#: profiles/forms.py:38
 msgid "Did not accept the portal's Terms of Service"
 msgstr "Non sono stati accettati i termini di servizio della piattaforma"
 
-#: .\profiles\models.py:29
+#: profiles/models.py:29
 msgid "nickname"
 msgstr "Nome utente"
 
-#: .\profiles\models.py:34
+#: profiles/models.py:34
 msgid "language preference"
 msgstr "Lingua preferita"
 
-#: .\profiles\models.py:116 .\profiles\models.py:208
+#: profiles/models.py:116 profiles/models.py:208
 msgid "user"
 msgstr "Utente"
 
-#: .\profiles\models.py:119
+#: profiles/models.py:119
 msgid "date updated"
 msgstr "Data aggiornata"
 
-#: .\profiles\models.py:123
+#: profiles/models.py:123
 msgid "gender"
 msgstr "Sesso"
 
-#: .\profiles\models.py:127
+#: profiles/models.py:127
 msgid "female"
 msgstr "Femmina"
 
-#: .\profiles\models.py:128
+#: profiles/models.py:128
 msgid "male"
 msgstr "Maschio"
 
-#: .\profiles\models.py:133
+#: profiles/models.py:133
 msgid "age"
 msgstr "Età"
 
-#: .\profiles\models.py:137
+#: profiles/models.py:137
 msgid "< 19"
 msgstr ""
 
-#: .\profiles\models.py:138
+#: profiles/models.py:138
 msgid "19 - 30"
 msgstr ""
 
-#: .\profiles\models.py:139
+#: profiles/models.py:139
 msgid "30 - 65"
 msgstr ""
 
-#: .\profiles\models.py:140
+#: profiles/models.py:140
 msgid "65+"
 msgstr ""
 
-#: .\profiles\models.py:149
+#: profiles/models.py:149
 msgid "phone number"
 msgstr "Numero di telefono"
 
-#: .\profiles\models.py:155
+#: profiles/models.py:155
 msgid "bio"
 msgstr "Bio"
 
-#: .\profiles\models.py:156
+#: profiles/models.py:156
 msgid "Short user biography"
 msgstr "Breve biografia"
 
-#: .\profiles\models.py:160
+#: profiles/models.py:160
 msgid "occupation"
 msgstr "Occupazione"
 
-#: .\profiles\models.py:163
+#: profiles/models.py:163
 msgid "insurance agent"
 msgstr "agente assicurativo"
 
-#: .\profiles\models.py:164
+#: profiles/models.py:164
 msgid "trading agent"
 msgstr "agente di commercio"
 
-#: .\profiles\models.py:165
+#: profiles/models.py:165
 msgid "freelancer"
 msgstr "altra libera professione"
 
-#: .\profiles\models.py:166
+#: profiles/models.py:166
 msgid "architect"
 msgstr "architetto"
 
-#: .\profiles\models.py:167
+#: profiles/models.py:167
 msgid "craftsman"
 msgstr "artigiano"
 
-#: .\profiles\models.py:168
+#: profiles/models.py:168
 msgid "artist"
 msgstr "artista"
 
-#: .\profiles\models.py:169
+#: profiles/models.py:169
 msgid "lawyer"
 msgstr "avvocato"
 
-#: .\profiles\models.py:170
+#: profiles/models.py:170
 msgid "housewife"
 msgstr "casalinga"
 
-#: .\profiles\models.py:171
+#: profiles/models.py:171
 msgid "accountant"
 msgstr "commercialista"
 
-#: .\profiles\models.py:172
+#: profiles/models.py:172
 msgid "dealer"
 msgstr "commerciante"
 
-#: .\profiles\models.py:173
+#: profiles/models.py:173
 msgid "shop assistant"
 msgstr "commesso"
 
-#: .\profiles\models.py:174
+#: profiles/models.py:174
 msgid "consultant"
 msgstr "consulente"
 
-#: .\profiles\models.py:175
+#: profiles/models.py:175
 msgid "public agency employee"
 msgstr "dipendente pubblica amministrazione"
 
-#: .\profiles\models.py:176
+#: profiles/models.py:176
 msgid "private sector employee"
 msgstr "dipendente di azienda privata"
 
-#: .\profiles\models.py:177
+#: profiles/models.py:177
 msgid "manager"
 msgstr "dirigente"
 
-#: .\profiles\models.py:178
+#: profiles/models.py:178
 msgid "public agency manager"
 msgstr "dirigente/funzionario p.a./ufficiale"
 
-#: .\profiles\models.py:179
+#: profiles/models.py:179
 msgid "pharmacist"
 msgstr "farmacista"
 
-#: .\profiles\models.py:180
+#: profiles/models.py:180
 msgid "surveyor"
 msgstr "geometra"
 
-#: .\profiles\models.py:181
+#: profiles/models.py:181
 msgid "journalist"
 msgstr "giornalista"
 
-#: .\profiles\models.py:182
+#: profiles/models.py:182
 msgid "entrepreneur"
 msgstr "imprenditore"
 
-#: .\profiles\models.py:183
+#: profiles/models.py:183
 msgid "engineer"
 msgstr "ingegnere"
 
-#: .\profiles\models.py:184
+#: profiles/models.py:184
 msgid "teacher"
 msgstr "insegnante"
 
-#: .\profiles\models.py:185
+#: profiles/models.py:185
 msgid "doctor"
 msgstr "medico"
 
-#: .\profiles\models.py:186
+#: profiles/models.py:186
 msgid "unemployed"
 msgstr "non occupato"
 
-#: .\profiles\models.py:187
+#: profiles/models.py:187
 msgid "notary"
 msgstr "notaio"
 
-#: .\profiles\models.py:188
+#: profiles/models.py:188
 msgid "worker"
 msgstr "operaio"
 
-#: .\profiles\models.py:189
+#: profiles/models.py:189
 msgid "retired"
 msgstr "pensionato"
 
-#: .\profiles\models.py:190
+#: profiles/models.py:190
 msgid "politician"
 msgstr "politico"
 
-#: .\profiles\models.py:191
+#: profiles/models.py:191
 msgid "university professor"
 msgstr "professore universitario"
 
-#: .\profiles\models.py:192
+#: profiles/models.py:192
 msgid "trainee"
 msgstr "stagista/tirocinante"
 
-#: .\profiles\models.py:193
+#: profiles/models.py:193
 msgid "professional athlete"
 msgstr "sportivo professionista"
 
-#: .\profiles\models.py:194
+#: profiles/models.py:194
 msgid "high school student"
 msgstr "studente scuola superiore"
 
-#: .\profiles\models.py:195
+#: profiles/models.py:195
 msgid "college student"
 msgstr "studente universitario"
 
-#: .\profiles\models.py:233
+#: profiles/models.py:233
 msgid "end user"
 msgstr "Utente finale"
 
-#: .\profiles\models.py:236
+#: profiles/models.py:236
 msgid "date answered"
 msgstr "Data della risposta"
 
-#: .\profiles\models.py:240
+#: profiles/models.py:240
 msgid "public transport usage"
 msgstr "Utilizzo dei trasporti pubblici"
 
-#: .\profiles\models.py:245
+#: profiles/models.py:245
 msgid "Habitual (more than 10 travels per month)"
 msgstr "Abituale (oltre 10 viaggi al mese)"
 
-#: .\profiles\models.py:249
+#: profiles/models.py:249
 msgid "Occasional (once per month)"
 msgstr "Sporadico (un viaggio al mese)"
 
-#: .\profiles\models.py:253
+#: profiles/models.py:253
 msgid "Rare (less than 10 travels per year)"
 msgstr "Raro (meno di 10 viaggi l'anno)"
 
-#: .\profiles\models.py:257
+#: profiles/models.py:257
 msgid "Never"
 msgstr "Mai"
 
-#: .\profiles\models.py:263
+#: profiles/models.py:263
 msgid "uses bike sharing services"
 msgstr "utilizzo servizi di bike sharing"
 
-#: .\profiles\models.py:267
+#: profiles/models.py:267
 msgid "uses electrical car sharing services"
 msgstr "utilizzo servizi di car sharing elettrico"
 
-#: .\profiles\models.py:271
+#: profiles/models.py:271
 msgid "uses fuel car sharing services"
 msgstr "uso servizi di car sharing"
 
-#: .\profiles\models.py:275
+#: profiles/models.py:275
 msgid "bicycle usage"
 msgstr "Utilizzo della bicicletta"
 
-#: .\profiles\models.py:280
+#: profiles/models.py:280
 msgid "Habitual (at least once a week on average)"
 msgstr "Abituale (almeno una volta alla settimana)"
 
-#: .\profiles\models.py:284
+#: profiles/models.py:284
 msgid "Habitual (at least once a month)"
 msgstr "Sporadico (almeno una volta al mese)"
 
-#: .\profiles\models.py:288
+#: profiles/models.py:288
 msgid "Seasonal (mainly used in the Summer)"
 msgstr "Stagionale (principalmente in primavera/estate)"
 
-#: .\profiles\models.py:292
+#: profiles/models.py:292
 msgid "Rare (less than once a month)"
 msgstr "Raro (meno di una volta al mese)"
 
-#: .\profiles\models.py:296
+#: profiles/models.py:296
 msgid "Never use a bicycle to move around in the city"
 msgstr "Non utilizzo mai la bicicletta per muovermi in città"
 
-#: .\profiles\views.py:136
+#: profiles/views.py:136
 msgid "Privileged user profile created!"
 msgstr "Creato utente con ruolo speciale"
 
-#: .\profiles\views.py:172
+#: profiles/views.py:172
 msgid "Registration request sent to admins"
 msgstr "La richeista di registrazione è stata inviata agli amministratori"
 
-#: .\profiles\views.py:173
+#: profiles/views.py:173
 msgid "You have been logged out"
 msgstr "Disconnesso"
 
-#: .\profiles\views.py:219
+#: profiles/views.py:219
 msgid "User profile created. You can now add some bikes"
 msgstr "Profilo utente createo. Adesso puoi aggiungere le tue biciclette"
 
-#: .\profiles\views.py:289
+#: profiles/views.py:289
 msgid "User profile updated!"
 msgstr "Profilo utente aggiornato!"
 
-#: .\profiles\views.py:332
+#: profiles/views.py:332
 msgid "Please complete your user profile before continuing"
 msgstr "Completa il tuo profilo utente per poter continuare nella navigazione"
 
-#: .\templates\avatar\add.html:10 .\templates\avatar\change.html:10
-#: .\templates\avatar\confirm_delete.html:9 .\templates\profiles\base.html:8
+#: templates/avatar/add.html:10 templates/avatar/change.html:10
+#: templates/avatar/confirm_delete.html:9 templates/profiles/base.html:8
 msgid "profile"
 msgstr "Il mio profilo"
 
-#: .\templates\avatar\add.html:11 .\templates\avatar\base.html:8
-#: .\templates\avatar\change.html:11 .\templates\avatar\confirm_delete.html:10
+#: templates/avatar/add.html:11 templates/avatar/base.html:8
+#: templates/avatar/change.html:11 templates/avatar/confirm_delete.html:10
 msgid "avatar"
 msgstr "Immagine del profilo"
 
-#: .\templates\avatar\add.html:12 .\templates\vehicles\bike_create.html:11
+#: templates/avatar/add.html:12 templates/vehicles/bike_create.html:11
 msgid "new"
 msgstr "Nuovo"
 
-#: .\templates\avatar\add.html:15
+#: templates/avatar/add.html:15
 msgid "Add avatar"
 msgstr "Aggiungi immagine del profile"
 
-#: .\templates\avatar\add.html:19
+#: templates/avatar/add.html:19
 msgid "Current avatar:"
 msgstr "Immagine del profilo"
 
-#: .\templates\avatar\add.html:24 .\templates\avatar\change.html:32
+#: templates/avatar/add.html:24 templates/avatar/change.html:32
 msgid "You haven't uploaded an avatar yet. Please upload one now."
 msgstr ""
 "Non hai ancora inserito un imagine per il tuo profilo. Potresti aggiungerne "
 "una?"
 
-#: .\templates\avatar\add.html:30
+#: templates/avatar/add.html:30
 msgid "Upload"
 msgstr "Carica"
 
-#: .\templates\avatar\change.html:14
+#: templates/avatar/change.html:14
 msgid "Change avatar"
 msgstr "Modifica immagine profile"
 
-#: .\templates\avatar\change.html:27
+#: templates/avatar/change.html:27
 msgid "Change"
 msgstr "Modifica"
 
-#: .\templates\avatar\change.html:28 .\templates\avatar\change.html:33
+#: templates/avatar/change.html:28 templates/avatar/change.html:33
 msgid "Upload new avatar"
 msgstr "Carica nuova immagine profilo"
 
-#: .\templates\avatar\change.html:29 .\templates\avatar\change.html:34
-#: .\templates\avatar\confirm_delete.html:14
+#: templates/avatar/change.html:29 templates/avatar/change.html:34
+#: templates/avatar/confirm_delete.html:14
 msgid "Delete avatars"
 msgstr "Elimina immagini profilo"
 
-#: .\templates\avatar\confirm_delete.html:11
-#: .\templates\vehicles\bike_confirm_delete.html:11
-#: .\templates\vehicles\bike_picture_confirm_delete.html:11
+#: templates/avatar/confirm_delete.html:11
+#: templates/vehicles/bike_confirm_delete.html:11
+#: templates/vehicles/bike_picture_confirm_delete.html:11
 msgid "delete"
 msgstr "Elimina"
 
-#: .\templates\avatar\confirm_delete.html:18
+#: templates/avatar/confirm_delete.html:18
 msgid "Please select the avatars that you would like to delete."
 msgstr "Selezioa le immagini del profilo che vuoi rimuovere"
 
-#: .\templates\avatar\confirm_delete.html:21
+#: templates/avatar/confirm_delete.html:21
 #, python-format
 msgid ""
 "You have no avatars to delete. Please <a href=\"%(avatar_add_url)s\">upload "
@@ -381,53 +381,53 @@ msgstr ""
 "Non ci sono immagini del profilo da elminare. <a href=\"%(avatar_add_url)s"
 "\">Aggiungine una."
 
-#: .\templates\avatar\confirm_delete.html:27
+#: templates/avatar/confirm_delete.html:27
 msgid "Delete selected"
 msgstr "Elimina selezionati"
 
-#: .\templates\base\base.html:41 .\templates\base\home.html:70
-#: .\templates\base\home.html:74
+#: templates/base/base.html:41 templates/base/home.html:70
+#: templates/base/home.html:74
 msgid "Bikes"
 msgstr "Biciclette"
 
-#: .\templates\base\base.html:42
+#: templates/base/base.html:42
 msgid "Report a lost Bike"
 msgstr "Segnala una bicicletta smarrita"
 
-#: .\templates\base\base.html:43
+#: templates/base/base.html:43
 msgid "About"
 msgstr "Info"
 
-#: .\templates\base\base.html:71
+#: templates/base/base.html:71
 msgid "My Profile"
 msgstr "Il mio profilo"
 
-#: .\templates\base\base.html:72
+#: templates/base/base.html:72
 msgid "Messages"
 msgstr "Messaggi"
 
-#: .\templates\base\base.html:74
+#: templates/base/base.html:74
 msgid "Logout"
 msgstr "Disconnetti"
 
-#: .\templates\base\base.html:76
+#: templates/base/base.html:76
 msgid "Login/Register"
 msgstr "Accedi o Registrati"
 
-#: .\templates\base\base.html:89
+#: templates/base/base.html:89
 msgid "Home"
 msgstr "Pagina iniziale"
 
-#: .\templates\base\base.html:133 .\templates\base\base.html:242
-#: .\templates\privacy\privacy_policy.html:8
+#: templates/base/base.html:133 templates/base/base.html:242
+#: templates/privacy/privacy_policy.html:8
 msgid "Privacy Policy"
 msgstr "Informativa sulla privacy"
 
-#: .\templates\base\base.html:188
+#: templates/base/base.html:188
 msgid "Close"
 msgstr "Chiudi"
 
-#: .\templates\base\base.html:240
+#: templates/base/base.html:240
 msgid ""
 "We use cookies to help make SaveMyBike better. By visiting this site, you "
 "agree to our cookie policy"
@@ -435,32 +435,32 @@ msgstr ""
 "Usiamo i cookie per migliorare il servizio di SaveMyBike. Visitando questo "
 "sito acconsenti alla nostra politica sull'utilizzo dei cookie"
 
-#: .\templates\base\base.html:241
+#: templates/base/base.html:241
 msgid "Got it!"
 msgstr "Capito!"
 
-#: .\templates\base\home.html:18
+#: templates/base/home.html:18
 msgid " Welcome on Good_Go! "
 msgstr "Benvenuto su Good_Go!"
 
-#: .\templates\base\home.html:21
+#: templates/base/home.html:21
 msgid "The mobility game that rewards"
 msgstr "Il gioco della mobilità che ripaga!"
 
-#: .\templates\base\home.html:40
+#: templates/base/home.html:40
 msgid "Protect your bikes"
 msgstr "Proteggi le tue bici"
 
-#: .\templates\base\home.html:43
+#: templates/base/home.html:43
 msgid "Request the RFID sensors to identify and localize them"
 msgstr ""
 "Richiedi i sensori RFID per poterle identificare e rilevarne la posizione"
 
-#: .\templates\base\home.html:60
+#: templates/base/home.html:60
 msgid "The SaveMyBike User Guide"
 msgstr "Guida utente"
 
-#: .\templates\base\home.html:61
+#: templates/base/home.html:61
 #, python-format
 msgid ""
 "<a href=\"%(MEDIA_URL)sdocs/Manuale_SaveMyBike_v2.pdf\" target=\"_blank"
@@ -471,29 +471,29 @@ msgstr ""
 "\"><b>Scarica</b></a> il documento che ti guiderà nella registrazione sulla "
 "piattaforma e all'utilizzo delle sue funzionalità"
 
-#: .\templates\base\home.html:72
+#: templates/base/home.html:72
 msgid ""
 " Register new Bikes, update information about your bikes and delete bikes "
 "from the system. "
 msgstr "Registra e gestisci le tue biciclette."
 
-#: .\templates\base\home.html:81
+#: templates/base/home.html:81
 msgid "Sensors"
 msgstr "Sensori"
 
-#: .\templates\base\home.html:83
+#: templates/base/home.html:83
 msgid "Want protection? Add rfid support to your bikes here"
 msgstr "Vuoi proteggere la tua bici? Prenota l'installazione dei sensori RFID"
 
-#: .\templates\base\home.html:85
+#: templates/base/home.html:85
 msgid "Book your sensor"
 msgstr "Prenotati"
 
-#: .\templates\base\home.html:94
+#: templates/base/home.html:94
 msgid "Activity"
 msgstr "Attività"
 
-#: .\templates\base\home.html:96
+#: templates/base/home.html:96
 msgid ""
 "View your tracks, calculate your gas emissions credits and the health "
 "impacts of cycling"
@@ -501,87 +501,87 @@ msgstr ""
 "Visualizza i percorsi registrati, calcola quanti gas esausti hai risparmiato "
 "e i benefici alla tua salute"
 
-#: .\templates\base\home.html:98 .\templates\base\home.html:109
-#: .\templates\base\home.html:120
+#: templates/base/home.html:98 templates/base/home.html:109
+#: templates/base/home.html:120
 msgid "Coming soon"
 msgstr "In arrivo..."
 
-#: .\templates\base\home.html:105
+#: templates/base/home.html:105
 msgid "Badges"
 msgstr "Badges"
 
-#: .\templates\base\home.html:107
+#: templates/base/home.html:107
 msgid ""
 "View all your Badges, the ones you've unlocked and ones you need to get."
 msgstr ""
 "Visualizza tutti i tuoi badge, quelli che hai sbloccato e quelli che devi "
 "ottenere"
 
-#: .\templates\base\home.html:116
+#: templates/base/home.html:116
 msgid "Prizes"
 msgstr "Premi"
 
-#: .\templates\base\home.html:118
+#: templates/base/home.html:118
 msgid " View all the prizes you can available in your city."
 msgstr ""
 "Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
 
-#: .\templates\gis\widgets\openlayers.html:11
+#: templates/gis/widgets/openlayers.html:11
 msgid "Delete all Features"
 msgstr "Elmina tutti gli elementi"
 
-#: .\templates\gis\widgets\openlayers.html:12
+#: templates/gis/widgets/openlayers.html:12
 msgid "Debugging window (serialized value)"
 msgstr ""
 
-#: .\templates\profiles\enduserprofile_create.html:9
+#: templates/profiles/enduserprofile_create.html:9
 msgid "Complete profile"
 msgstr "Completa il tuo profilo"
 
-#: .\templates\profiles\enduserprofile_create.html:13
+#: templates/profiles/enduserprofile_create.html:13
 msgid "complete profile"
 msgstr "Profilo copleto"
 
-#: .\templates\profiles\enduserprofile_create.html:40
+#: templates/profiles/enduserprofile_create.html:40
 msgid "Mobility Survey"
 msgstr "Sondaggio sulla mobilità"
 
-#: .\templates\profiles\enduserprofile_create.html:41
+#: templates/profiles/enduserprofile_create.html:41
 msgid ""
 "Please complete this short survey as a final step for creating your profile"
 msgstr "Completa questo breve sondaggio per completare il tuo profilo"
 
-#: .\templates\profiles\enduserprofile_create.html:43
-#: .\templates\profiles\enduserprofile_update.html:32
-#: .\templates\profiles\mobilityhabitssurvey_create.html:19
-#: .\templates\profiles\privilegeduserprofile_update.html:32
+#: templates/profiles/enduserprofile_create.html:43
+#: templates/profiles/enduserprofile_update.html:32
+#: templates/profiles/mobilityhabitssurvey_create.html:19
+#: templates/profiles/privilegeduserprofile_update.html:32
 msgid "Save"
 msgstr "Salva"
 
-#: .\templates\profiles\enduserprofile_create.html:46
+#: templates/profiles/enduserprofile_create.html:46
 #, python-format
 msgid ""
 "You can also <a href=\"%(privileged_url)s\">register as a different user type"
 msgstr "<a href=\"%(privileged_url)s\">Registrati come un altro utente"
 
-#: .\templates\profiles\enduserprofile_update.html:9
-#: .\templates\profiles\privilegeduserprofile_update.html:9
+#: templates/profiles/enduserprofile_update.html:9
+#: templates/profiles/privilegeduserprofile_update.html:9
 msgid "Your profile"
 msgstr "Il mio profilo"
 
-#: .\templates\profiles\enduserprofile_update.html:35
+#: templates/profiles/enduserprofile_update.html:35
 msgid "Mobility surveys"
 msgstr "Sondaggi sulla mobilità"
 
-#: .\templates\profiles\enduserprofile_update.html:44
+#: templates/profiles/enduserprofile_update.html:44
 msgid "Mobility survey"
 msgstr "Sondaggio sulla mobilità"
 
-#: .\templates\profiles\enduserprofile_update.html:48
+#: templates/profiles/enduserprofile_update.html:48
 msgid "Answer mobility survey again"
 msgstr "Rispondi nuovamente al sondaggio sulla mobilità"
 
-#: .\templates\profiles\mail\privilegeduser_registration_request_message.txt:1
+#: templates/profiles/mail/privilegeduser_registration_request_message.txt:1
 #, python-format
 msgid ""
 "User %(email)s wants to register as a privileged user\n"
@@ -613,17 +613,17 @@ msgstr ""
 "User enabled`\n"
 "\n"
 
-#: .\templates\profiles\mail\privilegeduser_registration_request_subject.txt:1
+#: templates/profiles/mail/privilegeduser_registration_request_subject.txt:1
 msgid "Privileged user registration request"
 msgstr "Richiesta di registrazione da un utente privilegiato"
 
-#: .\templates\profiles\mail\profile_created_message.txt:1
+#: templates/profiles/mail/profile_created_message.txt:1
 #, python-format
 msgid ""
 "Welcome to the savemybike portal!\n"
 "\n"
-"You registered a profile of type %(profile_type)s. Your username is %"
-"(username)s.\n"
+"You registered a profile of type %(profile_type)s. Your username is "
+"%(username)s.\n"
 "\n"
 "Access your profile details page at:\n"
 "\n"
@@ -639,63 +639,63 @@ msgstr ""
 "%(profile_url)s\n"
 "\n"
 
-#: .\templates\profiles\mail\profile_created_subject.txt:1
+#: templates/profiles/mail/profile_created_subject.txt:1
 msgid "User created"
 msgstr "Utente creato"
 
-#: .\templates\profiles\mobilityhabitssurvey_create.html:9
+#: templates/profiles/mobilityhabitssurvey_create.html:9
 msgid "new survey"
 msgstr "Nuovo sondaggio"
 
-#: .\templates\profiles\mobilityhabitssurvey_create.html:12
+#: templates/profiles/mobilityhabitssurvey_create.html:12
 msgid "New mobility survey"
 msgstr "Nuovo sondagio sulla mobilità"
 
-#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:6
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:6
 msgid "Bicycle usage"
 msgstr "Utilizzo della bicicletta"
 
-#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:7
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:7
 #, fuzzy, python-format
 #| msgid "%(bicycle_usage)s"
 msgid "%(bicycle_usage)s"
 msgstr "Utilizzo della bicicletta"
 
-#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:12
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:12
 msgid "Public transport usage"
 msgstr "Utilizzo dei trasporti pubblici"
 
-#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:13
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:13
 #, fuzzy, python-format
 #| msgid "%(public_transport_usage)s"
 msgid "%(public_transport_usage)s"
 msgstr "Utilizzo dei trasporti pubblici"
 
-#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:18
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:18
 msgid "Uses bike sharing services"
 msgstr "Utilizzo servizi di bike sharing"
 
-#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:24
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:24
 msgid "Uses electric car sharing services"
 msgstr "Utilizzo service di car sharing elettrico"
 
-#: .\templates\profiles\mobilityhabitssurvey_detail_inner.html:30
+#: templates/profiles/mobilityhabitssurvey_detail_inner.html:30
 msgid "Uses fuel car sharing services"
 msgstr "Uso servizi di car sharing"
 
-#: .\templates\profiles\privilegeduserprofile_create.html:9
+#: templates/profiles/privilegeduserprofile_create.html:9
 msgid "Complete profile - Privileged user"
 msgstr "Completa il profilo - Utente con ruolo speciale"
 
-#: .\templates\profiles\privilegeduserprofile_create.html:13
+#: templates/profiles/privilegeduserprofile_create.html:13
 msgid "complete profile privileged user"
 msgstr "Completa il profilo per utente con ruolo speciale"
 
-#: .\templates\profiles\privilegeduserprofile_create.html:36
+#: templates/profiles/privilegeduserprofile_create.html:36
 msgid "Note"
 msgstr ""
 
-#: .\templates\profiles\privilegeduserprofile_create.html:37
+#: templates/profiles/privilegeduserprofile_create.html:37
 msgid ""
 "Registering as a privileged user requires manual authorization from one of "
 "the platform's administrators. Your application will be moderated and you "
@@ -707,278 +707,277 @@ msgstr ""
 "processata verrà spedita una notiva via email. Fino ad allora non sarà "
 "possibile accedere al portale"
 
-#: .\templates\profiles\privilegeduserprofile_create.html:45
-#: .\templates\vehicles\bike_picture_confirm_delete.html:23
+#: templates/profiles/privilegeduserprofile_create.html:45
+#: templates/vehicles/bike_picture_confirm_delete.html:23
 msgid "Go back"
 msgstr "Torna indietro"
 
-#: .\templates\profiles\privilegeduserprofile_create.html:46
+#: templates/profiles/privilegeduserprofile_create.html:46
 msgid "Register as privileged user"
 msgstr "Registrati per un altro ruolo utente"
 
-#: .\templates\vehiclemonitor\base.html:8 .\templates\vehicles\base.html:9
+#: templates/vehiclemonitor/base.html:8 templates/vehicles/base.html:9
 msgid "bikes"
 msgstr "Biciclette"
 
-#: .\templates\vehiclemonitor\base.html:10
+#: templates/vehiclemonitor/base.html:10
 msgid "observations"
 msgstr "Rilevazioni"
 
-#: .\templates\vehiclemonitor\bikeobservation_list.html:15
-#: .\templates\vehiclemonitor\bikeobservation_list.html:51
+#: templates/vehiclemonitor/bikeobservation_list.html:15
+#: templates/vehiclemonitor/bikeobservation_list.html:51
 msgid "Bike observations"
 msgstr "Rilevazioni bicicletta"
 
-#: .\templates\vehiclemonitor\bikeobservation_list.html:23
+#: templates/vehiclemonitor/bikeobservation_list.html:23
 msgid "Latest observations"
 msgstr "Ultime rilevazioni"
 
-#: .\templates\vehiclemonitor\bikeobservation_list.html:45
+#: templates/vehiclemonitor/bikeobservation_list.html:45
 msgid "This bike has no observations yet"
 msgstr "Questa bicicletta non ha ancora posizioni rilevate"
 
-#: .\templates\vehiclemonitor\bikeobservation_list.html:54
+#: templates/vehiclemonitor/bikeobservation_list.html:54
 msgid ""
 "Bikes that have RFID tags may be monitored when circulating on the street"
 msgstr ""
 "Le biciclette con un RFID installato possono essere monitorate durante la "
 "circolazione per le strade"
 
-#: .\templates\vehicles\bike_confirm_delete.html:6
-#: .\templates\vehicles\bike_detail.html:173
-#: .\templates\vehicles\bike_detail.html:176
-#: .\templates\vehicles\bike_detail.html:179
+#: templates/vehicles/bike_confirm_delete.html:6
+#: templates/vehicles/bike_detail.html:173
+#: templates/vehicles/bike_detail.html:176
+#: templates/vehicles/bike_detail.html:179
 msgid "Delete bike"
 msgstr "Elimina la bicicletta"
 
-#: .\templates\vehicles\bike_confirm_delete_inner.html:4
+#: templates/vehicles/bike_confirm_delete_inner.html:4
 #, python-format
 msgid "Are you sure you want to delete bike <strong>%(nickname)s</strong>?"
 msgstr ""
 "Sei sicuro di voler rimuovere questa bicicletta <strong>%(nickname)s</"
 "strong>?"
 
-#: .\templates\vehicles\bike_create.html:7
-#: .\templates\vehicles\bike_list.html:43
+#: templates/vehicles/bike_create.html:7 templates/vehicles/bike_list.html:43
 msgid "Register new bike"
 msgstr "Registra una nuova bicicletta"
 
-#: .\templates\vehicles\bike_detail.html:16
+#: templates/vehicles/bike_detail.html:16
 msgid "Bike details"
 msgstr "Dettagli della bici"
 
-#: .\templates\vehicles\bike_detail.html:43
+#: templates/vehicles/bike_detail.html:43
 msgid "Current status"
 msgstr "Stato della bicicletta"
 
-#: .\templates\vehicles\bike_detail.html:44
+#: templates/vehicles/bike_detail.html:44
 msgid "Lost"
 msgstr "Smarrita"
 
-#: .\templates\vehicles\bike_detail.html:44
+#: templates/vehicles/bike_detail.html:44
 msgid "With owner"
 msgstr "In possesso del propretario"
 
-#: .\templates\vehicles\bike_detail.html:50
-#: .\templates\vehicles\tagregistration.html:27
+#: templates/vehicles/bike_detail.html:50
+#: templates/vehicles/tagregistration.html:27
 msgid "Registration code"
 msgstr "Registrazione"
 
-#: .\templates\vehicles\bike_detail.html:56
+#: templates/vehicles/bike_detail.html:56
 msgid "Bike type"
 msgstr "Tipo di bicicletta"
 
-#: .\templates\vehicles\bike_detail.html:57
+#: templates/vehicles/bike_detail.html:57
 #, python-format
 msgid "%(bike_type)s"
 msgstr ""
 
-#: .\templates\vehicles\bike_detail.html:62
+#: templates/vehicles/bike_detail.html:62
 msgid "Gears"
 msgstr "Cambio"
 
-#: .\templates\vehicles\bike_detail.html:63
+#: templates/vehicles/bike_detail.html:63
 #, python-format
 msgid "%(gear)s"
 msgstr ""
 
-#: .\templates\vehicles\bike_detail.html:68
+#: templates/vehicles/bike_detail.html:68
 msgid "Brakes"
 msgstr "Freni"
 
-#: .\templates\vehicles\bike_detail.html:69
+#: templates/vehicles/bike_detail.html:69
 #, python-format
 msgid "%(brakes)s"
 msgstr ""
 
-#: .\templates\vehicles\bike_detail.html:74
+#: templates/vehicles/bike_detail.html:74
 msgid "Brand"
 msgstr "Marca"
 
-#: .\templates\vehicles\bike_detail.html:80
+#: templates/vehicles/bike_detail.html:80
 msgid "Model"
 msgstr "Modello"
 
-#: .\templates\vehicles\bike_detail.html:86
+#: templates/vehicles/bike_detail.html:86
 msgid "Color"
 msgstr "Colore"
 
-#: .\templates\vehicles\bike_detail.html:92
+#: templates/vehicles/bike_detail.html:92
 msgid "Saddle"
 msgstr "Sella"
 
-#: .\templates\vehicles\bike_detail.html:98
+#: templates/vehicles/bike_detail.html:98
 msgid "Basket"
 msgstr "Cestino"
 
-#: .\templates\vehicles\bike_detail.html:104
+#: templates/vehicles/bike_detail.html:104
 msgid "Cargo rack"
 msgstr "Portapacchi"
 
-#: .\templates\vehicles\bike_detail.html:110
+#: templates/vehicles/bike_detail.html:110
 msgid "Light"
 msgstr "Luci"
 
-#: .\templates\vehicles\bike_detail.html:116
+#: templates/vehicles/bike_detail.html:116
 msgid "Bags"
 msgstr "Borse"
 
-#: .\templates\vehicles\bike_detail.html:122
+#: templates/vehicles/bike_detail.html:122
 msgid "Other details"
 msgstr "Altri dettagli"
 
-#: .\templates\vehicles\bike_detail.html:128
+#: templates/vehicles/bike_detail.html:128
 msgid "RFID tags"
 msgstr "Tag RFID"
 
-#: .\templates\vehicles\bike_detail.html:133
+#: templates/vehicles/bike_detail.html:133
 msgid "This bike does not have any tags"
 msgstr "Queta bicicletta non ha associato nessun tag"
 
-#: .\templates\vehicles\bike_detail.html:142
+#: templates/vehicles/bike_detail.html:142
 msgid "Book the RFID installation"
 msgstr "Prenota l'installazione dei sensori RFID"
 
-#: .\templates\vehicles\bike_detail.html:143
+#: templates/vehicles/bike_detail.html:143
 msgid "Print bike registry info"
 msgstr "Stampa codice registrazione"
 
-#: .\templates\vehicles\bike_detail.html:144
+#: templates/vehicles/bike_detail.html:144
 msgid "View bike observations"
 msgstr "Visualizza posizioni rilevate"
 
-#: .\templates\vehicles\bike_detail.html:149
+#: templates/vehicles/bike_detail.html:149
 msgid "Update bike"
 msgstr "Aggiorna bicicletta"
 
-#: .\templates\vehicles\bike_detail.html:152
-#: .\templates\vehicles\bike_detail.html:155
+#: templates/vehicles/bike_detail.html:152
+#: templates/vehicles/bike_detail.html:155
 msgid "Edit bike details"
 msgstr "Modifica"
 
-#: .\templates\vehicles\bike_detail.html:157
+#: templates/vehicles/bike_detail.html:157
 msgid "Manage bike pictures"
 msgstr "Gestisci le foto"
 
-#: .\templates\vehicles\bike_detail.html:162
-#: .\templates\vehicles\bike_detail.html:165
-#: .\templates\vehicles\bike_detail.html:168
-#: .\templates\vehicles\bikestatus_create.html:30 .\vehicles\forms.py:178
+#: templates/vehicles/bike_detail.html:162
+#: templates/vehicles/bike_detail.html:165
+#: templates/vehicles/bike_detail.html:168
+#: templates/vehicles/bikestatus_create.html:30 vehicles/forms.py:178
 msgid "Update bike status"
 msgstr "Aggiorna lo stato"
 
-#: .\templates\vehicles\bike_list.html:7
+#: templates/vehicles/bike_list.html:7
 msgid "Your bikes"
 msgstr "Le tue biciclette"
 
-#: .\templates\vehicles\bike_list.html:23
+#: templates/vehicles/bike_list.html:23
 msgid "This bike is currently reported as lost"
 msgstr "Questa bicicletta è segnalato come smarrita"
 
-#: .\templates\vehicles\bike_list.html:28
+#: templates/vehicles/bike_list.html:28
 msgid "You do not have any bikes yet"
 msgstr "Non ha ancora biciclette registrate"
 
-#: .\templates\vehicles\bike_list.html:39 .\vehicles\views.py:94
+#: templates/vehicles/bike_list.html:39 vehicles/views.py:94
 msgid "Create bike"
 msgstr "Registra la bicicletta"
 
-#: .\templates\vehicles\bike_list.html:44
+#: templates/vehicles/bike_list.html:44
 msgid "Bikes limit reached"
 msgstr "E' stato raggiunto il numero massimo di biciclette registrabili"
 
-#: .\templates\vehicles\bike_list.html:45 .\vehicles\models.py:216
+#: templates/vehicles/bike_list.html:45 vehicles/models.py:216
 msgid ""
 "Bikes limit reached. Cannot add more bikes. Delete some existing bikes first."
 msgstr ""
 "E' stato raggiunto il limite delle biciclette registrabili. Per registrare "
 "una nuova bicicletta rimuovere è necessario rimuoverne una esistente."
 
-#: .\templates\vehicles\bike_list.html:48
+#: templates/vehicles/bike_list.html:48
 msgid "Register a new bike"
 msgstr "Registra una nuova bicicletta"
 
-#: .\templates\vehicles\bike_picture_confirm_delete.html:10
-#: .\templates\vehicles\bike_picture_create.html:11
-#: .\templates\vehicles\bikegallery_detail.html:10
+#: templates/vehicles/bike_picture_confirm_delete.html:10
+#: templates/vehicles/bike_picture_create.html:11
+#: templates/vehicles/bikegallery_detail.html:10
 msgid "manage pictures"
 msgstr "Gestisci le foto"
 
-#: .\templates\vehicles\bike_picture_confirm_delete.html:14
-#: .\templates\vehicles\bikegallery_detail.html:48
+#: templates/vehicles/bike_picture_confirm_delete.html:14
+#: templates/vehicles/bikegallery_detail.html:48
 msgid "Delete pictures"
 msgstr "Elimina foto"
 
-#: .\templates\vehicles\bike_picture_confirm_delete.html:18
+#: templates/vehicles/bike_picture_confirm_delete.html:18
 msgid "Please select the pictures that you would like to delete."
 msgstr "Selezioare le immmagini che si vogliono eliminare"
 
-#: .\templates\vehicles\bike_picture_confirm_delete.html:24
+#: templates/vehicles/bike_picture_confirm_delete.html:24
 msgid "Delete selected pictures"
 msgstr "Elminia le immagini selezionate"
 
-#: .\templates\vehicles\bike_picture_create.html:12
+#: templates/vehicles/bike_picture_create.html:12
 msgid "add picture"
 msgstr "Aggiungi nuove foto"
 
-#: .\templates\vehicles\bike_picture_create.html:15
-#: .\templates\vehicles\bikegallery_detail.html:45
+#: templates/vehicles/bike_picture_create.html:15
+#: templates/vehicles/bikegallery_detail.html:45
 msgid "Add picture"
 msgstr "Aggiungi foto"
 
-#: .\templates\vehicles\bike_picture_create_inner.html:4
+#: templates/vehicles/bike_picture_create_inner.html:4
 #, python-format
 msgid "Upload pictures up to %(MAX_UPLOAD_SIZE_MEGABYTES)s MB in size"
 msgstr ""
 
-#: .\templates\vehicles\bikegallery_detail.html:13
+#: templates/vehicles/bikegallery_detail.html:13
 msgid "Bike Pictures"
 msgstr "Foto della bicicletta"
 
-#: .\templates\vehicles\bikegallery_detail.html:18
+#: templates/vehicles/bikegallery_detail.html:18
 msgid "This bike already has the maximum number of pictures. Cannot add more."
 msgstr ""
 "Questa bicicletta ha raggiunto il limite di foto associabili. Non è "
 "possibile aggiungerne altre"
 
-#: .\templates\vehicles\bikegallery_detail.html:25
+#: templates/vehicles/bikegallery_detail.html:25
 msgid "There are no pictures for this bike yet"
 msgstr "Non sono predenti fotografie di questa bicicletta"
 
-#: .\templates\vehicles\bikegallery_detail.html:36 .\vehicles\forms.py:260
-#: .\vehicles\forms.py:287
+#: templates/vehicles/bikegallery_detail.html:36 vehicles/forms.py:260
+#: vehicles/forms.py:287
 msgid "Upload picture"
 msgstr "Carica foto"
 
-#: .\templates\vehicles\bikegallery_detail.html:39
+#: templates/vehicles/bikegallery_detail.html:39
 msgid "Upload bike picture"
 msgstr "Carica foto"
 
-#: .\templates\vehicles\bikegallery_detail.html:40
+#: templates/vehicles/bikegallery_detail.html:40
 msgid "Bike pictures limit reached"
 msgstr "Hai raggiunto il limite di foto caricabili"
 
-#: .\templates\vehicles\bikegallery_detail.html:41 .\vehicles\models.py:311
+#: templates/vehicles/bikegallery_detail.html:41 vehicles/models.py:311
 msgid ""
 "Bike pictures limit reached. Cannot add more pictures. Delete some existing "
 "pictures first."
@@ -986,19 +985,19 @@ msgstr ""
 "Bhai raggiunto il limite di foto associabili alla bicicletta. Per aggiungere "
 "altre foto rimuovere una o più di quelle già presenti"
 
-#: .\templates\vehicles\bikestatus_create.html:24
+#: templates/vehicles/bikestatus_create.html:24
 msgid "update status"
 msgstr "Aggiorna stato"
 
-#: .\templates\vehicles\bikestatus_create.html:26
+#: templates/vehicles/bikestatus_create.html:26
 msgid "report lost"
 msgstr "Segnala bici smarrita"
 
-#: .\templates\vehicles\bikestatus_create.html:30 .\vehicles\forms.py:178
+#: templates/vehicles/bikestatus_create.html:30 vehicles/forms.py:178
 msgid "Report lost bike"
 msgstr "Segnala bicicletta smarrita"
 
-#: .\templates\vehicles\mail\bike_created_message.txt:1
+#: templates/vehicles/mail/bike_created_message.txt:1
 #, python-format
 msgid ""
 "Bike %(nickname)s has been successfully registered on the portal.\n"
@@ -1015,12 +1014,12 @@ msgstr ""
 "%(bike_url)s\n"
 "\n"
 
-#: .\templates\vehicles\mail\bike_created_subject.txt:1
+#: templates/vehicles/mail/bike_created_subject.txt:1
 #, python-format
 msgid "Bike %(nickname)s has been registered"
 msgstr "La bicicletta  %(nickname)s è stata registrata"
 
-#: .\templates\vehicles\mail\bike_deleted_message.txt:1
+#: templates/vehicles/mail/bike_deleted_message.txt:1
 #, python-format
 msgid ""
 "Bike %(nickname)s has been successfully deleted from the portal.\n"
@@ -1037,22 +1036,22 @@ msgstr ""
 "%(bike_list_url)s\n"
 "\n"
 
-#: .\templates\vehicles\mail\bike_deleted_subject.txt:1
+#: templates/vehicles/mail/bike_deleted_subject.txt:1
 #, python-format
 msgid "Bike %(nickname)s has been deleted"
 msgstr "La bicicletta %(nickname)s è stata rimossa"
 
-#: .\templates\vehicles\tagregistration.html:18
+#: templates/vehicles/tagregistration.html:18
 #, python-format
 msgid "Registration code for bike %(nickname)s"
 msgstr "Codice di registrazione della bicicletta %(nickname)s"
 
-#: .\templates\vehicles\tagregistration.html:22
+#: templates/vehicles/tagregistration.html:22
 #, python-format
 msgid "User: %(email)s"
 msgstr "Utente: %(email)s"
 
-#: .\templates\vehicles\tagregistration.html:23
+#: templates/vehicles/tagregistration.html:23
 msgid ""
 "Use your bike's registration code to obtain RFID tags. Apply these tags to "
 "your bike and enable additional functionality on the portal, such as "
@@ -1064,497 +1063,497 @@ msgstr ""
 "funzionalità per la ricerca e il ritrovamente delle biciclette smarrite\n"
 "                "
 
-#: .\templates\vehicles\tagregistration.html:29
+#: templates/vehicles/tagregistration.html:29
 msgid "Print registration information"
 msgstr "Stampa le informazioni di registrazione della bicibletta"
 
-#: .\tracks\models.py:26 .\vehiclemonitor\models.py:22
-#: .\vehicles\models.py:245 .\vehicles\models.py:283
+#: tracks/models.py:26 vehiclemonitor/models.py:22 vehicles/models.py:245
+#: vehicles/models.py:283
 msgid "bike"
 msgstr "Bicicletta"
 
-#: .\tracks\models.py:27
+#: tracks/models.py:27
 msgid "bus"
 msgstr ""
 
-#: .\tracks\models.py:28
+#: tracks/models.py:28
 msgid "car"
 msgstr ""
 
-#: .\tracks\models.py:29
+#: tracks/models.py:29
 msgid "foot"
 msgstr ""
 
-#: .\tracks\models.py:30
-msgid "motorbike"
+#: tracks/models.py:30
+msgid "motorcycle"
 msgstr ""
 
-#: .\tracks\models.py:31
-msgid "scooter"
+#: tracks/models.py:31
+msgid "train"
 msgstr ""
 
-#: .\tracks\models.py:42
+#: tracks/models.py:42
 msgid "session id"
 msgstr ""
 
-#: .\tracks\models.py:46
+#: tracks/models.py:46
 msgid "aggregated emissions"
 msgstr ""
 
-#: .\tracks\models.py:49
+#: tracks/models.py:49
 msgid ""
 "Aggregated emissions for the track's segments, for each vehicle type. These "
 "are pre-computed from segment data in order to improve runtime performance."
 msgstr ""
 
-#: .\tracks\models.py:54
+#: tracks/models.py:54
 msgid "aggregated costs"
 msgstr ""
 
-#: .\tracks\models.py:57
+#: tracks/models.py:57
 msgid ""
 "Aggregated costs for the track's segments, for each vehicle type. These are "
 "pre-computed from segment data in order to improve runtime performance."
 msgstr ""
 
-#: .\tracks\models.py:62
+#: tracks/models.py:62
 msgid "aggregated health"
 msgstr ""
 
-#: .\tracks\models.py:65
+#: tracks/models.py:65
 msgid ""
 "Aggregated health data for the track's segments, for each vehicle type. "
 "These are pre-computed from segment data in order to improve runtime "
 "performance."
 msgstr ""
 
-#: .\tracks\models.py:70 .\tracks\models.py:181
+#: tracks/models.py:70 tracks/models.py:181
 msgid "start date"
 msgstr ""
 
-#: .\tracks\models.py:75 .\tracks\models.py:185
+#: tracks/models.py:75 tracks/models.py:185
 msgid "end date"
 msgstr ""
 
-#: .\tracks\models.py:80
+#: tracks/models.py:80
 msgid "duration"
 msgstr ""
 
-#: .\tracks\models.py:83
+#: tracks/models.py:83
 msgid "Track duration, measured in minutes"
 msgstr ""
 
-#: .\tracks\models.py:86 .\tracks\models.py:178
+#: tracks/models.py:86 tracks/models.py:178
 msgid "geometry"
 msgstr ""
 
-#: .\tracks\models.py:91
+#: tracks/models.py:91
 msgid "length"
 msgstr ""
 
-#: .\tracks\models.py:94
+#: tracks/models.py:94
 msgid "Track length, measured in meters"
 msgstr ""
 
-#: .\tracks\models.py:157
+#: tracks/models.py:157
 msgid "track"
 msgstr ""
 
-#: .\tracks\models.py:164
+#: tracks/models.py:164
 msgid "user uuid"
 msgstr ""
 
-#: .\tracks\models.py:167
+#: tracks/models.py:167
 msgid "vehicle type"
 msgstr ""
 
-#: .\tracks\models.py:182
+#: tracks/models.py:182
 msgid "timestamp of first collected point of the segment"
 msgstr ""
 
-#: .\tracks\models.py:186
+#: tracks/models.py:186
 msgid "timestamp of last collected point of the segment"
 msgstr ""
 
-#: .\tracks\models.py:216 .\tracks\models.py:285 .\tracks\models.py:326
+#: tracks/models.py:216 tracks/models.py:285 tracks/models.py:326
 msgid "segment"
 msgstr ""
 
-#: .\tracks\models.py:219
+#: tracks/models.py:219
 msgid "SO2"
 msgstr ""
 
-#: .\tracks\models.py:222
+#: tracks/models.py:222
 msgid "Sulphur Dioxide emissions (mg)"
 msgstr ""
 
-#: .\tracks\models.py:225
+#: tracks/models.py:225
 msgid "SO2 saved"
 msgstr ""
 
-#: .\tracks\models.py:228
+#: tracks/models.py:228
 msgid "Dulphur Dioxide emissions that were prevented (mg)"
 msgstr ""
 
-#: .\tracks\models.py:231
+#: tracks/models.py:231
 msgid "NOx"
 msgstr ""
 
-#: .\tracks\models.py:234
+#: tracks/models.py:234
 msgid "Nitrogen Oxides emissions (mg)"
 msgstr ""
 
-#: .\tracks\models.py:237
+#: tracks/models.py:237
 msgid "NOx saved"
 msgstr ""
 
-#: .\tracks\models.py:240
+#: tracks/models.py:240
 msgid "Nitrogen Oxides emissions that were prevented (mg)"
 msgstr ""
 
-#: .\tracks\models.py:243
+#: tracks/models.py:243
 msgid "CO2"
 msgstr ""
 
-#: .\tracks\models.py:246
+#: tracks/models.py:246
 msgid "Carbon dioxide emissions (g)"
 msgstr ""
 
-#: .\tracks\models.py:249
+#: tracks/models.py:249
 msgid "CO2 saved"
 msgstr ""
 
-#: .\tracks\models.py:252
+#: tracks/models.py:252
 msgid "Carbon dioxide emissions that were prevented (g)"
 msgstr ""
 
-#: .\tracks\models.py:255
+#: tracks/models.py:255
 msgid "CO"
 msgstr ""
 
-#: .\tracks\models.py:258
+#: tracks/models.py:258
 msgid "Carbon monoxide emissions (mg)"
 msgstr ""
 
-#: .\tracks\models.py:261
+#: tracks/models.py:261
 msgid "CO saved"
 msgstr ""
 
-#: .\tracks\models.py:264
+#: tracks/models.py:264
 msgid "Carbon monoxide emissions that were prevented (mg)"
 msgstr ""
 
-#: .\tracks\models.py:267
+#: tracks/models.py:267
 msgid "PM10"
 msgstr ""
 
-#: .\tracks\models.py:270
+#: tracks/models.py:270
 msgid "Particulate Matter up to 10um emissions (mg)"
 msgstr ""
 
-#: .\tracks\models.py:273
+#: tracks/models.py:273
 msgid "PM10 saved"
 msgstr ""
 
-#: .\tracks\models.py:276
+#: tracks/models.py:276
 msgid "Particulate Matter up to 10um emissions that were prevented (mg)"
 msgstr ""
 
-#: .\tracks\models.py:288
+#: tracks/models.py:288
 msgid "fuel cost"
 msgstr ""
 
-#: .\tracks\models.py:291
+#: tracks/models.py:291
 msgid "Fuel consumption cost (eur)"
 msgstr ""
 
-#: .\tracks\models.py:294
+#: tracks/models.py:294
 msgid "time cost"
 msgstr ""
 
-#: .\tracks\models.py:297
+#: tracks/models.py:297
 msgid "Time spent cost (eur)"
 msgstr ""
 
-#: .\tracks\models.py:300
+#: tracks/models.py:300
 msgid "depreciation cost"
 msgstr ""
 
-#: .\tracks\models.py:303
+#: tracks/models.py:303
 msgid "Vehicle depreciation cost (eur)"
 msgstr ""
 
-#: .\tracks\models.py:306
+#: tracks/models.py:306
 msgid "operational cost"
 msgstr ""
 
-#: .\tracks\models.py:309
+#: tracks/models.py:309
 msgid "Vehicle operation cost (eur)"
 msgstr ""
 
-#: .\tracks\models.py:312
+#: tracks/models.py:312
 msgid "total cost"
 msgstr ""
 
-#: .\tracks\models.py:315
+#: tracks/models.py:315
 msgid "Total cost (eur)"
 msgstr ""
 
-#: .\tracks\models.py:329
+#: tracks/models.py:329
 msgid "calories consumed"
 msgstr ""
 
-#: .\tracks\models.py:332
+#: tracks/models.py:332
 msgid "Calories consumed (cal)"
 msgstr ""
 
-#: .\tracks\models.py:335
+#: tracks/models.py:335
 msgid "benefit index"
 msgstr ""
 
-#: .\tracks\models.py:338
+#: tracks/models.py:338
 msgid ""
 "Benefit Index, adapted from World Health Organization's 'Health economic "
 "assessment tools (HEAT) for walking and for cycling - Methods and user guide "
 "on physical activity, air pollution, injuries and carbon impact assessments'"
 msgstr ""
 
-#: .\vehiclemonitor\models.py:25
+#: vehiclemonitor/models.py:25
 msgid "reporter id"
 msgstr "ID rilevatore"
 
-#: .\vehiclemonitor\models.py:29
+#: vehiclemonitor/models.py:29
 msgid "reporter type"
 msgstr "Tipo di rilevatore"
 
-#: .\vehiclemonitor\models.py:33
+#: vehiclemonitor/models.py:33
 msgid "reporter name"
 msgstr "Nome del rilevatore"
 
-#: .\vehiclemonitor\models.py:38 .\vehicles\models.py:260
+#: vehiclemonitor/models.py:38 vehicles/models.py:260
 msgid "position"
 msgstr "Posizione"
 
-#: .\vehiclemonitor\models.py:41
+#: vehiclemonitor/models.py:41
 msgid "Either this field or `address` must be given"
 msgstr "Questo campo o il campo 'indirizzo' devono essere compilati"
 
-#: .\vehiclemonitor\models.py:44
+#: vehiclemonitor/models.py:44
 msgid "address"
 msgstr "Indirizzo"
 
-#: .\vehiclemonitor\models.py:46
+#: vehiclemonitor/models.py:46
 msgid "Approximate address. Either this field or `position` must be given"
 msgstr ""
 "Indirizzo. Questo campo o la posizione sulla mappa devono essere compilati"
 
-#: .\vehiclemonitor\models.py:51
+#: vehiclemonitor/models.py:51
 msgid "created at"
 msgstr "Creata il"
 
-#: .\vehiclemonitor\models.py:55
+#: vehiclemonitor/models.py:55
 msgid "observed at"
 msgstr "Rilevata il"
 
-#: .\vehiclemonitor\models.py:57
+#: vehiclemonitor/models.py:57
 msgid "When the observation was made"
 msgstr "Quando è stata fatta la rilevazione"
 
-#: .\vehiclemonitor\models.py:60 .\vehicles\models.py:256
+#: vehiclemonitor/models.py:60 vehicles/models.py:256
 msgid "details"
 msgstr "Dettagli"
 
-#: .\vehicles\forms.py:134
+#: vehicles/forms.py:134
 msgid "A bike with that nickname already exists"
 msgstr "E' già presente una bicicletta con questo nome"
 
-#: .\vehicles\forms.py:255
+#: vehicles/forms.py:255
 msgid "image"
 msgstr "Immagine"
 
-#: .\vehicles\forms.py:262
+#: vehicles/forms.py:262
 msgid "Picture too big to upload"
 msgstr ""
 
-#: .\vehicles\forms.py:301
+#: vehicles/forms.py:301
 msgid "could not read uploaded image"
 msgstr "Non è stato possibile leggere l'immagine caricata"
 
-#: .\vehicles\forms.py:329
+#: vehicles/forms.py:329
 msgid "Already uploaded a picture with that name"
 msgstr "E' stata già inserita una foto con lo stesso nome"
 
-#: .\vehicles\forms.py:364
+#: vehicles/forms.py:364
 msgid "Must select at least one picture to delete"
 msgstr "Selezionare almeno un'immagine da eliminare"
 
-#: .\vehicles\models.py:35
+#: vehicles/models.py:35
 msgid "short identifier"
 msgstr "Identificatore breve"
 
-#: .\vehicles\models.py:44
+#: vehicles/models.py:44
 msgid "last position"
 msgstr "Ultima positione rilevata"
 
-#: .\vehicles\models.py:111
+#: vehicles/models.py:111
 msgid "owner"
 msgstr "In possesso del propretario"
 
-#: .\vehicles\models.py:118
+#: vehicles/models.py:118
 msgid "picture_gallery"
 msgstr "Galleria immagini"
 
-#: .\vehicles\models.py:121
+#: vehicles/models.py:121
 msgid "last update"
 msgstr "Ultimo aggiornamento"
 
-#: .\vehicles\models.py:126
+#: vehicles/models.py:126
 msgid "bike type"
 msgstr "tipo di bicicletta"
 
-#: .\vehicles\models.py:129
+#: vehicles/models.py:129
 msgid "racing"
 msgstr "da competizione"
 
-#: .\vehicles\models.py:130
+#: vehicles/models.py:130
 msgid "city"
 msgstr "da città"
 
-#: .\vehicles\models.py:131
+#: vehicles/models.py:131
 msgid "mountain"
 msgstr "mountain bike"
 
-#: .\vehicles\models.py:132
+#: vehicles/models.py:132
 msgid "foldable"
 msgstr "ripiegabile"
 
-#: .\vehicles\models.py:137
+#: vehicles/models.py:137
 msgid "gear"
 msgstr "cambio"
 
-#: .\vehicles\models.py:140
+#: vehicles/models.py:140
 msgid "single ring"
 msgstr "corona singola"
 
-#: .\vehicles\models.py:141
+#: vehicles/models.py:141
 msgid "groupset below 18 speeds"
 msgstr "cambio con < 18 velocità"
 
-#: .\vehicles\models.py:142
+#: vehicles/models.py:142
 msgid "groupset above 18 speeds"
 msgstr "cambio con > 18 velocità"
 
-#: .\vehicles\models.py:143
+#: vehicles/models.py:143
 msgid "electric"
 msgstr "elettrica"
 
-#: .\vehicles\models.py:148
+#: vehicles/models.py:148
 msgid "brake"
 msgstr "freni"
 
-#: .\vehicles\models.py:151
+#: vehicles/models.py:151
 msgid "disk"
 msgstr "a disco"
 
-#: .\vehicles\models.py:152
+#: vehicles/models.py:152
 msgid "cantilevel"
 msgstr "cantilever"
 
-#: .\vehicles\models.py:153
+#: vehicles/models.py:153
 msgid "coaster"
 msgstr "contropedale"
 
-#: .\vehicles\models.py:158
+#: vehicles/models.py:158
 msgid "bikename"
 msgstr "Nome identificativo della bicicletta"
 
-#: .\vehicles\models.py:162
+#: vehicles/models.py:162
 msgid "brand"
 msgstr "marca"
 
-#: .\vehicles\models.py:167
+#: vehicles/models.py:167
 msgid "model"
 msgstr "modello"
 
-#: .\vehicles\models.py:172
+#: vehicles/models.py:172
 msgid "color"
 msgstr "colore"
 
-#: .\vehicles\models.py:177
+#: vehicles/models.py:177
 msgid "saddle"
 msgstr "sella"
 
-#: .\vehicles\models.py:182
+#: vehicles/models.py:182
 msgid "has basket"
 msgstr "cestino"
 
-#: .\vehicles\models.py:186
+#: vehicles/models.py:186
 msgid "has cargo rack"
 msgstr "portapacchi"
 
-#: .\vehicles\models.py:190
+#: vehicles/models.py:190
 msgid "has lights"
 msgstr "luci"
 
-#: .\vehicles\models.py:194
+#: vehicles/models.py:194
 msgid "has bags"
 msgstr "borse"
 
-#: .\vehicles\models.py:198
+#: vehicles/models.py:198
 msgid "other details"
 msgstr "altri dettagli"
 
-#: .\vehicles\models.py:248
+#: vehicles/models.py:248
 msgid "lost"
 msgstr "smarrita"
 
-#: .\vehicles\models.py:252 .\vehicles\models.py:291
+#: vehicles/models.py:252 vehicles/models.py:291
 msgid "creation date"
 msgstr "data di inserimento"
 
-#: .\vehicles\models.py:263
+#: vehicles/models.py:263
 msgid "Bike last seen position"
 msgstr "Ultima positione rilevata della bicicletta"
 
-#: .\vehicles\models.py:286
+#: vehicles/models.py:286
 msgid "epc"
 msgstr "epc"
 
-#: .\vehicles\models.py:287
+#: vehicles/models.py:287
 msgid "Electronic Product Code"
 msgstr "Codice prodotto"
 
-#: .\vehicles\validators.py:31
+#: vehicles/validators.py:31
 #, python-format
 msgid "Uploaded file is too large. File size must not exceed %(max_size)s MB"
 msgstr ""
 "Il file caricato è troppo grande. I file non possono eccedere %(max_size)s MB"
 
-#: .\vehicles\views.py:76
+#: vehicles/views.py:76
 msgid "Bike created!"
 msgstr "Bicicletta inserita!"
 
-#: .\vehicles\views.py:138
+#: vehicles/views.py:138
 msgid "Bike details updated!"
 msgstr "Dettagli bicicletta aggiornati!"
 
-#: .\vehicles\views.py:152
+#: vehicles/views.py:152
 msgid "Update bike details"
 msgstr "Modifica i dati della bicicletta"
 
-#: .\vehicles\views.py:176
+#: vehicles/views.py:176
 msgid "Bike deleted!"
 msgstr "La bicicletta è stata rimossa"
 
-#: .\vehicles\views.py:214
+#: vehicles/views.py:214
 msgid "Bike picture uploaded!"
 msgstr "La foto è stata caricata correttamente!"
 
-#: .\vehicles\views.py:268
+#: vehicles/views.py:268
 msgid "Pictures have been deleted!"
 msgstr "Le foto sono state eliminate!"
 
-#: .\vehicles\views.py:302
+#: vehicles/views.py:302
 msgid "Bike status updated!"
 msgstr "Lo stato è stato aggiornato!"
 

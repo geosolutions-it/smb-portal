@@ -212,7 +212,11 @@ class EndUserProfileCreateView(LoginRequiredMixin,
     form_class = forms.EndUserProfileForm
     template_name_suffix = "_create"
     permission_required = "profiles.can_create_profile"
-    success_url = reverse_lazy("profile:update")
+    success_url = reverse_lazy("bikes:list")
+
+    @property
+    def goto(self):
+        return "bikes:list"
 
     @property
     def success_message(self):
@@ -287,6 +291,7 @@ class ProfileUpdateView(LoginRequiredMixin,
     @property
     def success_message(self):
         return _("User profile updated!")
+
 
     def has_permission(self):
         user = self.request.user
