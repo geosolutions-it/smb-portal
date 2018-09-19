@@ -23,6 +23,11 @@ app_name = "api"
 
 router = routers.DefaultRouter()
 router.register(
+    prefix="my-badges",
+    viewset=views.MyBadgeViewSet,
+    base_name="my-badges"
+)
+router.register(
     prefix="my-bikes",
     viewset=views.MyBikeViewSet,
     base_name="my-bikes"
@@ -61,6 +66,11 @@ router.register(
     prefix="bikes",
     viewset=views.BikeViewSet,
     base_name="bikes"
+)
+router.register(
+    prefix="badges",
+    viewset=views.BadgeViewSet,
+    base_name="badges"
 )
 router.register(
     prefix="tags",

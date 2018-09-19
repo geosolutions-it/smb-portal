@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profiles', '0016_add-gamification-interface-to-users'),
+        ('profiles', '0015_smbuser_gamification_interface'),
     ]
 
     operations = [

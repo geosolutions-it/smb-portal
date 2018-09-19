@@ -19,6 +19,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 from rest_framework_gis.pagination import GeoJsonPagination
+import django_gamification.models
 
 from keycloakauth import utils
 from keycloakauth.keycloakadmin import get_manager
@@ -331,3 +332,34 @@ class SegmentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "tracks.can_list_segments",
     )
     queryset = tracks.models.Segment.objects.all()
+
+
+class BadgeViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.BadgeSerializer
+    required_permissions = (
+        "profiles.can_list_badges",
+    )
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_fields = (
+        "acquired",
+    )
+    queryset = django_gamification.models.Badge.objects.all()
+
+
+class MyBadgeViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.MyBadgeSerializer
+    required_permissions = (
+        "profiles.can_list_own_badges",
+    )
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_fields = (
+        "acquired",
+    )
+
+    def get_queryset(self):
+        return django_gamification.models.Badge.objects.filter(
+            interface__smbuser=self.request.user)

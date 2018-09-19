@@ -30,7 +30,6 @@ def is_owner(user, obj):
 def is_profile_owner(user, profile_obj):
     return user.profile == profile_obj if user.is_authenticated else False
 
-
 @rules.predicate
 def has_profile(user):
     return bool(user.profile) if user.is_authenticated else False
@@ -50,5 +49,7 @@ for perm, predicate in {
     "can_create_profile": ~has_profile,
     "can_view_profile": has_profile,
     "can_edit_profile": has_profile & is_profile_owner,
+    "can_list_badges": is_privileged_user,
+    "can_list_own_badges": is_end_user,
 }.items():
     rules.add_perm("profiles.{}".format(perm), predicate)

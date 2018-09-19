@@ -13,6 +13,8 @@ from django.utils.translation import ugettext_lazy as _
 
 import django_gamification.models as gm
 
+import profiles.models as pm
+
 
 # NOTE: Badge points are used for unlockables, which we are not using here
 CATEGORIES = {
@@ -313,9 +315,30 @@ class Command(BaseCommand):
     help = "Generate the default badge definitions for smb portal"
 
     def handle(self, *args, **options):
+        self.stdout.write(
+            "Deleting any previous gamification features...")
+        self.drop_previous_gamification_interfaces()
+        self.drop_previous_badge_definitions()
+        self.stdout.write("Adding gamification interface to endusers...")
+        self.add_user_gamification_interfaces()
+        self.stdout.write("Generating badge definitions and badges...")
         for cat_name, cat_config in CATEGORIES.items():
             self.generate_category(**cat_config)
         self.stdout.write("Done!")
+
+    def drop_previous_gamification_interfaces(self):
+        gm.GamificationInterface.objects.all().delete()
+
+    def drop_previous_badge_definitions(self):
+        gm.BadgeDefinition.objects.all().delete()
+
+    def add_user_gamification_interfaces(self):
+        for enduser_profile in pm.EndUserProfile.objects.all():
+            user = enduser_profile.user
+            if user.gamification_interface is None:
+                gi = gm.GamificationInterface.objects.create()
+                user.gamification_interface = gi
+                user.save()
 
     def generate_category(self, name="", description="",
                           badge_definitions=None, **kwargs):
@@ -324,13 +347,10 @@ class Command(BaseCommand):
             description=description
         )
         for definition in badge_definitions or []:
-            badge_def, created = gm.BadgeDefinition.objects.get_or_create(
+            badge_def = gm.BadgeDefinition.objects.create(
                 name=definition["name"],
                 description=definition["description"],
                 points=definition.get("points"),
                 progression_target=definition.get("progression_target"),
                 category=category,
             )
-            if created:
-                self.stdout.write(
-                    "Created badge definition {}".format(badge_def.name))
