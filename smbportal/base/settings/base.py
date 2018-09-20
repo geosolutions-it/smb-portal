@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     "sortedm2m",
     "django_bootstrap_breadcrumbs",
     "avatar",
+    "django_gamification",
     "base.apps.BaseConfig",
     "keycloakauth.apps.KeycloakauthConfig",
     "profiles.apps.ProfilesConfig",

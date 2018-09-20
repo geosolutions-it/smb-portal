@@ -22,6 +22,7 @@ import tracks.models
 import tracks.utils
 import vehicles.models
 import vehiclemonitor.models
+import django_gamification.models
 
 logger = logging.getLogger(__name__)
 
@@ -78,9 +79,23 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
     profile = serializers.SerializerMethodField()
     profile_type = serializers.SerializerMethodField()
     password = serializers.CharField(write_only=True)
+    acquired_badges = serializers.SerializerMethodField()
 
     def get_uuid(self, obj):
         return obj.keycloak.UID
+
+    def get_acquired_badges(self, obj):
+        if obj.gamification_interface is None:
+            result = []
+        else:
+            badges = obj.gamification_interface.badge_set.filter(acquired=True)
+            serializer = BriefBadgeSerializer(
+                instance=badges,
+                context=self.context,
+                many=True
+            )
+            result = serializer.data
+        return result
 
     def get_profile(self, obj):
         if obj.profile is not None:
@@ -119,14 +134,29 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
             "nickname",
             "profile",
             "profile_type",
+            "acquired_badges",
         )
 
 
 class MyUserSerializer(SmbUserSerializer):
     url = serializers.SerializerMethodField()
+    badges = serializers.SerializerMethodField()
 
     def get_url(self, obj):
         return reverse("api:my-user", request=self.context.get("request"))
+
+    def get_badges(self, obj):
+        if obj.gamification_interface is None:
+            result = []
+        else:
+            badges = obj.gamification_interface.badge_set.filter()
+            serializer = MyBriefBadgeSerializer(
+                instance=badges,
+                context=self.context,
+                many=True
+            )
+            result = serializer.data
+        return result
 
     class Meta:
         model = profiles.models.SmbUser
@@ -143,6 +173,7 @@ class MyUserSerializer(SmbUserSerializer):
             "nickname",
             "profile",
             "profile_type",
+            "badges",
         )
 
 
@@ -825,3 +856,69 @@ class HealthSerializer(serializers.ModelSerializer):
             "calories_consumed",
             "benefit_index",
         )
+
+
+class BadgeSerializer(serializers.ModelSerializer):
+    category = serializers.CharField(source="category.name")
+    user = serializers.SerializerMethodField()
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:badges-detail",
+    )
+
+    def get_user(self, obj):
+        user = obj.interface.smbuser_set.first()
+        return reverse(
+            "api:users-detail",
+            kwargs={"uuid": user.keycloak.UID},
+            request=self.context.get("request")
+        )
+
+    class Meta:
+        model = django_gamification.models.Badge
+        fields = (
+            "id",
+            "url",
+            "name",
+            "user",
+            "acquired",
+            "description",
+            "category"
+        )
+
+
+class BriefBadgeSerializer(BadgeSerializer):
+    class Meta:
+        model = django_gamification.models.Badge
+        fields = (
+            "name",
+            "url",
+        )
+
+
+class MyBadgeSerializer(BadgeSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:my-badges-detail",
+    )
+
+    class Meta:
+        model = django_gamification.models.Badge
+        fields = (
+            "id",
+            "url",
+            "name",
+            "acquired",
+            "description",
+            "category"
+        )
+
+
+class MyBriefBadgeSerializer(MyBadgeSerializer):
+    class Meta:
+        model = django_gamification.models.Badge
+        fields = (
+            "name",
+            "url",
+            "acquired",
+        )
+
+
