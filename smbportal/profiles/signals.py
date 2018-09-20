@@ -15,9 +15,26 @@ from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 
 from base.utils import send_mail
+from badges.utils import add_gamification_interface
+from badges.utils import award_new_user_badge
 from . import models
 
 logger = logging.getLogger(__name__)
+
+
+def gamify_user(sender, **kwargs):
+    """Add gamification features to the user
+
+    This function adds a gamification interface to the user (which results
+    in the automatic creation of all badges) and awards the `new user` badge
+
+    """
+
+    if sender == models.EndUserProfile and kwargs.get("created"):
+        profile = kwargs.get("instance")
+        user = profile.user
+        add_gamification_interface(user)
+        award_new_user_badge(user)
 
 
 def notify_profile_created(sender, **kwargs):
