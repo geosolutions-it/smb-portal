@@ -12,6 +12,7 @@
 
 import logging
 
+from avatar.templatetags.avatar_tags import avatar_url
 from rest_framework.reverse import reverse
 import photologue.models
 from rest_framework import serializers
@@ -80,9 +81,13 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
     profile_type = serializers.SerializerMethodField()
     password = serializers.CharField(write_only=True)
     acquired_badges = serializers.SerializerMethodField()
+    avatar = serializers.SerializerMethodField()
 
     def get_uuid(self, obj):
         return obj.keycloak.UID
+
+    def get_avatar(self, obj):
+        return avatar_url(obj)
 
     def get_acquired_badges(self, obj):
         if obj.gamification_interface is None:
@@ -134,6 +139,7 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
             "nickname",
             "profile",
             "profile_type",
+            "avatar",
             "acquired_badges",
         )
 
@@ -173,6 +179,7 @@ class MyUserSerializer(SmbUserSerializer):
             "nickname",
             "profile",
             "profile_type",
+            "avatar",
             "badges",
         )
 
@@ -204,7 +211,9 @@ class UserDumpSerializer(SmbUserSerializer):
             "nickname",
             "profile",
             "profile_type",
-            "vehicles"
+            "vehicles",
+            "avatar",
+            "acquired_badges",
         )
 
 
