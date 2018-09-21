@@ -19,7 +19,12 @@ class ProfilesConfig(AppConfig):
 
     def ready(self):
         from . import signals
+        import django_gamification.signals
         post_save.connect(
             signals.notify_profile_created,
+            dispatch_uid=str(uuid.uuid4())
+        )
+        post_save.connect(
+            signals.gamify_user,
             dispatch_uid=str(uuid.uuid4())
         )
