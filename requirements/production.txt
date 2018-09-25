@@ -24,3 +24,6 @@ git+https://github.com/jhuapl-boss/drf-oidc-auth.git@v0.8.0
 
 # includes a fix for jhuapl-boss/boss-oidc #28
 git+https://github.com/geosolutions-it/boss-oidc.git@4fad0f8579f4c091b8a80426407cad7d98969e28
+
+# smb-backend
+git+https://github.com/geosolutions-it/smb-backend.git
