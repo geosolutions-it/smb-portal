@@ -12,7 +12,7 @@
 
 import django_gamification.models as gm
 
-from .constants import CATEGORIES
+from . import constants
 
 
 def add_gamification_interface(user):
@@ -24,9 +24,7 @@ def add_gamification_interface(user):
 
 def award_new_user_badge(user):
     interface = user.gamification_interface
-    new_user_badge = interface.badge_set.get(
-        name=CATEGORIES[
-            "user_registration"]["badge_definitions"][0]["name"])
+    new_user_badge = interface.badge_set.get(name=constants.NEW_USER_BADGE)
     if not new_user_badge.acquired:
         new_user_badge.award()
         new_user_badge.save()

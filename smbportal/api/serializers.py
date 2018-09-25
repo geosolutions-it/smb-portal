@@ -13,6 +13,8 @@
 import logging
 
 from avatar.templatetags.avatar_tags import avatar_url
+from django.db.models import OuterRef
+from django.db.models import Subquery
 from rest_framework.reverse import reverse
 import photologue.models
 from rest_framework import serializers
@@ -23,7 +25,7 @@ import tracks.models
 import tracks.utils
 import vehicles.models
 import vehiclemonitor.models
-import django_gamification.models
+import django_gamification.models as gm
 
 logger = logging.getLogger(__name__)
 
@@ -81,6 +83,7 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
     profile_type = serializers.SerializerMethodField()
     password = serializers.CharField(write_only=True)
     acquired_badges = serializers.SerializerMethodField()
+    next_badges = serializers.SerializerMethodField()
     avatar = serializers.SerializerMethodField()
 
     def get_uuid(self, obj):
@@ -101,6 +104,29 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
             )
             result = serializer.data
         return result
+
+    def get_next_badges(self, obj):
+        if obj.gamification_interface is None:
+            result = []
+        else:
+            unacquired = gm.Badge.objects.filter(
+                acquired=False,
+                interface__smbuser=obj,
+                category=OuterRef("pk")
+            )
+            next_badges_ids = gm.Category.objects.annotate(
+                next_badge=Subquery(unacquired.values("pk")[:1])
+            ).values_list("next_badge", flat=True)
+            qs = gm.Badge.objects.filter(
+                pk__in=next_badges_ids).order_by("name")
+            serializer = BriefBadgeSerializer(
+                instance=qs,
+                context=self.context,
+                many=True
+            )
+            result = serializer.data
+        return result
+
 
     def get_profile(self, obj):
         if obj.profile is not None:
@@ -141,21 +167,26 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
             "profile_type",
             "avatar",
             "acquired_badges",
+            "next_badges",
         )
 
 
 class MyUserSerializer(SmbUserSerializer):
     url = serializers.SerializerMethodField()
-    badges = serializers.SerializerMethodField()
+    total_health_benefits = serializers.SerializerMethodField()
+    total_emissions = serializers.SerializerMethodField()
+    total_distance_km = serializers.SerializerMethodField()
+    total_travels = serializers.SerializerMethodField()
 
     def get_url(self, obj):
         return reverse("api:my-user", request=self.context.get("request"))
 
-    def get_badges(self, obj):
+    def get_acquired_badges(self, obj):
         if obj.gamification_interface is None:
             result = []
         else:
-            badges = obj.gamification_interface.badge_set.filter()
+            badges = obj.gamification_interface.badge_set.filter(
+                acquired=True).order_by("name")
             serializer = MyBriefBadgeSerializer(
                 instance=badges,
                 context=self.context,
@@ -163,6 +194,46 @@ class MyUserSerializer(SmbUserSerializer):
             )
             result = serializer.data
         return result
+
+    def get_next_badges(self, obj):
+        if obj.gamification_interface is None:
+            result = []
+        else:
+            unacquired = gm.Badge.objects.filter(
+                acquired=False,
+                interface__smbuser=obj,
+                category=OuterRef("pk")
+            )
+            next_badges_ids = gm.Category.objects.annotate(
+                next_badge=Subquery(unacquired.values("pk")[:1])
+            ).values_list("next_badge", flat=True)
+            qs = gm.Badge.objects.filter(
+                pk__in=next_badges_ids).order_by("name")
+            serializer = MyBriefBadgeSerializer(
+                instance=qs,
+                context=self.context,
+                many=True
+            )
+            result = serializer.data
+        return result
+
+    def get_total_health_benefits(self, obj):
+        return tracks.utils.get_aggregated_data(
+            "health",
+            segment_filters={"track__owner": obj}
+        )
+
+    def get_total_emissions(self, obj):
+        return tracks.utils.get_aggregated_data(
+            "emissions",
+            segment_filters={"track__owner": obj}
+        )
+
+    def get_total_distance_km(self, obj):
+        return tracks.utils.get_total_distance_by_vehicle_type(obj)
+
+    def get_total_travels(self, obj):
+        return tracks.utils.get_total_travels_by_vehicle_type(obj)
 
     class Meta:
         model = profiles.models.SmbUser
@@ -180,7 +251,12 @@ class MyUserSerializer(SmbUserSerializer):
             "profile",
             "profile_type",
             "avatar",
-            "badges",
+            "acquired_badges",
+            "next_badges",
+            "total_health_benefits",
+            "total_emissions",
+            "total_distance_km",
+            "total_travels",
         )
 
 
@@ -873,6 +949,10 @@ class BadgeSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:badges-detail",
     )
+    next_badge = serializers.HyperlinkedRelatedField(
+        view_name="api:badges-detail",
+        queryset=gm.Badge.objects.all()
+    )
 
     def get_user(self, obj):
         user = obj.interface.smbuser_set.first()
@@ -883,7 +963,7 @@ class BadgeSerializer(serializers.ModelSerializer):
         )
 
     class Meta:
-        model = django_gamification.models.Badge
+        model = gm.Badge
         fields = (
             "id",
             "url",
@@ -891,13 +971,14 @@ class BadgeSerializer(serializers.ModelSerializer):
             "user",
             "acquired",
             "description",
-            "category"
+            "category",
+            "next_badge",
         )
 
 
 class BriefBadgeSerializer(BadgeSerializer):
     class Meta:
-        model = django_gamification.models.Badge
+        model = gm.Badge
         fields = (
             "name",
             "url",
@@ -908,22 +989,27 @@ class MyBadgeSerializer(BadgeSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:my-badges-detail",
     )
+    next_badge = serializers.HyperlinkedRelatedField(
+        view_name="api:my-badges-detail",
+        queryset=gm.Badge.objects.all()
+    )
 
     class Meta:
-        model = django_gamification.models.Badge
+        model = gm.Badge
         fields = (
             "id",
             "url",
             "name",
             "acquired",
             "description",
-            "category"
+            "category",
+            "next_badge",
         )
 
 
 class MyBriefBadgeSerializer(MyBadgeSerializer):
     class Meta:
-        model = django_gamification.models.Badge
+        model = gm.Badge
         fields = (
             "name",
             "url",
