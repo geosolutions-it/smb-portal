@@ -173,6 +173,10 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
 
 class MyUserSerializer(SmbUserSerializer):
     url = serializers.SerializerMethodField()
+    total_health_benefits = serializers.SerializerMethodField()
+    total_emissions = serializers.SerializerMethodField()
+    total_distance_km = serializers.SerializerMethodField()
+    total_travels = serializers.SerializerMethodField()
 
     def get_url(self, obj):
         return reverse("api:my-user", request=self.context.get("request"))
@@ -213,6 +217,23 @@ class MyUserSerializer(SmbUserSerializer):
             result = serializer.data
         return result
 
+    def get_total_health_benefits(self, obj):
+        return tracks.utils.get_aggregated_data(
+            "health",
+            segment_filters={"track__owner": obj}
+        )
+
+    def get_total_emissions(self, obj):
+        return tracks.utils.get_aggregated_data(
+            "emissions",
+            segment_filters={"track__owner": obj}
+        )
+
+    def get_total_distance_km(self, obj):
+        return tracks.utils.get_total_distance_by_vehicle_type(obj)
+
+    def get_total_travels(self, obj):
+        return tracks.utils.get_total_travels_by_vehicle_type(obj)
 
     class Meta:
         model = profiles.models.SmbUser
@@ -232,6 +253,10 @@ class MyUserSerializer(SmbUserSerializer):
             "avatar",
             "acquired_badges",
             "next_badges",
+            "total_health_benefits",
+            "total_emissions",
+            "total_distance_km",
+            "total_travels",
         )
 
 

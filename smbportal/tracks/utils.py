@@ -184,8 +184,33 @@ Calories consumption
 """
 
 from django.db.models import Sum
+from django.contrib.gis.db.models.functions import Length as gis_length
 
 from . import models
+
+
+def get_total_distance_by_vehicle_type(user):
+    """Return the total distance (in km) traveled with each vehicle type"""
+    annotated_segments = _get_annotated_segment_data(
+        annotations={"distance": gis_length("geom", spheroid=True)},
+        annotate_by=["vehicle_type"],
+        segment_filters={"track__owner": user}
+    )
+    result = {}
+    for item in annotated_segments:
+        result.setdefault(item["vehicle_type"], 0)
+        result[item["vehicle_type"]] += item["distance"].km
+    return result
+
+
+def get_total_travels_by_vehicle_type(user):
+    result = {}
+    qs = models.Segment.objects.filter(
+        track__owner=user).values_list("vehicle_type", flat=True)
+    for travel in qs:
+        result.setdefault(travel, 0)
+        result[travel] += 1
+    return result
 
 
 def get_aggregated_data(data_type, annotate_by=None, segment_filters=None,
