@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     "tracks.apps.TracksConfig",
     "vehiclemonitor.apps.VehiclemonitorConfig",
     "badges.apps.BadgesConfig",
+    "prizes.apps.PrizesConfig",
     "rules.apps.AutodiscoverRulesConfig",
 ]
 
