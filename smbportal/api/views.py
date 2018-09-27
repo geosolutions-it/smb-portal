@@ -345,7 +345,8 @@ class BadgeViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = (
         "acquired",
     )
-    queryset = django_gamification.models.Badge.objects.all()
+    queryset = django_gamification.models.Badge.objects.all().order_by(
+        "-acquired", "name")
 
 
 class MyBadgeViewSet(viewsets.ReadOnlyModelViewSet):
@@ -362,4 +363,4 @@ class MyBadgeViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return django_gamification.models.Badge.objects.filter(
-            interface__smbuser=self.request.user)
+            interface__smbuser=self.request.user).order_by("-acquired", "name")
