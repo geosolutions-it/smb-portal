@@ -172,7 +172,6 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
 
 class MyUserSerializer(SmbUserSerializer):
     username = serializers.CharField(required=False)
-    accepted_terms_of_service = serializers.BooleanField(write_only=True)
     nickname = serializers.CharField(required=False)
     language_preference = serializers.CharField(required=False)
     url = serializers.SerializerMethodField()
