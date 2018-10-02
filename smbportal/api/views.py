@@ -24,6 +24,7 @@ import django_gamification.models
 from keycloakauth import utils
 from keycloakauth.keycloakadmin import get_manager
 import profiles.models
+import profiles.views
 import tracks.models
 import vehicles.models
 import vehiclemonitor.models
@@ -41,16 +42,24 @@ class MyUserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
                     viewsets.GenericViewSet):
     serializer_class = serializers.MyUserSerializer
     required_permissions = (
-        "profiles.can_view_profile",
-    )
-    required_object_permissions = (
-        "profiles.can_edit_profile",
+        "profiles.is_authenticated",
     )
 
     def get_object(self):
         user = self.request.user
         self.check_object_permissions(self.request, obj=user.profile)
         return user
+
+    def perform_update(self, serializer):
+        """Save any modifications to the user object
+
+        In case of profile generation, be sure to communicate with keycloak
+        in order to setup correct group memberships
+
+        """
+
+        user = serializer.save()
+        _update_group_memberships(user)
 
 
 class MyBikeViewSet(viewsets.ModelViewSet):
@@ -363,3 +372,26 @@ class MyBadgeViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         return django_gamification.models.Badge.objects.filter(
             interface__smbuser=self.request.user)
+
+
+def _update_group_memberships(user):
+    manager = get_manager(
+        settings.KEYCLOAK["base_url"],
+        settings.KEYCLOAK["realm"],
+        settings.KEYCLOAK["client_id"],
+        settings.KEYCLOAK["admin_username"],
+        settings.KEYCLOAK["admin_password"],
+    )
+    user_groups = manager.get_user_groups(user.keycloak.UID)
+    logger.debug("updating user group memberships...")
+    profile_name = (user.profile.__class__.__name__.lower() if
+                    user.profile is not None else None)
+    keycloak_group_name = {
+        "enduserprofile": settings.END_USER_PROFILE,
+        "privilegeduserprofile": settings.PRIVILEGED_USER_PROFILE,
+    }.get(profile_name or "")
+    utils.update_user_groups(
+        user=user,
+        user_profile=keycloak_group_name,
+        current_keycloak_groups=[g["name"] for g in user_groups]
+    )

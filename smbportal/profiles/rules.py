@@ -44,6 +44,7 @@ is_end_user = rules.is_group_member("end_users")
 is_privileged_user = rules.is_group_member("privileged_users")
 
 for perm, predicate in {
+    "is_authenticated": rules.is_authenticated,
     "can_list_users": is_privileged_user,
     "can_delete_user": is_admin,
     "can_create_profile": ~has_profile,

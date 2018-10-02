@@ -28,8 +28,7 @@ from django.views.generic import UpdateView
 
 from base import mixins
 from base import utils
-from keycloakauth import oidchooks
-from keycloakauth.keycloakadmin import get_manager as get_keycloak_manager
+from keycloakauth.utils import update_user_groups
 from . import forms
 from . import models
 from .rules import has_profile
@@ -41,72 +40,6 @@ def activate_language(language_code, request):
     logger.debug("activate_language called")
     translation.activate(language_code)
     request.session[translation.LANGUAGE_SESSION_KEY] = language_code
-
-
-def update_user_groups(user: models.SmbUser, user_profile: str,
-                       current_keycloak_groups: List[str]):
-    """Update a user's groups based on the requested user profile
-
-    The workflow is:
-
-    - user asks Keycloak to become a member of the group(s) corresponding
-      to its profile
-    - Keycloak either accepts and creates the memberships or denies and
-      notifies an admin that user wants to be given membership of said groups
-    - if Keycloak created the relevant memberships, we update the user's
-      django groups
-
-    Note:
-
-    We do not use permissions here because we want Keycloak to be the
-    authority on the user group memberships. In order to do that we can only
-    update a django user's django group when we are certain that Keycloak
-    already has reflected that membership in its own user database
-
-    """
-
-    keycloak_groups = enforce_keycloak_group_memberships(
-        user.keycloak.UID,
-        user_profile,
-        current_keycloak_groups
-    )
-    oidchooks.create_django_memberships(user, keycloak_groups)
-
-
-def enforce_keycloak_group_memberships(user_id: str, user_profile: str,
-                                       current_groups: List[str]):
-    """Assign user memberships on the relevant KeyCloak groups, if allowed.
-
-    The registration of some user profiles, like `end_user`, is automatically
-    accepted, resulting in the relevant KeyCloak groups needing to be updated
-    with new members. Other profile types are not allowed to self register as
-    group members on KeyCloak.
-
-    """
-
-    memberships_to_enforce = settings.KEYCLOAK["group_mappings"][user_profile]
-    if set(current_groups) == set(memberships_to_enforce):
-        result = current_groups
-    else:
-        keycloak_manager = get_keycloak_manager(
-            base_url=settings.KEYCLOAK["base_url"],
-            realm=settings.KEYCLOAK["realm"],
-            client_id=settings.KEYCLOAK["client_id"],
-            username=settings.KEYCLOAK["admin_username"],
-            password=settings.KEYCLOAK["admin_password"],
-        )
-        if user_profile == settings.END_USER_PROFILE:
-            missing_memberships = set(
-                memberships_to_enforce) - set(current_groups)
-            if any(missing_memberships):
-                for group_path in missing_memberships:
-                    keycloak_manager.add_user_to_group(user_id, group_path)
-            result = memberships_to_enforce
-        else:
-            keycloak_manager.set_user_access(user_id, enabled=False)
-            raise RuntimeError("profiles of type {!r} must be manually "
-                               "approved by an admin".format(user_profile))
-    return result
 
 
 class UserProfileMixin(object):
