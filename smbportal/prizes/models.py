@@ -12,9 +12,12 @@ import datetime as dt
 import calendar
 from itertools import product
 
+from django.db import connections
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext_lazy as _
+from smbbackend import calculateprizes
 import pytz
 
 from profiles.models import EndUserProfile
@@ -223,6 +226,13 @@ class CurrentCompetitionManager(models.Manager):
             start_date__lte=now, end_date__gte=now)
 
 
+class FinishedCompetitionManager(models.Manager):
+
+    def get_queryset(self):
+        now = dt.datetime.now(pytz.utc)
+        return super().get_queryset().filter(end_date__lte=now)
+
+
 class CompetitionCreatorManager(models.Manager):
 
     def create_competitions(self, competition_definition):
@@ -233,54 +243,56 @@ class CompetitionCreatorManager(models.Manager):
             competition_definition.num_days
         )
         if competition_definition.segment_by_age_group:
-            age_groups = competition_definition.age_group
+            for pair, age in product(dates, competition_definition.age_group):
+                obj = self.model(
+                    competition_definition=competition_definition,
+                    age_group=[age],  # age_group is an ArrayField
+                    start_date=pair[0],
+                    end_date=pair[1]
+                )
+                obj.save()
         else:
-            age_groups = [Competition.COMPOUND_AGE_GROUP]
-
-        for date_pair, age_group in product(dates, age_groups):
-            obj = self.model(
-                competition_definition=competition_definition,
-                age_group=age_group,
-                start_date=date_pair[0],
-                end_date=date_pair[1]
-            )
-            obj.save()
-
+            for pair in dates:
+                obj = self.model(
+                    competition_definition=competition_definition,
+                    age_group=competition_definition.age_group,
+                    start_date=pair[0],
+                    end_date=pair[1]
+                )
+                obj.save()
 
 
 class Competition(models.Model):
     """Stores the result of a competition"""
-    COMPOUND_AGE_GROUP = "compound_age_group"
 
     competition_definition = models.ForeignKey(
         "CompetitionDefinition",
         on_delete=models.CASCADE,
         verbose_name=_("competition definition")
     )
-    age_group = models.CharField(
-        max_length=50,
-        choices=[
-            (
-                EndUserProfile.AGE_YOUNGER_THAN_NINETEEN,
-                _("< 19")
-            ),
-            (
-                EndUserProfile.AGE_BETWEEN_NINETEEN_AND_THIRTY,
-                _("19 - 30")
-            ),
-            (
-                EndUserProfile.AGE_BETWEEN_THIRTY_AND_SIXTY_FIVE,
-                _("30 - 65")
-            ),
-            (
-                EndUserProfile.AGE_OLDER_THAN_SIXTY_FIVE,
-                _("65+")
-            ),
-            (
-                COMPOUND_AGE_GROUP,
-                _("compound age group")
-            ),
-        ],
+    age_group = ArrayField(
+        base_field=models.CharField(
+            max_length=10,
+            choices=[
+                (
+                    EndUserProfile.AGE_YOUNGER_THAN_NINETEEN,
+                    _("< 19")
+                ),
+                (
+                    EndUserProfile.AGE_BETWEEN_NINETEEN_AND_THIRTY,
+                    _("19 - 30")
+                ),
+                (
+                    EndUserProfile.AGE_BETWEEN_THIRTY_AND_SIXTY_FIVE,
+                    _("30 - 65")
+                ),
+                (
+                    EndUserProfile.AGE_OLDER_THAN_SIXTY_FIVE,
+                    _("65+")
+                ),
+            ]
+        ),
+        size=4,
         verbose_name=_("age group"),
     )
     start_date = models.DateTimeField(
@@ -316,12 +328,39 @@ class Competition(models.Model):
         return (now > self.start_date) and (now <= self.end_date)
 
     def get_leaderboard(self):
-        pass
+        competition_info = calculateprizes.CompetitionInfo(
+            id=self.id,
+            name=self.competition_definition.name,
+            criteria=self.competition_definition.criteria,
+            repeat_when=self.competition_definition.repeat_when,
+            winner_threshold=self.competition_definition.winner_threshold,
+            start_date=self.start_date,
+            end_date=self.end_date,
+            age_groups=self.age_group,
+        )
+        leaderboard = calculateprizes.get_leaderboard(
+            competition_info,
+            connections["default"].connection.cursor()
+        )
+        user_model = get_user_model()
+        result = []
+        for entry in leaderboard:
+            user = user_model.objects.get(id=entry["user"])
+            result.append((user, entry["criteria_points"]))
+        return result
 
 
 class CurrentCompetition(Competition):
 
     objects = CurrentCompetitionManager()
+
+    class Meta:
+        proxy = True
+
+
+class FinishedCompetition(Competition):
+
+    objects = FinishedCompetitionManager()
 
     class Meta:
         proxy = True

@@ -56,6 +56,23 @@ class CurrentCompetitionAdmin(admin.ModelAdmin):
         return self.model.objects.get_queryset()
 
 
+@admin.register(models.FinishedCompetition)
+class FinishedCompetitionAdmin(admin.ModelAdmin):
+    list_display = (
+        "competition_definition",
+        "start_date",
+        "end_date",
+        "age_group",
+    )
+    list_filter = (
+        "age_group",
+        "start_date",
+    )
+
+    def get_queryset(self, request):
+        return self.model.objects.get_queryset()
+
+
 @admin.register(models.CompetitionPrize)
 class CompetitionPrizeAdmin(admin.ModelAdmin):
     pass
