@@ -23,6 +23,7 @@ import django_gamification.models
 
 from keycloakauth import utils
 from keycloakauth.keycloakadmin import get_manager
+import prizes.models
 import profiles.models
 import profiles.views
 import tracks.models
@@ -372,6 +373,39 @@ class MyBadgeViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         return django_gamification.models.Badge.objects.filter(
             interface__smbuser=self.request.user)
+
+
+class CompetitionViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.CompetitionDetailSerializer
+    queryset = prizes.models.Competition.objects.all()
+    required_permissions = (
+        "profiles.can_list_competitions",
+    )
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.CompetitionListSerializer
+        else:
+            result = serializers.CompetitionDetailSerializer
+        return result
+
+    @action(detail=False)
+    def current_competitions(self, request):
+        qs = prizes.models.CurrentCompetition.objects.all()
+        filtered = self.filter_queryset(qs)
+        page = self.paginate_queryset(filtered)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            result = self.get_paginated_response(serializer.data)
+        else:
+            serializer = self.get_serializer(filtered, many=True)
+            result = Response(serializer.data)
+        return result
+
+
+
+class MyCompetitionWonViewSet(viewsets.ReadOnlyModelViewSet):
+    pass
 
 
 def _update_group_memberships(user):

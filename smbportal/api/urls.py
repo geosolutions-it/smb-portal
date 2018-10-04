@@ -33,6 +33,11 @@ router.register(
     base_name="my-bikes"
 )
 router.register(
+    prefix="my-competitions-won",
+    viewset=views.MyCompetitionWonViewSet,
+    base_name="my-competitions-won"
+)
+router.register(
     prefix="my-tags",
     viewset=views.MyPhysicalTagViewSet,
     base_name="my-tags"
@@ -71,6 +76,11 @@ router.register(
     prefix="badges",
     viewset=views.BadgeViewSet,
     base_name="badges"
+)
+router.register(
+    prefix="competitions",
+    viewset=views.CompetitionViewSet,
+    base_name="competitions"
 )
 router.register(
     prefix="tags",

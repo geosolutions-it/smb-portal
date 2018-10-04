@@ -15,18 +15,19 @@ import logging
 from avatar.templatetags.avatar_tags import avatar_url
 from django.db.models import OuterRef
 from django.db.models import Subquery
+import django_gamification.models as gm
 from rest_framework.reverse import reverse
 import photologue.models
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
+import prizes.models
 import profiles.models
 import tracks.models
 import tracks.utils
 import vehicles.models
 import vehiclemonitor.models
-import django_gamification.models as gm
 
 logger = logging.getLogger(__name__)
 
@@ -1091,3 +1092,94 @@ class MyBriefBadgeSerializer(MyBadgeSerializer):
         )
 
 
+class SponsorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = prizes.models.Sponsor
+        fields = (
+            "name",
+            "logo",
+            "url",
+        )
+
+
+class CompetitionRankingSerializer(serializers.BaseSerializer):
+
+    def to_representation(self, instance):
+        criteria = instance[1]
+        result = {
+            "username": instance[0].username
+        }
+        result.update(
+            {criterium.value: score for criterium, score in criteria.items()})
+        return result
+
+
+class PrizeSerializer(serializers.ModelSerializer):
+    sponsor = SponsorSerializer()
+
+    class Meta:
+        model = prizes.models.Prize
+        fields = (
+            "name",
+            "description",
+            "url",
+            "sponsor"
+        )
+
+
+class CompetitionPrizeSerializer(serializers.ModelSerializer):
+    prize = PrizeSerializer()
+
+    class Meta:
+        model = prizes.models.CompetitionPrize
+        fields = (
+            "prize",
+            "user_rank",
+        )
+
+
+class CompetitionListSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:competitions-detail",
+    )
+
+    class Meta:
+        model = prizes.models.Competition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+        )
+
+
+class CompetitionDetailSerializer(CompetitionListSerializer):
+    leaderboard = serializers.SerializerMethodField()
+    prizes = CompetitionPrizeSerializer(
+        many=True,
+        source="competitionprize_set"
+    )
+
+    def get_leaderboard(self, obj):
+        board = obj.get_leaderboard()
+        serializer = CompetitionRankingSerializer(instance=board, many=True)
+        return serializer.data
+
+    class Meta:
+        model = prizes.models.Competition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+            "winner_threshold",
+            "leaderboard",
+            "prizes",
+        )

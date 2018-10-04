@@ -15,34 +15,236 @@ import pytz
 
 from profiles.models import EndUserProfile
 from prizes.models import Competition
-from prizes.models import CompetitionDefinition
 import prizes.models
 
-COMPETITION_DEFINITIONS = [
-    {
-        "name": "Weekly CO2 saver",
-        "num_days": 7,
-        "starts_at": "2018-09-02",
-        "num_repeats": 157,  # ~ three years (52 weeks per year)
-        "repeat": CompetitionDefinition.REPEAT_WEEKLY,
-        "age_group": [
-            EndUserProfile.AGE_YOUNGER_THAN_NINETEEN,
-            EndUserProfile.AGE_BETWEEN_NINETEEN_AND_THIRTY,
-            EndUserProfile.AGE_BETWEEN_THIRTY_AND_SIXTY_FIVE,
-            EndUserProfile.AGE_OLDER_THAN_SIXTY_FIVE
-        ],
-        "segment_by_age_group": True,
-        "criteria": [
-            CompetitionDefinition.CRITERIUM_SAVED_CO2_EMISSIONS,
-        ],
-        "winner_threshold": 1,
-        "prizes": [
-            {
-                "name": "Some reward",
-                "user_rank": 1
-            }
-        ]
-    }
+SPONSORS = [
+    "CTTNord srl",
+    "Banco di Andrea Briguglio",
+    "Negozio di Roberto Sgariglia",
+    "Bar Nuovo",
+    "Negozio Supershoes di via del giglio",
+    "Libreria 'Libri' di Daniela Barli Carboncini",
+    "Torteria 'Da Gagarin'",
+]
+
+PRIZES = [  # (prize_name, sponsor_index)
+    ("Abbonamento mensile BUS urbano", 0),
+    ("1 kit igiene casa", 1),
+    ("Buono spesa di 5 euro", 2),
+    ("Colazione", 3),
+    ("1 paio di ciabatte", 4),
+    ("1 libro", 5),
+    ("1 5& 5 e spuma", 6),
+]
+
+NAME = "Weekly CO2 saver"
+CRITERIA = [Competition.CRITERIUM_SAVED_CO2_EMISSIONS]
+START_DATE = "2018-09-02"
+GROUP_1 = [EndUserProfile.AGE_BETWEEN_NINETEEN_AND_THIRTY]
+GROUP_2 = [EndUserProfile.AGE_BETWEEN_THIRTY_AND_SIXTY_FIVE]
+GROUP_3 = [EndUserProfile.AGE_OLDER_THAN_SIXTY_FIVE]
+
+COMPETITIONS = [
+    [  # week 1
+        {
+            "name": NAME,
+            "age_groups": GROUP_1,
+            "criteria": CRITERIA,
+            "prize_indexes": [0],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_2,
+            "criteria": CRITERIA,
+            "prize_indexes": [1],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_3,
+            "criteria": CRITERIA,
+            "prize_indexes": [2],
+        },
+    ],
+    [  # week 2
+        {
+            "name": NAME,
+            "age_groups": GROUP_1,
+            "criteria": CRITERIA,
+            "prize_indexes": [3],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_2,
+            "criteria": CRITERIA,
+            "prize_indexes": [0],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_3,
+            "criteria": CRITERIA,
+            "prize_indexes": [4],
+        },
+    ],
+    [  # week 3
+        {
+            "name": NAME,
+            "age_groups": GROUP_1,
+            "criteria": CRITERIA,
+            "prize_indexes": [5],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_2,
+            "criteria": CRITERIA,
+            "prize_indexes": [6],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_3,
+            "criteria": CRITERIA,
+            "prize_indexes": [1],
+        },
+    ],
+    [  # week 4
+        {
+            "name": NAME,
+            "age_groups": GROUP_1,
+            "criteria": CRITERIA,
+            "prize_indexes": [6],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_2,
+            "criteria": CRITERIA,
+            "prize_indexes": [0],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_3,
+            "criteria": CRITERIA,
+            "prize_indexes": [3],
+        },
+    ],
+    [  # week 5
+        {
+            "name": NAME,
+            "age_groups": GROUP_1,
+            "criteria": CRITERIA,
+            "prize_indexes": [0],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_2,
+            "criteria": CRITERIA,
+            "prize_indexes": [2],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_3,
+            "criteria": CRITERIA,
+            "prize_indexes": [1],
+        },
+    ],
+    [  # week 6
+        {
+            "name": NAME,
+            "age_groups": GROUP_1,
+            "criteria": CRITERIA,
+            "prize_indexes": [3],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_2,
+            "criteria": CRITERIA,
+            "prize_indexes": [6],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_3,
+            "criteria": CRITERIA,
+            "prize_indexes": [0],
+        },
+    ],
+    [  # week 7
+        {
+            "name": NAME,
+            "age_groups": GROUP_1,
+            "criteria": CRITERIA,
+            "prize_indexes": [0],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_2,
+            "criteria": CRITERIA,
+            "prize_indexes": [1],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_3,
+            "criteria": CRITERIA,
+            "prize_indexes": [5],
+        },
+    ],
+    [  # week 8
+        {
+            "name": NAME,
+            "age_groups": GROUP_1,
+            "criteria": CRITERIA,
+            "prize_indexes": [5],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_2,
+            "criteria": CRITERIA,
+            "prize_indexes": [2],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_3,
+            "criteria": CRITERIA,
+            "prize_indexes": [6],
+        },
+    ],
+    [  # week 9
+        {
+            "name": NAME,
+            "age_groups": GROUP_1,
+            "criteria": CRITERIA,
+            "prize_indexes": [6],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_2,
+            "criteria": CRITERIA,
+            "prize_indexes": [3],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_3,
+            "criteria": CRITERIA,
+            "prize_indexes": [2],
+        },
+    ],
+    [  # week 10
+        {
+            "name": NAME,
+            "age_groups": GROUP_1,
+            "criteria": CRITERIA,
+            "prize_indexes": [0],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_2,
+            "criteria": CRITERIA,
+            "prize_indexes": [5],
+        },
+        {
+            "name": NAME,
+            "age_groups": GROUP_3,
+            "criteria": CRITERIA,
+            "prize_indexes": [4],
+        },
+    ],
 ]
 
 
@@ -54,46 +256,48 @@ class Command(BaseCommand):
             "Removing previous competition definitions that have the same "
             "name as the ones specified..."
         )
-        remove_existing_competition_definitions(COMPETITION_DEFINITIONS)
-        self.stdout.write("Creating competition definitions...")
-        competition_definitions = create_competition_definitions(
-            COMPETITION_DEFINITIONS)
-        self.stdout.write("Creating concrete competitions...")
-        for definition in competition_definitions:
-            Competition.creation_manager.create_competitions(definition)
+        self.stdout.write("Updating sponsors...")
+        update_sponsors(SPONSORS)
+        self.stdout.write("Updating prizes...")
+        update_prizes(PRIZES, SPONSORS)
+        self.stdout.write("Removing previously existing competitions ...")
+        prizes.models.Competition.objects.all().delete()
+        self.stdout.write("Creating competitions ...")
+        start = dt.datetime.strptime(START_DATE, "%Y-%m-%d").replace(
+            tzinfo=pytz.utc)
+        for index, week in enumerate(COMPETITIONS):
+            self.stdout.write("Handling week {}...".format(index))
+            start_date = start + dt.timedelta(days=7*index)
+            end_date = start_date + dt.timedelta(days=6)
+            for competition_definition in week:
+                competition = prizes.models.Competition.objects.create(
+                    name=NAME,
+                    age_groups=competition_definition["age_groups"],
+                    start_date=start_date,
+                    end_date=end_date,
+                    criteria=CRITERIA,
+                )
+                for prize_index in competition_definition["prize_indexes"]:
+                    prize = prizes.models.Prize.objects.get(
+                        name=PRIZES[prize_index][0])
+                    prizes.models.CompetitionPrize.objects.create(
+                        prize=prize,
+                        competition=competition,
+                        user_rank=1
+                    )
+        self.stdout.write("Done!")
 
 
-def remove_existing_competition_definitions(defs):
-    qs = CompetitionDefinition.objects.filter(
-        name__in=[i["name"] for i in defs])
-    qs.delete()
+def update_sponsors(sponsors):
+    for sponsor_name in sponsors:
+        prizes.models.Sponsor.objects.get_or_create(name=sponsor_name)
 
 
-def create_competition_definitions(defs):
-    result = []
-    for definition in defs:
-        starts_at = dt.datetime.strptime(
-            definition["starts_at"], "%Y-%m-%d").replace(tzinfo=pytz.utc)
-        competition_def = CompetitionDefinition.objects.create(
-            name=definition["name"],
-            num_days=definition["num_days"],
-            starts_at=starts_at,
-            num_repeats=definition["num_repeats"],
-            repeat_when=definition["repeat"],
-            age_group=definition["age_group"],
-            segment_by_age_group=definition["segment_by_age_group"],
-            criteria=definition["criteria"],
-            winner_threshold=definition["winner_threshold"]
+def update_prizes(prize_definitions, sponsor_definitions):
+    for prize_name, sponsor_index in  prize_definitions:
+        sponsor = prizes.models.Sponsor.objects.get(
+            name=sponsor_definitions[sponsor_index])
+        prizes.models.Prize.objects.get_or_create(
+            name=prize_name,
+            sponsor=sponsor
         )
-        result.append(competition_def)
-        for prize_def in definition["prizes"]:
-            prize, created = prizes.models.Prize.objects.get_or_create(
-                name=prize_def["name"],
-                description=prize_def.get("description", "")
-            )
-            prizes.models.CompetitionPrize.objects.get_or_create(
-                prize=prize,
-                competition_definition=competition_def,
-                user_rank=prize_def["user_rank"]
-            )
-    return result
