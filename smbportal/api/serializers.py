@@ -10,6 +10,7 @@
 
 """Serializers for the smbportal REST API"""
 
+from itertools import zip_longest
 import logging
 
 from avatar.templatetags.avatar_tags import avatar_url
@@ -1080,6 +1081,42 @@ class MyBadgeSerializer(BadgeSerializer):
             "category",
             "next_badge",
         )
+
+
+class MyMixedBadgesSerializer(serializers.BaseSerializer):
+
+    def to_representation(self, user_badges):
+        """Return a representation of all relevant badges
+
+        Relevant badges are:
+
+        1. Badges that have already been acquired
+        2. Next badges to acquire, after the ones that have been acquired
+           already (example: badge2, if badge1 has been acquired already)
+        3. First unacquired badges of each category
+
+        """
+
+        unacquired_firsts = self._get_unacquired_category_first_badges(
+            user_badges)
+        acquired = list(user_badges.filter(acquired=True).order_by("name"))
+        next_ = [b.next_badge for b in acquired if b.next_badge is not None]
+        leaf_next = [b for b in next_ if b not in acquired]
+        consolidated = set(
+            unacquired_firsts).union(set(acquired)).union(set(leaf_next))
+        sorted_badges = sorted(consolidated, key=lambda b: b.name)
+        badge_serializer = MyBadgeSerializer(
+            instance=sorted_badges, many=True, context=self.context)
+        return badge_serializer.data
+
+    def _get_unacquired_category_first_badges(self, badges):
+        """Return a list with the first unacquired badge of each category"""
+        unacquired_firsts = []
+        for badge in badges.filter(acquired=False).order_by("name"):
+            cat_names = [b.category for b in unacquired_firsts]
+            if badge.category not in cat_names:
+                unacquired_firsts.append(badge)
+        return unacquired_firsts
 
 
 class MyBriefBadgeSerializer(MyBadgeSerializer):

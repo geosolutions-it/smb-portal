@@ -359,20 +359,30 @@ class BadgeViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class MyBadgeViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.MyBadgeSerializer
     required_permissions = (
         "profiles.can_list_own_badges",
-    )
-    filter_backends = (
-        DjangoFilterBackend,
-    )
-    filter_fields = (
-        "acquired",
     )
 
     def get_queryset(self):
         return django_gamification.models.Badge.objects.filter(
             interface__smbuser=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.MyMixedBadgesSerializer
+        else:
+            result = serializers.MyBadgeSerializer
+        return result
+
+    def get_serializer(self, *args, **kwargs):
+        if self.action == "list":
+            serializer_class = self.get_serializer_class()
+            context = self.get_serializer_context()
+            qs = self.get_queryset()
+            serializer = serializer_class(instance=qs, context=context)
+        else:
+            serializer = super().get_serializer(*args, **kwargs)
+        return serializer
 
 
 class CompetitionViewSet(viewsets.ReadOnlyModelViewSet):
