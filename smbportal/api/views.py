@@ -23,6 +23,7 @@ import django_gamification.models
 
 from keycloakauth import utils
 from keycloakauth.keycloakadmin import get_manager
+import prizes.models
 import profiles.models
 import profiles.views
 import tracks.models
@@ -358,20 +359,91 @@ class BadgeViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class MyBadgeViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.MyBadgeSerializer
     required_permissions = (
         "profiles.can_list_own_badges",
-    )
-    filter_backends = (
-        DjangoFilterBackend,
-    )
-    filter_fields = (
-        "acquired",
     )
 
     def get_queryset(self):
         return django_gamification.models.Badge.objects.filter(
             interface__smbuser=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.MyMixedBadgesSerializer
+        else:
+            result = serializers.MyBadgeSerializer
+        return result
+
+    def get_serializer(self, *args, **kwargs):
+        if self.action == "list":
+            serializer_class = self.get_serializer_class()
+            context = self.get_serializer_context()
+            qs = self.get_queryset()
+            serializer = serializer_class(instance=qs, context=context)
+        else:
+            serializer = super().get_serializer(*args, **kwargs)
+        return serializer
+
+
+class CompetitionViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.CompetitionDetailSerializer
+    queryset = prizes.models.Competition.objects.all()
+    required_permissions = (
+        "profiles.can_list_competitions",
+    )
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.CompetitionListSerializer
+        else:
+            result = serializers.CompetitionDetailSerializer
+        return result
+
+    @action(detail=False)
+    def current_competitions(self, request):
+        qs = prizes.models.CurrentCompetition.objects.all()
+        filtered = self.filter_queryset(qs)
+        page = self.paginate_queryset(filtered)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            result = self.get_paginated_response(serializer.data)
+        else:
+            serializer = self.get_serializer(filtered, many=True)
+            result = Response(serializer.data)
+        return result
+
+
+class MyCurrentCompetitionViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.UserCompetitionDetailSerializer
+    required_permissions = (
+        "profiles.can_list_own_competitions",
+    )
+
+    def get_queryset(self):
+        user_age = getattr(self.request.user.profile, "age")
+        if user_age is not None:
+            qs = prizes.models.CurrentCompetition.objects.filter(
+                age_groups__contains=[user_age])
+        else:
+            qs = prizes.models.CurrentCompetition.objects.all()
+        return qs
+
+    def get_serializer_context(self):
+        """Inject the current user into the serializer context"""
+        context = super().get_serializer_context()
+        context.update(user=self.request.user)
+        return context
+
+
+class MyCompetitionWonViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.CompetitionDetailSerializer
+    required_permissions = (
+        "profiles.can_list_own_competitions",
+    )
+
+    def get_queryset(self):
+        return prizes.models.FinishedCompetition.objects.filter(
+            winners__user=self.request.user)
 
 
 def _update_group_memberships(user):

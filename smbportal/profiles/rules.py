@@ -52,5 +52,7 @@ for perm, predicate in {
     "can_edit_profile": has_profile & is_profile_owner,
     "can_list_badges": is_privileged_user,
     "can_list_own_badges": is_end_user,
+    "can_list_competitions": is_privileged_user,
+    "can_list_own_competitions": is_end_user,
 }.items():
     rules.add_perm("profiles.{}".format(perm), predicate)

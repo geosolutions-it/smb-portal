@@ -10,23 +10,25 @@
 
 """Serializers for the smbportal REST API"""
 
+from itertools import zip_longest
 import logging
 
 from avatar.templatetags.avatar_tags import avatar_url
 from django.db.models import OuterRef
 from django.db.models import Subquery
+import django_gamification.models as gm
 from rest_framework.reverse import reverse
 import photologue.models
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
+import prizes.models
 import profiles.models
 import tracks.models
 import tracks.utils
 import vehicles.models
 import vehiclemonitor.models
-import django_gamification.models as gm
 
 logger = logging.getLogger(__name__)
 
@@ -1081,6 +1083,42 @@ class MyBadgeSerializer(BadgeSerializer):
         )
 
 
+class MyMixedBadgesSerializer(serializers.BaseSerializer):
+
+    def to_representation(self, user_badges):
+        """Return a representation of all relevant badges
+
+        Relevant badges are:
+
+        1. Badges that have already been acquired
+        2. Next badges to acquire, after the ones that have been acquired
+           already (example: badge2, if badge1 has been acquired already)
+        3. First unacquired badges of each category
+
+        """
+
+        unacquired_firsts = self._get_unacquired_category_first_badges(
+            user_badges)
+        acquired = list(user_badges.filter(acquired=True).order_by("name"))
+        next_ = [b.next_badge for b in acquired if b.next_badge is not None]
+        leaf_next = [b for b in next_ if b not in acquired]
+        consolidated = set(
+            unacquired_firsts).union(set(acquired)).union(set(leaf_next))
+        sorted_badges = sorted(consolidated, key=lambda b: b.name)
+        badge_serializer = MyBadgeSerializer(
+            instance=sorted_badges, many=True, context=self.context)
+        return badge_serializer.data
+
+    def _get_unacquired_category_first_badges(self, badges):
+        """Return a list with the first unacquired badge of each category"""
+        unacquired_firsts = []
+        for badge in badges.filter(acquired=False).order_by("name"):
+            cat_names = [b.category for b in unacquired_firsts]
+            if badge.category not in cat_names:
+                unacquired_firsts.append(badge)
+        return unacquired_firsts
+
+
 class MyBriefBadgeSerializer(MyBadgeSerializer):
     class Meta:
         model = gm.Badge
@@ -1091,3 +1129,118 @@ class MyBriefBadgeSerializer(MyBadgeSerializer):
         )
 
 
+class SponsorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = prizes.models.Sponsor
+        fields = (
+            "name",
+            "logo",
+            "url",
+        )
+
+
+class CompetitionRankingSerializer(serializers.BaseSerializer):
+
+    def to_representation(self, instance):
+        criteria = instance[1]
+        result = {
+            "username": instance[0].username
+        }
+        result.update(
+            {criterium.value: score for criterium, score in criteria.items()})
+        return result
+
+
+class PrizeSerializer(serializers.ModelSerializer):
+    sponsor = SponsorSerializer()
+
+    class Meta:
+        model = prizes.models.Prize
+        fields = (
+            "name",
+            "description",
+            "url",
+            "sponsor"
+        )
+
+
+class CompetitionPrizeSerializer(serializers.ModelSerializer):
+    prize = PrizeSerializer()
+
+    class Meta:
+        model = prizes.models.CompetitionPrize
+        fields = (
+            "prize",
+            "user_rank",
+        )
+
+
+class CompetitionListSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:competitions-detail",
+    )
+
+    class Meta:
+        model = prizes.models.Competition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+        )
+
+
+class CompetitionDetailSerializer(CompetitionListSerializer):
+    leaderboard = serializers.SerializerMethodField()
+    prizes = CompetitionPrizeSerializer(
+        many=True,
+        source="competitionprize_set"
+    )
+
+    def get_leaderboard(self, obj):
+        board = obj.get_leaderboard()
+        serializer = CompetitionRankingSerializer(instance=board, many=True)
+        return serializer.data
+
+    class Meta:
+        model = prizes.models.Competition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+            "winner_threshold",
+            "leaderboard",
+            "prizes",
+        )
+
+
+class UserCompetitionDetailSerializer(CompetitionDetailSerializer):
+    score = serializers.SerializerMethodField()
+
+    def get_score(self, obj):
+        score = obj.get_user_score(self.context["user"])
+        return {criterium.value: value for criterium, value in  score.items()}
+
+    class Meta:
+        model = prizes.models.CurrentCompetition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+            "winner_threshold",
+            "score",
+            "leaderboard",
+            "prizes",
+        )

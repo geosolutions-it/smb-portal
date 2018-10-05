@@ -18,23 +18,19 @@ class PrizeAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.CompetitionDefinition)
-class CompetitionDefinitionAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(models.Competition)
 class CompetitionAdmin(admin.ModelAdmin):
 
     list_display = (
-        "competition_definition",
+        "name",
         "start_date",
         "end_date",
-        "age_group",
+        "age_groups",
+        "criteria",
         "is_open",
     )
     list_filter = (
-        "age_group",
+        "age_groups",
         "start_date",
     )
 
@@ -42,13 +38,30 @@ class CompetitionAdmin(admin.ModelAdmin):
 @admin.register(models.CurrentCompetition)
 class CurrentCompetitionAdmin(admin.ModelAdmin):
     list_display = (
-        "competition_definition",
+        "name",
         "start_date",
         "end_date",
-        "age_group",
+        "age_groups",
     )
     list_filter = (
-        "age_group",
+        "age_groups",
+        "start_date",
+    )
+
+    def get_queryset(self, request):
+        return self.model.objects.get_queryset()
+
+
+@admin.register(models.FinishedCompetition)
+class FinishedCompetitionAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "start_date",
+        "end_date",
+        "age_groups",
+    )
+    list_filter = (
+        "age_groups",
         "start_date",
     )
 
