@@ -1183,3 +1183,27 @@ class CompetitionDetailSerializer(CompetitionListSerializer):
             "leaderboard",
             "prizes",
         )
+
+
+class UserCompetitionDetailSerializer(CompetitionDetailSerializer):
+    score = serializers.SerializerMethodField()
+
+    def get_score(self, obj):
+        score = obj.get_user_score(self.context["user"])
+        return {criterium.value: value for criterium, value in  score.items()}
+
+    class Meta:
+        model = prizes.models.CurrentCompetition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+            "winner_threshold",
+            "score",
+            "leaderboard",
+            "prizes",
+        )

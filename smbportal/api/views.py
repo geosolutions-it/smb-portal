@@ -403,9 +403,37 @@ class CompetitionViewSet(viewsets.ReadOnlyModelViewSet):
         return result
 
 
+class MyCurrentCompetitionViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.UserCompetitionDetailSerializer
+    required_permissions = (
+        "profiles.can_list_own_competitions",
+    )
+
+    def get_queryset(self):
+        user_age = getattr(self.request.user.profile, "age")
+        if user_age is not None:
+            qs = prizes.models.CurrentCompetition.objects.filter(
+                age_groups__contains=[user_age])
+        else:
+            qs = prizes.models.CurrentCompetition.objects.all()
+        return qs
+
+    def get_serializer_context(self):
+        """Inject the current user into the serializer context"""
+        context = super().get_serializer_context()
+        context.update(user=self.request.user)
+        return context
+
 
 class MyCompetitionWonViewSet(viewsets.ReadOnlyModelViewSet):
-    pass
+    serializer_class = serializers.CompetitionDetailSerializer
+    required_permissions = (
+        "profiles.can_list_own_competitions",
+    )
+
+    def get_queryset(self):
+        return prizes.models.FinishedCompetition.objects.filter(
+            winners__user=self.request.user)
 
 
 def _update_group_memberships(user):

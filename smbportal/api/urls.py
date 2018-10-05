@@ -38,6 +38,11 @@ router.register(
     base_name="my-competitions-won"
 )
 router.register(
+    prefix="my-competitions-current",
+    viewset=views.MyCurrentCompetitionViewSet,
+    base_name="my-competitions-current"
+)
+router.register(
     prefix="my-tags",
     viewset=views.MyPhysicalTagViewSet,
     base_name="my-tags"
