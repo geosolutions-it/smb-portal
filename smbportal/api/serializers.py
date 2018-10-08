@@ -10,7 +10,6 @@
 
 """Serializers for the smbportal REST API"""
 
-from itertools import zip_longest
 import logging
 
 from avatar.templatetags.avatar_tags import avatar_url
@@ -1160,6 +1159,7 @@ class PrizeSerializer(serializers.ModelSerializer):
         fields = (
             "name",
             "description",
+            "image",
             "url",
             "sponsor"
         )
@@ -1187,6 +1187,7 @@ class CompetitionListSerializer(serializers.ModelSerializer):
             "id",
             "url",
             "name",
+            "description",
             "age_groups",
             "start_date",
             "end_date",
@@ -1212,6 +1213,7 @@ class CompetitionDetailSerializer(CompetitionListSerializer):
             "id",
             "url",
             "name",
+            "description",
             "age_groups",
             "start_date",
             "end_date",
@@ -1235,6 +1237,7 @@ class UserCompetitionDetailSerializer(CompetitionDetailSerializer):
             "id",
             "url",
             "name",
+            "description",
             "age_groups",
             "start_date",
             "end_date",
