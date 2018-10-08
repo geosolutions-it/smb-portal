@@ -30,6 +30,7 @@ class Sponsor(models.Model):
     logo = models.ImageField(
         verbose_name="logo",
         null=True,
+        blank=True,
     )
     url = models.URLField(
         verbose_name=_("url"),
@@ -45,6 +46,11 @@ class Prize(models.Model):
     name = models.CharField(
         max_length=100,
         verbose_name=_("name"),
+    )
+    image = models.ImageField(
+        verbose_name="image",
+        null=True,
+        blank=True,
     )
     description = models.TextField(
         verbose_name=_("description"),
@@ -140,6 +146,10 @@ class Competition(models.Model):
     name = models.CharField(
         verbose_name=_("name"),
         max_length=100
+    )
+    description = models.TextField(
+        verbose_name=_("description"),
+        blank=True
     )
     age_groups = ArrayField(
         base_field=models.CharField(
