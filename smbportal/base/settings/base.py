@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "django.contrib.sites",
     "django.forms",
+    "django.contrib.humanize",
     "rest_framework",
     "rest_framework_gis",
     "django_filters",

@@ -435,17 +435,6 @@ class MyCurrentCompetitionViewSet(viewsets.ReadOnlyModelViewSet):
         return context
 
 
-class MyCompetitionWonViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.CompetitionDetailSerializer
-    required_permissions = (
-        "profiles.can_list_own_competitions",
-    )
-
-    def get_queryset(self):
-        return prizes.models.FinishedCompetition.objects.filter(
-            winners__user=self.request.user)
-
-
 class CompetitionViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.CompetitionDetailSerializer
     queryset = prizes.models.Competition.objects.all()
@@ -497,7 +486,7 @@ class MyCurrentCompetitionViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class MyCompetitionWonViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.CompetitionDetailSerializer
+    serializer_class = serializers.CompetitionWonDetailSerializer
     required_permissions = (
         "profiles.can_list_own_competitions",
     )
@@ -505,6 +494,12 @@ class MyCompetitionWonViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         return prizes.models.FinishedCompetition.objects.filter(
             winners__user=self.request.user)
+
+    def get_serializer_context(self):
+        """Inject the current user into the serializer context"""
+        context = super().get_serializer_context()
+        context.update(user=self.request.user)
+        return context
 
 
 def _update_group_memberships(user):

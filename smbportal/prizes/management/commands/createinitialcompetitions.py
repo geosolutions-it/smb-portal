@@ -40,6 +40,7 @@ PRIZES = [  # (prize_name, sponsor_index)
 NAME = "Weekly CO2 saver"
 CRITERIA = [Competition.CRITERIUM_SAVED_CO2_EMISSIONS]
 START_DATE = "2018-09-02"
+ATTRIBUTION_TEMPLATE = "Congratulations, you got {{ rank|ordinal }} place. You score was {{ score }}"
 GROUP_1 = [EndUserProfile.AGE_BETWEEN_NINETEEN_AND_THIRTY]
 GROUP_2 = [EndUserProfile.AGE_BETWEEN_THIRTY_AND_SIXTY_FIVE]
 GROUP_3 = [EndUserProfile.AGE_OLDER_THAN_SIXTY_FIVE]
@@ -283,7 +284,8 @@ class Command(BaseCommand):
                     prizes.models.CompetitionPrize.objects.create(
                         prize=prize,
                         competition=competition,
-                        user_rank=1
+                        user_rank=1,
+                        prize_attribution_template=ATTRIBUTION_TEMPLATE,
                     )
         self.stdout.write("Done!")
 
