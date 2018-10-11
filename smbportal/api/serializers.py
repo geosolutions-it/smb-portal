@@ -15,6 +15,8 @@ import logging
 from avatar.templatetags.avatar_tags import avatar_url
 from django.db.models import OuterRef
 from django.db.models import Subquery
+from django.template import Context
+from django.template import Engine
 import django_gamification.models as gm
 from rest_framework.reverse import reverse
 import photologue.models
@@ -1166,11 +1168,36 @@ class PrizeSerializer(serializers.ModelSerializer):
 
 
 class CompetitionPrizeSerializer(serializers.ModelSerializer):
+    winner_description = serializers.SerializerMethodField()
     prize = PrizeSerializer()
+
+    def get_winner_description(self, obj):
+        engine = Engine.get_default()
+        string_template = obj.prize_attribution_template
+        try:
+            rank = obj.competition.winners.get(user=self.context["user"]).rank
+        except prizes.models.Winner.DoesNotExist:
+            result = string_template
+        else:
+            score = obj.competition.get_user_score(self.context["user"])
+            formatted_score = ", ".join(
+                "{}: {:0.3f}".format(criterium.value, value) for
+                criterium, value in score.items()
+            )
+            context = Context({
+                "rank": rank,
+                "score": formatted_score,
+            })
+            if "humanize" not in string_template:
+                string_template = "{% load humanize %}" + string_template
+            template = engine.from_string(string_template)
+            result = template.render(context)
+        return result
 
     class Meta:
         model = prizes.models.CompetitionPrize
         fields = (
+            "winner_description",
             "prize",
             "user_rank",
         )
@@ -1199,7 +1226,7 @@ class CompetitionDetailSerializer(CompetitionListSerializer):
     leaderboard = serializers.SerializerMethodField()
     prizes = CompetitionPrizeSerializer(
         many=True,
-        source="competitionprize_set"
+        source="competitionprize_set",
     )
 
     def get_leaderboard(self, obj):
@@ -1244,6 +1271,57 @@ class UserCompetitionDetailSerializer(CompetitionDetailSerializer):
             "criteria",
             "winner_threshold",
             "score",
+            "leaderboard",
+            "prizes",
+        )
+
+
+class CompetitionWonDetailSerializer(CompetitionDetailSerializer):
+    score = serializers.SerializerMethodField()
+    # winner_description = serializers.SerializerMethodField()
+
+    def get_score(self, obj):
+        score = obj.get_user_score(self.context["user"])
+        return {criterium.value: value for criterium, value in  score.items()}
+
+    # def get_winner_description(self, obj):
+    #     engine = Engine.get_default()
+    #     rank = obj.winners.get(user=self.context["user"]).rank
+    #     score = obj.get_user_score(self.context["user"])
+    #     formatted_score = ", ".join(
+    #         "{}: {:0.3f}".format(criterium.value, value) for
+    #         criterium, value in score.items()
+    #     )
+    #     context = Context({
+    #         "rank": rank,
+    #         "score": formatted_score,
+    #     })
+    #     competition_prizes = obj.competitionprize_set.filter(
+    #         user_rank__in=[rank, None])
+    #     result = []
+    #     for competition_prize in competition_prizes:
+    #         string_template = competition_prize.prize_attribution_template
+    #         if "humanize" not in string_template:
+    #             string_template = "{% load humanize %}" + string_template
+    #         template = engine.from_string(string_template)
+    #         result.append(template.render(context))
+    #     return result
+
+
+    class Meta:
+        model = prizes.models.CurrentCompetition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "description",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+            "winner_threshold",
+            "score",
+            # "winner_description",
             "leaderboard",
             "prizes",
         )

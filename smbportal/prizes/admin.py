@@ -71,7 +71,16 @@ class FinishedCompetitionAdmin(admin.ModelAdmin):
 
 @admin.register(models.CompetitionPrize)
 class CompetitionPrizeAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "prize",
+        "competition",
+        "user_rank",
+        "prize_attribution_template"
+    )
+    list_filter = (
+        "prize",
+        "competition",
+    )
 
 
 @admin.register(models.Winner)

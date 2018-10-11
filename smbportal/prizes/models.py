@@ -100,6 +100,18 @@ class CompetitionPrize(models.Model):
             "s winners will be awarded the prize"
         )
     )
+    prize_attribution_template = models.TextField(
+        verbose_name=_("prize attribution template"),
+        help_text=_(
+            "Message shown to the user when the prize is won. This string is "
+            "treated as a normal django template and rendered with a context "
+            "that has the following variables: `score`, `rank`. The "
+            "`django.contrib.humanize` is available. Example: The string "
+            "'Congratulations, you got {{ rank|ordinal }} place with a score "
+            "of {{ score }}' would get rendered as 'Congratulations, you got "
+            "1st place with a score of 2061'"),
+        blank=True
+    )
 
     class Meta:
         ordering = (
