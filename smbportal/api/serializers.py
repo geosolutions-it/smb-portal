@@ -781,6 +781,8 @@ class TrackListSerializer(serializers.ModelSerializer):
             "duration_minutes",
             "length_meters",
             "vehicle_types",
+            "is_valid",
+            "validation_error",
             "emissions",
             "costs",
             "health",
@@ -813,6 +815,8 @@ class MyTrackListSerializer(TrackListSerializer):
             "duration_minutes",
             "length_meters",
             "vehicle_types",
+            "is_valid",
+            "validation_error",
             "emissions",
             "costs",
             "health",
@@ -851,6 +855,8 @@ class TrackDetailSerializer(TrackListSerializer):
             "duration_minutes",
             "length_meters",
             "vehicle_types",
+            "is_valid",
+            "validation_error",
             "emissions",
             "costs",
             "health",
@@ -883,6 +889,8 @@ class MyTrackDetailSerializer(TrackDetailSerializer):
             "duration_minutes",
             "length_meters",
             "vehicle_types",
+            "is_valid",
+            "validation_error",
             "emissions",
             "costs",
             "health",
@@ -1278,34 +1286,10 @@ class UserCompetitionDetailSerializer(CompetitionDetailSerializer):
 
 class CompetitionWonDetailSerializer(CompetitionDetailSerializer):
     score = serializers.SerializerMethodField()
-    # winner_description = serializers.SerializerMethodField()
 
     def get_score(self, obj):
         score = obj.get_user_score(self.context["user"])
         return {criterium.value: value for criterium, value in  score.items()}
-
-    # def get_winner_description(self, obj):
-    #     engine = Engine.get_default()
-    #     rank = obj.winners.get(user=self.context["user"]).rank
-    #     score = obj.get_user_score(self.context["user"])
-    #     formatted_score = ", ".join(
-    #         "{}: {:0.3f}".format(criterium.value, value) for
-    #         criterium, value in score.items()
-    #     )
-    #     context = Context({
-    #         "rank": rank,
-    #         "score": formatted_score,
-    #     })
-    #     competition_prizes = obj.competitionprize_set.filter(
-    #         user_rank__in=[rank, None])
-    #     result = []
-    #     for competition_prize in competition_prizes:
-    #         string_template = competition_prize.prize_attribution_template
-    #         if "humanize" not in string_template:
-    #             string_template = "{% load humanize %}" + string_template
-    #         template = engine.from_string(string_template)
-    #         result.append(template.render(context))
-    #     return result
 
 
     class Meta:
@@ -1321,7 +1305,6 @@ class CompetitionWonDetailSerializer(CompetitionDetailSerializer):
             "criteria",
             "winner_threshold",
             "score",
-            # "winner_description",
             "leaderboard",
             "prizes",
         )

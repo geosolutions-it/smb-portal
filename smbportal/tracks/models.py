@@ -93,6 +93,17 @@ class Track(models.Model):
         null=True,
         help_text=_("Track length, measured in meters")
     )
+    is_valid = models.BooleanField(
+        verbose_name=_("is valid"),
+        default=False,
+        help_text=_(
+            "If the track has passed the ingestion validation pipeline")
+    )
+    validation_error = models.TextField(
+        verbose_name=_("validation error"),
+        blank=True,
+        help_text=_("Reason for the track not being valid")
+    )
 
     class Meta:
         ordering = ["start_date"]
