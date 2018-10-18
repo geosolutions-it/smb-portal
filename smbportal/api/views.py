@@ -155,6 +155,7 @@ class MyTrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     )
     filter_fields = (
         "session_id",
+        "is_valid",
     )
 
     def get_queryset(self):
@@ -325,6 +326,7 @@ class TrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     )
     filter_fields = (
         "session_id",
+        "is_valid",
     )
 
     def get_serializer_class(self):
@@ -383,56 +385,6 @@ class MyBadgeViewSet(viewsets.ReadOnlyModelViewSet):
         else:
             serializer = super().get_serializer(*args, **kwargs)
         return serializer
-
-
-class CompetitionViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.CompetitionDetailSerializer
-    queryset = prizes.models.Competition.objects.all()
-    required_permissions = (
-        "profiles.can_list_competitions",
-    )
-
-    def get_serializer_class(self):
-        if self.action == "list":
-            result = serializers.CompetitionListSerializer
-        else:
-            result = serializers.CompetitionDetailSerializer
-        return result
-
-    @action(detail=False)
-    def current_competitions(self, request):
-        qs = prizes.models.CurrentCompetition.objects.all()
-        filtered = self.filter_queryset(qs)
-        page = self.paginate_queryset(filtered)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            result = self.get_paginated_response(serializer.data)
-        else:
-            serializer = self.get_serializer(filtered, many=True)
-            result = Response(serializer.data)
-        return result
-
-
-class MyCurrentCompetitionViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = serializers.UserCompetitionDetailSerializer
-    required_permissions = (
-        "profiles.can_list_own_competitions",
-    )
-
-    def get_queryset(self):
-        user_age = getattr(self.request.user.profile, "age")
-        if user_age is not None:
-            qs = prizes.models.CurrentCompetition.objects.filter(
-                age_groups__contains=[user_age])
-        else:
-            qs = prizes.models.CurrentCompetition.objects.all()
-        return qs
-
-    def get_serializer_context(self):
-        """Inject the current user into the serializer context"""
-        context = super().get_serializer_context()
-        context.update(user=self.request.user)
-        return context
 
 
 class CompetitionViewSet(viewsets.ReadOnlyModelViewSet):

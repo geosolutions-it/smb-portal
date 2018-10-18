@@ -15,6 +15,7 @@ from django.db import connections
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import JSONField
 from django.utils.translation import ugettext_lazy as _
 from smbbackend import calculateprizes
 import pytz
@@ -235,6 +236,15 @@ class Competition(models.Model):
             "prizes specified in this competition."
         )
     )
+    closing_leaderboard = JSONField(
+        verbose_name=_("closing leaderboard"),
+        null=True,
+        blank=True,
+        help_text=_(
+            "leaderboard calculated at the time the competition was closed. "
+            "Winners are assigned from the score in this leaderboard"
+        )
+    )
 
     objects = models.Manager()
     current_competitions_manager = CurrentCompetitionManager()
@@ -259,10 +269,13 @@ class Competition(models.Model):
         return (now > self.start_date) and (now <= self.end_date)
 
     def get_leaderboard(self):
-        leaderboard = calculateprizes.get_leaderboard(
-            self._as_competition_info(),
-            connections["default"].connection.cursor()
-        )
+        if self.is_open():
+            leaderboard = calculateprizes.get_leaderboard(
+                self._as_competition_info(),
+                connections["default"].connection.cursor()
+            )
+        else:
+            leaderboard = self.closing_leaderboard or []
         user_model = get_user_model()
         result = []
         for entry in leaderboard:
