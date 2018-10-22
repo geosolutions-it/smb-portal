@@ -286,7 +286,7 @@ MEDIA_ROOT = get_environment_variable(
 )
 
 FCM_DJANGO_SETTINGS = {
-    "FCM_SERVER_KEY": get_environment_variable("FCM_API_KEY"),
+    "FCM_SERVER_KEY": get_environment_variable("FCM_SERVER_KEY"),
     "ONE_DEVICE_PER_USER": False,
     "DELETE_INACTIVE_DEVICES": False
 }
