@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     "django_bootstrap_breadcrumbs",
     "avatar",
     "django_gamification",
+    "fcm_django",
     "base.apps.BaseConfig",
     "keycloakauth.apps.KeycloakauthConfig",
     "profiles.apps.ProfilesConfig",
@@ -283,6 +284,12 @@ MEDIA_ROOT = get_environment_variable(
     "DJANGO_MEDIA_ROOT",
     default_value=str(pathlib.Path(BASE_DIR).parent / "media"),
 )
+
+FCM_DJANGO_SETTINGS = {
+    "FCM_SERVER_KEY": get_environment_variable("FCM_API_KEY"),
+    "ONE_DEVICE_PER_USER": False,
+    "DELETE_INACTIVE_DEVICES": False
+}
 
 KEYCLOAK = {
     "base_url": get_environment_variable(

@@ -14,6 +14,7 @@ from django.conf import settings
 from django.urls import path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from fcm_django.api.rest_framework import FCMDeviceAuthorizedViewSet
 from rest_framework import routers
 from rest_framework.permissions import AllowAny
 
@@ -41,6 +42,11 @@ router.register(
     prefix="my-competitions-current",
     viewset=views.MyCurrentCompetitionViewSet,
     base_name="my-competitions-current"
+)
+router.register(
+    prefix="my-devices",
+    viewset=FCMDeviceAuthorizedViewSet,
+    base_name="my-devices"
 )
 router.register(
     prefix="my-tags",

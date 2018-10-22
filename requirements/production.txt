@@ -10,9 +10,11 @@ django-filter==1.1.0
 django-ipware==2.1.0
 django-photologue==3.8.1
 drf-yasg==1.8.0
+fcm-django==0.2.19
 geoip2==2.9.0
 lxml==4.2.3
 psycopg2-binary==2.7.4
+pyfcm==1.4.5
 pygdal==2.2.3.3 # depends on libgdal-dev 2.3.3
 pytz==2018.4
 requests==2.18.4
