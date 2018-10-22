@@ -12,6 +12,9 @@ import logging
 
 from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
+import django_gamification.models
+import fcm_django.models
+from fcm_django.api.rest_framework import FCMDeviceSerializer
 from rest_framework.decorators import action
 from rest_framework import mixins
 from rest_framework import viewsets
@@ -19,7 +22,6 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 from rest_framework_gis.pagination import GeoJsonPagination
-import django_gamification.models
 
 from keycloakauth import utils
 from keycloakauth.keycloakadmin import get_manager
@@ -452,6 +454,17 @@ class MyCompetitionWonViewSet(viewsets.ReadOnlyModelViewSet):
         context = super().get_serializer_context()
         context.update(user=self.request.user)
         return context
+
+
+class MyDeviceViewSet(viewsets.ModelViewSet):
+    serializer_class = FCMDeviceSerializer
+    required_permissions = (
+        "profiles.is_authenticated",
+    )
+
+    def get_queryset(self):
+        return fcm_django.models.FCMDevice.objects.filter(
+            user=self.request.user)
 
 
 def _update_group_memberships(user):
