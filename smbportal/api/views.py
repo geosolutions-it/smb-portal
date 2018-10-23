@@ -15,6 +15,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 import django_gamification.models
 import fcm_django.models
 from fcm_django.api.rest_framework import FCMDeviceSerializer
+from fcm_django.api.rest_framework import DeviceViewSetMixin
 from rest_framework.decorators import action
 from rest_framework import mixins
 from rest_framework import viewsets
@@ -456,7 +457,7 @@ class MyCompetitionWonViewSet(viewsets.ReadOnlyModelViewSet):
         return context
 
 
-class MyDeviceViewSet(viewsets.ModelViewSet):
+class MyDeviceViewSet(DeviceViewSetMixin, viewsets.ModelViewSet):
     serializer_class = FCMDeviceSerializer
     required_permissions = (
         "profiles.is_authenticated",
