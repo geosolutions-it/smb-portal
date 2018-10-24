@@ -106,7 +106,7 @@ class Track(models.Model):
     )
 
     class Meta:
-        ordering = ["start_date"]
+        ordering = ["-start_date"]
 
 
 class CollectedPoint(gismodels.Model):
