@@ -913,19 +913,34 @@ class SegmentSerializer(serializers.ModelSerializer):
         return obj.geom.geojson
 
     def get_emissions(self, obj):
-        serializer = EmissionSerializer(
-            instance=obj.emission, context=self.context)
-        return serializer.data
+        try:
+            emissions = obj.emission
+            serializer = EmissionSerializer(
+                instance=emissions, context=self.context)
+            result = serializer.data
+        except tracks.models.Emission.DoesNotExist:
+            result = None
+        return result
 
     def get_costs(self, obj):
-        serializer = CostSerializer(
-            instance=obj.cost, context=self.context)
-        return serializer.data
+        try:
+            costs = obj.cost
+            serializer = CostSerializer(
+                instance=costs, context=self.context)
+            result = serializer.data
+        except tracks.models.Cost.DoesNotExist:
+            result = None
+        return result
 
     def get_health(self, obj):
-        serializer = HealthSerializer(
-            instance=obj.health, context=self.context)
-        return serializer.data
+        try:
+            health = obj.health
+            serializer = HealthSerializer(
+                instance=health, context=self.context)
+            result = serializer.data
+        except tracks.models.Health.DoesNotExist:
+            result = None
+        return result
 
     class Meta:
         model = tracks.models.Segment
