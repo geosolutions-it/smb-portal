@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "django.contrib.sites",
     "django.forms",
+    "django.contrib.humanize",
     "rest_framework",
     "rest_framework_gis",
     "django_filters",
@@ -85,12 +86,16 @@ INSTALLED_APPS = [
     "sortedm2m",
     "django_bootstrap_breadcrumbs",
     "avatar",
+    "django_gamification",
+    "fcm_django",
     "base.apps.BaseConfig",
     "keycloakauth.apps.KeycloakauthConfig",
     "profiles.apps.ProfilesConfig",
     "vehicles.apps.VehiclesConfig",
     "tracks.apps.TracksConfig",
     "vehiclemonitor.apps.VehiclemonitorConfig",
+    "badges.apps.BadgesConfig",
+    "prizes.apps.PrizesConfig",
     "rules.apps.AutodiscoverRulesConfig",
 ]
 
@@ -279,6 +284,12 @@ MEDIA_ROOT = get_environment_variable(
     "DJANGO_MEDIA_ROOT",
     default_value=str(pathlib.Path(BASE_DIR).parent / "media"),
 )
+
+FCM_DJANGO_SETTINGS = {
+    "FCM_SERVER_KEY": get_environment_variable("FCM_SERVER_KEY"),
+    "ONE_DEVICE_PER_USER": False,
+    "DELETE_INACTIVE_DEVICES": False
+}
 
 KEYCLOAK = {
     "base_url": get_environment_variable(

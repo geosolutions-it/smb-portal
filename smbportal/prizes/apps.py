@@ -11,5 +11,5 @@
 from django.apps import AppConfig
 
 
-class BadgesConfig(AppConfig):
-    name = 'badges'
+class PrizesConfig(AppConfig):
+    name = "prizes"

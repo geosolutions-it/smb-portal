@@ -5,13 +5,16 @@ dj-database-url==0.5.0
 django-avatar==4.1.0
 django-bootstrap-breadcrumbs==0.9.1
 django-crispy-forms==1.7.2
+django-gamification==0.3.1
 django-filter==1.1.0
 django-ipware==2.1.0
 django-photologue==3.8.1
 drf-yasg==1.8.0
+fcm-django==0.2.19
 geoip2==2.9.0
 lxml==4.2.3
 psycopg2-binary==2.7.4
+pyfcm==1.4.5
 pygdal==2.2.3.3 # depends on libgdal-dev 2.3.3
 pytz==2018.4
 requests==2.18.4
@@ -23,3 +26,6 @@ git+https://github.com/jhuapl-boss/drf-oidc-auth.git@v0.8.0
 
 # includes a fix for jhuapl-boss/boss-oidc #28
 git+https://github.com/geosolutions-it/boss-oidc.git@4fad0f8579f4c091b8a80426407cad7d98969e28
+
+# smb-backend
+git+https://github.com/geosolutions-it/smb-backend.git

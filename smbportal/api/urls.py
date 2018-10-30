@@ -14,6 +14,7 @@ from django.conf import settings
 from django.urls import path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from fcm_django.api.rest_framework import FCMDeviceAuthorizedViewSet
 from rest_framework import routers
 from rest_framework.permissions import AllowAny
 
@@ -23,9 +24,29 @@ app_name = "api"
 
 router = routers.DefaultRouter()
 router.register(
+    prefix="my-badges",
+    viewset=views.MyBadgeViewSet,
+    base_name="my-badges"
+)
+router.register(
     prefix="my-bikes",
     viewset=views.MyBikeViewSet,
     base_name="my-bikes"
+)
+router.register(
+    prefix="my-competitions-won",
+    viewset=views.MyCompetitionWonViewSet,
+    base_name="my-competitions-won"
+)
+router.register(
+    prefix="my-competitions-current",
+    viewset=views.MyCurrentCompetitionViewSet,
+    base_name="my-competitions-current"
+)
+router.register(
+    prefix="my-devices",
+    viewset=FCMDeviceAuthorizedViewSet,
+    base_name="my-devices"
 )
 router.register(
     prefix="my-tags",
@@ -61,6 +82,16 @@ router.register(
     prefix="bikes",
     viewset=views.BikeViewSet,
     base_name="bikes"
+)
+router.register(
+    prefix="badges",
+    viewset=views.BadgeViewSet,
+    base_name="badges"
+)
+router.register(
+    prefix="competitions",
+    viewset=views.CompetitionViewSet,
+    base_name="competitions"
 )
 router.register(
     prefix="tags",

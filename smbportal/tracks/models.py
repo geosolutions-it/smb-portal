@@ -93,9 +93,20 @@ class Track(models.Model):
         null=True,
         help_text=_("Track length, measured in meters")
     )
+    is_valid = models.BooleanField(
+        verbose_name=_("is valid"),
+        default=False,
+        help_text=_(
+            "If the track has passed the ingestion validation pipeline")
+    )
+    validation_error = models.TextField(
+        verbose_name=_("validation error"),
+        blank=True,
+        help_text=_("Reason for the track not being valid")
+    )
 
     class Meta:
-        ordering = ["start_date"]
+        ordering = ["-start_date"]
 
 
 class CollectedPoint(gismodels.Model):
@@ -344,3 +355,14 @@ class Health(models.Model):
 
     def __str__(self):
         return "{0.segment} - {0.benefit_index}".format(self)
+
+
+class RegionOfInterest(gismodels.Model):
+    geom = gismodels.MultiPolygonField(
+        verbose_name=_("geometry"),
+        help_text=_(
+            "Geometry for the region of interest. Only points that are "
+            "located within this area will be considered when creating "
+            "tracks"
+        )
+    )

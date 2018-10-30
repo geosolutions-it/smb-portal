@@ -8,8 +8,12 @@
 #
 #########################################################################
 
-from django.apps import AppConfig
+from django.contrib.admin import register
+from django.contrib.gis.admin import OSMGeoAdmin
+
+from . import models
 
 
-class BadgesConfig(AppConfig):
-    name = 'badges'
+@register(models.RegionOfInterest)
+class RegionOfInterestAdmin(OSMGeoAdmin):
+    pass

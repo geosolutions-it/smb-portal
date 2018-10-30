@@ -12,11 +12,19 @@
 
 import logging
 
+from avatar.templatetags.avatar_tags import avatar_url
+from django.db.models import OuterRef
+from django.db.models import Subquery
+from django.template import Context
+from django.template import Engine
+import django_gamification.models as gm
 from rest_framework.reverse import reverse
 import photologue.models
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
+import prizes.models
 import profiles.models
 import tracks.models
 import tracks.utils
@@ -77,21 +85,56 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
     uuid = serializers.SerializerMethodField()
     profile = serializers.SerializerMethodField()
     profile_type = serializers.SerializerMethodField()
-    password = serializers.CharField(write_only=True)
+    acquired_badges = serializers.SerializerMethodField()
+    next_badges = serializers.SerializerMethodField()
+    avatar = serializers.SerializerMethodField()
 
     def get_uuid(self, obj):
         return obj.keycloak.UID
 
+    def get_avatar(self, obj):
+        return avatar_url(obj)
+
+    def get_acquired_badges(self, obj):
+        if obj.gamification_interface is None:
+            result = []
+        else:
+            badges = obj.gamification_interface.badge_set.filter(acquired=True)
+            serializer = BriefBadgeSerializer(
+                instance=badges,
+                context=self.context,
+                many=True
+            )
+            result = serializer.data
+        return result
+
+    def get_next_badges(self, obj):
+        if obj.gamification_interface is None:
+            result = []
+        else:
+            unacquired = gm.Badge.objects.filter(
+                acquired=False,
+                interface__smbuser=obj,
+                category=OuterRef("pk")
+            )
+            next_badges_ids = gm.Category.objects.annotate(
+                next_badge=Subquery(unacquired.values("pk")[:1])
+            ).values_list("next_badge", flat=True)
+            qs = gm.Badge.objects.filter(
+                pk__in=next_badges_ids).order_by("name")
+            serializer = BriefBadgeSerializer(
+                instance=qs,
+                context=self.context,
+                many=True
+            )
+            result = serializer.data
+        return result
+
+
     def get_profile(self, obj):
-        if obj.profile is not None:
-            serializer_class = {
-                "enduserprofile": EndUserProfileSerializer,
-                "privilegeduserprofile": (
-                    PrivilegedUserProfileSerializer),
-            }.get(obj.profile.__class__.__name__.lower())
-            print("class: {}".format(obj.profile.__class__))
-            print("class_name: {}".format(obj.profile.__class__.__name__))
-            print("serializer class: {}".format(serializer_class))
+        profile_type = self.get_profile_type(obj)
+        if profile_type is not None:
+            serializer_class = self._get_profile_serializer_class(profile_type)
             serializer = serializer_class(
                 instance=obj.profile,
                 context=self.context
@@ -104,13 +147,18 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
     def get_profile_type(self, obj):
         return type(obj.profile).__name__.lower() if obj.profile else None
 
+    def _get_profile_serializer_class(self, profile_type):
+        return {
+            "privilegeduserprofile": (
+                PrivilegedUserProfileSerializer),
+        }.get(profile_type, EndUserProfileSerializer)
+
     class Meta:
         model = profiles.models.SmbUser
         fields = (
             "url",
             "uuid",
             "username",
-            "password",
             "email",
             "date_joined",
             "language_preference",
@@ -119,22 +167,140 @@ class SmbUserSerializer(serializers.HyperlinkedModelSerializer):
             "nickname",
             "profile",
             "profile_type",
+            "avatar",
+            "acquired_badges",
+            "next_badges",
         )
 
 
 class MyUserSerializer(SmbUserSerializer):
+    username = serializers.CharField(required=False)
+    nickname = serializers.CharField(required=False)
+    language_preference = serializers.CharField(required=False)
     url = serializers.SerializerMethodField()
+    total_health_benefits = serializers.SerializerMethodField()
+    total_emissions = serializers.SerializerMethodField()
+    total_distance_km = serializers.SerializerMethodField()
+    total_travels = serializers.SerializerMethodField()
+
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get("username", instance.username)
+        instance.nickname = validated_data.get("nickname", instance.nickname)
+        instance.accepted_terms_of_service = validated_data.get(
+            "accepted_terms_of_service", instance.accepted_terms_of_service)
+        instance.language_preference = validated_data.get(
+            "language_preference", instance.language_preference)
+        # The profile-related fields are fetched from `initial_data` instead
+        # `validated_data` intentionally. Since their representation
+        # is being created using `serializers.SerializerMethodField`, they
+        # are supposed to be readonly, and thus rest-framework does not use
+        # them for data updates (so they do not show up in `validated_data`).
+        # This is likely a hacky way to support different models under the
+        # same `profile` attribute name
+        initial_data = getattr(self, "initial_data", {})
+        profile_type = initial_data.get("profile_type")
+        profile_data = initial_data.get("profile")
+        if profile_data is not None:
+            self._update_profile(instance, profile_data, profile_type)
+        instance.save()
+        return instance
+
+    def _update_profile(self, instance, profile_data, profile_type):
+        """Update the nested `profile` resource"""
+        profile_type_matches = self.get_profile_type(instance) == profile_type
+        is_correct_profile_type = (
+            (profile_type_matches and profile_type is not None) or
+            (profile_type is None)
+        )
+        if not is_correct_profile_type:
+            raise ValidationError({"profile_type": "incorrect value"})
+        profile_serializer_context = self.context.copy()
+        profile_serializer_context.update({
+            "user": instance
+        })
+        profile_serializer_class = self._get_profile_serializer_class(
+            profile_type)
+        current_profile = instance.profile
+        if current_profile is None:
+            profile_serializer = profile_serializer_class(
+                data=profile_data,
+                context=profile_serializer_context
+            )
+        else:
+            profile_serializer = profile_serializer_class(
+                instance=current_profile,
+                data=profile_data,
+                context=profile_serializer_context,
+                partial=True
+            )
+        profile_serializer.is_valid(raise_exception=True)
+        user_profile = profile_serializer.save()
+        return user_profile
 
     def get_url(self, obj):
         return reverse("api:my-user", request=self.context.get("request"))
 
+    def get_acquired_badges(self, obj):
+        if obj.gamification_interface is None:
+            result = []
+        else:
+            badges = obj.gamification_interface.badge_set.filter(
+                acquired=True).order_by("name")
+            serializer = MyBriefBadgeSerializer(
+                instance=badges,
+                context=self.context,
+                many=True
+            )
+            result = serializer.data
+        return result
+
+    def get_next_badges(self, obj):
+        if obj.gamification_interface is None:
+            result = []
+        else:
+            unacquired = gm.Badge.objects.filter(
+                acquired=False,
+                interface__smbuser=obj,
+                category=OuterRef("pk")
+            )
+            next_badges_ids = gm.Category.objects.annotate(
+                next_badge=Subquery(unacquired.values("pk")[:1])
+            ).values_list("next_badge", flat=True)
+            qs = gm.Badge.objects.filter(
+                pk__in=next_badges_ids).order_by("name")
+            serializer = MyBriefBadgeSerializer(
+                instance=qs,
+                context=self.context,
+                many=True
+            )
+            result = serializer.data
+        return result
+
+    def get_total_health_benefits(self, obj):
+        return tracks.utils.get_aggregated_data(
+            "health",
+            segment_filters={"track__owner": obj}
+        )
+
+    def get_total_emissions(self, obj):
+        return tracks.utils.get_aggregated_data(
+            "emissions",
+            segment_filters={"track__owner": obj}
+        )
+
+    def get_total_distance_km(self, obj):
+        return tracks.utils.get_total_distance_by_vehicle_type(obj)
+
+    def get_total_travels(self, obj):
+        return tracks.utils.get_total_travels_by_vehicle_type(obj)
+
     class Meta:
         model = profiles.models.SmbUser
         fields = (
+            "accepted_terms_of_service",
             "url",
             "uuid",
             "username",
-            "password",
             "email",
             "date_joined",
             "language_preference",
@@ -143,6 +309,13 @@ class MyUserSerializer(SmbUserSerializer):
             "nickname",
             "profile",
             "profile_type",
+            "avatar",
+            "acquired_badges",
+            "next_badges",
+            "total_health_benefits",
+            "total_emissions",
+            "total_distance_km",
+            "total_travels",
         )
 
 
@@ -173,11 +346,14 @@ class UserDumpSerializer(SmbUserSerializer):
             "nickname",
             "profile",
             "profile_type",
-            "vehicles"
+            "vehicles",
+            "avatar",
+            "acquired_badges",
         )
 
 
 class EndUserProfileSerializer(serializers.ModelSerializer):
+    date_updated = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = profiles.models.EndUserProfile
@@ -189,6 +365,23 @@ class EndUserProfileSerializer(serializers.ModelSerializer):
             "date_updated",
             "occupation",
         )
+
+    def create(self, validated_data):
+        return profiles.models.EndUserProfile.objects.create(
+            user=self.context["user"],
+            **validated_data
+        )
+
+    def update(self, instance, validated_data):
+        instance.gender = validated_data.get("gender", instance.gender)
+        instance.age = validated_data.get("age", instance.gender)
+        instance.phone_number = validated_data.get(
+            "phone_number", instance.gender)
+        instance.bio = validated_data.get("bio", instance.gender)
+        instance.occupation = validated_data.get(
+            "occupation", instance.occupation)
+        instance.save()
+        return instance
 
 
 class PrivilegedUserProfileSerializer(serializers.ModelSerializer):
@@ -588,6 +781,8 @@ class TrackListSerializer(serializers.ModelSerializer):
             "duration_minutes",
             "length_meters",
             "vehicle_types",
+            "is_valid",
+            "validation_error",
             "emissions",
             "costs",
             "health",
@@ -620,6 +815,8 @@ class MyTrackListSerializer(TrackListSerializer):
             "duration_minutes",
             "length_meters",
             "vehicle_types",
+            "is_valid",
+            "validation_error",
             "emissions",
             "costs",
             "health",
@@ -658,6 +855,8 @@ class TrackDetailSerializer(TrackListSerializer):
             "duration_minutes",
             "length_meters",
             "vehicle_types",
+            "is_valid",
+            "validation_error",
             "emissions",
             "costs",
             "health",
@@ -690,6 +889,8 @@ class MyTrackDetailSerializer(TrackDetailSerializer):
             "duration_minutes",
             "length_meters",
             "vehicle_types",
+            "is_valid",
+            "validation_error",
             "emissions",
             "costs",
             "health",
@@ -712,19 +913,34 @@ class SegmentSerializer(serializers.ModelSerializer):
         return obj.geom.geojson
 
     def get_emissions(self, obj):
-        serializer = EmissionSerializer(
-            instance=obj.emission, context=self.context)
-        return serializer.data
+        try:
+            emissions = obj.emission
+            serializer = EmissionSerializer(
+                instance=emissions, context=self.context)
+            result = serializer.data
+        except tracks.models.Emission.DoesNotExist:
+            result = None
+        return result
 
     def get_costs(self, obj):
-        serializer = CostSerializer(
-            instance=obj.cost, context=self.context)
-        return serializer.data
+        try:
+            costs = obj.cost
+            serializer = CostSerializer(
+                instance=costs, context=self.context)
+            result = serializer.data
+        except tracks.models.Cost.DoesNotExist:
+            result = None
+        return result
 
     def get_health(self, obj):
-        serializer = HealthSerializer(
-            instance=obj.health, context=self.context)
-        return serializer.data
+        try:
+            health = obj.health
+            serializer = HealthSerializer(
+                instance=health, context=self.context)
+            result = serializer.data
+        except tracks.models.Health.DoesNotExist:
+            result = None
+        return result
 
     class Meta:
         model = tracks.models.Segment
@@ -824,4 +1040,286 @@ class HealthSerializer(serializers.ModelSerializer):
         fields = (
             "calories_consumed",
             "benefit_index",
+        )
+
+
+class BadgeSerializer(serializers.ModelSerializer):
+    category = serializers.CharField(source="category.name")
+    user = serializers.SerializerMethodField()
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:badges-detail",
+    )
+    next_badge = serializers.HyperlinkedRelatedField(
+        view_name="api:badges-detail",
+        queryset=gm.Badge.objects.all()
+    )
+
+    def get_user(self, obj):
+        user = obj.interface.smbuser_set.first()
+        return reverse(
+            "api:users-detail",
+            kwargs={"uuid": user.keycloak.UID},
+            request=self.context.get("request")
+        )
+
+    class Meta:
+        model = gm.Badge
+        fields = (
+            "id",
+            "url",
+            "name",
+            "user",
+            "acquired",
+            "description",
+            "category",
+            "next_badge",
+        )
+
+
+class BriefBadgeSerializer(BadgeSerializer):
+    class Meta:
+        model = gm.Badge
+        fields = (
+            "name",
+            "url",
+        )
+
+
+class MyBadgeSerializer(BadgeSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:my-badges-detail",
+    )
+    next_badge = serializers.HyperlinkedRelatedField(
+        view_name="api:my-badges-detail",
+        queryset=gm.Badge.objects.all()
+    )
+
+    class Meta:
+        model = gm.Badge
+        fields = (
+            "id",
+            "url",
+            "name",
+            "acquired",
+            "description",
+            "category",
+            "next_badge",
+        )
+
+
+class MyMixedBadgesSerializer(serializers.BaseSerializer):
+
+    def to_representation(self, user_badges):
+        """Return a representation of all relevant badges
+
+        Relevant badges are:
+
+        1. Badges that have already been acquired
+        2. Next badges to acquire, after the ones that have been acquired
+           already (example: badge2, if badge1 has been acquired already)
+        3. First unacquired badges of each category
+
+        """
+
+        unacquired_firsts = self._get_unacquired_category_first_badges(
+            user_badges)
+        acquired = list(user_badges.filter(acquired=True).order_by("name"))
+        next_ = [b.next_badge for b in acquired if b.next_badge is not None]
+        leaf_next = [b for b in next_ if b not in acquired]
+        consolidated = set(
+            unacquired_firsts).union(set(acquired)).union(set(leaf_next))
+        sorted_badges = sorted(consolidated, key=lambda b: b.name)
+        badge_serializer = MyBadgeSerializer(
+            instance=sorted_badges, many=True, context=self.context)
+        return badge_serializer.data
+
+    def _get_unacquired_category_first_badges(self, badges):
+        """Return a list with the first unacquired badge of each category"""
+        unacquired_firsts = []
+        for badge in badges.filter(acquired=False).order_by("name"):
+            cat_names = [b.category for b in unacquired_firsts]
+            if badge.category not in cat_names:
+                unacquired_firsts.append(badge)
+        return unacquired_firsts
+
+
+class MyBriefBadgeSerializer(MyBadgeSerializer):
+    class Meta:
+        model = gm.Badge
+        fields = (
+            "name",
+            "url",
+            "acquired",
+        )
+
+
+class SponsorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = prizes.models.Sponsor
+        fields = (
+            "name",
+            "logo",
+            "url",
+        )
+
+
+class CompetitionRankingSerializer(serializers.BaseSerializer):
+
+    def to_representation(self, instance):
+        criteria = instance[1]
+        result = {
+            "username": instance[0].username
+        }
+        result.update(
+            {criterium.value: score for criterium, score in criteria.items()})
+        return result
+
+
+class PrizeSerializer(serializers.ModelSerializer):
+    sponsor = SponsorSerializer()
+
+    class Meta:
+        model = prizes.models.Prize
+        fields = (
+            "name",
+            "description",
+            "image",
+            "url",
+            "sponsor"
+        )
+
+
+class CompetitionPrizeSerializer(serializers.ModelSerializer):
+    winner_description = serializers.SerializerMethodField()
+    prize = PrizeSerializer()
+
+    def get_winner_description(self, obj):
+        engine = Engine.get_default()
+        string_template = obj.prize_attribution_template
+        try:
+            rank = obj.competition.winners.get(user=self.context["user"]).rank
+        except prizes.models.Winner.DoesNotExist:
+            result = string_template
+        else:
+            score = obj.competition.get_user_score(self.context["user"])
+            formatted_score = ", ".join(
+                "{}: {:0.3f}".format(criterium.value, value) for
+                criterium, value in score.items()
+            )
+            context = Context({
+                "rank": rank,
+                "score": formatted_score,
+            })
+            if "humanize" not in string_template:
+                string_template = "{% load humanize %}" + string_template
+            template = engine.from_string(string_template)
+            result = template.render(context)
+        return result
+
+    class Meta:
+        model = prizes.models.CompetitionPrize
+        fields = (
+            "winner_description",
+            "prize",
+            "user_rank",
+        )
+
+
+class CompetitionListSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:competitions-detail",
+    )
+
+    class Meta:
+        model = prizes.models.Competition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "description",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+        )
+
+
+class CompetitionDetailSerializer(CompetitionListSerializer):
+    leaderboard = serializers.SerializerMethodField()
+    prizes = CompetitionPrizeSerializer(
+        many=True,
+        source="competitionprize_set",
+    )
+
+    def get_leaderboard(self, obj):
+        board = obj.get_leaderboard()
+        serializer = CompetitionRankingSerializer(instance=board, many=True)
+        return serializer.data
+
+    class Meta:
+        model = prizes.models.Competition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "description",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+            "winner_threshold",
+            "leaderboard",
+            "prizes",
+        )
+
+
+class UserCompetitionDetailSerializer(CompetitionDetailSerializer):
+    score = serializers.SerializerMethodField()
+
+    def get_score(self, obj):
+        score = obj.get_user_score(self.context["user"])
+        return {criterium.value: value for criterium, value in  score.items()}
+
+    class Meta:
+        model = prizes.models.CurrentCompetition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "description",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+            "winner_threshold",
+            "score",
+            "leaderboard",
+            "prizes",
+        )
+
+
+class CompetitionWonDetailSerializer(CompetitionDetailSerializer):
+    score = serializers.SerializerMethodField()
+
+    def get_score(self, obj):
+        score = obj.get_user_score(self.context["user"])
+        return {criterium.value: value for criterium, value in  score.items()}
+
+
+    class Meta:
+        model = prizes.models.CurrentCompetition
+        fields = (
+            "id",
+            "url",
+            "name",
+            "description",
+            "age_groups",
+            "start_date",
+            "end_date",
+            "criteria",
+            "winner_threshold",
+            "score",
+            "leaderboard",
+            "prizes",
         )

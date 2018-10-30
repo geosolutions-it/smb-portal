@@ -12,6 +12,10 @@ import logging
 
 from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
+import django_gamification.models
+import fcm_django.models
+from fcm_django.api.rest_framework import FCMDeviceSerializer
+from fcm_django.api.rest_framework import DeviceViewSetMixin
 from rest_framework.decorators import action
 from rest_framework import mixins
 from rest_framework import viewsets
@@ -22,7 +26,9 @@ from rest_framework_gis.pagination import GeoJsonPagination
 
 from keycloakauth import utils
 from keycloakauth.keycloakadmin import get_manager
+import prizes.models
 import profiles.models
+import profiles.views
 import tracks.models
 import vehicles.models
 import vehiclemonitor.models
@@ -40,16 +46,24 @@ class MyUserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
                     viewsets.GenericViewSet):
     serializer_class = serializers.MyUserSerializer
     required_permissions = (
-        "profiles.can_view_profile",
-    )
-    required_object_permissions = (
-        "profiles.can_edit_profile",
+        "profiles.is_authenticated",
     )
 
     def get_object(self):
         user = self.request.user
         self.check_object_permissions(self.request, obj=user.profile)
         return user
+
+    def perform_update(self, serializer):
+        """Save any modifications to the user object
+
+        In case of profile generation, be sure to communicate with keycloak
+        in order to setup correct group memberships
+
+        """
+
+        user = serializer.save()
+        _update_group_memberships(user)
 
 
 class MyBikeViewSet(viewsets.ModelViewSet):
@@ -144,6 +158,7 @@ class MyTrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     )
     filter_fields = (
         "session_id",
+        "is_valid",
     )
 
     def get_queryset(self):
@@ -314,6 +329,7 @@ class TrackViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     )
     filter_fields = (
         "session_id",
+        "is_valid",
     )
 
     def get_serializer_class(self):
@@ -331,3 +347,145 @@ class SegmentViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "tracks.can_list_segments",
     )
     queryset = tracks.models.Segment.objects.all()
+
+
+class BadgeViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.BadgeSerializer
+    required_permissions = (
+        "profiles.can_list_badges",
+    )
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_fields = (
+        "acquired",
+    )
+    queryset = django_gamification.models.Badge.objects.all()
+
+
+class MyBadgeViewSet(viewsets.ReadOnlyModelViewSet):
+    required_permissions = (
+        "profiles.can_list_own_badges",
+    )
+
+    def get_queryset(self):
+        return django_gamification.models.Badge.objects.filter(
+            interface__smbuser=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.MyMixedBadgesSerializer
+        else:
+            result = serializers.MyBadgeSerializer
+        return result
+
+    def get_serializer(self, *args, **kwargs):
+        if self.action == "list":
+            serializer_class = self.get_serializer_class()
+            context = self.get_serializer_context()
+            qs = self.get_queryset()
+            serializer = serializer_class(instance=qs, context=context)
+        else:
+            serializer = super().get_serializer(*args, **kwargs)
+        return serializer
+
+
+class CompetitionViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.CompetitionDetailSerializer
+    queryset = prizes.models.Competition.objects.all()
+    required_permissions = (
+        "profiles.can_list_competitions",
+    )
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            result = serializers.CompetitionListSerializer
+        else:
+            result = serializers.CompetitionDetailSerializer
+        return result
+
+    @action(detail=False)
+    def current_competitions(self, request):
+        qs = prizes.models.CurrentCompetition.objects.all()
+        filtered = self.filter_queryset(qs)
+        page = self.paginate_queryset(filtered)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            result = self.get_paginated_response(serializer.data)
+        else:
+            serializer = self.get_serializer(filtered, many=True)
+            result = Response(serializer.data)
+        return result
+
+
+class MyCurrentCompetitionViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.UserCompetitionDetailSerializer
+    required_permissions = (
+        "profiles.can_list_own_competitions",
+    )
+
+    def get_queryset(self):
+        user_age = getattr(self.request.user.profile, "age")
+        if user_age is not None:
+            qs = prizes.models.CurrentCompetition.objects.filter(
+                age_groups__contains=[user_age])
+        else:
+            qs = prizes.models.CurrentCompetition.objects.all()
+        return qs
+
+    def get_serializer_context(self):
+        """Inject the current user into the serializer context"""
+        context = super().get_serializer_context()
+        context.update(user=self.request.user)
+        return context
+
+
+class MyCompetitionWonViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.CompetitionWonDetailSerializer
+    required_permissions = (
+        "profiles.can_list_own_competitions",
+    )
+
+    def get_queryset(self):
+        return prizes.models.FinishedCompetition.objects.filter(
+            winners__user=self.request.user)
+
+    def get_serializer_context(self):
+        """Inject the current user into the serializer context"""
+        context = super().get_serializer_context()
+        context.update(user=self.request.user)
+        return context
+
+
+class MyDeviceViewSet(DeviceViewSetMixin, viewsets.ModelViewSet):
+    serializer_class = FCMDeviceSerializer
+    required_permissions = (
+        "profiles.is_authenticated",
+    )
+
+    def get_queryset(self):
+        return fcm_django.models.FCMDevice.objects.filter(
+            user=self.request.user)
+
+
+def _update_group_memberships(user):
+    manager = get_manager(
+        settings.KEYCLOAK["base_url"],
+        settings.KEYCLOAK["realm"],
+        settings.KEYCLOAK["client_id"],
+        settings.KEYCLOAK["admin_username"],
+        settings.KEYCLOAK["admin_password"],
+    )
+    user_groups = manager.get_user_groups(user.keycloak.UID)
+    logger.debug("updating user group memberships...")
+    profile_name = (user.profile.__class__.__name__.lower() if
+                    user.profile is not None else None)
+    keycloak_group_name = {
+        "enduserprofile": settings.END_USER_PROFILE,
+        "privilegeduserprofile": settings.PRIVILEGED_USER_PROFILE,
+    }.get(profile_name or "")
+    utils.update_user_groups(
+        user=user,
+        user_profile=keycloak_group_name,
+        current_keycloak_groups=[g["name"] for g in user_groups]
+    )
