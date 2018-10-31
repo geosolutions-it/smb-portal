@@ -398,7 +398,7 @@ class CompetitionViewSet(viewsets.ReadOnlyModelViewSet):
     )
 
     def get_serializer_class(self):
-        if self.action == "list":
+        if self.action in ["list", "current_competitions"]:
             result = serializers.CompetitionListSerializer
         else:
             result = serializers.CompetitionDetailSerializer

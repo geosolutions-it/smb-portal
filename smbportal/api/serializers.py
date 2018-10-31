@@ -1172,7 +1172,7 @@ class CompetitionRankingSerializer(serializers.BaseSerializer):
             "username": instance[0].username
         }
         result.update(
-            {criterium.value: score for criterium, score in criteria.items()})
+            {criterium: score for criterium, score in criteria.items()})
         return result
 
 
