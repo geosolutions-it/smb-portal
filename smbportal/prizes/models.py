@@ -192,12 +192,10 @@ class Competition(models.Model):
     start_date = models.DateTimeField(
         verbose_name=_("start date"),
         help_text=_("Date when the competition started"),
-        editable=False,
     )
     end_date = models.DateTimeField(
         verbose_name=_("end date"),
         help_text=_("Date when the competition ended"),
-        editable=False,
     )
     criteria = ArrayField(
         base_field=models.CharField(
