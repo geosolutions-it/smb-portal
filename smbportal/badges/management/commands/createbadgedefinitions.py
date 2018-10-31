@@ -98,7 +98,8 @@ def award_new_user_badges():
 def update_all_badges():
     for track in tm.Track.objects.all():
         db_connection = connections["default"].connection
-        update_badges(track.pk, db_connection)
+        cursor = db_connection.cursor()
+        update_badges(track.pk, cursor)
 
 
 def sort_badge_definitions(items, regexp="(\d+)"):
