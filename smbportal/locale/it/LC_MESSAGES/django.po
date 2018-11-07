@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-24 16:36+0000\n"
+"POT-Creation-Date: 2018-11-07 22:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,188 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: base/settings/base.py:198
+#: base/settings/base.py:202
 msgid "English"
 msgstr "English"
 
-#: base/settings/base.py:199
+#: base/settings/base.py:203
 msgid "Italian"
 msgstr "Italian"
+
+#: dashboard/forms.py:20 dashboard/forms.py:42
+msgid "Start date"
+msgstr ""
+
+#: dashboard/forms.py:29 dashboard/forms.py:51
+msgid "End date"
+msgstr ""
+
+#: dashboard/forms.py:60 templates/base/base.html:42
+#: templates/base/home.html:70 templates/base/home.html:74
+msgid "Bikes"
+msgstr "Biciclette"
+
+#: prizes/models.py:29 prizes/models.py:64
+msgid "sponsor"
+msgstr ""
+
+#: prizes/models.py:37
+msgid "url"
+msgstr ""
+
+#: prizes/models.py:49 prizes/models.py:160
+msgid "name"
+msgstr "Nome utente"
+
+#: prizes/models.py:57 prizes/models.py:164
+msgid "description"
+msgstr ""
+
+#: prizes/models.py:71
+msgid "URL where more information about this prize can be obtained"
+msgstr ""
+
+#: prizes/models.py:87
+msgid "prize"
+msgstr ""
+
+#: prizes/models.py:92 prizes/models.py:323
+msgid "competition"
+msgstr ""
+
+#: prizes/models.py:95
+msgid "user rank"
+msgstr ""
+
+#: prizes/models.py:99
+msgid ""
+"Rank that the user must attain in the underlying competition in order to be "
+"awarded the prize. If None, all of the competition's winners will be awarded "
+"the prize"
+msgstr ""
+
+#: prizes/models.py:105
+msgid "prize attribution template"
+msgstr ""
+
+#: prizes/models.py:107
+msgid ""
+"Message shown to the user when the prize is won. This string is treated as a "
+"normal django template and rendered with a context that has the following "
+"variables: `score`, `rank`. The `django.contrib.humanize` is available. "
+"Example: The string 'Congratulations, you got {{ rank|ordinal }} place with "
+"a score of {{ score }}' would get rendered as 'Congratulations, you got 1st "
+"place with a score of 2061'"
+msgstr ""
+
+#: prizes/models.py:173 profiles/models.py:145
+msgid "< 19"
+msgstr ""
+
+#: prizes/models.py:177 profiles/models.py:146
+msgid "19 - 30"
+msgstr ""
+
+#: prizes/models.py:181 profiles/models.py:147
+msgid "30 - 65"
+msgstr ""
+
+#: prizes/models.py:185 profiles/models.py:148
+msgid "65+"
+msgstr ""
+
+#: prizes/models.py:190
+msgid "age group"
+msgstr ""
+
+#: prizes/models.py:193 tracks/models.py:70 tracks/models.py:192
+msgid "start date"
+msgstr ""
+
+#: prizes/models.py:194
+msgid "Date when the competition started"
+msgstr ""
+
+#: prizes/models.py:197 tracks/models.py:75 tracks/models.py:196
+msgid "end date"
+msgstr ""
+
+#: prizes/models.py:198
+msgid "Date when the competition ended"
+msgstr ""
+
+#: prizes/models.py:204 prizes/models.py:206
+msgid "saved CO2 emissions"
+msgstr ""
+
+#: prizes/models.py:205
+msgid "saved NOx emissions"
+msgstr ""
+
+#: prizes/models.py:207
+msgid "saved CO emissions"
+msgstr ""
+
+#: prizes/models.py:208
+msgid "saved PM10 emissions"
+msgstr ""
+
+#: prizes/models.py:209
+msgid "consumed calories"
+msgstr ""
+
+#: prizes/models.py:210
+msgid "bike usage frequency"
+msgstr ""
+
+#: prizes/models.py:213
+msgid "public transport usage frequency"
+msgstr ""
+
+#: prizes/models.py:215
+msgid "bike distance"
+msgstr ""
+
+#: prizes/models.py:218
+msgid "sustainable means distance"
+msgstr ""
+
+#: prizes/models.py:222
+msgid "criteria"
+msgstr ""
+
+#: prizes/models.py:224
+msgid "Which criteria will be used for deciding who wins the competition"
+msgstr ""
+
+#: prizes/models.py:229
+msgid "winner threshold"
+msgstr ""
+
+#: prizes/models.py:232
+msgid ""
+"After results are calculated and ordered, how many of the top users should "
+"be considered winners? The winners will earn the prizes specified in this "
+"competition."
+msgstr ""
+
+#: prizes/models.py:238
+msgid "closing leaderboard"
+msgstr ""
+
+#: prizes/models.py:242
+msgid ""
+"leaderboard calculated at the time the competition was closed. Winners are "
+"assigned from the score in this leaderboard"
+msgstr ""
+
+#: prizes/models.py:329 profiles/models.py:124 profiles/models.py:216
+msgid "user"
+msgstr "Utente"
+
+#: prizes/models.py:334
+msgid "rank"
+msgstr ""
 
 #: profiles/forms.py:38
 msgid "Did not accept the portal's Terms of Service"
@@ -40,10 +215,6 @@ msgstr "Lingua preferita"
 #: profiles/models.py:46
 msgid "gamification interface"
 msgstr ""
-
-#: profiles/models.py:124 profiles/models.py:216
-msgid "user"
-msgstr "Utente"
 
 #: profiles/models.py:127
 msgid "date updated"
@@ -64,22 +235,6 @@ msgstr "Maschio"
 #: profiles/models.py:141
 msgid "age"
 msgstr "Età"
-
-#: profiles/models.py:145
-msgid "< 19"
-msgstr ""
-
-#: profiles/models.py:146
-msgid "19 - 30"
-msgstr ""
-
-#: profiles/models.py:147
-msgid "30 - 65"
-msgstr ""
-
-#: profiles/models.py:148
-msgid "65+"
-msgstr ""
 
 #: profiles/models.py:157
 msgid "phone number"
@@ -293,27 +448,27 @@ msgstr "Raro (meno di una volta al mese)"
 msgid "Never use a bicycle to move around in the city"
 msgstr "Non utilizzo mai la bicicletta per muovermi in città"
 
-#: profiles/views.py:136
+#: profiles/views.py:69
 msgid "Privileged user profile created!"
 msgstr "Creato utente con ruolo speciale"
 
-#: profiles/views.py:172
+#: profiles/views.py:105
 msgid "Registration request sent to admins"
 msgstr "La richeista di registrazione è stata inviata agli amministratori"
 
-#: profiles/views.py:173
+#: profiles/views.py:106
 msgid "You have been logged out"
 msgstr "Disconnesso"
 
-#: profiles/views.py:223
+#: profiles/views.py:156
 msgid "User profile created. You can now add some bikes"
 msgstr "Profilo utente createo. Adesso puoi aggiungere le tue biciclette"
 
-#: profiles/views.py:293
+#: profiles/views.py:226
 msgid "User profile updated!"
 msgstr "Profilo utente aggiornato!"
 
-#: profiles/views.py:337
+#: profiles/views.py:270
 msgid "Please complete your user profile before continuing"
 msgstr "Completa il tuo profilo utente per poter continuare nella navigazione"
 
@@ -389,49 +544,44 @@ msgstr ""
 msgid "Delete selected"
 msgstr "Elimina selezionati"
 
-#: templates/base/base.html:41 templates/base/home.html:70
-#: templates/base/home.html:74
-msgid "Bikes"
-msgstr "Biciclette"
-
-#: templates/base/base.html:42
+#: templates/base/base.html:43
 msgid "Report a lost Bike"
 msgstr "Segnala una bicicletta smarrita"
 
-#: templates/base/base.html:43
+#: templates/base/base.html:44
 msgid "About"
 msgstr "Info"
 
-#: templates/base/base.html:71
+#: templates/base/base.html:73
 msgid "My Profile"
 msgstr "Il mio profilo"
 
-#: templates/base/base.html:72
+#: templates/base/base.html:74
 msgid "Messages"
 msgstr "Messaggi"
 
-#: templates/base/base.html:74
+#: templates/base/base.html:76
 msgid "Logout"
 msgstr "Disconnetti"
 
-#: templates/base/base.html:76
+#: templates/base/base.html:78
 msgid "Login/Register"
 msgstr "Accedi o Registrati"
 
-#: templates/base/base.html:89
+#: templates/base/base.html:91
 msgid "Home"
 msgstr "Pagina iniziale"
 
-#: templates/base/base.html:133 templates/base/base.html:242
+#: templates/base/base.html:135 templates/base/base.html:244
 #: templates/privacy/privacy_policy.html:8
 msgid "Privacy Policy"
 msgstr "Informativa sulla privacy"
 
-#: templates/base/base.html:188
+#: templates/base/base.html:190
 msgid "Close"
 msgstr "Chiudi"
 
-#: templates/base/base.html:240
+#: templates/base/base.html:242
 msgid ""
 "We use cookies to help make SaveMyBike better. By visiting this site, you "
 "agree to our cookie policy"
@@ -439,7 +589,7 @@ msgstr ""
 "Usiamo i cookie per migliorare il servizio di SaveMyBike. Visitando questo "
 "sito acconsenti alla nostra politica sull'utilizzo dei cookie"
 
-#: templates/base/base.html:241
+#: templates/base/base.html:243
 msgid "Got it!"
 msgstr "Capito!"
 
@@ -529,6 +679,29 @@ msgstr "Premi"
 msgid " View all the prizes you can available in your city."
 msgstr ""
 "Visualizza tutti i premi che puoi mettere a disposizione nella tua città"
+
+#: templates/dashboard/analyst_index.html:13
+msgid "Track Segments"
+msgstr ""
+
+#: templates/dashboard/analyst_index.html:15
+msgid " Download track segment data "
+msgstr ""
+
+#: templates/dashboard/analyst_index.html:19
+#: templates/dashboard/analyst_index.html:30
+msgid "Download"
+msgstr ""
+
+#: templates/dashboard/analyst_index.html:24
+#: templates/vehiclemonitor/bikeobservation_list.html:15
+#: templates/vehiclemonitor/bikeobservation_list.html:51
+msgid "Bike observations"
+msgstr "Rilevazioni bicicletta"
+
+#: templates/dashboard/analyst_index.html:26
+msgid "Download bike observations data"
+msgstr ""
 
 #: templates/gis/widgets/openlayers.html:11
 msgid "Delete all Features"
@@ -727,11 +900,6 @@ msgstr "Biciclette"
 #: templates/vehiclemonitor/base.html:10
 msgid "observations"
 msgstr "Rilevazioni"
-
-#: templates/vehiclemonitor/bikeobservation_list.html:15
-#: templates/vehiclemonitor/bikeobservation_list.html:51
-msgid "Bike observations"
-msgstr "Rilevazioni bicicletta"
 
 #: templates/vehiclemonitor/bikeobservation_list.html:23
 msgid "Latest observations"
@@ -1131,14 +1299,6 @@ msgid ""
 "performance."
 msgstr ""
 
-#: tracks/models.py:70 tracks/models.py:181
-msgid "start date"
-msgstr ""
-
-#: tracks/models.py:75 tracks/models.py:185
-msgid "end date"
-msgstr ""
-
 #: tracks/models.py:80
 msgid "duration"
 msgstr ""
@@ -1147,7 +1307,7 @@ msgstr ""
 msgid "Track duration, measured in minutes"
 msgstr ""
 
-#: tracks/models.py:86 tracks/models.py:178
+#: tracks/models.py:86 tracks/models.py:189 tracks/models.py:362
 msgid "geometry"
 msgstr ""
 
@@ -1159,167 +1319,189 @@ msgstr ""
 msgid "Track length, measured in meters"
 msgstr ""
 
-#: tracks/models.py:157
+#: tracks/models.py:97
+msgid "is valid"
+msgstr ""
+
+#: tracks/models.py:100
+msgid "If the track has passed the ingestion validation pipeline"
+msgstr ""
+
+#: tracks/models.py:103
+msgid "validation error"
+msgstr ""
+
+#: tracks/models.py:105
+msgid "Reason for the track not being valid"
+msgstr ""
+
+#: tracks/models.py:168
 msgid "track"
 msgstr ""
 
-#: tracks/models.py:164
+#: tracks/models.py:175
 msgid "user uuid"
 msgstr ""
 
-#: tracks/models.py:167
+#: tracks/models.py:178
 msgid "vehicle type"
 msgstr ""
 
-#: tracks/models.py:182
+#: tracks/models.py:193
 msgid "timestamp of first collected point of the segment"
 msgstr ""
 
-#: tracks/models.py:186
+#: tracks/models.py:197
 msgid "timestamp of last collected point of the segment"
 msgstr ""
 
-#: tracks/models.py:216 tracks/models.py:285 tracks/models.py:326
+#: tracks/models.py:227 tracks/models.py:296 tracks/models.py:337
 msgid "segment"
 msgstr ""
 
-#: tracks/models.py:219
+#: tracks/models.py:230
 msgid "SO2"
 msgstr ""
 
-#: tracks/models.py:222
+#: tracks/models.py:233
 msgid "Sulphur Dioxide emissions (mg)"
 msgstr ""
 
-#: tracks/models.py:225
+#: tracks/models.py:236
 msgid "SO2 saved"
 msgstr ""
 
-#: tracks/models.py:228
+#: tracks/models.py:239
 msgid "Dulphur Dioxide emissions that were prevented (mg)"
 msgstr ""
 
-#: tracks/models.py:231
+#: tracks/models.py:242
 msgid "NOx"
 msgstr ""
 
-#: tracks/models.py:234
+#: tracks/models.py:245
 msgid "Nitrogen Oxides emissions (mg)"
 msgstr ""
 
-#: tracks/models.py:237
+#: tracks/models.py:248
 msgid "NOx saved"
 msgstr ""
 
-#: tracks/models.py:240
+#: tracks/models.py:251
 msgid "Nitrogen Oxides emissions that were prevented (mg)"
 msgstr ""
 
-#: tracks/models.py:243
+#: tracks/models.py:254
 msgid "CO2"
 msgstr ""
 
-#: tracks/models.py:246
+#: tracks/models.py:257
 msgid "Carbon dioxide emissions (g)"
 msgstr ""
 
-#: tracks/models.py:249
+#: tracks/models.py:260
 msgid "CO2 saved"
 msgstr ""
 
-#: tracks/models.py:252
+#: tracks/models.py:263
 msgid "Carbon dioxide emissions that were prevented (g)"
 msgstr ""
 
-#: tracks/models.py:255
+#: tracks/models.py:266
 msgid "CO"
 msgstr ""
 
-#: tracks/models.py:258
+#: tracks/models.py:269
 msgid "Carbon monoxide emissions (mg)"
 msgstr ""
 
-#: tracks/models.py:261
+#: tracks/models.py:272
 msgid "CO saved"
 msgstr ""
 
-#: tracks/models.py:264
+#: tracks/models.py:275
 msgid "Carbon monoxide emissions that were prevented (mg)"
 msgstr ""
 
-#: tracks/models.py:267
+#: tracks/models.py:278
 msgid "PM10"
 msgstr ""
 
-#: tracks/models.py:270
+#: tracks/models.py:281
 msgid "Particulate Matter up to 10um emissions (mg)"
 msgstr ""
 
-#: tracks/models.py:273
+#: tracks/models.py:284
 msgid "PM10 saved"
 msgstr ""
 
-#: tracks/models.py:276
+#: tracks/models.py:287
 msgid "Particulate Matter up to 10um emissions that were prevented (mg)"
 msgstr ""
 
-#: tracks/models.py:288
+#: tracks/models.py:299
 msgid "fuel cost"
 msgstr ""
 
-#: tracks/models.py:291
+#: tracks/models.py:302
 msgid "Fuel consumption cost (eur)"
 msgstr ""
 
-#: tracks/models.py:294
+#: tracks/models.py:305
 msgid "time cost"
 msgstr ""
 
-#: tracks/models.py:297
+#: tracks/models.py:308
 msgid "Time spent cost (eur)"
 msgstr ""
 
-#: tracks/models.py:300
+#: tracks/models.py:311
 msgid "depreciation cost"
 msgstr ""
 
-#: tracks/models.py:303
+#: tracks/models.py:314
 msgid "Vehicle depreciation cost (eur)"
 msgstr ""
 
-#: tracks/models.py:306
+#: tracks/models.py:317
 msgid "operational cost"
 msgstr ""
 
-#: tracks/models.py:309
+#: tracks/models.py:320
 msgid "Vehicle operation cost (eur)"
 msgstr ""
 
-#: tracks/models.py:312
+#: tracks/models.py:323
 msgid "total cost"
 msgstr ""
 
-#: tracks/models.py:315
+#: tracks/models.py:326
 msgid "Total cost (eur)"
 msgstr ""
 
-#: tracks/models.py:329
+#: tracks/models.py:340
 msgid "calories consumed"
 msgstr ""
 
-#: tracks/models.py:332
+#: tracks/models.py:343
 msgid "Calories consumed (cal)"
 msgstr ""
 
-#: tracks/models.py:335
+#: tracks/models.py:346
 msgid "benefit index"
 msgstr ""
 
-#: tracks/models.py:338
+#: tracks/models.py:349
 msgid ""
 "Benefit Index, adapted from World Health Organization's 'Health economic "
 "assessment tools (HEAT) for walking and for cycling - Methods and user guide "
 "on physical activity, air pollution, injuries and carbon impact assessments'"
+msgstr ""
+
+#: tracks/models.py:364
+msgid ""
+"Geometry for the region of interest. Only points that are located within "
+"this area will be considered when creating tracks"
 msgstr ""
 
 #: vehiclemonitor/models.py:25
