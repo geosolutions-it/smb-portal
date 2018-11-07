@@ -71,6 +71,16 @@ LOGGING = {
             "handlers": ["console"],
             "level": "DEBUG",
             "propagate": False,
-        }
+        },
+        "smbbackend": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "dashboard": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
     }
 }

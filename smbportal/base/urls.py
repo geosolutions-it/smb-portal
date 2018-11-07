@@ -85,5 +85,10 @@ urlpatterns += i18n_patterns(
         route='privacy_policy/',
         view=TemplateView.as_view(template_name="privacy/privacy_policy.html"),
         name='privacy_policy'
+    ),
+    path(
+        route='dashboard/',
+        view=include("dashboard.urls"),
+        name='dashboard'
     )
 )

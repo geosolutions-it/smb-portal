@@ -56,8 +56,8 @@ class SmbUser(AbstractUser):
     @property
     def profile(self):
         attribute_names = (
-            "enduserprofile",
             "privilegeduserprofile",
+            "enduserprofile",
             # add more profiles for analysts, prize managers, etc
         )
         for attr in attribute_names:
