@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{%  block main-navigation %}{%  endblock %}
+
+{% block content %}
+    <div class="card margin-bottom-2x">
+        <div class="card-header"><h6>{% trans 'Track Segments' %}</h6></div>
+        <div class="card-body">
+            <p>{% blocktrans %} Download track segment data {% endblocktrans %}</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ segments_form|crispy }}
+                <input type="submit" name="{{ segments_form.prefix }}-submit" value="{% trans 'Download' %}" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header"><h6>{% trans 'Bike observations' %}</h6></div>
+        <div class="card-body">
+            {% blocktrans %}Download bike observations data{% endblocktrans %}
+            <form method="post">
+                {% csrf_token %}
+                {{ observations_form|crispy }}
+                <input type="submit" name="{{ observations_form.prefix }}-submit" value="{% trans 'Download' %}" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+
+
+{% endblock %}

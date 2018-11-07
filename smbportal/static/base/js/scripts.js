@@ -1,5 +1,5 @@
 "use strict";
-var plugin_path = 'assets/plugins/';
+var plugin_path = '/static/base/plugins/';
 
 /** Load Script
 
