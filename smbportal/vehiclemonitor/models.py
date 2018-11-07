@@ -12,6 +12,9 @@ from django.contrib.gis.db import models as gis_models
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from fcm_django.models import FCMDevice
+
+from smbbackend.utils import MessageType
 
 
 class BikeObservation(gis_models.Model):
@@ -74,3 +77,13 @@ class BikeObservation(gis_models.Model):
             raise RuntimeError("Specify one of `position` or `address`")
         super().save(force_insert=force_insert, force_update=force_update,
                      using=using, update_fields=update_fields)
+        current_status = self.bike.get_current_status()
+        if current_status.lost:
+            devices = FCMDevice.objects.filter(user=self.bike.owner)
+            devices.send_message(
+                data={
+                    "message_name": MessageType.bike_observed.name,
+                    "bike_id": self.bike.short_uuid,
+                    "observation_id": self.id
+                }
+            )
