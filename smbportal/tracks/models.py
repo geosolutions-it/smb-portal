@@ -217,7 +217,7 @@ class Segment(gismodels.Model):
         """Return average speed in km/h"""
         length_km = self.get_length().km
         duration_hour = self.duration.seconds / 3600
-        return length_km / duration_hour
+        return length_km / duration_hour if duration_hour > 0 else 0
 
 
 class Emission(models.Model):
