@@ -12,7 +12,7 @@ import pathlib
 
 from django.core.management.base import BaseCommand
 
-from tracks import exporter
+from dashboard import exporter
 from tracks import models
 
 

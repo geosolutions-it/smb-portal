@@ -20,7 +20,7 @@
             </form>
         </div>
     </div>
-    <div class="card">
+    <div class="card margin-bottom-2x">
         <div class="card-header"><h6>{% trans 'Bike observations' %}</h6></div>
         <div class="card-body">
             {% blocktrans %}Download bike observations data{% endblocktrans %}
@@ -28,6 +28,17 @@
                 {% csrf_token %}
                 {{ observations_form|crispy }}
                 <input type="submit" name="{{ observations_form.prefix }}-submit" value="{% trans 'Download' %}" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+    <div class="card margin-bottom-2x">
+        <div class="card-header"><h6>{% trans 'Bike Status History' %}</h6></div>
+        <div class="card-body">
+            {% blocktrans %}Download bike status history data{% endblocktrans %}
+            <form method="post">
+                {% csrf_token %}
+                {{ statuses_form|crispy }}
+                <input type="submit" name="{{ statuses_form.prefix }}-submit" value="{% trans 'Download' %}" class="btn btn-primary">
             </form>
         </div>
     </div>

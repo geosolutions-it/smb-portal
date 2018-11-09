@@ -24,10 +24,10 @@ from django.shortcuts import render
 from django.http import Http404
 from django.http import HttpResponse
 
-from tracks.exporter import export_segments
+from dashboard import exporter
 from tracks.models import Segment
 from vehicles.models import Bike
-from vehiclemonitor.exporter import export_observations
+from vehicles.models import BikeStatus
 from vehiclemonitor.models import BikeObservation
 
 from . import forms
@@ -36,17 +36,20 @@ logger = logging.getLogger(__name__)
 
 
 def dashboard_downloads(request):
-    segs_prefix = "segments"
-    obs_prefix = "observations"
+    observations_form = forms.ObservationDownloadForm(prefix="observations")
+    segments_form = forms.SegmentDownloadForm(prefix="segments")
+    statuses_form = forms.BikeStatusDownloadForm(prefix="statuses")
     render_partial = partial(render, request, "dashboard/analyst_index.html")
-    observations_form = forms.ObservationDownloadForm(prefix=obs_prefix)
-    segments_form = forms.SegmentDownloadForm(prefix=segs_prefix)
+    render_context = {
+        "segments_form": segments_form,
+        "observations_form": observations_form,
+        "statuses_form": statuses_form,
+    }
     if request.method == "POST":
-        if f"{segs_prefix}-submit" in request.POST:
-            form = forms.SegmentDownloadForm(request.POST, prefix=segs_prefix)
+        if f"{segments_form.prefix}-submit" in request.POST:
+            form = forms.SegmentDownloadForm(
+                request.POST, prefix=segments_form.prefix)
             if form.is_valid():
-                logger.debug("segments form has been submitted")
-                # process and return the zipped shapefile
                 segments = _get_segments(
                     form.cleaned_data["start_date"],
                     form.cleaned_data["end_date"]
@@ -55,18 +58,12 @@ def dashboard_downloads(request):
                 result["Content-Disposition"] = (
                     "attachment; filename=segments.zip")
             else:
-                result = render_partial(
-                    {
-                        "segments_form": form,
-                        "observations_form": observations_form
-                    }
-                )
-        elif f"{obs_prefix}-submit" in request.POST:
+                render_context[segments_form] = form
+                result = render_partial(render_context)
+        elif f"{observations_form.prefix}-submit" in request.POST:
             form = forms.ObservationDownloadForm(
-                request.POST, prefix=obs_prefix)
+                request.POST, prefix=observations_form.prefix)
             if form.is_valid():
-                logger.debug("observations form has been submitted")
-                # process and return the csv
                 observations = _get_observations(
                     form.cleaned_data["start_date"],
                     form.cleaned_data["end_date"],
@@ -78,21 +75,28 @@ def dashboard_downloads(request):
                     "attachment; filename=observations.csv")
             else:
                 logger.debug(f"form did not validate: {form.errors}")
-                result = render_partial(
-                    {
-                        "segments_form": segments_form,
-                        "observations_form": form
-                    }
+                render_context["observations_form"] = form
+                result = render_partial(render_context)
+        elif f"{statuses_form.prefix}-submit" in request.POST:
+            form = forms.BikeStatusDownloadForm(
+                request.POST, prefix=statuses_form.prefix)
+            if form.is_valid():
+                statuses = _get_bike_statuses(
+                    form.cleaned_data["start_date"],
+                    form.cleaned_data["end_date"],
+                    form.cleaned_data["bikes"]
                 )
+                result = HttpResponse(statuses, content_type="text/csv")
+                result["Content-Disposition"] = (
+                    "attachment; filename=bike_status_history.csv")
+            else:
+                logger.debug(f"form did not validate: {form.errors}")
+                render_context["statuses_form"] = form
+                result = render_partial(render_context)
         else:
             raise Http404
     else:
-        result = render_partial(
-            {
-                "segments_form": segments_form,
-                "observations_form": observations_form,
-            }
-        )
+        result = render_partial(render_context)
     return result
 
 
@@ -107,7 +111,7 @@ def _get_observations(start_date: Optional[dt.datetime],
         observations_qs = observations_qs.filter(observed_at__lte=end_date)
     if len(bikes) != 0:
         observations_qs = observations_qs.filter(bike__in=bikes)
-    export_observations(observations_qs, output_path)
+    exporter.export_observations(observations_qs, output_path)
     contents = io.BytesIO()
     with output_path.open("rb") as fh:
         contents.write(fh.read())
@@ -116,7 +120,6 @@ def _get_observations(start_date: Optional[dt.datetime],
     return contents
 
 
-# TODO: add filters
 def _get_segments(start_date: dt.datetime, end_date: dt.datetime):
     output_dir = pathlib.Path(tempfile.mkdtemp())
     output_path = output_dir / "segments.shp"
@@ -125,7 +128,7 @@ def _get_segments(start_date: dt.datetime, end_date: dt.datetime):
         segments_qs = segments_qs.filter(start_date__gte=start_date)
     if end_date is not None:
         segments_qs = segments_qs.filter(end_date__lte=end_date)
-    export_segments(segments_qs, output_path)
+    exporter.export_segments(segments_qs, output_path)
     zip_buffer = io.BytesIO()
     with zipfile.ZipFile(zip_buffer, mode="w") as zh:
         for item in output_path.parent.iterdir():
@@ -134,3 +137,24 @@ def _get_segments(start_date: dt.datetime, end_date: dt.datetime):
     shutil.rmtree(str(output_dir))
     zip_buffer.seek(0)
     return zip_buffer
+
+
+def _get_bike_statuses(start_date: Optional[dt.datetime],
+                       end_date: Optional[dt.datetime], bikes: List[Bike]):
+    output_dir = pathlib.Path(tempfile.mkdtemp())
+    output_path = output_dir / "statuses.csv"
+    statuses_qs = BikeStatus.objects.all()
+    if start_date is not None:
+        statuses_qs = statuses_qs.filter(creation_date__gte=start_date)
+    if end_date is not None:
+        statuses_qs = statuses_qs.filter(creation_date__lte=end_date)
+    if len(bikes) != 0:
+        statuses_qs = statuses_qs.filter(bike__in=bikes)
+        statuses_qs.order_by("bike")
+    exporter.export_bike_statuses(statuses_qs, output_path)
+    contents = io.BytesIO()
+    with output_path.open("rb") as fh:
+        contents.write(fh.read())
+    shutil.rmtree(str(output_dir))
+    contents.seek(0)
+    return contents
