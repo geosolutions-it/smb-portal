@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-07 22:08+0000\n"
+"POT-Creation-Date: 2018-11-12 16:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,15 +25,17 @@ msgstr "English"
 msgid "Italian"
 msgstr "Italian"
 
-#: dashboard/forms.py:20 dashboard/forms.py:42
+#: dashboard/forms.py:20 dashboard/forms.py:41 dashboard/forms.py:72
+#: dashboard/forms.py:103
 msgid "Start date"
 msgstr ""
 
-#: dashboard/forms.py:29 dashboard/forms.py:51
+#: dashboard/forms.py:29 dashboard/forms.py:50 dashboard/forms.py:81
+#: dashboard/forms.py:112
 msgid "End date"
 msgstr ""
 
-#: dashboard/forms.py:60 templates/base/base.html:42
+#: dashboard/forms.py:59 dashboard/forms.py:90 templates/base/base.html:42
 #: templates/base/home.html:70 templates/base/home.html:74
 msgid "Bikes"
 msgstr "Biciclette"
@@ -690,6 +692,8 @@ msgstr ""
 
 #: templates/dashboard/analyst_index.html:19
 #: templates/dashboard/analyst_index.html:30
+#: templates/dashboard/analyst_index.html:41
+#: templates/dashboard/analyst_index.html:52
 msgid "Download"
 msgstr ""
 
@@ -701,6 +705,22 @@ msgstr "Rilevazioni bicicletta"
 
 #: templates/dashboard/analyst_index.html:26
 msgid "Download bike observations data"
+msgstr ""
+
+#: templates/dashboard/analyst_index.html:35
+msgid "Bike Status History"
+msgstr ""
+
+#: templates/dashboard/analyst_index.html:37
+msgid "Download bike status history data"
+msgstr ""
+
+#: templates/dashboard/analyst_index.html:46
+msgid "Competition winners"
+msgstr ""
+
+#: templates/dashboard/analyst_index.html:48
+msgid "Download competition winners data"
 msgstr ""
 
 #: templates/gis/widgets/openlayers.html:11
@@ -1239,7 +1259,7 @@ msgstr ""
 msgid "Print registration information"
 msgstr "Stampa le informazioni di registrazione della bicibletta"
 
-#: tracks/models.py:26 vehiclemonitor/models.py:22 vehicles/models.py:245
+#: tracks/models.py:26 vehiclemonitor/models.py:25 vehicles/models.py:245
 #: vehicles/models.py:283
 msgid "bike"
 msgstr "Bicicletta"
@@ -1504,48 +1524,48 @@ msgid ""
 "this area will be considered when creating tracks"
 msgstr ""
 
-#: vehiclemonitor/models.py:25
+#: vehiclemonitor/models.py:28
 msgid "reporter id"
 msgstr "ID rilevatore"
 
-#: vehiclemonitor/models.py:29
+#: vehiclemonitor/models.py:32
 msgid "reporter type"
 msgstr "Tipo di rilevatore"
 
-#: vehiclemonitor/models.py:33
+#: vehiclemonitor/models.py:36
 msgid "reporter name"
 msgstr "Nome del rilevatore"
 
-#: vehiclemonitor/models.py:38 vehicles/models.py:260
+#: vehiclemonitor/models.py:41 vehicles/models.py:260
 msgid "position"
 msgstr "Posizione"
 
-#: vehiclemonitor/models.py:41
+#: vehiclemonitor/models.py:44
 msgid "Either this field or `address` must be given"
 msgstr "Questo campo o il campo 'indirizzo' devono essere compilati"
 
-#: vehiclemonitor/models.py:44
+#: vehiclemonitor/models.py:47
 msgid "address"
 msgstr "Indirizzo"
 
-#: vehiclemonitor/models.py:46
+#: vehiclemonitor/models.py:49
 msgid "Approximate address. Either this field or `position` must be given"
 msgstr ""
 "Indirizzo. Questo campo o la posizione sulla mappa devono essere compilati"
 
-#: vehiclemonitor/models.py:51
+#: vehiclemonitor/models.py:54
 msgid "created at"
 msgstr "Creata il"
 
-#: vehiclemonitor/models.py:55
+#: vehiclemonitor/models.py:58
 msgid "observed at"
 msgstr "Rilevata il"
 
-#: vehiclemonitor/models.py:57
+#: vehiclemonitor/models.py:60
 msgid "When the observation was made"
 msgstr "Quando è stata fatta la rilevazione"
 
-#: vehiclemonitor/models.py:60 vehicles/models.py:256
+#: vehiclemonitor/models.py:63 vehicles/models.py:256
 msgid "details"
 msgstr "Dettagli"
 

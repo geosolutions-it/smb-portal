@@ -25,6 +25,7 @@ from django.http import Http404
 from django.http import HttpResponse
 
 from dashboard import exporter
+from prizes.models import Winner
 from tracks.models import Segment
 from vehicles.models import Bike
 from vehicles.models import BikeStatus
@@ -39,11 +40,13 @@ def dashboard_downloads(request):
     observations_form = forms.ObservationDownloadForm(prefix="observations")
     segments_form = forms.SegmentDownloadForm(prefix="segments")
     statuses_form = forms.BikeStatusDownloadForm(prefix="statuses")
+    winners_form = forms.CompetitionWinnerDownloadForm(prefix="winners")
     render_partial = partial(render, request, "dashboard/analyst_index.html")
     render_context = {
         "segments_form": segments_form,
         "observations_form": observations_form,
         "statuses_form": statuses_form,
+        "winners_form": winners_form,
     }
     if request.method == "POST":
         if f"{segments_form.prefix}-submit" in request.POST:
@@ -92,6 +95,21 @@ def dashboard_downloads(request):
             else:
                 logger.debug(f"form did not validate: {form.errors}")
                 render_context["statuses_form"] = form
+                result = render_partial(render_context)
+        elif f"{winners_form.prefix}-submit" in request.POST:
+            form = forms.CompetitionWinnerDownloadForm(
+                request.POST, prefix=winners_form.prefix)
+            if form.is_valid():
+                statuses = _get_winners(
+                    form.cleaned_data["start_date"],
+                    form.cleaned_data["end_date"],
+                )
+                result = HttpResponse(statuses, content_type="text/csv")
+                result["Content-Disposition"] = (
+                    "attachment; filename=competition_winners.csv")
+            else:
+                logger.debug(f"form did not validate: {form.errors}")
+                render_context["winners_form"] = form
                 result = render_partial(render_context)
         else:
             raise Http404
@@ -152,6 +170,23 @@ def _get_bike_statuses(start_date: Optional[dt.datetime],
         statuses_qs = statuses_qs.filter(bike__in=bikes)
         statuses_qs.order_by("bike")
     exporter.export_bike_statuses(statuses_qs, output_path)
+    contents = io.BytesIO()
+    with output_path.open("rb") as fh:
+        contents.write(fh.read())
+    shutil.rmtree(str(output_dir))
+    contents.seek(0)
+    return contents
+
+
+def _get_winners(start_date: dt.datetime, end_date: dt.datetime):
+    output_dir = pathlib.Path(tempfile.mkdtemp())
+    output_path = output_dir / "winners.csv"
+    winners_qs = Winner.objects.all()
+    if start_date is not None:
+        winners_qs = winners_qs.filter(start_date__gte=start_date)
+    if end_date is not None:
+        winners_qs = winners_qs.filter(end_date__lte=end_date)
+    exporter.export_competition_winners(winners_qs, output_path)
     contents = io.BytesIO()
     with output_path.open("rb") as fh:
         contents.write(fh.read())

@@ -96,3 +96,24 @@ class BikeStatusDownloadForm(forms.Form):
             }
         )
     )
+
+
+class CompetitionWinnerDownloadForm(forms.Form):
+    start_date = forms.DateTimeField(
+        label=_("Start date"),
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "date_time_picker"
+            }
+        )
+    )
+    end_date = forms.DateTimeField(
+        label=_("End date"),
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "date_time_picker"
+            }
+        )
+    )

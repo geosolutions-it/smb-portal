@@ -208,6 +208,32 @@ def export_bike_statuses(statuses, output_path: pathlib.Path,
     )
 
 
+def export_competition_winners(winners, output_path: pathlib.Path):
+    fields = [
+        FieldDef(
+            "user", ogr.OFTString,
+            _get_related_model, ("user", "username"),
+        ),
+        FieldDef(
+            "competition_name", ogr.OFTString,
+            _get_related_model, ("competition", "name")
+        ),
+        FieldDef(
+            "competition_start", ogr.OFTString,
+            _get_related_model, ("competition", "start_date", str),
+        ),
+        FieldDef(
+            "competition_end", ogr.OFTString,
+            _get_related_model, ("competition", "end_date", str),
+        ),
+        FieldDef(
+            "rank", ogr.OFTInteger,
+            _get_attribute_field, ("rank", int),
+        ),
+    ]
+    return _export_model_with_ogr(winners, output_path, fields, "CSV")
+
+
 def get_coordinate(model_obj, coordinate: str, geometry_attribute_name):
     attribute = {
         "latitude": "y",
@@ -245,7 +271,7 @@ def _export_model_with_ogr(objects, output_path: pathlib.Path,
     for obj in objects:
         feature_def = layer.GetLayerDefn()
         feature = ogr.Feature(feature_def)
-        django_geom = getattr(obj, geom_attribute_name)
+        django_geom = getattr(obj, geom_attribute_name, None)
         if django_geom is not None:
             ogr_geom = ogr.CreateGeometryFromWkb(bytes(django_geom.wkb))
             feature.SetGeometry(ogr_geom)
@@ -265,7 +291,12 @@ def _get_field_value(obj, field_def):
 
 def _get_attribute_field(obj, attribute_name: str, cast_to=None):
     value = getattr(obj, attribute_name)
-    return cast_to(value) if cast_to is not None else value
+    cast_value = cast_to(value) if cast_to is not None else value
+    if isinstance(cast_value, str):
+        result = cast_value.encode("utf-8")
+    else:
+        result = cast_value
+    return result
 
 
 def _get_related_model(obj, segment_attribute: str, model_attribute: str,
