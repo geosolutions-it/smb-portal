@@ -36,7 +36,6 @@ class SegmentDownloadForm(forms.Form):
     )
 
 
-
 class ObservationDownloadForm(forms.Form):
     start_date = forms.DateTimeField(
         label=_("Start date"),
@@ -63,6 +62,58 @@ class ObservationDownloadForm(forms.Form):
         widget=forms.SelectMultiple(
             attrs={
                 "class": "select_2 select_2_multiple"
+            }
+        )
+    )
+
+
+class BikeStatusDownloadForm(forms.Form):
+    start_date = forms.DateTimeField(
+        label=_("Start date"),
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "date_time_picker"
+            }
+        )
+    )
+    end_date = forms.DateTimeField(
+        label=_("End date"),
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "date_time_picker"
+            }
+        )
+    )
+    bikes = forms.ModelMultipleChoiceField(
+        label=_("Bikes"),
+        required=False,
+        queryset=Bike.objects.all(),
+        widget=forms.SelectMultiple(
+            attrs={
+                "class": "select_2 select_2_multiple"
+            }
+        )
+    )
+
+
+class CompetitionWinnerDownloadForm(forms.Form):
+    start_date = forms.DateTimeField(
+        label=_("Start date"),
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "date_time_picker"
+            }
+        )
+    )
+    end_date = forms.DateTimeField(
+        label=_("End date"),
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "date_time_picker"
             }
         )
     )
