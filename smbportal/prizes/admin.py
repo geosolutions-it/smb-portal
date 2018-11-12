@@ -85,4 +85,9 @@ class CompetitionPrizeAdmin(admin.ModelAdmin):
 
 @admin.register(models.Winner)
 class WinnerAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "id",
+        "competition",
+        "user",
+        "rank",
+    )

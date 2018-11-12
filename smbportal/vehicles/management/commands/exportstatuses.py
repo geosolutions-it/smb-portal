@@ -13,7 +13,7 @@ import pathlib
 from django.core.management.base import BaseCommand
 
 from dashboard import exporter
-from vehiclemonitor import models
+from vehicles import models
 
 
 def _parse_lookup(value):
@@ -21,7 +21,7 @@ def _parse_lookup(value):
 
 
 class Command(BaseCommand):
-    help = "Export observation data to CSV"
+    help = "Export status history data to csv"
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -31,20 +31,20 @@ class Command(BaseCommand):
             "-s",
             "--queryset-lookup",
             action="append",
-            help="Lookup to use when selecting which observations should be "
+            help="Lookup to use when selecting which bike statuses should be "
                  "exported",
             type=_parse_lookup
         )
 
     def handle(self, *args, **options):
-        observations = models.BikeObservation.objects.all()
+        bike_statuses = models.BikeStatus.objects.all()
         lookups = options.get("queryset_lookup") or []
         for name, value in lookups:
             self.stdout.write(f"{name}: {value}")
-            observations = observations.filter(**{name: value})
+            bike_statuses = bike_statuses.filter(**{name: value})
         output_path = pathlib.Path(
             options["output_path"]).expanduser().resolve()
         output_path.parent.mkdir(parents=True, exist_ok=True)
         if output_path.exists():
             output_path.unlink()
-        exporter.export_observations(observations, output_path)
+        exporter.export_bike_statuses(bike_statuses, output_path)
