@@ -8,6 +8,9 @@
 #
 #########################################################################
 
+import binascii
+import os
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
@@ -16,6 +19,11 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from django_gamification.models import GamificationInterface
+
+
+def generate_anonymization_salt():
+    salt = os.urandom(18)
+    return binascii.hexlify(salt).decode("utf-8")
 
 
 class SmbUser(AbstractUser):
@@ -46,6 +54,12 @@ class SmbUser(AbstractUser):
         verbose_name=_("gamification interface"),
         null=True,
         blank=True
+    )
+    anonymization_salt = models.CharField(
+        max_length=36,
+        default=generate_anonymization_salt,
+        editable=False,
+        help_text=_("Random string used when anonymizing user data")
     )
 
     class Meta:
