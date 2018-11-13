@@ -8,8 +8,11 @@
 #
 #########################################################################
 
+import binascii
 from collections import namedtuple
 from functools import partial
+from functools import lru_cache
+import hashlib
 import logging
 import pathlib
 
@@ -38,6 +41,10 @@ def export_segments(segments, output_path: pathlib.Path,
         FieldDef(
             "track", ogr.OFTInteger,
             _get_attribute_field, ("track_id",)
+        ),
+        FieldDef(
+            "anonymized_user"[:10], ogr.OFTString,
+            get_anonymized_user, None
         ),
         FieldDef(
             "valid", ogr.OFTInteger,
@@ -292,11 +299,7 @@ def _get_field_value(obj, field_def):
 def _get_attribute_field(obj, attribute_name: str, cast_to=None):
     value = getattr(obj, attribute_name)
     cast_value = cast_to(value) if cast_to is not None else value
-    if isinstance(cast_value, str):
-        result = cast_value.encode("utf-8")
-    else:
-        result = cast_value
-    return result
+    return cast_value
 
 
 def _get_related_model(obj, segment_attribute: str, model_attribute: str,
@@ -305,3 +308,22 @@ def _get_related_model(obj, segment_attribute: str, model_attribute: str,
     value = getattr(related_obj, model_attribute, None)
     value = value if value is not None else default_value
     return cast_to(value) if cast_to is not None else value
+
+
+def get_anonymized_user(track_segment: tracks.models.Segment):
+    """Return an anonymized reference to the segment's owner"""
+    owner = track_segment.track.owner
+    return _anonymize_user(owner.username, owner.anonymization_salt)
+
+
+@lru_cache()
+def _anonymize_user(username, salt):
+    encoding="utf-8"
+    derived_key = hashlib.pbkdf2_hmac(
+        "sha256",
+        bytes(username, encoding=encoding),
+        binascii.unhexlify(salt),
+        100000,
+        dklen=8
+    )
+    return binascii.hexlify(derived_key).decode(encoding=encoding)
