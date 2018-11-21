@@ -20,6 +20,7 @@ from osgeo import gdal
 from osgeo import ogr
 
 import tracks.models
+import prizes.models
 
 gdal.UseExceptions()
 
@@ -218,8 +219,28 @@ def export_bike_statuses(statuses, output_path: pathlib.Path,
 def export_competition_winners(winners, output_path: pathlib.Path):
     fields = [
         FieldDef(
-            "user", ogr.OFTString,
+            "username", ogr.OFTString,
             _get_related_model, ("user", "username"),
+        ),
+        FieldDef(
+            "first_name", ogr.OFTString,
+            _get_related_model, ("user", "first_name"),
+        ),
+        FieldDef(
+            "last_name", ogr.OFTString,
+            _get_related_model, ("user", "last_name"),
+        ),
+        FieldDef(
+            "email", ogr.OFTString,
+            _get_related_model, ("user", "email"),
+        ),
+        FieldDef(
+            "phone_number", ogr.OFTString,
+            get_profile_info, ("phone_number",),
+        ),
+        FieldDef(
+            "age", ogr.OFTString,
+            get_profile_info, ("age",),
         ),
         FieldDef(
             "competition_name", ogr.OFTString,
@@ -234,8 +255,20 @@ def export_competition_winners(winners, output_path: pathlib.Path):
             _get_related_model, ("competition", "end_date", str),
         ),
         FieldDef(
+            "competition_age_groups", ogr.OFTString,
+            get_competition_age_groups, None,
+        ),
+        FieldDef(
             "rank", ogr.OFTInteger,
             _get_attribute_field, ("rank", int),
+        ),
+        FieldDef(
+            "prize_name", ogr.OFTString,
+            get_prize_info, ("prize_names",),
+        ),
+        FieldDef(
+            "prize_sponsor", ogr.OFTString,
+            get_prize_info, ("sponsor_names",),
         ),
     ]
     return _export_model_with_ogr(winners, output_path, fields, "CSV")
@@ -263,6 +296,26 @@ def get_length(segment: tracks.models.Segment):
 
 def get_speed(segment: tracks.models.Segment):
     return segment.get_average_speed()
+
+
+def get_prize_info(winner: prizes.models.Winner, info: str):
+    competition_prizes = winner.competition.competitionprize_set.filter(
+        user_rank=winner.rank)
+    if info == "prize_names":
+        result = ";".join(cp.prize.name for cp in competition_prizes)
+    elif info == "sponsor_names":
+        result = ";".join(cp.prize.sponsor.name for cp in competition_prizes)
+    else:
+        result = ""
+    return result
+
+
+def get_profile_info(winner: prizes.models.Winner, info: str):
+    return getattr(winner.user.profile, info, "")
+
+
+def get_competition_age_groups(winner: prizes.models.Winner):
+    return "; ".join(g for g in winner.competition.age_groups)
 
 
 def _export_model_with_ogr(objects, output_path: pathlib.Path,
@@ -302,9 +355,9 @@ def _get_attribute_field(obj, attribute_name: str, cast_to=None):
     return cast_value
 
 
-def _get_related_model(obj, segment_attribute: str, model_attribute: str,
+def _get_related_model(obj, related_attribute: str, model_attribute: str,
                        cast_to=None, default_value=0):
-    related_obj = getattr(obj, segment_attribute, None)
+    related_obj = getattr(obj, related_attribute, None)
     value = getattr(related_obj, model_attribute, None)
     value = value if value is not None else default_value
     return cast_to(value) if cast_to is not None else value
