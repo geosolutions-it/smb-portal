@@ -26,7 +26,9 @@ from django.http import HttpResponse
 
 from dashboard import exporter
 from prizes.models import Winner
+from tracks.models import CollectedPoint
 from tracks.models import Segment
+from tracks.models import Track
 from vehicles.models import Bike
 from vehicles.models import BikeStatus
 from vehiclemonitor.models import BikeObservation
@@ -39,11 +41,13 @@ logger = logging.getLogger(__name__)
 def dashboard_downloads(request):
     observations_form = forms.ObservationDownloadForm(prefix="observations")
     segments_form = forms.SegmentDownloadForm(prefix="segments")
+    points_form = forms.CollectedPointDownloadForm(prefix="points")
     statuses_form = forms.BikeStatusDownloadForm(prefix="statuses")
     winners_form = forms.CompetitionWinnerDownloadForm(prefix="winners")
     render_partial = partial(render, request, "dashboard/analyst_index.html")
     render_context = {
         "segments_form": segments_form,
+        "points_form": points_form,
         "observations_form": observations_form,
         "statuses_form": statuses_form,
         "winners_form": winners_form,
@@ -62,6 +66,24 @@ def dashboard_downloads(request):
                     "attachment; filename=segments.zip")
             else:
                 render_context[segments_form] = form
+                result = render_partial(render_context)
+        elif f"{points_form.prefix}-submit" in request.POST:
+            form = forms.CollectedPointDownloadForm(
+                request.POST, prefix=points_form.prefix)
+            if form.is_valid():
+                observations = _get_points(
+                    form.cleaned_data["start_date"],
+                    form.cleaned_data["end_date"],
+                    form.cleaned_data["vehicle_types"],
+                    form.cleaned_data["tracks"],
+                )
+                result = HttpResponse(
+                    observations, content_type="text/csv")
+                result["Content-Disposition"] = (
+                    "attachment; filename=collected_points.csv")
+            else:
+                logger.debug(f"form did not validate: {form.errors}")
+                render_context["points_form"] = form
                 result = render_partial(render_context)
         elif f"{observations_form.prefix}-submit" in request.POST:
             form = forms.ObservationDownloadForm(
@@ -192,4 +214,26 @@ def _get_winners(start_date: dt.datetime, end_date: dt.datetime):
         contents.write(fh.read())
     shutil.rmtree(str(output_dir))
     contents.seek(0)
+    return contents
+
+
+def _get_points(start_date: dt.datetime, end_date: dt.datetime,
+                vehicle_types: List[str], tracks: List[Track]):
+    output_dir = pathlib.Path(tempfile.mkdtemp())
+    output_path = output_dir / "points.csv"
+    points_qs = CollectedPoint.objects.all()
+    if start_date is not None:
+        points_qs = points_qs.filter(timestamp__gte=start_date)
+    if end_date is not None:
+        points_qs = points_qs.filter(timestamp__lte=end_date)
+    if len(tracks) != 0:
+        points_qs = points_qs.filter(track__in=tracks)
+    if len(vehicle_types) != 0:
+        points_qs = points_qs.filter(vehicle_type__in=vehicle_types)
+    exporter.export_collected_points(points_qs, output_path)
+    contents = io.BytesIO()
+    with output_path.open("rb") as fh:
+        contents.write(fh.read())
+    contents.seek(0)
+    shutil.rmtree(str(output_dir))
     return contents

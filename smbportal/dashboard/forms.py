@@ -11,8 +11,51 @@
 
 from django import forms
 from django.utils.translation import gettext as _
+from smbbackend._constants import VehicleType
 
 from vehicles.models import Bike
+from tracks.models import Track
+
+
+class CollectedPointDownloadForm(forms.Form):
+    start_date = forms.DateTimeField(
+        label=_("Start date"),
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "date_time_picker"
+            }
+        )
+    )
+    end_date = forms.DateTimeField(
+        label=_("End date"),
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "date_time_picker"
+            }
+        )
+    )
+    vehicle_types = forms.MultipleChoiceField(
+        label=_("Vehicle types"),
+        required=False,
+        choices=((k, k) for k in VehicleType.__members__.keys()),
+        widget=forms.SelectMultiple(
+            attrs={
+                "class": "select_2 select_2_multiple"
+            }
+        )
+    )
+    tracks = forms.ModelMultipleChoiceField(
+        label=_("Bikes"),
+        required=False,
+        queryset=Track.objects.all(),
+        widget=forms.SelectMultiple(
+            attrs={
+                "class": "select_2 select_2_multiple"
+            }
+        )
+    )
 
 
 class SegmentDownloadForm(forms.Form):

@@ -35,6 +35,46 @@ FieldDef = namedtuple("FieldDef", [
 ])
 
 
+def export_collected_points(collected_points, output_path: pathlib.Path,
+                            driver_name="CSV"):
+    geom_attribute_name = "the_geom"
+    fields = [
+        FieldDef(
+            "id", ogr.OFTInteger,
+            _get_attribute_field, ("id",),
+        ),
+        FieldDef(
+            "vehicle_type", ogr.OFTString,
+            _get_attribute_field, ("vehicle_type",),
+        ),
+        FieldDef(
+            "track", ogr.OFTInteger,
+            _get_attribute_field, ("track_id",),
+        ),
+        FieldDef(
+            "longitude", ogr.OFTReal,
+            get_coordinate, ("longitude", geom_attribute_name),
+        ),
+        FieldDef(
+            "latitude", ogr.OFTReal,
+            get_coordinate, ("latitude", geom_attribute_name),
+        ),
+        FieldDef(
+            "sessionid", ogr.OFTString,
+            _get_attribute_field, ("sessionid", str),
+        ),
+        FieldDef(
+            "timestamp", ogr.OFTString,
+            _get_attribute_field, ("timestamp", str),
+        ),
+
+    ]
+    return _export_model_with_ogr(
+        collected_points, output_path, fields, driver_name,
+        geom_attribute_name=geom_attribute_name
+    )
+
+
 def export_segments(segments, output_path: pathlib.Path,
                     driver_name="ESRI Shapefile"):
     """Export segments with OGR"""
