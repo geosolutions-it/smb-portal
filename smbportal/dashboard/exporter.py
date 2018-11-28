@@ -67,6 +67,70 @@ def export_collected_points(collected_points, output_path: pathlib.Path,
             "timestamp", ogr.OFTString,
             _get_attribute_field, ("timestamp", str),
         ),
+        FieldDef(
+            "acceleration_x", ogr.OFTReal,
+            _get_attribute_field, ("accelerationx",),
+        ),
+        FieldDef(
+            "acceleration_y", ogr.OFTReal,
+            _get_attribute_field, ("accelerationy",),
+        ),
+        FieldDef(
+            "acceleration_z", ogr.OFTReal,
+            _get_attribute_field, ("accelerationz",),
+        ),
+        FieldDef(
+            "accuracy", ogr.OFTReal,
+            _get_attribute_field, ("accuracy",),
+        ),
+        FieldDef(
+            "battery_consumption_per_hour", ogr.OFTReal,
+            _get_attribute_field, ("batconsumptionperhour",),
+        ),
+        FieldDef(
+            "battery_level", ogr.OFTReal,
+            _get_attribute_field, ("batterylevel",),
+        ),
+        FieldDef(
+            "device_bearing", ogr.OFTReal,
+            _get_attribute_field, ("devicebearing",),
+        ),
+        FieldDef(
+            "device_pitch", ogr.OFTReal,
+            _get_attribute_field, ("devicepitch",),
+        ),
+        FieldDef(
+            "device_roll", ogr.OFTReal,
+            _get_attribute_field, ("deviceroll",),
+        ),
+        FieldDef(
+            "elevation", ogr.OFTReal,
+            _get_attribute_field, ("elevation",),
+        ),
+        FieldDef(
+            "gps_bearing", ogr.OFTReal,
+            _get_attribute_field, ("gps_bearing",),
+        ),
+        FieldDef(
+            "humidity", ogr.OFTReal,
+            _get_attribute_field, ("humidity",),
+        ),
+        FieldDef(
+            "lumen", ogr.OFTReal,
+            _get_attribute_field, ("lumen",),
+        ),
+        FieldDef(
+            "proximity", ogr.OFTReal,
+            _get_attribute_field, ("proximity",),
+        ),
+        FieldDef(
+            "speed", ogr.OFTReal,
+            _get_attribute_field, ("speed",),
+        ),
+        FieldDef(
+            "temperature", ogr.OFTReal,
+            _get_attribute_field, ("temperature",),
+        ),
 
     ]
     return _export_model_with_ogr(
