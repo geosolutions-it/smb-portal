@@ -19,14 +19,4 @@ urlpatterns = [
         view=views.dashboard_downloads,
         name="index"
     ),
-    # path(
-    #     route="download-segments",
-    #     view=views.download_segments,
-    #     name="download-segments"
-    # ),
-    # path(
-    #     route="download-observations",
-    #     view=views.download_observations,
-    #     name="download-observations"
-    # ),
 ]
