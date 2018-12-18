@@ -8,11 +8,8 @@
 #
 #########################################################################
 
-import binascii
 from collections import namedtuple
 from functools import partial
-from functools import lru_cache
-import hashlib
 import logging
 import pathlib
 
@@ -147,10 +144,12 @@ def export_segments(segments, output_path: pathlib.Path,
             "track", ogr.OFTInteger,
             _get_attribute_field, ("track_id",)
         ),
-        FieldDef(
-            "anonymized_user"[:10], ogr.OFTString,
-            get_anonymized_user, None
-        ),
+        FieldDef("first_name", ogr.OFTString,
+                 get_segment_owner_info, ("first_name",)),
+        FieldDef("last_name", ogr.OFTString,
+                 get_segment_owner_info, ("last_name",)),
+        FieldDef("email", ogr.OFTString,
+                 get_segment_owner_info, ("email",)),
         FieldDef(
             "valid", ogr.OFTInteger,
             _get_related_model, ("track", "is_valid", int)
@@ -394,6 +393,12 @@ def get_minutes(segment: tracks.models.Segment):
     return day_minutes + second_minutes
 
 
+def get_segment_owner_info(segment: tracks.models.Segment, attribute,
+                           cast_to=None):
+    value = getattr(segment.track.owner, attribute, "")
+    return cast_to(value) if cast_to is not None else value
+
+
 def get_length(segment: tracks.models.Segment):
     return segment.get_length().km
 
@@ -465,22 +470,3 @@ def _get_related_model(obj, related_attribute: str, model_attribute: str,
     value = getattr(related_obj, model_attribute, None)
     value = value if value is not None else default_value
     return cast_to(value) if cast_to is not None else value
-
-
-def get_anonymized_user(track_segment: tracks.models.Segment):
-    """Return an anonymized reference to the segment's owner"""
-    owner = track_segment.track.owner
-    return _anonymize_user(owner.username, owner.anonymization_salt)
-
-
-@lru_cache()
-def _anonymize_user(username, salt):
-    encoding="utf-8"
-    derived_key = hashlib.pbkdf2_hmac(
-        "sha256",
-        bytes(username, encoding=encoding),
-        binascii.unhexlify(salt),
-        100000,
-        dklen=8
-    )
-    return binascii.hexlify(derived_key).decode(encoding=encoding)
