@@ -17,6 +17,7 @@ from django.template import Engine
 from rest_framework import serializers
 
 from .. import models
+from .. import utils
 
 logger = logging.getLogger(__name__)
 
@@ -62,15 +63,21 @@ class CompetitionPrizeSerializer(serializers.ModelSerializer):
     winner_description = serializers.SerializerMethodField()
     prize = PrizeSerializer()
 
-    def get_winner_description(self, obj):
+    def get_winner_description(
+            self,
+            obj: models.CompetitionPrize
+    ):
         engine = Engine.get_default()
         string_template = obj.prize_attribution_template
         try:
-            winner = obj.competition.winners.get(user=self.context.get("user"))
+            winner = models.Winner.objects.get(
+                participant__user=self.context.get("user"),
+                participant__competition=obj.competition
+            )
         except models.Winner.DoesNotExist:
             result = string_template
         else:
-            score = obj.competition.get_user_score(self.context["user"])
+            score = winner.participant.get_score()
             formatted_score = ", ".join(
                 "{}: {:0.3f}".format(criterium.value, value) for
                 criterium, value in score.items()
@@ -144,52 +151,70 @@ class CompetitionDetailSerializer(CompetitionListSerializer):
         )
 
 
-class UserCompetitionDetailSerializer(CompetitionDetailSerializer):
+class CompetitionParticipantDetailSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="api:my-competitions-current-detail",
+    )
     score = serializers.SerializerMethodField()
+    competition = CompetitionDetailSerializer()
 
-    def get_score(self, obj):
-        score = obj.get_user_score(self.context["user"])
-        return {criterium.value: value for criterium, value in  score.items()}
+    def get_score(self, participant: models.CompetitionParticipant):
+        status = participant.registration_status
+        if status == models.CompetitionParticipant.APPROVED:
+            score = participant.get_score()
+            result = {
+                criterium.value: value for criterium, value in  score.items()}
+        else:
+            result = None
+        return result
 
     class Meta:
-        model = models.CurrentCompetition
+        model = models.CompetitionParticipant
         fields = (
             "id",
             "url",
-            "name",
-            "description",
-            "age_groups",
-            "start_date",
-            "end_date",
-            "criteria",
-            "winner_threshold",
+            "registration_status",
             "score",
-            "leaderboard",
-            "prizes",
+            "competition",
         )
 
 
-class CompetitionWonDetailSerializer(CompetitionDetailSerializer):
-    score = serializers.SerializerMethodField()
+class CompetitionParticipantRequestSerializer(serializers.Serializer):
+    competition_id = serializers.IntegerField()
 
-    def get_score(self, obj):
-        score = obj.get_user_score(self.context["user"])
-        return {criterium.value: value for criterium, value in  score.items()}
+    def validate_competition_id(self, value):
+        try:
+            competition = models.Competition.objects.get(pk=value)
+        except models.Competition.DoesNotExist:
+            raise serializers.ValidationError("Invalid competition_id")
+        else:
+            already_exists = models.CompetitionParticipant.objects.filter(
+                user=self.context["user"],
+                competition=competition
+            ).exists()
+            if already_exists:
+                raise serializers.ValidationError(
+                    "User is already subscribed to the selected "
+                    "competition"
+                )
+            else:
+                available_competitions = utils.get_available_competitions(
+                    self.context["user"])
+                if competition not in available_competitions:
+                    raise serializers.ValidationError(
+                        "User cannot join the selected competition")
+                else:
+                    result = value
+            return result
 
-
-    class Meta:
-        model = models.CurrentCompetition
-        fields = (
-            "id",
-            "url",
-            "name",
-            "description",
-            "age_groups",
-            "start_date",
-            "end_date",
-            "criteria",
-            "winner_threshold",
-            "score",
-            "leaderboard",
-            "prizes",
+    def create(self, validated_data):
+        competition = models.Competition.objects.get(
+            pk=validated_data["competition_id"])
+        user = self.context["user"]
+        participant = utils.sign_up_for_competition(
+            user,
+            competition,
+            request=self.context["request"],
+            approved=False,
         )
+        return participant

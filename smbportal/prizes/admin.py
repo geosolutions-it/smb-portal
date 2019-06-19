@@ -1,6 +1,6 @@
 #########################################################################
 #
-# Copyright 2018, GeoSolutions Sas.
+# Copyright 2019, GeoSolutions Sas.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -9,8 +9,10 @@
 #########################################################################
 
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 
 from . import models
+from . import utils
 
 
 @admin.register(models.Prize)
@@ -87,7 +89,79 @@ class CompetitionPrizeAdmin(admin.ModelAdmin):
 class WinnerAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "competition",
-        "user",
+        "participant_user",
+        "participant_competition",
         "rank",
     )
+
+    def participant_user(self, winner: models.Winner):
+        return winner.participant.user
+
+    participant_user.short_description = _("user")
+    participant_user.admin_order_field = "participant__user"
+
+    def participant_competition(self, winner: models.Winner):
+        return winner.participant.competition
+
+    participant_competition.short_description = _("competitition")
+    participant_competition.admin_order_field = "participant__competition"
+
+
+def approve_participant(model_admin, request, queryset):
+    _moderate_participant(
+        model_admin, models.CompetitionParticipant.APPROVED,request, queryset)
+approve_participant.short_description = _("Approve participants")
+
+
+def reject_participant(model_admin, request, queryset):
+    _moderate_participant(
+        model_admin, models.CompetitionParticipant.REJECTED,request, queryset)
+reject_participant.short_description = _("Reject participants")
+
+
+def _moderate_participant(model_admin, status, request, queryset):
+    rows_updated = utils.moderate_competition_participation_request(
+        queryset,
+        status,
+        request
+    )
+    model_admin.message_user(
+        request,
+        _(f"{rows_updated} participation requests have been {status}")
+    )
+
+
+@admin.register(models.CompetitionParticipant)
+class CompetitionParticipantAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "competition",
+        "user",
+        "registration_status",
+    )
+    actions = [
+        approve_participant,
+        reject_participant,
+    ]
+    list_filter = (
+        "registration_status",
+    )
+
+
+@admin.register(models.PendingCompetitionParticipant)
+class PendingCompetitionParticipantAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "competition",
+        "user",
+    )
+    actions = [
+        approve_participant,
+        reject_participant,
+    ]
+
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if "delete_selected" in actions:
+            del actions["delete_selected"]
+        return actions

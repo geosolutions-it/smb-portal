@@ -1,0 +1,15 @@
+{% load i18n %}{% blocktrans with username=participant.user.username competition_name=participant.competition.name %}Hello {{ username }}
+
+Your request for participating in the competition {{ competition_name }} has been {% endblocktrans %} {% if approved %}approved{% else %}rejected{% endif %}.
+
+{% if approved %}
+{% blocktrans with end_date=participant.competition.end_date %}
+Your tracks and emission savings will now be ranked with other participants of the competition!
+
+This competition will close on {{ participant.competition.end_date }}.
+{% endblocktrans %}
+{% else %}
+{% blocktrans %}
+Please contact the administrator if you would like more information on the reason for your participation request being rejected.
+{% endblocktrans %}
+{% endif %}

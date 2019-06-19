@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 16:50+0000\n"
+"POT-Creation-Date: 2019-06-28 16:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,65 +25,94 @@ msgstr "English"
 msgid "Italian"
 msgstr "Italian"
 
-#: dashboard/forms.py:20 dashboard/forms.py:41 dashboard/forms.py:72
-#: dashboard/forms.py:103
+#: dashboard/forms.py:22 dashboard/forms.py:63 dashboard/forms.py:84
+#: dashboard/forms.py:115 dashboard/forms.py:146
 msgid "Start date"
 msgstr ""
 
-#: dashboard/forms.py:29 dashboard/forms.py:50 dashboard/forms.py:81
-#: dashboard/forms.py:112
+#: dashboard/forms.py:31 dashboard/forms.py:72 dashboard/forms.py:93
+#: dashboard/forms.py:124 dashboard/forms.py:155
 msgid "End date"
 msgstr ""
 
-#: dashboard/forms.py:59 dashboard/forms.py:90 templates/base/base.html:42
-#: templates/base/home.html:70 templates/base/home.html:74
+#: dashboard/forms.py:40
+#, fuzzy
+#| msgid "Bike type"
+msgid "Vehicle types"
+msgstr "Tipo di bicicletta"
+
+#: dashboard/forms.py:50 dashboard/forms.py:102 dashboard/forms.py:133
+#: templates/base/base.html:42 templates/base/home.html:70
+#: templates/base/home.html:74
 msgid "Bikes"
 msgstr "Biciclette"
 
-#: prizes/models.py:29 prizes/models.py:64
+#: prizes/admin.py:100 prizes/models.py:334 profiles/models.py:138
+#: profiles/models.py:230
+msgid "user"
+msgstr "Utente"
+
+#: prizes/admin.py:106
+msgid "competitition"
+msgstr ""
+
+#: prizes/admin.py:113
+msgid "Approve participants"
+msgstr ""
+
+#: prizes/admin.py:119
+msgid "Reject participants"
+msgstr ""
+
+#: prizes/admin.py:127
+#, python-brace-format
+msgid "{rows_updated} participation requests have been {status}"
+msgstr ""
+
+#: prizes/models.py:28 prizes/models.py:63
 msgid "sponsor"
 msgstr ""
 
-#: prizes/models.py:37
+#: prizes/models.py:36
 msgid "url"
 msgstr ""
 
-#: prizes/models.py:49 prizes/models.py:160
+#: prizes/models.py:48 prizes/models.py:159
 msgid "name"
 msgstr "Nome utente"
 
-#: prizes/models.py:57 prizes/models.py:164
+#: prizes/models.py:56 prizes/models.py:163
 msgid "description"
 msgstr ""
 
-#: prizes/models.py:71
+#: prizes/models.py:70
 msgid "URL where more information about this prize can be obtained"
 msgstr ""
 
-#: prizes/models.py:87
+#: prizes/models.py:86
 msgid "prize"
 msgstr ""
 
-#: prizes/models.py:92 prizes/models.py:323
+#: prizes/models.py:91
 msgid "competition"
 msgstr ""
 
-#: prizes/models.py:95
+#: prizes/models.py:94
 msgid "user rank"
 msgstr ""
 
-#: prizes/models.py:99
+#: prizes/models.py:98
 msgid ""
 "Rank that the user must attain in the underlying competition in order to be "
 "awarded the prize. If None, all of the competition's winners will be awarded "
 "the prize"
 msgstr ""
 
-#: prizes/models.py:105
+#: prizes/models.py:104
 msgid "prize attribution template"
 msgstr ""
 
-#: prizes/models.py:107
+#: prizes/models.py:106
 msgid ""
 "Message shown to the user when the prize is won. This string is treated as a "
 "normal django template and rendered with a context that has the following "
@@ -93,112 +122,130 @@ msgid ""
 "place with a score of 2061'"
 msgstr ""
 
-#: prizes/models.py:173 profiles/models.py:145
+#: prizes/models.py:172 profiles/models.py:159
 msgid "< 19"
 msgstr ""
 
-#: prizes/models.py:177 profiles/models.py:146
+#: prizes/models.py:176 profiles/models.py:160
 msgid "19 - 30"
 msgstr ""
 
-#: prizes/models.py:181 profiles/models.py:147
+#: prizes/models.py:180 profiles/models.py:161
 msgid "30 - 65"
 msgstr ""
 
-#: prizes/models.py:185 profiles/models.py:148
+#: prizes/models.py:184 profiles/models.py:162
 msgid "65+"
 msgstr ""
 
-#: prizes/models.py:190
+#: prizes/models.py:189
 msgid "age group"
 msgstr ""
 
-#: prizes/models.py:193 tracks/models.py:70 tracks/models.py:192
+#: prizes/models.py:192 tracks/models.py:70 tracks/models.py:192
 msgid "start date"
 msgstr ""
 
-#: prizes/models.py:194
+#: prizes/models.py:193
 msgid "Date when the competition started"
 msgstr ""
 
-#: prizes/models.py:197 tracks/models.py:75 tracks/models.py:196
+#: prizes/models.py:196 tracks/models.py:75 tracks/models.py:196
 msgid "end date"
 msgstr ""
 
-#: prizes/models.py:198
+#: prizes/models.py:197
 msgid "Date when the competition ended"
 msgstr ""
 
-#: prizes/models.py:204 prizes/models.py:206
+#: prizes/models.py:203 prizes/models.py:205
 msgid "saved CO2 emissions"
 msgstr ""
 
-#: prizes/models.py:205
+#: prizes/models.py:204
 msgid "saved NOx emissions"
 msgstr ""
 
-#: prizes/models.py:207
+#: prizes/models.py:206
 msgid "saved CO emissions"
 msgstr ""
 
-#: prizes/models.py:208
+#: prizes/models.py:207
 msgid "saved PM10 emissions"
 msgstr ""
 
-#: prizes/models.py:209
+#: prizes/models.py:208
 msgid "consumed calories"
 msgstr ""
 
-#: prizes/models.py:210
+#: prizes/models.py:209
 msgid "bike usage frequency"
 msgstr ""
 
-#: prizes/models.py:213
+#: prizes/models.py:212
 msgid "public transport usage frequency"
 msgstr ""
 
-#: prizes/models.py:215
+#: prizes/models.py:214
 msgid "bike distance"
 msgstr ""
 
-#: prizes/models.py:218
+#: prizes/models.py:217
 msgid "sustainable means distance"
 msgstr ""
 
-#: prizes/models.py:222
+#: prizes/models.py:221
 msgid "criteria"
 msgstr ""
 
-#: prizes/models.py:224
+#: prizes/models.py:223
 msgid "Which criteria will be used for deciding who wins the competition"
 msgstr ""
 
-#: prizes/models.py:229
+#: prizes/models.py:228
 msgid "winner threshold"
 msgstr ""
 
-#: prizes/models.py:232
+#: prizes/models.py:231
 msgid ""
 "After results are calculated and ordered, how many of the top users should "
 "be considered winners? The winners will earn the prizes specified in this "
 "competition."
 msgstr ""
 
-#: prizes/models.py:238
+#: prizes/models.py:237
 msgid "closing leaderboard"
 msgstr ""
 
-#: prizes/models.py:242
+#: prizes/models.py:241
 msgid ""
 "leaderboard calculated at the time the competition was closed. Winners are "
 "assigned from the score in this leaderboard"
 msgstr ""
 
-#: prizes/models.py:329 profiles/models.py:124 profiles/models.py:216
-msgid "user"
-msgstr "Utente"
+#: prizes/models.py:248
+msgid "Sponsors for the competition"
+msgstr ""
 
-#: prizes/models.py:334
+#: prizes/models.py:344
+msgid "approved"
+msgstr ""
+
+#: prizes/models.py:348
+msgid "rejected"
+msgstr ""
+
+#: prizes/models.py:352
+msgid "pending moderation"
+msgstr ""
+
+#: prizes/models.py:360
+msgid ""
+"A justification for the moderation of the user's request. Mostly useful as a "
+"means to let the user know why its participation request was rejected."
+msgstr ""
+
+#: prizes/models.py:385
 msgid "rank"
 msgstr ""
 
@@ -206,247 +253,251 @@ msgstr ""
 msgid "Did not accept the portal's Terms of Service"
 msgstr "Non sono stati accettati i termini di servizio della piattaforma"
 
-#: profiles/models.py:30
+#: profiles/models.py:38
 msgid "nickname"
 msgstr "Nome utente"
 
-#: profiles/models.py:35
+#: profiles/models.py:43
 msgid "language preference"
 msgstr "Lingua preferita"
 
-#: profiles/models.py:46
+#: profiles/models.py:54
 msgid "gamification interface"
 msgstr ""
 
-#: profiles/models.py:127
+#: profiles/models.py:62
+msgid "Random string used when anonymizing user data"
+msgstr ""
+
+#: profiles/models.py:141
 msgid "date updated"
 msgstr "Data aggiornata"
 
-#: profiles/models.py:131
+#: profiles/models.py:145
 msgid "gender"
 msgstr "Sesso"
 
-#: profiles/models.py:135
+#: profiles/models.py:149
 msgid "female"
 msgstr "Femmina"
 
-#: profiles/models.py:136
+#: profiles/models.py:150
 msgid "male"
 msgstr "Maschio"
 
-#: profiles/models.py:141
+#: profiles/models.py:155
 msgid "age"
 msgstr "Età"
 
-#: profiles/models.py:157
+#: profiles/models.py:171
 msgid "phone number"
 msgstr "Numero di telefono"
 
-#: profiles/models.py:163
+#: profiles/models.py:177
 msgid "bio"
 msgstr "Bio"
 
-#: profiles/models.py:164
+#: profiles/models.py:178
 msgid "Short user biography"
 msgstr "Breve biografia"
 
-#: profiles/models.py:168
+#: profiles/models.py:182
 msgid "occupation"
 msgstr "Occupazione"
 
-#: profiles/models.py:171
+#: profiles/models.py:185
 msgid "insurance agent"
 msgstr "agente assicurativo"
 
-#: profiles/models.py:172
+#: profiles/models.py:186
 msgid "trading agent"
 msgstr "agente di commercio"
 
-#: profiles/models.py:173
+#: profiles/models.py:187
 msgid "freelancer"
 msgstr "altra libera professione"
 
-#: profiles/models.py:174
+#: profiles/models.py:188
 msgid "architect"
 msgstr "architetto"
 
-#: profiles/models.py:175
+#: profiles/models.py:189
 msgid "craftsman"
 msgstr "artigiano"
 
-#: profiles/models.py:176
+#: profiles/models.py:190
 msgid "artist"
 msgstr "artista"
 
-#: profiles/models.py:177
+#: profiles/models.py:191
 msgid "lawyer"
 msgstr "avvocato"
 
-#: profiles/models.py:178
+#: profiles/models.py:192
 msgid "housewife"
 msgstr "casalinga"
 
-#: profiles/models.py:179
+#: profiles/models.py:193
 msgid "accountant"
 msgstr "commercialista"
 
-#: profiles/models.py:180
+#: profiles/models.py:194
 msgid "dealer"
 msgstr "commerciante"
 
-#: profiles/models.py:181
+#: profiles/models.py:195
 msgid "shop assistant"
 msgstr "commesso"
 
-#: profiles/models.py:182
+#: profiles/models.py:196
 msgid "consultant"
 msgstr "consulente"
 
-#: profiles/models.py:183
+#: profiles/models.py:197
 msgid "public agency employee"
 msgstr "dipendente pubblica amministrazione"
 
-#: profiles/models.py:184
+#: profiles/models.py:198
 msgid "private sector employee"
 msgstr "dipendente di azienda privata"
 
-#: profiles/models.py:185
+#: profiles/models.py:199
 msgid "manager"
 msgstr "dirigente"
 
-#: profiles/models.py:186
+#: profiles/models.py:200
 msgid "public agency manager"
 msgstr "dirigente/funzionario p.a./ufficiale"
 
-#: profiles/models.py:187
+#: profiles/models.py:201
 msgid "pharmacist"
 msgstr "farmacista"
 
-#: profiles/models.py:188
+#: profiles/models.py:202
 msgid "surveyor"
 msgstr "geometra"
 
-#: profiles/models.py:189
+#: profiles/models.py:203
 msgid "journalist"
 msgstr "giornalista"
 
-#: profiles/models.py:190
+#: profiles/models.py:204
 msgid "entrepreneur"
 msgstr "imprenditore"
 
-#: profiles/models.py:191
+#: profiles/models.py:205
 msgid "engineer"
 msgstr "ingegnere"
 
-#: profiles/models.py:192
+#: profiles/models.py:206
 msgid "teacher"
 msgstr "insegnante"
 
-#: profiles/models.py:193
+#: profiles/models.py:207
 msgid "doctor"
 msgstr "medico"
 
-#: profiles/models.py:194
+#: profiles/models.py:208
 msgid "unemployed"
 msgstr "non occupato"
 
-#: profiles/models.py:195
+#: profiles/models.py:209
 msgid "notary"
 msgstr "notaio"
 
-#: profiles/models.py:196
+#: profiles/models.py:210
 msgid "worker"
 msgstr "operaio"
 
-#: profiles/models.py:197
+#: profiles/models.py:211
 msgid "retired"
 msgstr "pensionato"
 
-#: profiles/models.py:198
+#: profiles/models.py:212
 msgid "politician"
 msgstr "politico"
 
-#: profiles/models.py:199
+#: profiles/models.py:213
 msgid "university professor"
 msgstr "professore universitario"
 
-#: profiles/models.py:200
+#: profiles/models.py:214
 msgid "trainee"
 msgstr "stagista/tirocinante"
 
-#: profiles/models.py:201
+#: profiles/models.py:215
 msgid "professional athlete"
 msgstr "sportivo professionista"
 
-#: profiles/models.py:202
+#: profiles/models.py:216
 msgid "high school student"
 msgstr "studente scuola superiore"
 
-#: profiles/models.py:203
+#: profiles/models.py:217
 msgid "college student"
 msgstr "studente universitario"
 
-#: profiles/models.py:241
+#: profiles/models.py:255
 msgid "end user"
 msgstr "Utente finale"
 
-#: profiles/models.py:244
+#: profiles/models.py:258
 msgid "date answered"
 msgstr "Data della risposta"
 
-#: profiles/models.py:248
+#: profiles/models.py:262
 msgid "public transport usage"
 msgstr "Utilizzo dei trasporti pubblici"
 
-#: profiles/models.py:253
+#: profiles/models.py:267
 msgid "Habitual (more than 10 travels per month)"
 msgstr "Abituale (oltre 10 viaggi al mese)"
 
-#: profiles/models.py:257
+#: profiles/models.py:271
 msgid "Occasional (once per month)"
 msgstr "Sporadico (un viaggio al mese)"
 
-#: profiles/models.py:261
+#: profiles/models.py:275
 msgid "Rare (less than 10 travels per year)"
 msgstr "Raro (meno di 10 viaggi l'anno)"
 
-#: profiles/models.py:265
+#: profiles/models.py:279
 msgid "Never"
 msgstr "Mai"
 
-#: profiles/models.py:271
+#: profiles/models.py:285
 msgid "uses bike sharing services"
 msgstr "utilizzo servizi di bike sharing"
 
-#: profiles/models.py:275
+#: profiles/models.py:289
 msgid "uses electrical car sharing services"
 msgstr "utilizzo servizi di car sharing elettrico"
 
-#: profiles/models.py:279
+#: profiles/models.py:293
 msgid "uses fuel car sharing services"
 msgstr "uso servizi di car sharing"
 
-#: profiles/models.py:283
+#: profiles/models.py:297
 msgid "bicycle usage"
 msgstr "Utilizzo della bicicletta"
 
-#: profiles/models.py:288
+#: profiles/models.py:302
 msgid "Habitual (at least once a week on average)"
 msgstr "Abituale (almeno una volta alla settimana)"
 
-#: profiles/models.py:292
+#: profiles/models.py:306
 msgid "Habitual (at least once a month)"
 msgstr "Sporadico (almeno una volta al mese)"
 
-#: profiles/models.py:296
+#: profiles/models.py:310
 msgid "Seasonal (mainly used in the Summer)"
 msgstr "Stagionale (principalmente in primavera/estate)"
 
-#: profiles/models.py:300
+#: profiles/models.py:314
 msgid "Rare (less than once a month)"
 msgstr "Raro (meno di una volta al mese)"
 
-#: profiles/models.py:304
+#: profiles/models.py:318
 msgid "Never use a bicycle to move around in the city"
 msgstr "Non utilizzo mai la bicicletta per muovermi in città"
 
@@ -694,32 +745,41 @@ msgstr ""
 #: templates/dashboard/analyst_index.html:30
 #: templates/dashboard/analyst_index.html:41
 #: templates/dashboard/analyst_index.html:52
+#: templates/dashboard/analyst_index.html:63
 msgid "Download"
 msgstr ""
 
 #: templates/dashboard/analyst_index.html:24
+msgid "Track Points"
+msgstr ""
+
+#: templates/dashboard/analyst_index.html:26
+msgid " Download track point data "
+msgstr ""
+
+#: templates/dashboard/analyst_index.html:35
 #: templates/vehiclemonitor/bikeobservation_list.html:15
 #: templates/vehiclemonitor/bikeobservation_list.html:51
 msgid "Bike observations"
 msgstr "Rilevazioni bicicletta"
 
-#: templates/dashboard/analyst_index.html:26
+#: templates/dashboard/analyst_index.html:37
 msgid "Download bike observations data"
 msgstr ""
 
-#: templates/dashboard/analyst_index.html:35
+#: templates/dashboard/analyst_index.html:46
 msgid "Bike Status History"
 msgstr ""
 
-#: templates/dashboard/analyst_index.html:37
+#: templates/dashboard/analyst_index.html:48
 msgid "Download bike status history data"
 msgstr ""
 
-#: templates/dashboard/analyst_index.html:46
+#: templates/dashboard/analyst_index.html:57
 msgid "Competition winners"
 msgstr ""
 
-#: templates/dashboard/analyst_index.html:48
+#: templates/dashboard/analyst_index.html:59
 msgid "Download competition winners data"
 msgstr ""
 

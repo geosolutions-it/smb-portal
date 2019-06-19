@@ -55,6 +55,11 @@ router.register(
     base_name="my-competitions-current"
 )
 router.register(
+    prefix="my-competitions-available",
+    viewset=prizes_views.MyAvailableCompetitionViewSet,
+    base_name="my-competitions-available"
+)
+router.register(
     prefix="competitions",
     viewset=prizes_views.CompetitionViewSet,
     base_name="competitions"

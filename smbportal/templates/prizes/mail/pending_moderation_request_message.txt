@@ -1,0 +1,10 @@
+{% load i18n %}{% blocktrans %}User {{ participant.user.email }} wants to register for competition {{ participant.competition }}.
+
+For moderating this request, please visit {{ site_name }} and log in with your credentials
+
+After logging in, access the administration area of the site and proceed as follows:
+
+- Access the pending competition participants section
+- Locate the user and competition that this email refers to and select it
+- Approve the competition participation request
+{% endblocktrans %}

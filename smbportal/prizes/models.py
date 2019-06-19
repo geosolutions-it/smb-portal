@@ -1,6 +1,6 @@
 #########################################################################
 #
-# Copyright 2018, GeoSolutions Sas.
+# Copyright 2019, GeoSolutions Sas.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -9,7 +9,7 @@
 #########################################################################
 
 import datetime as dt
-import calendar
+import logging
 
 from django.db import connections
 from django.db import models
@@ -21,6 +21,8 @@ from smbbackend import calculateprizes
 import pytz
 
 from profiles.models import EndUserProfile
+
+logger = logging.getLogger(__name__)
 
 
 class Sponsor(models.Model):
@@ -274,7 +276,7 @@ class Competition(models.Model):
     def get_leaderboard(self):
         if self.is_open():
             leaderboard = calculateprizes.get_leaderboard(
-                self._as_competition_info(),
+                self.as_competition_info(),
                 connections["default"].connection.cursor()
             )
         else:
@@ -282,18 +284,15 @@ class Competition(models.Model):
         user_model = get_user_model()
         result = []
         for entry in leaderboard:
-            user = user_model.objects.get(id=entry["user"])
-            result.append((user, entry["criteria_points"]))
+            try:
+                user = user_model.objects.get(id=entry["user"])
+            except user_model.DoesNotExist:
+                logger.warning(f"Cannot find user {entry['user']} in the DB")
+            else:
+                result.append((user, entry["criteria_points"]))
         return result
 
-    def get_user_score(self, user):
-        return calculateprizes.get_user_score(
-            self._as_competition_info(),
-            user.pk,
-            connections["default"].connection.cursor()
-        )
-
-    def _as_competition_info(self):
+    def as_competition_info(self):
         return calculateprizes.CompetitionInfo(
             id=self.id,
             name=self.name,
@@ -321,34 +320,98 @@ class FinishedCompetition(Competition):
         proxy = True
 
 
-class Winner(models.Model):
-    """Stores the winners of competitions"""
+class CompetitionParticipant(models.Model):
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    PENDING_MODERATION = "pending_moderation"
+
     competition = models.ForeignKey(
-        "Competition",
-        verbose_name=_("competition"),
+        Competition,
         on_delete=models.CASCADE,
-        related_name="winners",
     )
     user = models.ForeignKey(
         "profiles.SmbUser",
         verbose_name=_("user"),
         on_delete=models.CASCADE,
-        related_name="competitions_won"
+        related_name="competitions_participating"
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    registration_status = models.CharField(
+        max_length=100,
+        choices=[
+            (
+                APPROVED,
+                _("approved")
+            ),
+            (
+                REJECTED,
+                _("rejected")
+            ),
+            (
+                PENDING_MODERATION,
+                _("pending moderation")
+            ),
+        ]
+    )
+    registration_justification = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_(
+            "A justification for the moderation of the user's request. Mostly "
+            "useful as a means to let the user know why its participation "
+            "request was rejected."
+        )
+    )
+
+    def get_score(self):
+        if self.registration_status == self.APPROVED:
+            result = calculateprizes.get_user_score(
+                self.competition.as_competition_info(),
+                self.user.pk,
+                connections["default"].connection.cursor()
+            )
+        else:
+            result = {}
+        return result
+
+
+class PendingCompetitionParticipantManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            registration_status=CompetitionParticipant.PENDING_MODERATION)
+
+
+class PendingCompetitionParticipant(CompetitionParticipant):
+
+    objects = PendingCompetitionParticipantManager()
+
+    class Meta:
+        proxy = True
+
+
+class Winner(models.Model):
+    """Stores the winners of competitions"""
     rank = models.IntegerField(
         verbose_name=_("rank"),
+    )
+    participant = models.ForeignKey(
+        CompetitionParticipant,
+        on_delete=models.CASCADE,
+        limit_choices_to={
+            "registration_status": CompetitionParticipant.APPROVED
+        }
     )
 
     class Meta:
         ordering = (
-            "competition",
             "rank",
-            "user",
+            "participant",
         )
 
     def __str__(self):
         return "Competition {!r} ({} - {})".format(
-            self.competition,
-            self.user,
+            self.participant.competition.name,
+            self.participant.user.username,
             self.rank
         )
