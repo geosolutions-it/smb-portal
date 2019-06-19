@@ -1198,7 +1198,7 @@ class CompetitionPrizeSerializer(serializers.ModelSerializer):
         engine = Engine.get_default()
         string_template = obj.prize_attribution_template
         try:
-            rank = obj.competition.winners.get(user=self.context["user"]).rank
+            winner = obj.competition.winners.get(user=self.context.get("user"))
         except prizes.models.Winner.DoesNotExist:
             result = string_template
         else:
@@ -1208,7 +1208,7 @@ class CompetitionPrizeSerializer(serializers.ModelSerializer):
                 criterium, value in score.items()
             )
             context = Context({
-                "rank": rank,
+                "rank": winner.rank,
                 "score": formatted_score,
             })
             if "humanize" not in string_template:
@@ -1251,6 +1251,7 @@ class CompetitionDetailSerializer(CompetitionListSerializer):
         many=True,
         source="competitionprize_set",
     )
+    sponsors = SponsorSerializer(many=True)
 
     def get_leaderboard(self, obj):
         board = obj.get_leaderboard()
@@ -1271,6 +1272,7 @@ class CompetitionDetailSerializer(CompetitionListSerializer):
             "winner_threshold",
             "leaderboard",
             "prizes",
+            "sponsors",
         )
 
 
