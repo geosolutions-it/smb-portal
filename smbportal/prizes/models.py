@@ -243,6 +243,11 @@ class Competition(models.Model):
             "Winners are assigned from the score in this leaderboard"
         )
     )
+    sponsors = models.ManyToManyField(
+        "Sponsor",
+        blank=True,
+        help_text=_("Sponsors for the competition")
+    )
 
     objects = models.Manager()
     current_competitions_manager = CurrentCompetitionManager()
