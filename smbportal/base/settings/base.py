@@ -315,6 +315,9 @@ KEYCLOAK = {
         ],
         PRIVILEGED_USER_PROFILE: [
             "/privileged_users"
+        ],
+        "competition_moderators": [
+            "/competition_moderators"
         ]
     }
 }

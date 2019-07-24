@@ -72,6 +72,9 @@
                             </li>
                             <li><a href="{% url 'profile:update' %}"> <i class="icon-head"></i> {% trans 'My Profile' %}</a></li>
                             <li><a href="javascript:void(0)"> <i class="icon-mail"></i> {% trans 'Messages' %}</a></li>
+                            {% if request.user.is_staff %}
+                                <li><a href="{% url 'admin:index' %}"> <i class="icon-head"></i> {% trans 'Admin area' %}</a></li>
+                            {% endif %}
                             <li class="sub-menu-separator"></li>
                             <li><a href="{% url 'logout' %}"> <i class="icon-lock"></i> {% trans 'Logout' %}</a></li>
                         {% else %}
@@ -132,7 +135,7 @@
                     <div class="col-lg-12 col-md-12">
                         <!-- About Us-->
                         <section class="footer-widgets widget widget-links widget-light-skin">
-                            <span><a href="https://www.savemybike.eu/" target="_blank">SaveMyBike</a> // info@savemybike.eu // <a href="{% url 'privacy_policy' %}">{% blocktrans %}Privacy Policy{% endblocktrans %} </a> // <a href="https://www.geo-solutions.it/" target="_blank">Credits</a></span>
+                            <span><a href="https://www.savemybike.eu/" target="_blank">SaveMyBike</a> // info@savemybike.eu // <a href="{% url 'privacy_policy' %}">{% blocktrans %}Privacy Policy{% endblocktrans %} </a> // <a href="{% url 'api:schema-swagger-ui' %}">API</a> // <a href="https://www.geo-solutions.it/" target="_blank">Credits</a></span>
                              <a class="social-button shape-circle sb-facebook sb-light-skin" href="https://www.facebook.com/Savemybike-1505927189521211/" target="_blank">
                                 <i class="fa fa-facebook"></i>
                             </a>

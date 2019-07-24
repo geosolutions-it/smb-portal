@@ -11,11 +11,13 @@
 import logging
 from smtplib import SMTPServerDisconnected
 from smtplib import SMTPSenderRefused
+import typing
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.template.loader import render_to_string
+from fcm_django.models import FCMDevice
 
 from vehicles import models
 
@@ -54,19 +56,27 @@ def send_email_to_admins(subject_template, message_template, context=None):
 
     """
 
-    logger.debug("context: {}".format(context))
-
     superusers = get_user_model().objects.filter(is_superuser=True)
     destination_addresses = set(superusers.values_list("email", flat=True))
-    logger.debug("destination_addresses: {}".format(destination_addresses))
     unique_recipients = set(settings.ADMINS).union(destination_addresses)
     logger.debug("unique_recipients: {}".format(unique_recipients))
+    return send_mail_to_recipients(
+        unique_recipients, subject_template, message_template, context=context)
+
+
+def send_mail_to_recipients(
+        recipients,
+        subject_template,
+        message_template,
+        context=None
+):
     ctx = dict(context) if context is not None else {}
+    logger.debug("context: {}".format(context))
     send_mail(
-        subject=render_to_string(subject_template, context=ctx),
+        subject=render_to_string(subject_template, context=ctx).strip(),
         message=render_to_string(message_template, context=ctx),
         from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=list(unique_recipients)
+        recipient_list=list(recipients)
     )
 
 
@@ -77,3 +87,13 @@ def send_mail(*args, **kwargs):
     except (SMTPSenderRefused, SMTPServerDisconnected) as exc:
         logger.warning(
             "Could not send notification email: {}".format(str(exc)))
+
+
+def notify_user(
+        user,
+        message: typing.Dict
+):
+    """Notify a user via django_fcm"""
+    devices = FCMDevice.objects.filter(user=user)
+    logger.debug(f"About to send message {message} to devices {devices}...")
+    devices.send_message(data=message)
