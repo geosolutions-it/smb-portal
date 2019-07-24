@@ -9,6 +9,7 @@
 #########################################################################
 
 from django.contrib import admin
+from django.contrib.gis.admin import OSMGeoAdmin
 from django.utils.translation import ugettext_lazy as _
 
 from . import models
@@ -22,7 +23,6 @@ class PrizeAdmin(admin.ModelAdmin):
 
 @admin.register(models.Competition)
 class CompetitionAdmin(admin.ModelAdmin):
-
     list_display = (
         "name",
         "start_date",
@@ -30,11 +30,20 @@ class CompetitionAdmin(admin.ModelAdmin):
         "age_groups",
         "criteria",
         "is_open",
+        "show_regions",
     )
     list_filter = (
         "age_groups",
         "start_date",
+        "regions",
     )
+    filter_horizontal = (
+        "regions",
+    )
+
+    def show_regions(self, obj):
+        return list(obj.regions.values_list("name", flat=True))
+    show_regions.short_description = "regions"
 
 
 @admin.register(models.CurrentCompetition)
@@ -165,3 +174,14 @@ class PendingCompetitionParticipantAdmin(admin.ModelAdmin):
         if "delete_selected" in actions:
             del actions["delete_selected"]
         return actions
+
+
+@admin.register(models.RegionOfInterest)
+class RegionOfInterestAdmin(OSMGeoAdmin):
+    map_width = 900
+    map_height = 600
+
+    list_display = (
+        "id",
+        "name",
+    )

@@ -14,6 +14,7 @@ import logging
 from django.db import connections
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.contrib.gis.db import models as gismodels
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.postgres.fields import JSONField
 from django.utils.translation import ugettext_lazy as _
@@ -250,6 +251,11 @@ class Competition(models.Model):
         blank=True,
         help_text=_("Sponsors for the competition")
     )
+    regions = models.ManyToManyField(
+        "RegionOfInterest",
+        blank=True,
+        help_text=_("Regions of interest for the competition, if any")
+    )
 
     objects = models.Manager()
     current_competitions_manager = CurrentCompetitionManager()
@@ -415,3 +421,13 @@ class Winner(models.Model):
             self.participant.user.username,
             self.rank
         )
+
+
+class RegionOfInterest(gismodels.Model):
+    name = models.CharField(max_length=200)
+    geom = gismodels.PolygonField(
+        verbose_name=_("geometry"),
+    )
+
+    def __str__(self):
+        return self.name

@@ -355,14 +355,3 @@ class Health(models.Model):
 
     def __str__(self):
         return "{0.segment} - {0.benefit_index}".format(self)
-
-
-class RegionOfInterest(gismodels.Model):
-    geom = gismodels.MultiPolygonField(
-        verbose_name=_("geometry"),
-        help_text=_(
-            "Geometry for the region of interest. Only points that are "
-            "located within this area will be considered when creating "
-            "tracks"
-        )
-    )
