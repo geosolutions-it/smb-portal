@@ -15,6 +15,7 @@ from django.db import connections
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.gis.db import models as gismodels
+from django.contrib.gis.db.models import Union
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.postgres.fields import JSONField
 from django.utils.translation import ugettext_lazy as _
@@ -299,6 +300,7 @@ class Competition(models.Model):
         return result
 
     def as_competition_info(self):
+        roi = self.regions.aggregate(roi=Union("geom"))["roi"]
         return calculateprizes.CompetitionInfo(
             id=self.id,
             name=self.name,
@@ -307,6 +309,7 @@ class Competition(models.Model):
             start_date=self.start_date,
             end_date=self.end_date,
             age_groups=self.age_groups,
+            region_of_interest=roi
         )
 
 
