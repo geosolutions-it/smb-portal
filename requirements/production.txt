@@ -13,7 +13,7 @@ drf-yasg==1.8.0
 fcm-django==0.2.19
 geoip2==2.9.0
 lxml==4.2.3
-psycopg2-binary==2.7.4
+psycopg2==2.8.3
 pyfcm==1.4.5
 pygdal==2.2.3.3 # depends on libgdal-dev 2.3.3
 pytz==2018.4
