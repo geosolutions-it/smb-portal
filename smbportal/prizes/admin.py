@@ -16,6 +16,10 @@ from . import models
 from . import utils
 
 
+@admin.register(models.Sponsor)
+class SponsorAdmin(admin.ModelAdmin):
+    pass
+
 @admin.register(models.Prize)
 class PrizeAdmin(admin.ModelAdmin):
     pass
