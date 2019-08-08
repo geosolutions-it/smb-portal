@@ -22,6 +22,7 @@ from django.utils.translation import ugettext_lazy as _
 from smbbackend import calculateprizes
 import pytz
 
+from base.fields import ChoiceArrayField
 from profiles.models import EndUserProfile
 
 logger = logging.getLogger(__name__)
@@ -168,7 +169,7 @@ class Competition(models.Model):
         verbose_name=_("description"),
         blank=True
     )
-    age_groups = ArrayField(
+    age_groups = ChoiceArrayField(
         base_field=models.CharField(
             max_length=10,
             choices=[
@@ -192,6 +193,7 @@ class Competition(models.Model):
         ),
         size=4,
         verbose_name=_("age group"),
+        default=list
     )
     start_date = models.DateTimeField(
         verbose_name=_("start date"),
@@ -201,26 +203,29 @@ class Competition(models.Model):
         verbose_name=_("end date"),
         help_text=_("Date when the competition ended"),
     )
-    criteria = ArrayField(
+    criteria = ChoiceArrayField(
         base_field=models.CharField(
             max_length=100,
             choices=[
-                (CRITERIUM_SAVED_CO2_EMISSIONS, _("saved CO2 emissions")),
+                (CRITERIUM_SAVED_SO2_EMISSIONS, _("saved SO2 emissions")),
                 (CRITERIUM_SAVED_NOX_EMISSIONS, _("saved NOx emissions")),
                 (CRITERIUM_SAVED_CO2_EMISSIONS, _("saved CO2 emissions")),
                 (CRITERIUM_SAVED_CO_EMISSIONS, _("saved CO emissions")),
                 (CRITERIUM_SAVED_PM10_EMISSIONS, _("saved PM10 emissions")),
-                (CRITERIUM_CONSUMED_CALORIES, _("consumed calories")),
-                (CRITERIUM_BIKE_USAGE_FREQUENCY, _("bike usage frequency")),
-                (
-                    CRITERIUM_PUBLIC_TRANSPORT_USAGE_FREQUENCY,
-                    _("public transport usage frequency")
-                ),
-                (CRITERIUM_BIKE_DISTANCE, _("bike distance")),
-                (
-                    CRITERIUM_SUSTAINABLE_MEANS_DISTANCE,
-                    _("sustainable means distance")
-                ),
+                # NOTE: The following are commented out because the backend
+                # does not know how to score them yet
+                #
+                # (CRITERIUM_CONSUMED_CALORIES, _("consumed calories")),
+                # (CRITERIUM_BIKE_USAGE_FREQUENCY, _("bike usage frequency")),
+                # (
+                #     CRITERIUM_PUBLIC_TRANSPORT_USAGE_FREQUENCY,
+                #     _("public transport usage frequency")
+                # ),
+                # (CRITERIUM_BIKE_DISTANCE, _("bike distance")),
+                # (
+                #     CRITERIUM_SUSTAINABLE_MEANS_DISTANCE,
+                #     _("sustainable means distance")
+                # ),
             ]
         ),
         verbose_name=_("criteria"),

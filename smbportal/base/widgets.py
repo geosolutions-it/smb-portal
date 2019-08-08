@@ -1,6 +1,6 @@
 #########################################################################
 #
-# Copyright 2018, GeoSolutions Sas.
+# Copyright 2019, GeoSolutions Sas.
 # All rights reserved.
 #
 # This source code is licensed under the BSD-style license found in the
@@ -10,6 +10,7 @@
 
 """Custom widgets for smb-portal"""
 
+from django.forms import SelectMultiple
 from django.contrib.gis.forms.widgets import OSMWidget
 
 
@@ -22,3 +23,9 @@ class SmbOsmWidget(OSMWidget):
         # - the template is responsible for loading the openlayers css and js
         #   assets
         extend = False
+
+
+class ArrayFieldSelectMultipleWidget(SelectMultiple):
+
+    def value_omitted_from_data(self, data, files, name):
+        return False
