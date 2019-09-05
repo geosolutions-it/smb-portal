@@ -1,4 +1,4 @@
-{% load i18n %}{% blocktrans %}User {{ participant.user.email }} wants to register for competition {{ participant.competition }}.
+{% load i18n %}{% blocktrans with username=participant.user.username competition_name=participant.competition.name %}User {{ username }} wants to register for competition {{ competition_name }}.
 
 For moderating this request, please visit {{ site_name }} and log in with your credentials
 
