@@ -45,9 +45,10 @@ def update_user_data(user, token):
 
 
 def update_user_details(user, token):
-    email = token.get("email")
-    if email is not None:
-        user.email = email
+    user.first_name = token.get("given_name", user.first_name)
+    user.last_name = token.get("family_name", user.last_name)
+    user.username = token.get("preferred_username", user.username)
+    user.email = token.get("email", user.email)
     user.save()
 
 

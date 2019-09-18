@@ -6,7 +6,7 @@ Your request for participating in the competition {{ competition_name }} has bee
 {% blocktrans with end_date=participant.competition.end_date %}
 Your tracks and emission savings will now be ranked with other participants of the competition!
 
-This competition will close on {{ participant.competition.end_date }}.
+This competition will close on {{ end_date }}.
 {% endblocktrans %}
 {% else %}
 {% blocktrans %}
