@@ -9,6 +9,8 @@
 #########################################################################
 
 import logging
+import pytz
+from datetime import datetime as dt
 
 from rest_framework.decorators import action
 from rest_framework import (
@@ -81,8 +83,10 @@ class MyCurrentCompetitionViewSet(mixins.CreateModelMixin,
         return context
 
     def get_queryset(self):
+        now = dt.utcnow().replace(tzinfo=pytz.utc)
         return models.CompetitionParticipant.objects.filter(
-            user=self.request.user
+            user=self.request.user,
+            competition__end_date__gt=now
         )
 
     def create(self, request, *args, **kwargs):
