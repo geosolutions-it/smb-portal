@@ -105,6 +105,11 @@ class CompetitionListSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name="api:competitions-detail",
     )
+    prizes = CompetitionPrizeSerializer(
+        many=True,
+        source="competitionprize_set",
+    )
+    sponsors = SponsorSerializer(many=True)
 
     class Meta:
         model = models.Competition
@@ -116,7 +121,8 @@ class CompetitionListSerializer(serializers.ModelSerializer):
             "age_groups",
             "start_date",
             "end_date",
-            "criteria",
+            "prizes",
+            "sponsors",
         )
 
 
