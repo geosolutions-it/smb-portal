@@ -128,7 +128,8 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.i18n",
-                "django.template.context_processors.media"
+                "django.template.context_processors.media",
+                "base.context_processors.global_settings"
             ],
             # "loaders": [
             #     "django.template.loaders.filesystem.Loader",
@@ -315,6 +316,9 @@ KEYCLOAK = {
         ],
         PRIVILEGED_USER_PROFILE: [
             "/privileged_users"
+        ],
+        "competition_moderators": [
+            "/competition_moderators"
         ]
     }
 }
@@ -370,3 +374,5 @@ SMB_PORTAL = {
     "max_pictures_per_bike": 5,
     "num_latest_observations": 5,
 }
+
+SMB_PORTAL_MAINTENANCE_MESSAGE=get_boolean_env_value('SMB_PORTAL_MAINTENANCE_MESSAGE','false')

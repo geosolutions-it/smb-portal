@@ -1,0 +1,1 @@
+{% load i18n %}{{ site_name }} - {% blocktrans with competition_name=participant.competition.name%}Competition {{ competition_name }} registration request has been {% endblocktrans %}{% if approved %}approved {% else %}rejected{% endif %}
