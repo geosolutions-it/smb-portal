@@ -129,7 +129,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.i18n",
                 "django.template.context_processors.media",
-                "smbportal.base.context_processors.global_settings"
+                "base.context_processors.global_settings"
             ],
             # "loaders": [
             #     "django.template.loaders.filesystem.Loader",
