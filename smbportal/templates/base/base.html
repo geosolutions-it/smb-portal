@@ -107,6 +107,20 @@
             </div>
         </div>
         {% endblock %}
+        {% if SMB_PORTAL_MAINTENANCE_MESSAGE %}
+        <div style="width: 100%; display: table; margin: 10px 0px 10px 0px">
+            <div style="display: table-cell;
+                        vertical-align: middle;
+                        width: 100%;
+                        background-color: #dc2106;
+                        color: white;
+                        text-align: center;
+                        height: 150px;">
+                <p style="font-size: 1.8em; margin: 0; padding: 0px 50px 0px 50px">Il sistema è in fase di aggiornamento, potreste incontrare malfunzionamenti sul portale e sull'app.</p>
+                <p style="font-size: 1.5em; margin: 0; padding: 0px 50px 0px 50px">Il sistema sarà ripristinato a breve.</p>
+            </div>
+        </div>
+        {% endif %}
         <div id="container" class="">
             {% block hero %}{% endblock %}
             <div class="container p-t-60">
