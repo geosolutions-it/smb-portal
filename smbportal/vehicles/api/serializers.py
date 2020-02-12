@@ -71,12 +71,15 @@ class BikeDetailSerializer(BikeListSerializer):
     pictures = serializers.SerializerMethodField()
 
     def get_pictures(self, bike):
-        serializer = PictureSerializer(
-            instance=bike.picture_gallery.photos.all(),
-            context=self.context,
-            many=True
-        )
-        return [item["image"] for item in serializer.data]
+        if bike.picture_gallery is not None:
+            serializer = PictureSerializer(
+                instance=bike.picture_gallery.photos.all(),
+                context=self.context,
+                many=True
+            )
+            return [item["image"] for item in serializer.data]
+        else:
+            return []
 
     class Meta:
         model = vehicles.models.Bike
@@ -121,16 +124,17 @@ class MyBikeDetailSerializer(BikeDetailSerializer):
 
     def get_current_status(self, obj):
         current_status = obj.get_current_status()
-        return {
-            "lost": current_status.lost,
-            "url": reverse(
-                "api:my-bike-statuses-detail",
-                kwargs={
-                    "pk": current_status.pk
-                },
-                request=self.context.get("request")
-            )
-        }
+        if current_status is not None:
+            return {
+                "lost": current_status.lost,
+                "url": reverse(
+                    "api:my-bike-statuses-detail",
+                    kwargs={
+                        "pk": current_status.pk
+                    },
+                    request=self.context.get("request")
+                )
+            }
 
     class Meta:
         model = vehicles.models.Bike

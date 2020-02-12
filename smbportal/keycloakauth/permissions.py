@@ -51,6 +51,7 @@ class DjangoRulesPermission(permissions.BasePermission):
         return result
 
     def has_permission(self, request, view):
+
         """Check permissions for accessing the input view
 
         This method will by default deny access unless permissions are
@@ -61,15 +62,17 @@ class DjangoRulesPermission(permissions.BasePermission):
         all_perms = self._get_view_permissions(view)
         safe_perms = filter_out_unsafe_permissions(all_perms)
         is_safe_method = request.method in permissions.SAFE_METHODS
-
         perms_to_check = safe_perms if is_safe_method else all_perms
         result = False
-        for perm in perms_to_check:
-            if request.user.has_perm(perm):
-                result = True
-            else:
-                result = False
-                break
+        if isinstance(perms_to_check, str):
+            result = request.user.has_perm(perms_to_check)
+        else:
+            for perm in perms_to_check:
+                if request.user.has_perm(perm):
+                    result = True
+                else:
+                    result = False
+                    break
         return result
 
     def has_object_permission(self, request, view, obj):
