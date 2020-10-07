@@ -8,18 +8,15 @@
 #
 #########################################################################
 
-import logging
+import urllib
 
+from django.db.models import Q
 from rest_framework import mixins
 from rest_framework import viewsets
 
-
-from .. import models
 from . import filters
 from . import serializers
-
-
-logger = logging.getLogger(__name__)
+from .. import models
 
 
 class MyBikeViewSet(viewsets.ModelViewSet):
@@ -88,6 +85,35 @@ class PhysicalTagViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         "vehicles.can_create_physical_tag",
     )
     lookup_field = "epc"
+
+
+class TaggedBikeViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.BikeListSerializer
+    required_permissions = (
+         "vehicles.can_list_own_bikes",
+         "vehicles.can_create_bike",
+
+    )
+    lookup_field = "epc"
+
+    def get_queryset(self):
+        epc = urllib.parse.unquote(self.request.GET.get("epc"))
+        return models.Bike.objects.filter(
+            tags__epc=epc)
+
+
+class MyTaggedBikeViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.BikeListSerializer
+    required_permissions = (
+         "vehicles.can_list_own_bikes",
+         "vehicles.can_create_bike",
+
+    )
+    lookup_field = "epc"
+
+    def get_queryset(self):
+        epc = urllib.parse.unquote(self.request.GET.get("epc"))
+        return models.Bike.objects.filter(Q(owner=self.request.user) and Q(tags__epc=epc))
 
 
 class BikeStatusViewSet(viewsets.ReadOnlyModelViewSet):

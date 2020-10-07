@@ -14,7 +14,6 @@ from django.conf import settings
 from django.urls import path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-#from fcm_django.api.rest_framework import FCMDeviceAuthorizedViewSet
 from .fcm.api import FCMDeviceAuthorizedViewSet
 from rest_framework import routers
 from rest_framework.permissions import AllowAny
@@ -125,6 +124,19 @@ router.register(
     viewset=vehicles_views.BikeStatusViewSet,
     base_name="bike-statuses"
 )
+
+router.register(
+    prefix="tagged-bike",
+    viewset=vehicles_views.TaggedBikeViewSet,
+    base_name="tagged-bike"
+)
+
+router.register(
+    prefix="my-tagged-bike",
+    viewset=vehicles_views.MyTaggedBikeViewSet,
+    base_name="my-tagged-bike"
+)
+
 router.register(
     prefix="tags",
     viewset=vehicles_views.PhysicalTagViewSet,
