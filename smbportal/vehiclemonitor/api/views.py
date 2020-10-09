@@ -10,6 +10,8 @@
 
 import logging
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins
 from rest_framework import viewsets
@@ -18,6 +20,7 @@ from rest_framework_gis.pagination import GeoJsonPagination
 from .. import models
 from . import filters
 from . import serializers
+from ..models import BikeObservation
 
 logger = logging.getLogger(__name__)
 
@@ -44,8 +47,20 @@ class MyBikeObservationViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 class BikeObservationViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                              mixins.CreateModelMixin, mixins.DestroyModelMixin,
                              viewsets.GenericViewSet):
+
     serializer_class = serializers.BikeObservationSerializer
+
     required_permissions = (
-        "vehiclemonitor.can_list_bike_observation",
+        "vehiclemonitor.can_list_own_bike_observation"
     )
     queryset = models.BikeObservation.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(reporter_name=self.request.user.email, reporter_id=self.request.user.pk)
+
+
+
+
+
+
+
